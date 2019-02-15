@@ -33,6 +33,6 @@ The following instructions are specific for Blackboard 9.1 (the basics apply to 
 
 1. Add another Content Item 
 1. Give the new content item the title _Tweak_
-1. Copy and paste the Javascript/CSS code in your version of the ??? file
+1. Copy and paste the HTML in your customised version of [the tweak.html file](https://raw.githubusercontent.com/djplaner/Content-Interface-Tweak/master/tweak.html)
 
 
