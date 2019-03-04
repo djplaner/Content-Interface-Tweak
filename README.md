@@ -10,7 +10,7 @@ See [this blog post](https://djon.es/blog/2019/02/24/exploring-knowledge-reuse-i
 # How it works
 
 1. Content author copies and pastes [some Javascript/CSS](https://raw.githubusercontent.com/djplaner/Content-Interface-Tweak/master/tweak.html) to final destination Web page
-> At this stage, the Javascript/CSS is specific for [Blackboard 9.1](https://www.blackboard.com/sites/sp6/index.html)
+At this stage, the Javascript/CSS is specific for [Blackboard 9.1](https://www.blackboard.com/sites/sp6/index.html)
 1. Content author creates content using Microsoft Word and a pre-defined set of styles.
 1. When Word doc complete a customised version of [mammoth.js](https://github.com/mwilliamson/mammoth.js) is used to convert the Word doc to clean HTML.
 1. Content author copies and pastes the HTML to the final desination Web page
