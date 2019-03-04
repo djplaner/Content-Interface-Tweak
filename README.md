@@ -5,12 +5,14 @@ Support a process by which content authors current ability of use Microsoft Word
 
 Originally designed for a University context using the Blackboard LMS in an attempt to help teaching staff produce increasingly effective learning material.
 
+See [this blog post](https://djon.es/blog/2019/02/24/exploring-knowledge-reuse-in-design-for-digital-learning/) for more detail on why and how it works.
+
 # How it works
 
-1. Content author copies and pastes some Javascript/CSS to final destination Web page
+1. Content author copies and pastes [some Javascript/CSS](https://raw.githubusercontent.com/djplaner/Content-Interface-Tweak/master/tweak.html) to final destination Web page
 > At this stage, the Javascript/CSS is specific for [Blackboard 9.1](https://www.blackboard.com/sites/sp6/index.html)
 1. Content author creates content using Microsoft Word and a pre-defined set of styles.
-1. When Word doc complete complete a customised version of [mammoth.js](https://github.com/mwilliamson/mammoth.js) is used to convert the Word doc to clean HTML.
+1. When Word doc complete a customised version of [mammoth.js](https://github.com/mwilliamson/mammoth.js) is used to convert the Word doc to clean HTML.
 1. Content author copies and pastes the HTML to the final desination Web page
 > Steps 2-4 are repeated everytime a change is made to the content. These steps (without the Javascript/CSS) should work on any web-based platform. Entirely because Mammoth.js produces nice clean HTML.
 1. When web page is viewed the Javascript/CSS modifies the clean HTML to improve appearance and functionality.
