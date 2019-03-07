@@ -9,6 +9,11 @@ var READING=`<div class="image"><img src="https://djon.es/gu/icons/icons8-readin
 var ACTIVITY=`<div class="image"><img src="https://djon.es/gu/icons/icons8-dancing-48.png" /></div>`;
 var NOTE=`<div class="icon"><img src="http://uimagine.edu.au/interact2-theme/fa/Blk-Warning.png"></div>`;
 
+var EXPAND_COLLAPSE_BUTTON_HTML = `<div class="accordion-expand-holder">
+<button type="button" class="open">Expand all</button>
+<button type="button" class="close">Collapse all</button>
+</div>`;
+
 // simple definition for using pure.css tables
 // TODO need to replace this.
 var TABLE_CLASS='table stripe-row-odd'; 
@@ -63,7 +68,14 @@ function contentInterface($){
     
  	// Add a <div> </div> around all the content following H1s
  	jQuery('#GU_ContentInterface h1').each(function() {
+ 	    jQuery(this).nextUntil('h1').addBack().wrapAll('<div class="accordion_top"></div>');
  	    jQuery(this).nextUntil('h1').wrapAll('<div></div>');
+ 	});
+ 	// Add divs around the h2 headings, until h2 or h1
+ 	jQuery('#GU_ContentInterface h2').each(function() {
+ 	   // console.log( "Heading text " + jQuery(this).html());
+ 	    jQuery(this).nextUntil('h1,h2').addBack().wrapAll('<div class="accordion"></div>');
+ 	    jQuery(this).nextUntil('h1,h2').wrapAll('<div></div>');
  	});
  	
     // Update all the readings and activities
@@ -90,7 +102,7 @@ function contentInterface($){
 	
 	// check for any spans class checkbox and replace with checkbox
 	jQuery("#GU_ContentInterface span.checkbox").each( function(idx) {
-	    console.log(idx + " found checkbox " + jQuery(this).html());
+	    //console.log(idx + " found checkbox " + jQuery(this).html());
 	    jQuery(this).html(CHECKBOX);
 	});
 	
@@ -116,7 +128,8 @@ function contentInterface($){
 	});
 	
 	// Apply the jQuery accordion
-	jQuery("#GU_ContentInterface").accordion( {header:"h1",
+	// --- old style single level accordion
+	/*jQuery("#GU_ContentInterface").accordion( {header:"h1",
 	    collapsible:true, heightStyle: 'content',
 	    navigation: true,
 	    activate : function( event, ui ) {
@@ -124,7 +137,60 @@ function contentInterface($){
 				$('html:not(:animated), body:not(:animated)').animate({ scrollTop: ui.newHeader.offset().top }, 'slow');
 			}
 		}
-	});
+	});*/
+	// New style multi-level accordion
+	// http://jsfiddle.net/hEApL/147/
+	// Accordion - Expand All #01
+    //$(function () {$(".accordion").accordion({
+    
+    jQuery(".accordion,.accordion_top").accordion({
+        collapsible: true,
+        active: false,
+        //navigation:true,
+        //autoHeight:true
+        heightStyle: 'content',
+        activate : function( event, ui ) {
+			if(!$.isEmptyObject(ui.newHeader.offset())) {
+				$('html:not(:animated), body:not(:animated)').animate({ scrollTop: ui.newHeader.offset().top }, 'slow');
+			}
+        }
+    });
+    
+    // TODO move this to a string and make it look prettier
+    jQuery( "#GU_ContentInterface").prepend(EXPAND_COLLAPSE_BUTTON_HTML);
+    var icons = jQuery(".accordion").accordion("option", "icons");
+    jQuery('.open').click(function () {
+        jQuery('.ui-accordion-header').removeClass('ui-corner-all').addClass('ui-accordion-header-active ui-state-active ui-corner-top').attr({
+            'aria-selected': 'true',
+                'tabindex': '0'
+        });
+        jQuery('.ui-accordion-header-icon').removeClass(icons.header).addClass(icons.headerSelected);
+        jQuery('.ui-accordion-content').addClass('ui-accordion-content-active').attr({
+            'aria-expanded': 'true',
+                'aria-hidden': 'false'
+        }).show();
+        jQuery(this).attr("disabled", "disabled");
+        jQuery('.close').removeAttr("disabled");
+    });
+    jQuery('.close').click(function () {
+        jQuery('.ui-accordion-header').removeClass('ui-accordion-header-active ui-state-active ui-corner-top').addClass('ui-corner-all').attr({
+            'aria-selected': 'false',
+                'tabindex': '-1'
+        });
+        jQuery('.ui-accordion-header-icon').removeClass(icons.headerSelected).addClass(icons.header);
+        jQuery('.ui-accordion-content').removeClass('ui-accordion-content-active').attr({
+            'aria-expanded': 'false',
+                'aria-hidden': 'true'
+        }).hide();
+        jQuery(this).attr("disabled", "disabled");
+        jQuery('.open').removeAttr("disabled");
+    });
+    jQuery('.ui-accordion-header').click(function () {
+        jQuery('.open').removeAttr("disabled");
+        jQuery('.close').removeAttr("disabled");
+        //console.log('click header ' + jQuery(this).html());
+
+    });
 	//console.log("after accordion");
 }
 
@@ -227,5 +293,3 @@ function doVideo() {
     
     
 } 
-
-
