@@ -225,7 +225,10 @@ function handleBlackboardItem() {
         // wrap any span class="blackboardLink" with a link
         var string = '<a href="' + link + '"></a>';
         // Try to replace just the Blackboard links for the current heading
-        jQuery(this).nextUntil('h1').find(".blackboardLink").wrapAll(string);
+        jQuery(this).nextUntil('h1').find(".blackboardLink").each( function() {
+            jQuery(this).wrapAll(string);
+        });
+        
     }
     
 }
@@ -293,3 +296,4 @@ function doVideo() {
     
     
 } 
+
