@@ -65,6 +65,7 @@ function contentInterface($){
     // handle the integration of any blackboard headings/items into the
     // content interface
     jQuery("h1.blackboard").each( handleBlackboardItem );
+    jQuery("h2.blackboard").each( handleBlackboardItem );
     
  	// Add a <div> </div> around all the content following H1s
  	jQuery('#GU_ContentInterface h1').each(function() {
@@ -95,6 +96,20 @@ function contentInterface($){
 	    var decoded = jQuery("<div/>").html(embed).text();
 	    jQuery(this).html(decoded);
 	    
+	});
+	
+	// Find all the div.picture and add a <p> </p> around
+	// text after the image
+	
+	jQuery("#GU_ContentInterface div.picture").each( function(idx) {
+	    jQuery(this).children('img').after('<br />');
+	   console.log("Picture found " + jQuery(this).text()) ;
+	   //console.log("Picture found after text " + jQuery(afterImage));
+	});
+	jQuery("#GU_ContentInterface div.pictureRight").each( function(idx) {
+	    jQuery(this).children('img').after('<br />');
+	   console.log("Picture found " + jQuery(this).text()) ;
+	   //console.log("Picture found after text " + jQuery(afterImage));
 	});
 	
 	// convert all tables in the content to TABLE_CLASS
@@ -145,8 +160,8 @@ function contentInterface($){
     
     jQuery(".accordion,.accordion_top").accordion({
         collapsible: true,
-        active: false,
-        //navigation:true,
+        active: 1,
+        navigation:true,
         //autoHeight:true
         heightStyle: 'content',
         activate : function( event, ui ) {
@@ -159,6 +174,7 @@ function contentInterface($){
     // TODO move this to a string and make it look prettier
     jQuery( "#GU_ContentInterface").prepend(EXPAND_COLLAPSE_BUTTON_HTML);
     var icons = jQuery(".accordion").accordion("option", "icons");
+    // define the click function for the expand all
     jQuery('.open').click(function () {
         jQuery('.ui-accordion-header').removeClass('ui-corner-all').addClass('ui-accordion-header-active ui-state-active ui-corner-top').attr({
             'aria-selected': 'true',
@@ -172,6 +188,7 @@ function contentInterface($){
         jQuery(this).attr("disabled", "disabled");
         jQuery('.close').removeAttr("disabled");
     });
+    // define the click functio for the collapse all
     jQuery('.close').click(function () {
         jQuery('.ui-accordion-header').removeClass('ui-accordion-header-active ui-state-active ui-corner-top').addClass('ui-corner-all').attr({
             'aria-selected': 'false',
@@ -189,9 +206,11 @@ function contentInterface($){
         jQuery('.open').removeAttr("disabled");
         jQuery('.close').removeAttr("disabled");
         //console.log('click header ' + jQuery(this).html());
-
     });
-	//console.log("after accordion");
+    
+    // make the very first accordion at the top level open
+    jQuery('.accordion_top').first().accordion("option","active", 0);
+    
 }
 
 /***************************************************
@@ -205,7 +224,7 @@ function contentInterface($){
 function handleBlackboardItem() {
     // make sure we're doing upper case 
     title = replaceWordChars( jQuery(this).text() ).toUpperCase();
-    
+    console.log("Handling blackboard item " + title );
     /* Find the matching Blackboard element heading (h3) */
     var bbItem = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(
         ".item h3").filter(":contains( " + title +")"); //.eq(0);
