@@ -233,7 +233,7 @@ function contentInterface($){
     var start = window.location.hash.substring(1);
     
     numAccordions = jQuery('.accordion_top').length;
-    start = parseInt( start, 10 );
+    start = parseInt( start, 10 ) - 1;
     if ( ( ! Number.isInteger(start) ) || ( start > numAccordions-1 ) ) {
         start=0;
         end=1;
