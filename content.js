@@ -103,17 +103,33 @@ function contentInterface($){
 	
 	jQuery("#GU_ContentInterface div.picture").each( function(idx) {
 	    jQuery(this).children('img').after('<br />');
-	   console.log("Picture found " + jQuery(this).text()) ;
+	   //console.log("Picture found " + jQuery(this).text()) ;
 	   //console.log("Picture found after text " + jQuery(afterImage));
 	});
 	jQuery("#GU_ContentInterface div.pictureRight").each( function(idx) {
 	    jQuery(this).children('img').after('<br />');
-	   console.log("Picture found " + jQuery(this).text()) ;
+	   //console.log("Picture found " + jQuery(this).text()) ;
 	   //console.log("Picture found after text " + jQuery(afterImage));
 	});
 	
 	// convert all tables in the content to TABLE_CLASS
+	// - TODO only add TABLE_CLASS if it doesn't have and div#tableHeading
+	//   or otheers within it
 	jQuery("#GU_ContentInterface table").addClass(TABLE_CLASS);
+	
+	// center contents of table cells that contain span class strongCentered
+	jQuery("#GU_ContentInterface span.strongCentered").each( function(idx){
+	        if (jQuery(this).parent().parent().is("td")) {
+	            jQuery(this).parent().parent().css('text-align','center');
+	        }
+	    });
+	    
+	jQuery("#GU_ContentInterface span.centered").each( function(idx){
+	        if (jQuery(this).parent().parent().is("td")) {
+	            jQuery(this).parent().parent().css('text-align','center');
+	        }
+	    });
+	
 	
 	// check for any spans class checkbox and replace with checkbox
 	jQuery("#GU_ContentInterface span.checkbox").each( function(idx) {
@@ -176,6 +192,7 @@ function contentInterface($){
     var icons = jQuery(".accordion").accordion("option", "icons");
     // define the click function for the expand all
     jQuery('.open').click(function () {
+        console.log("Open click");
         jQuery('.ui-accordion-header').removeClass('ui-corner-all').addClass('ui-accordion-header-active ui-state-active ui-corner-top').attr({
             'aria-selected': 'true',
                 'tabindex': '0'
@@ -208,8 +225,22 @@ function contentInterface($){
         //console.log('click header ' + jQuery(this).html());
     });
     
-    // make the very first accordion at the top level open
-    jQuery('.accordion_top').first().accordion("option","active", 0);
+    // figure out which accordion to open
+    // - by default it is the first 0
+    // - if an integer is used as a link e.g. #1 or #5
+    //   then open accordion matching that number
+    
+    var start = window.location.hash.substring(1);
+    
+    numAccordions = jQuery('.accordion_top').length;
+    start = parseInt( start, 10 );
+    if ( ( ! Number.isInteger(start) ) || ( start > numAccordions-1 ) ) {
+        start=0;
+        end=1;
+    } else  {
+        end=start+1;
+    }
+    jQuery('.accordion_top').slice(start,end).accordion("option","active", 0);
     
 }
 
@@ -224,7 +255,7 @@ function contentInterface($){
 function handleBlackboardItem() {
     // make sure we're doing upper case 
     title = replaceWordChars( jQuery(this).text() ).toUpperCase();
-    console.log("Handling blackboard item " + title );
+    //console.log("Handling blackboard item " + title );
     /* Find the matching Blackboard element heading (h3) */
     var bbItem = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(
         ".item h3").filter(":contains( " + title +")"); //.eq(0);
