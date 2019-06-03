@@ -50,7 +50,10 @@ function contentInterface($){
 	
 	// Find the item in which the content is contained
     var contentInterface = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Interface")').eq(0);
- 	      
+    
+    // check parameters passed in
+    params = checkParams( contentInterface);
+    
  	 // Hide the tweak if we're not editing
 	 if (location.href.indexOf("listContent.jsp") > 0) {
          $(".gutweak").parents("li").hide(); 
@@ -100,7 +103,6 @@ function contentInterface($){
 	
 	// Find all the div.picture and add a <p> </p> around
 	// text after the image
-	
 	jQuery("#GU_ContentInterface div.picture").each( function(idx) {
 	    jQuery(this).children('img').after('<br />');
 	   //console.log("Picture found " + jQuery(this).text()) ;
@@ -174,9 +176,17 @@ function contentInterface($){
 	// Accordion - Expand All #01
     //$(function () {$(".accordion").accordion({
     
+    accordionDisabled = false;
+    if ( params.noAccordion===true){
+        console.log("See accordion disabled");
+        // This actually greys out the accordion, rather than not
+        // using it
+        //accordionDisabled = true;
+    }
     jQuery(".accordion,.accordion_top").accordion({
         collapsible: true,
         active: 1,
+        disabled: accordionDisabled,
         navigation:true,
         //autoHeight:true
         heightStyle: 'content',
@@ -240,8 +250,54 @@ function contentInterface($){
     } else  {
         end=start+1;
     }
+    // want all expanded, figure out num accordions and set end appropriately
+    if ( params.expandAll===true){
+        start = 0;
+        end = jQuery('#GU_ContentInterface h1').length;
+    }
     jQuery('.accordion_top').slice(start,end).accordion("option","active", 0);
     
+    
+    
+}
+
+/************************************************
+ * checkParams
+ * - given the content interface element check to see if anya
+ *   parameters passed in 
+ * - set object attributes and return it
+ * 
+ */
+
+function checkParams( contentInterface) {
+    var paramsObj = {};
+    
+    if (contentInterface.length>0) {
+        var contentInterfaceTitle = jQuery.trim(contentInterface.text());
+        
+        var m = contentInterfaceTitle.match(/content interface\s*([^<]+)/i );
+        
+        if (m) {
+            params = m[1].match(/\S+/g);
+            
+            if (params) {
+                params.forEach( function(element) {
+                    console.log("element is " + element);
+                    
+                    if ( element.match(/expandall/i)) {
+                        paramsObj.expandAll = true;
+                    }
+                    if ( element.match(/collapseall/i)) {
+                        paramsObj.collapseAll = true;
+                    }
+                    if ( element.match(/noaccordion/i)) {
+                        paramsObj.noAccordion = true;
+                    }
+                });
+            }
+        }
+    }
+    return paramsObj;
 }
 
 /***************************************************
@@ -347,3 +403,20 @@ function doVideo() {
     
 } 
 
+
+//*** Experiements to see if I can open all by function call **
+
+function openAll() {
+        console.log("Open ALL ");
+        jQuery('.ui-accordion-header').removeClass('ui-corner-all').addClass('ui-accordion-header-active ui-state-active ui-corner-top').attr({
+            'aria-selected': 'true',
+                'tabindex': '0'
+        });
+        jQuery('.ui-accordion-header-icon').removeClass(icons.header).addClass(icons.headerSelected);
+        jQuery('.ui-accordion-content').addClass('ui-accordion-content-active').attr({
+            'aria-expanded': 'true',
+                'aria-hidden': 'false'
+        }).show();
+        jQuery(this).attr("disabled", "disabled");
+        jQuery('.close').removeAttr("disabled");
+}
