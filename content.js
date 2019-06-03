@@ -178,7 +178,6 @@ function contentInterface($){
     
     accordionDisabled = false;
     if ( params.noAccordion===true){
-        console.log("See accordion disabled");
         // This actually greys out the accordion, rather than not
         // using it
         //accordionDisabled = true;
@@ -282,8 +281,6 @@ function checkParams( contentInterface) {
             
             if (params) {
                 params.forEach( function(element) {
-                    console.log("element is " + element);
-                    
                     if ( element.match(/expandall/i)) {
                         paramsObj.expandAll = true;
                     }
