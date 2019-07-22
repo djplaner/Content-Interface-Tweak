@@ -161,21 +161,6 @@ function contentInterface($){
 	});
 	
 	// Apply the jQuery accordion
-	// --- old style single level accordion
-	/*jQuery("#GU_ContentInterface").accordion( {header:"h1",
-	    collapsible:true, heightStyle: 'content',
-	    navigation: true,
-	    activate : function( event, ui ) {
-			if(!$.isEmptyObject(ui.newHeader.offset())) {
-				$('html:not(:animated), body:not(:animated)').animate({ scrollTop: ui.newHeader.offset().top }, 'slow');
-			}
-		}
-	});*/
-	// New style multi-level accordion
-	// http://jsfiddle.net/hEApL/147/
-	// Accordion - Expand All #01
-    //$(function () {$(".accordion").accordion({
-    
     accordionDisabled = false;
     if ( params.noAccordion===true){
         // This actually greys out the accordion, rather than not
@@ -192,6 +177,9 @@ function contentInterface($){
         activate : function( event, ui ) {
 			if(!$.isEmptyObject(ui.newHeader.offset())) {
 				$('html:not(:animated), body:not(:animated)').animate({ scrollTop: ui.newHeader.offset().top }, 'slow');
+				// send resize to ensure that h5p iframe appears correct
+				// size
+				window.dispatchEvent(new Event('resize'));
 			}
         }
     });
