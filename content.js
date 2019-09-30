@@ -309,6 +309,18 @@ function handleBlackboardItem() {
         // get the link
         var link = jQuery(bbItem).children("a").attr('href');
         
+        // if there's no link, then check to see if it's TurnitIn
+        if ( link == null ) {
+            // Assume it's a TurnitIn and look for "View Assignment" link
+            // Have to go up to the parent and onto the next div
+            link = jQuery(bbItem).parent().next().children(".vtbegenerated").children("a");
+            var text = link.text();
+            if ( text === 'View Assignment') {
+                // we've found a Safe Assignment link
+                link = link.attr('href');
+            }
+        }
+        
         // Hide the bbitem li
         if (location.href.indexOf("listContent.jsp") > 0) {
             jQuery(bbItem).parent().parent().hide();
