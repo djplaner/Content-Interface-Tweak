@@ -299,15 +299,23 @@ function handleBlackboardItem() {
     
     var hidden_string = " (Not currently available)";
     
-    // make sure we're doing upper case 
-    title = replaceWordChars( jQuery(this).text() ).toUpperCase();
-    //console.log("Handling blackboard item " + title );
+    // get the title from the Blackboard Item Heading (2)
+    title = jQuery(this).text()
+    
+    // define pseudo function to do comparison to get exact match, but
+    // case insensitive
+    jQuery.expr[':'].textEquals = jQuery.expr[':'].textEquals || jQuery.expr.createPseudo(function(arg) {
+            return function( elem ) {
+                return elem.textContent.trim().localeCompare( arg, undefined, {
+                    sensitivity: 'base'
+                }) === 0;
+            };
+        });
+    
     /* Find the matching Blackboard element heading (h3) */
-    var bbItem = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(
-        ".item h3").filter(":contains( " + title +")"); //.eq(0);
+    var bbItem = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find("h3:textEquals(" + title +")");
     
     if ( bbItem.length===0) {
-        console.log("ERROR didn't find a match for " + title );
         // add the hidden_string to the heading
         linkText = jQuery(this).text();
         jQuery(this).text( linkText + hidden_string);
@@ -317,8 +325,6 @@ function handleBlackboardItem() {
                     linkText = jQuery(this).text();
                     jQuery(this).text( linkText + hidden_string);
             });
-        
-            
     } else if ( bbItem.length > 1 ) {
         console.log("Error found more than 1 (" + bbItem.length + ") entries matching " + title);
     } else if ( bbItem.length===1 ) {
@@ -326,6 +332,7 @@ function handleBlackboardItem() {
         var link = jQuery(bbItem).children("a").attr('href');
         
         // if there's no link, then check to see if it's TurnitIn
+        // (which puts the link in the body)
         if ( link == null ) {
             // Assume it's a TurnitIn and look for "View Assignment" link
             // Have to go up to the parent and onto the next div
