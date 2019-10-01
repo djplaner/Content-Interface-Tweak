@@ -286,14 +286,19 @@ function checkParams( contentInterface) {
 }
 
 /***************************************************
- * handleBlackboardItem
+ * handleBlackboardItem( heading )
  * Given a single heading element as this
  * - find the matching Blackboard element
  * - find the content up until the next heading
  * - find any span.blackboardLink in the HTML and update the link
+ * - if the item is hidden don't show the link and attempt to update
+ *   the text to show (not currently available)
  */
  
 function handleBlackboardItem() {
+    
+    var hidden_string = " (Not currently available)";
+    
     // make sure we're doing upper case 
     title = replaceWordChars( jQuery(this).text() ).toUpperCase();
     //console.log("Handling blackboard item " + title );
@@ -303,6 +308,17 @@ function handleBlackboardItem() {
     
     if ( bbItem.length===0) {
         console.log("ERROR didn't find a match for " + title );
+        // add the hidden_string to the heading
+        linkText = jQuery(this).text();
+        jQuery(this).text( linkText + hidden_string);
+        
+        // add the hidden_string to the link
+        jQuery(this).nextUntil(this.tagName).find(".blackboardLink").each( function() {
+                    linkText = jQuery(this).text();
+                    jQuery(this).text( linkText + hidden_string);
+            });
+        
+            
     } else if ( bbItem.length > 1 ) {
         console.log("Error found more than 1 (" + bbItem.length + ") entries matching " + title);
     } else if ( bbItem.length===1 ) {
@@ -321,6 +337,21 @@ function handleBlackboardItem() {
             }
         }
         
+        // check to see if the item is actually hidden
+        hidden = jQuery(bbItem).parent().next().find('.contextItemDetailsHeaders').filter(":contains('Item is hidden from students.')");
+        loc = location.href.indexOf("listContent.jsp");
+        if ( hidden.length===1 ) {
+            // add the hidden_string to the heading
+            linkText = jQuery(this).text();
+            jQuery(this).text( linkText + hidden_string);
+            // add the hidden_string to the end of each .blackboardlink     
+            jQuery(this).nextUntil(this.tagName).find(".blackboardLink").each( function() {
+                    linkText = jQuery(this).text();
+                    jQuery(this).text( linkText + hidden_string);
+            });
+            return true;
+        }
+        
         // Hide the bbitem li
         if (location.href.indexOf("listContent.jsp") > 0) {
             jQuery(bbItem).parent().parent().hide();
@@ -328,7 +359,7 @@ function handleBlackboardItem() {
         // wrap any span class="blackboardLink" with a link
         var string = '<a href="' + link + '"></a>';
         // Try to replace just the Blackboard links for the current heading
-        jQuery(this).nextUntil('h1').find(".blackboardLink").each( function() {
+        jQuery(this).nextUntil(this.tagName).find(".blackboardLink").each( function() {
             jQuery(this).wrapAll(string);
         });
         
