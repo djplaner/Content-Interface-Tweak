@@ -18,90 +18,91 @@
   
 /* Base classes */
 
-h1 {
-  font-size: 200%;
+#GU_ContentInterface h1 {
+  font-size: 120%;
   padding: 0.4em;
   margin: .5vw 0; }
   
-h2 {
-  font-size: 150%;
+#GU_ContentInterface h2 {
+  font-size: 110%;
   padding: 0.4em;
   margin: .5vw 0; }
 
-h3 {
-  font-size: 130%;
+#GU_ContentInterface h3 {
+    
+  font-size: 105%;
   padding: 0.4em;
   margin: .5vw 0;
   font-weight: normal; }
 
-h4 {
-  font-size: 120%;
+#GU_ContentInterface h4 {
+  font-size: 100%;
   padding: 0.4em;
   margin: .5vw 0; }
 
-h5 {
+#GU_ContentInterface h5 {
   font-size: 110%;
   padding: 0.4em;
   margin: .5vw 0;
   font-weight: normal; }
 
-h6 {
+#GU_ContentInterface h6 {
   font-size: 100%;
   padding: 0.4em;
   margin: .5vw 0; }
 
-p {
+#GU_ContentInterface p {
   font-size: 100%;
   padding: 0.4em;
   margin: .5vw 0; }
 
 /** Base Styles **/
-code {
+#GU_ContentInterface code {
   font-size: 95%;
   color: #347EA4;
   background: #f8f8f8;
   padding: 0.4em;
   margin: .5vw; }
 
-p code {
+#GU_ContentInterface p code {
   padding: .125em;
   margin: 0; }
 
-a {
+#GU_ContentInterface a {
   text-decoration: none;
   color: #347EA4; }
 
-blockquote {
+#GU_ContentInterface blockquote {
   border-left: 4px solid;
   color: #757575;
   font-style: italic;
   margin: .5em 5vw !important;
   padding: 1em; }
 
-cite {
+#GU_ContentInterface cite {
   font-size: 80%; }
 
-cite:before {
+#GU_ContentInterface cite:before {
   content: '\2014\00a0\00a0 ';
   margin-left: 1em; }
 
-hr {
+#GU_ContentInterface hr {
   border-top: 2px solid;
   width: 98%; }
 
-ol {
+#GU_ContentInterface ol {
   padding-left: 2em !important; }
 
-ul {
+#GU_ContentInterface ul {
   padding-left: 2em !important; }
   
 /** picture **/
 
-.pictureRight {
+#GU_ContentInterface .pictureRight {
     float:right;
 }
 
-.picture {
+#GU_ContentInterface .picture {
 }
 
 /** video **/
@@ -116,23 +117,23 @@ ul {
 }
 
 /** Tables **/
-.table {
+#GU_ContentInterface .table {
   /*width: 99%;*/
   border-collapse: collapse;
   margin: 1em 0; }
 
-.table th {
+#GU_ContentInterface .table th {
   font-weight: bold; }
 
-.table td, .table th {
+#GU_ContentInterface .table td, .table th {
   padding: 6px;
   text-align: left; }
 
-.table tbody tr:nth-child(odd) {
+#GU_ContentInterface .table tbody tr:nth-child(odd) {
   border: 1px solid #757575;
   border-width: 1px 0; }
 
-.table caption, .table .caption {
+#GU_ContentInterface .table caption, .table .caption {
   text-align: center;
   font-style: italic;
   color: #757575;
@@ -145,14 +146,14 @@ ul {
   margin: 0;
   border-collapse: collapse; }*/
 
-.table.stripe-row-odd tbody tr:nth-child(odd), .table.striped-odd .flex-row:nth-child(odd) {
+#GU_ContentInterface .table.stripe-row-odd tbody tr:nth-child(odd), .table.striped-odd .flex-row:nth-child(odd) {
   background: #F0F0F0;
   border: 1px solid #757575;
   border-width: 1px 0; }
   
 /** Activity **/
 
-.action-box {
+#GU_ContentInterface .action-box {
   border-radius: 1em;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
   display: flex;
@@ -161,7 +162,7 @@ ul {
   margin: 1em auto;
   width: 80%; }
 
-.activity  {
+#GU_ContentInterface .activity  {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
   display: flex;
   flex-direction: row;
@@ -174,7 +175,7 @@ ul {
     padding: 1em;
 }
 
-.activityNarrow  {
+#GU_ContentInterface .activityNarrow  {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
   flex: 1 1 auto;
   display: flex;
@@ -188,7 +189,7 @@ ul {
 
 #GU_ContentInterface .invisible { display:none}
 
-.reading  {
+#GU_ContentInterface .reading  {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
   display: flex;
   flex-direction: row;
@@ -201,7 +202,7 @@ ul {
     
 }
 
-.icon {
+#GU_ContentInterface .icon {
   flex: 1 !important;
   display: flex;
   align-items: flex-start;
@@ -211,36 +212,36 @@ ul {
 .icon img {
   width: 100%; }
 
-.icon svg {
+#GU_ContentInterface .icon svg {
   width: 100%; }
 
-.instructions {
+#GU_ContentInterface .instructions {
   flex: 4; }
 
 
 
-.table.stripe-row-even tbody tr:nth-child(even), .table.striped-even .flex-row:nth-child(even) {
+#GU_ContentInterface .table.stripe-row-even tbody tr:nth-child(even), .table.striped-even .flex-row:nth-child(even) {
   background: #F8F8F8;
   border: 1px solid #757575;
   border-width: 1px 0; }
 
-.table .header .flex-column {
+#GU_ContentInterface .table .header .flex-column {
   font-weight: bold; }
 
-.table .flex-row .flex-column {
+#GU_ContentInterface .table .flex-row .flex-column {
   padding: 6px;
   text-align: left; }
 
-.table .flex-row.boxes > * {
+#GU_ContentInterface .table .flex-row.boxes > * {
   box-shadow: 1px 0 0 0 #888, 0 1px 0 0 #888, 1px 1px 0 0 #888, 1px 0 0 0 #888 inset, 0 1px 0 0 #888 inset; }
 
-.table.boxes td {
+#GU_ContentInterface .table.boxes td {
   border: 1px solid #757575 !important; }
 
-.table.boxes th {
+#GU_ContentInterface .table.boxes th {
   border: 1px solid #757575 !important; }
 
-.table.stripe-col-first th:nth-of-type(1) {
+#GU_ContentInterface .table.stripe-col-first th:nth-of-type(1) {
   background: #F8F8F8; }
 
 .table.stripe-col-odd td:nth-child(odd), .table.col-odd th:nth-child(odd) {

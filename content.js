@@ -297,7 +297,7 @@ function checkParams( contentInterface) {
  
 function handleBlackboardItem() {
     
-    var hidden_string = " (Not currently available)";
+    var hidden_string = " (not currently available)";
     
     // get the title from the Blackboard Item Heading (2)
     title = jQuery(this).text()
