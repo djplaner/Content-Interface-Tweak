@@ -69,6 +69,9 @@ function contentInterface($){
     // content interface
     jQuery("h1.blackboard").each( handleBlackboardItem );
     jQuery("h2.blackboard").each( handleBlackboardItem );
+    jQuery("span.blackboardContentLink").each( handleBlackboardContentLink );
+    jQuery("span.blackboardMenuLink").each( handleBlackboardMenuLink );
+    
     
  	// Add a <div> </div> around all the content following H1s
  	jQuery('#GU_ContentInterface h1').each(function() {
@@ -146,13 +149,14 @@ function contentInterface($){
 	    var theLink = jQuery(this).attr('href');
 	    
 	    if ( typeof theLink !== 'undefined'){
-	        // replace blaed links
+	        // replace blaed links with normal links
             if ( theLink.match(BLAED_LINK)!==null) {
                 theLink = theLink.replace( BLAED_LINK, LMS_LINK);
                 jQuery(this).attr('href',theLink);
             }
-	        // open external links in a new window
-            if ( theLink.match(LMS_LINK) === null) {
+	        // open external links in a new window i.e. links that don't
+	        // match the LMS or don't have a host portion at the start
+            if ( theLink.match(LMS_LINK) === null && theLink.match(/^\//)===null) {
 	            jQuery(this).attr('target','_blank');
 	            // turn off the Blackboard onclick "stuff"
 	            jQuery(this).prop("onclick",null).off("click");
@@ -374,6 +378,150 @@ function handleBlackboardItem() {
     
 }
 
+
+/***************************************************
+ * handleBlackboardContentLink( element )
+ * Given a <span class="blackboardContentLink"> item
+ * - find parent link and extract the href
+ * - find the content item link on this page that matches the href
+ * - if found - replace the href with the contentItem link
+ * - if not found remove the link and maybe do a javascript popup
+ */
+ 
+function handleBlackboardContentLink() {
+    var hidden_string = " (not currently available)";
+    
+    // get the title from the Blackboard Item Heading (2)
+    title = jQuery(this).parent().attr('href');
+    
+    // define pseudo function to do comparison to get exact match, but
+    // case insensitive
+    jQuery.expr[':'].textEquals = jQuery.expr[':'].textEquals || jQuery.expr.createPseudo(function(arg) {
+            return function( elem ) {
+                return elem.textContent.trim().localeCompare( arg, undefined, {
+                    sensitivity: 'base'
+                }) === 0;
+            };
+        });
+    
+    /* Find the matching Blackboard element heading (h3) */
+    var bbItem = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find("h3:textEquals(" + title +")");
+    
+    if ( bbItem.length===0) {
+        // not found, so add hidden_string
+        spanText = jQuery(this).text();
+        jQuery(this).text( spanText + hidden_string);
+    } else if ( bbItem.length > 1 ) {
+        console.log("Error found more than 1 (" + bbItem.length + ") entries matching " + title);
+    } else if ( bbItem.length===1 ) {
+        // get the link
+        var link = jQuery(bbItem).children("a").attr('href');
+        
+        // if there's no link, then check to see if it's TurnitIn
+        // (which puts the link in the body)
+        if ( link == null ) {
+            // Assume it's a TurnitIn and look for "View Assignment" link
+            // Have to go up to the parent and onto the next div
+            link = jQuery(bbItem).parent().next().children(".vtbegenerated").children("a");
+            var text = link.text();
+            if ( text === 'View Assignment') {
+                // we've found a Safe Assignment link
+                link = link.attr('href');
+            }
+        }
+        
+        // check to see if the item is actually hidden
+        hidden = jQuery(bbItem).parent().next().find('.contextItemDetailsHeaders').filter(":contains('Item is hidden from students.')");
+        loc = location.href.indexOf("listContent.jsp");
+        if ( hidden.length===1 ) {
+            // add the hidden_string to the heading
+            linkText = jQuery(this).text();
+            jQuery(this).text( linkText + hidden_string);
+            // add the hidden_string to the end of each .blackboardlink     
+            return true;
+        }
+        
+        jQuery(this).parent().attr('href', link);
+    }
+}
+
+/***************************************************
+ * handleBlackboardMenuLink( element )
+ * Given a <span class="blackboardMenuLink"> item
+ * - find parent link and extract the href
+ * - find the menu item link on this page that matches the href
+ * - if found - replace the href with the contentItem link
+ * - if not found remove the link and maybe do a javascript popup
+ */
+ 
+function handleBlackboardMenuLink() {
+    var hidden_string = " (not currently available)";
+    
+    // get the title from the Blackboard Item Heading (2)
+    title = jQuery(this).parent().attr('href');
+    
+    // define pseudo function to do comparison to get exact match, but
+    // case insensitive
+    jQuery.expr[':'].titleEquals = jQuery.expr[':'].textEquals || jQuery.expr.createPseudo(function(arg) {
+            return function( elem ) {
+                return elem.attr("title").trim().localeCompare( arg, undefined, {
+                    sensitivity: 'base'
+                }) === 0;
+            };
+        });
+    
+    /* Find the course menu link that matches */
+    var bbItem = jQuery( "#courseMenuPalette_contents > li > a > span:titleEquals(" + title + ")");
+    
+    if ( bbItem.length===0) {
+        // not found, so add hidden_string
+        spanText = jQuery(this).text();
+        jQuery(this).text( spanText + hidden_string);
+    } else if ( bbItem.length > 1 ) {
+        console.log("Error found more than 1 (" + bbItem.length + ") entries matching " + title);
+    } else if ( bbItem.length===1 ) {
+        // get the link
+        var link = jQuery(bbItem).parent().attr('href');
+        
+        // if there's no link, then check to see if it's TurnitIn
+        // (which puts the link in the body)
+        if ( link == null ) {
+            // Assume it's a TurnitIn and look for "View Assignment" link
+            // Have to go up to the parent and onto the next div
+            link = jQuery(bbItem).parent().next().children(".vtbegenerated").children("a");
+            var text = link.text();
+            if ( text === 'View Assignment') {
+                // we've found a Safe Assignment link
+                link = link.attr('href');
+            }
+        }
+        
+        // check to see if the course menu item is actually hidden
+        hidden = jQuery(bbItem).next().attr("class" );
+        
+        if ( hidden==="cmLink-hidden" ) {
+            // add the hidden_string to the heading
+            linkText = jQuery(this).text();
+            jQuery(this).text( linkText + hidden_string);
+            // add the hidden_string to the end of each .blackboardlink     
+            return true;
+        }
+        
+        jQuery(this).parent().attr('href', link);
+        // Hide the bbitem li
+        /*if (location.href.indexOf("listContent.jsp") > 0) {
+            jQuery(bbItem).parent().parent().hide();
+        }*/
+        // wrap any span class="blackboardLink" with a link
+        //var string = '<a href="' + link + '"></a>';
+        // Try to replace just the Blackboard links for the current heading
+        /*jQuery(this).nextUntil(this.tagName).find(".blackboardLink").each( function() {
+            jQuery(this).wrapAll(string);
+        });*/
+        
+    }
+    
+}
 /*********************************************************************
  * Replaces commonly-used Windows 1252 encoded chars that do not exist 
  * in ASCII or ISO-8859-1 with ISO-8859-1 cognates.
