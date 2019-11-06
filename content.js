@@ -393,6 +393,7 @@ function handleBlackboardContentLink() {
     
     // get the title from the Blackboard Item Heading (2)
     title = jQuery(this).parent().attr('href');
+    title = title.replace(/%20/g," ");
     
     // define pseudo function to do comparison to get exact match, but
     // case insensitive
@@ -459,6 +460,7 @@ function handleBlackboardMenuLink() {
     
     // get the title from the Blackboard Item Heading (2)
     title = jQuery(this).parent().attr('href');
+    title = title.replace(/%20/g," ");
     
     // define pseudo function to do comparison to get exact match, but
     // case insensitive
