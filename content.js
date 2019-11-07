@@ -393,7 +393,9 @@ function handleBlackboardContentLink() {
     
     // get the title from the Blackboard Item Heading (2)
     title = jQuery(this).parent().attr('href');
-    title = title.replace(/%20/g," ");
+    if ( typeof title !== 'undefined'){
+        title = title.replace(/%20/g," ");
+    }
     
     // define pseudo function to do comparison to get exact match, but
     // case insensitive
@@ -440,6 +442,8 @@ function handleBlackboardContentLink() {
             jQuery(this).text( linkText + hidden_string);
             // add the hidden_string to the end of each .blackboardlink     
             return true;
+        } else if (location.href.indexOf("listContent.jsp") > 0) {
+            jQuery(bbItem).parent().parent().hide();
         }
         
         jQuery(this).parent().attr('href', link);
@@ -460,7 +464,9 @@ function handleBlackboardMenuLink() {
     
     // get the title from the Blackboard Item Heading (2)
     title = jQuery(this).parent().attr('href');
-    title = title.replace(/%20/g," ");
+    if ( typeof title !== 'undefined'){
+        title = title.replace(/%20/g," ");
+    }
     
     // define pseudo function to do comparison to get exact match, but
     // case insensitive
