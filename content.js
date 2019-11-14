@@ -1,3 +1,4 @@
+
 /* content
  * - Given a Blackboard page containing a content item with  
      HTML generated from Mammoth
@@ -32,7 +33,7 @@ var LMS_LINK = 'bblearn.griffith.edu.au';
  */
  
 function contentInterface($){
-    
+
     // redefine contains so that it is case insensitive
     // Used to match the Blackboard headings
     $.expr[":"].contains = $.expr.createPseudo(function(arg) {
@@ -51,8 +52,12 @@ function contentInterface($){
 	// Find the item in which the content is contained
     var contentInterface = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Interface")').eq(0);
     
-    // check parameters passed in
     params = checkParams( contentInterface);
+    setUpEdit(contentInterface, params);
+    
+    
+    // check parameters passed in
+    
     
  	 // Hide the tweak if we're not editing
 	 if (location.href.indexOf("listContent.jsp") > 0) {
@@ -230,9 +235,10 @@ function contentInterface($){
     // - by default it is the first 0
     // - if an integer is used as a link e.g. #1 or #5
     //   then open accordion matching that number
+    // - if paramsObj.collapseAll == true - then none
     
     var start = window.location.hash.substring(1);
-    
+    var end;
     numAccordions = jQuery('.accordion_top').length;
     start = parseInt( start, 10 ) - 1;
     if ( ( ! Number.isInteger(start) ) || ( start > numAccordions-1 ) ) {
@@ -245,11 +251,87 @@ function contentInterface($){
     if ( params.expandAll===true){
         start = 0;
         end = jQuery('#GU_ContentInterface h1').length;
+    } else if ( params.collapseAll===true ){
+        start = 0;
+        end =0;
+    } else if ( params.expand>0 ) {
+        if ( params.expand < jQuery('#GU_ContentInterface h1').length ) {
+            start = params.expand-1;
+            end = start+1;
+        } else {
+            console.log("ERROR - expand value (" + params.expand +") larger than number of heading 1s ");
+        }
     }
     jQuery('.accordion_top').slice(start,end).accordion("option","active", 0);
     
     
     
+    
+}
+
+/***************************************************
+ * setUpEdit
+ * - Set up the edit/update process
+ * 
+ * 
+ */
+ 
+function setUpEdit(ci, params) {
+  //------------------------------------------------
+  // Check to see if the Content Interface item contains details
+  // about the Word document
+  // - NO - show a message without update button
+  // - YES - add the update button
+  
+  // does ci contain a path
+  // -- currently implemented as a span with id gu_WordDocument that
+  //    will contain a simple path (probably only works for me)
+  // -- eventually should be a link that works for all with access
+  
+  
+  /*var path = jQuery(".gutweak").parent(".vtbegenerated").find("#gu_WordDocument");
+    
+   if ( path.length === 0){
+      jQuery("#guUpdate").parent().html("No Word document specified. <strong>INSERT INSTRUCTIONS ABOUT HOW TO DO THAT</strong>");
+      return false;
+  }*/
+  
+  var path = params.wordDoc;
+  
+  if ( typeof path === 'undefined'){
+  //    jQuery("#guUpdate").parent().html("No Word document specified. <strong>INSERT INSTRUCTIONS ABOUT HOW TO DO THAT</strong>");
+    jQuery(".gu_docPresent").hide();
+    return false;
+  }
+  
+  jQuery(".gu_docNotPresent").hide();
+  
+  jQuery("#gu_doc").attr("href", path);
+  
+  // encode path ready for going via URLs
+  path="u!" + btoa(path).replace(/\+/g,'-').replace(/\//g,'_').replace(/\=+$/,'');
+  
+  //---------------------------------------------------
+  // Set up the click event for the submit button
+  // get the courseId
+  current = window.location.href;
+  var courseId;
+  var contentId;
+  
+  m = current.match( /^.*course_id=(_[^&]*).*$/ );
+  if ( m ) {
+      courseId=m[1];
+  }
+
+  // get the content id
+  // - find the content interface element
+  //var contentInterface = jQuery(tweak_bb.page_id +" &gt; "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Interface")').eq(0);
+  
+  contentId = jQuery(ci).parent().attr("id");
+  
+  jQuery("#guUpdate").click( function( event ) {
+        window.location.href="https://djon.es/gu/mammoth.js/browser-demo/testing.html?course=" + courseId + "&content=" + contentId + "&path=" + path;
+  } );
 }
 
 /************************************************
@@ -262,6 +344,7 @@ function contentInterface($){
 
 function checkParams( contentInterface) {
     var paramsObj = {};
+    paramsObj.expand = -1;
     
     if (contentInterface.length>0) {
         var contentInterfaceTitle = jQuery.trim(contentInterface.text());
@@ -277,10 +360,17 @@ function checkParams( contentInterface) {
                         paramsObj.expandAll = true;
                     }
                     if ( element.match(/collapseall/i)) {
+                        console.log("Collapse all");
                         paramsObj.collapseAll = true;
                     }
                     if ( element.match(/noaccordion/i)) {
                         paramsObj.noAccordion = true;
+                    }
+                    if ( x = element.match(/wordDoc=([^ ]*)/i) ) {
+                        paramsObj.wordDoc = x[1];
+                    }
+                    if ( x = element.match(/expand=([0-9]*)/i)) {
+                        paramsObj.expand = x[1];
                     }
                 });
             }
