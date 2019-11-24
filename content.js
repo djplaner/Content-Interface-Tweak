@@ -51,18 +51,18 @@ function contentInterface($){
 	
 	// Find the item in which the content is contained
     var contentInterface = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Interface")').eq(0);
+    // Find any Word Document link that's been added
+    var wordDoc = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Word Document")').eq(0);
     
-    params = checkParams( contentInterface);
+    params = checkParams( contentInterface,wordDoc);
     setUpEdit(contentInterface, params);
     
-    
     // check parameters passed in
-    
-    
  	 // Hide the tweak if we're not editing
 	 if (location.href.indexOf("listContent.jsp") > 0) {
          $(".gutweak").parents("li").hide(); 
          contentInterface.parents("div.item").hide();
+         jQuery(wordDoc).hide();
 	 }
 
     // do nothing if we couldn't find the contentInterface item
@@ -76,7 +76,6 @@ function contentInterface($){
     jQuery("h2.blackboard").each( handleBlackboardItem );
     jQuery("span.blackboardContentLink").each( handleBlackboardContentLink );
     jQuery("span.blackboardMenuLink").each( handleBlackboardMenuLink );
-    
     
  	// Add a <div> </div> around all the content following H1s
  	jQuery('#GU_ContentInterface h1').each(function() {
@@ -176,6 +175,9 @@ function contentInterface($){
         // using it
         //accordionDisabled = true;
     }
+    // check if there is actually an accordion, if not don't go any further
+    
+    // add and handle the accordion
     jQuery(".accordion,.accordion_top").accordion({
         collapsible: true,
         active: 1,
@@ -192,7 +194,6 @@ function contentInterface($){
 			}
         }
     });
-    
     // TODO move this to a string and make it look prettier
     jQuery( "#GU_ContentInterface").prepend(EXPAND_COLLAPSE_BUTTON_HTML);
     var icons = jQuery(".accordion").accordion("option", "icons");
@@ -263,10 +264,6 @@ function contentInterface($){
         }
     }
     jQuery('.accordion_top').slice(start,end).accordion("option","active", 0);
-    
-    
-    
-    
 }
 
 /***************************************************
@@ -275,6 +272,49 @@ function contentInterface($){
  * 
  * 
  */
+ 
+
+var UPDATE_HTML = `
+<h3>Important</h3>
+<ol>
+<li><strong>No changes to this item</strong> - do not edit or remove content from this tweak code item. The tweak code implements the Card interface. Changes may break the Card interface.</li>
+<li><strong>Do not hide this item from students.</strong> - the tweak in this item will hide the item from students. They will not see it. If you use Blackboard to hide this tweak from students, it will NOT work and students won't see the accordion interface.</li>
+</ol>
+<p>For some help on using this feature, please peruse <a href="https://github.com/djplaner/Content-Interface-Tweak/blob/master/README.md">the README page</a></p>
+
+ <h3>Updating and editing</h3>
+
+`;
+
+var WORD_DOC_PRESENT = `
+<ol>
+  <li> Make any changes to the Word document, either <a id="gu_doc" target="_blank" href="http://griffith.edu.au">online</a> or directly.</li>
+  <li>  Click the green button to <button style="background-color: #4CAF50; border: none; color: white; padding: 5px 5px; text-align: center; text-decoration: none; display: inline-block; border-radius: 12px" type="button" id="guUpdate">Update Content Interface</button>  </li>
+  </ol>
+`;
+
+var WORD_DOC_NOT_PRESENT =`<ol>
+<li>Make any change in the matching Word document.</li>
+<li><a href="https://djon.es/gu/mammoth.js/browser-demo/" target="_blank" rel="noreferrer noopener">Convert the Word document into HTML</a>.</li>
+<li>Copy and paste the HTML into {EDIT_CONTENT_ITEM}. <br />
+<p>See this <a href="http://www.bu.edu/tech/services/teaching/lms/blackboard/how-to/copypaste-into-blackboard-learn/">explanation on how to copy and paste HTML</a> into Blackboard content items.</p>
+</li>
+</ol>
+<p><strong>Add some advice about how to configure the Word document to enable integrated updating</strong></p>
+`;
+
+var CONTENT_INTERFACE_NOT_PRESENT = `
+<h3>Missing Content Interface item</h3>
+
+<p>Unable to find a content item on this page with <strong>Content Interface</strong> in the title.</p>
+<p>Such a content item is required before the Content Interface tweak can function.</p>
+`;
+
+var INSTRUCTIONS = `
+<h3>Detailed documentation</h3>
+<p>See <a href="https://griffitheduau-my.sharepoint.com/:w:/g/personal/d_jones6_griffith_edu_au/EUbAQvhxLW1MicRKf9Hof3sBIoS2EyJP_SfkYbqZ7c3qhw?e=2S9k3Y" target="_blank" rel="noreferrer noopener">this Word document</a> for more detailed documentation on creating and changing content.</p>
+`;
+
  
 function setUpEdit(ci, params) {
   //------------------------------------------------
@@ -289,31 +329,6 @@ function setUpEdit(ci, params) {
   // -- eventually should be a link that works for all with access
   
   
-  /*var path = jQuery(".gutweak").parent(".vtbegenerated").find("#gu_WordDocument");
-    
-   if ( path.length === 0){
-      jQuery("#guUpdate").parent().html("No Word document specified. <strong>INSERT INSTRUCTIONS ABOUT HOW TO DO THAT</strong>");
-      return false;
-  }*/
-  
-  var path = params.wordDoc;
-  
-  if ( typeof path === 'undefined'){
-  //    jQuery("#guUpdate").parent().html("No Word document specified. <strong>INSERT INSTRUCTIONS ABOUT HOW TO DO THAT</strong>");
-    jQuery(".gu_docPresent").hide();
-    return false;
-  }
-  
-  jQuery(".gu_docNotPresent").hide();
-  
-  jQuery("#gu_doc").attr("href", path);
-  
-  // encode path ready for going via URLs
-  path="u!" + btoa(path).replace(/\+/g,'-').replace(/\//g,'_').replace(/\=+$/,'');
-  
-  //---------------------------------------------------
-  // Set up the click event for the submit button
-  // get the courseId
   current = window.location.href;
   var courseId;
   var contentId;
@@ -324,28 +339,66 @@ function setUpEdit(ci, params) {
   }
 
   // get the content id
-  // - find the content interface element
-  //var contentInterface = jQuery(tweak_bb.page_id +" &gt; "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Interface")').eq(0);
-  
   contentId = jQuery(ci).parent().attr("id");
+  
+  // if no content id then change display
+  if ( typeof contentId === 'undefined'){
+      jQuery('#gu_update').html(CONTENT_INTERFACE_NOT_PRESENT);
+      return ;
+  }
+  
+  // Has a link  to the word doc been shared
+  var path = params.wordDoc;
+  
+  if ( typeof path === 'undefined'){
+    // Word document is not defined
+    var html = UPDATE_HTML + WORD_DOC_NOT_PRESENT
+
+    // add in link to edit the content item
+    var editContent = 'into the <a href="https://bblearn-blaed.griffith.edu.au/webapps/blackboard/execute/manageCourseItem?content_id=' + contentId + '&course_id=' + courseId + '&dispatch=edit">Content Interface content item</a>';
+    
+    html = html.replace( "{EDIT_CONTENT_ITEM}", editContent);
+    
+   // console.log("edit content item is " + editContent);
+    jQuery('#gu_update').html(html);
+    return ;
+  }
+  
+  //jQuery(".gu_docNotPresent").hide();
+  jQuery('#gu_update').html(UPDATE_HTML + WORD_DOC_PRESENT + INSTRUCTIONS);
+  
+  jQuery("#gu_doc").attr("href", path);
+  
+  // encode path ready for going via URLs
+  path="u!" + btoa(path).replace(/\+/g,'-').replace(/\//g,'_').replace(/\=+$/,'');
+  
+  
+  
+  //---------------------------------------------------
+  // Set up the click event for the submit button
+  // get the courseId
+  
   
   jQuery("#guUpdate").click( function( event ) {
         window.location.href="https://djon.es/gu/mammoth.js/browser-demo/testing.html?course=" + courseId + "&content=" + contentId + "&path=" + path;
   } );
 }
-
+    
 /************************************************
  * checkParams
  * - given the content interface element check to see if anya
  *   parameters passed in 
  * - set object attributes and return it
- * 
+ * - parameters come from both 
+ *   - the title of the Content Interface content item
+ *   - a Web Link content item that has Word Document in the title
  */
 
-function checkParams( contentInterface) {
+function checkParams( contentInterface,wordDoc) {
     var paramsObj = {};
     paramsObj.expand = -1;
     
+    // Check parameters in the Content Interface item title
     if (contentInterface.length>0) {
         var contentInterfaceTitle = jQuery.trim(contentInterface.text());
         
@@ -360,15 +413,15 @@ function checkParams( contentInterface) {
                         paramsObj.expandAll = true;
                     }
                     if ( element.match(/collapseall/i)) {
-                        console.log("Collapse all");
+                        //console.log("Collapse all");
                         paramsObj.collapseAll = true;
                     }
                     if ( element.match(/noaccordion/i)) {
                         paramsObj.noAccordion = true;
                     }
-                    if ( x = element.match(/wordDoc=([^ ]*)/i) ) {
+                    /*if ( x = element.match(/wordDoc=([^ ]*)/i) ) {
                         paramsObj.wordDoc = x[1];
-                    }
+                    }*/
                     if ( x = element.match(/expand=([0-9]*)/i)) {
                         paramsObj.expand = x[1];
                     }
@@ -376,6 +429,16 @@ function checkParams( contentInterface) {
             }
         }
     }
+    // Check for a Word doc link
+    //var wordDoc = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Word Document")').eq(0);
+    
+    var wordDocLink = jQuery(wordDoc).find("a:contains('Word Document')").attr('href');
+    
+    if ( typeof wordDocLink !== 'undefined' ) {
+        paramsObj.wordDoc = wordDocLink;
+    }
+    
+    //console.log(paramsObj);
     return paramsObj;
 }
 
