@@ -52,7 +52,7 @@ function contentInterface($){
 	// Find the item in which the content is contained
     var contentInterface = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Interface")').eq(0);
     // Find any Word Document link that's been added
-    var wordDoc = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Word Document")').eq(0);
+    var wordDoc = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Document")').eq(0);
     
     params = checkParams( contentInterface,wordDoc);
     setUpEdit(contentInterface, params);
@@ -288,7 +288,7 @@ var UPDATE_HTML = `
 
 var WORD_DOC_PRESENT = `
 <ol>
-  <li> Make any changes to the Word document, either <a id="gu_doc" target="_blank" href="http://griffith.edu.au">online</a> or directly.</li>
+  <li> Make any changes to the Content document, either <a id="gu_doc" target="_blank" href="http://griffith.edu.au">online</a> or directly.</li>
   <li>  Click the green button to <button style="background-color: #4CAF50; border: none; color: white; padding: 5px 5px; text-align: center; text-decoration: none; display: inline-block; border-radius: 12px" type="button" id="guUpdate">Update Content Interface</button>  </li>
   </ol>
 `;
@@ -300,7 +300,12 @@ var WORD_DOC_NOT_PRESENT =`<ol>
 <p>See this <a href="http://www.bu.edu/tech/services/teaching/lms/blackboard/how-to/copypaste-into-blackboard-learn/">explanation on how to copy and paste HTML</a> into Blackboard content items.</p>
 </li>
 </ol>
-<p><strong>Add some advice about how to configure the Word document to enable integrated updating</strong></p>
+<p>To semi-automate this process, you can:</p>
+<ol>
+  <li> Share the Word document via OneDrive or Sharepoint and copy the share URL.<br />(<a href="https://support.office.com/en-us/article/share-a-document-using-sharepoint-or-onedrive-807de6cf-1ece-41b9-a2b3-250d9a48f1e8">How to share a document using SharePoint or OneDrive</a>) </li>
+  <li> Create a <em>Web Link</em> item on this page using the name <em>Content Document</em> and the URL as the shared URL created in the first step.<br />(<a href="https://help.blackboard.com/Learn/Instructor/Course_Content/Create_Content/Create_Course_Materials/Link_to_Websites">How to create a Web Link item in Blackboard</a>) </li>
+</ol>
+
 `;
 
 var CONTENT_INTERFACE_NOT_PRESENT = `
@@ -380,7 +385,7 @@ function setUpEdit(ci, params) {
   
   
   jQuery("#guUpdate").click( function( event ) {
-        window.location.href="https://djon.es/gu/mammoth.js/browser-demo/testing.html?course=" + courseId + "&content=" + contentId + "&path=" + path;
+        window.location.href="https://djon.es/gu/mammoth.js/browser-demo/oneDriveMammoth.html?course=" + courseId + "&content=" + contentId + "&path=" + path;
   } );
 }
     
@@ -391,7 +396,7 @@ function setUpEdit(ci, params) {
  * - set object attributes and return it
  * - parameters come from both 
  *   - the title of the Content Interface content item
- *   - a Web Link content item that has Word Document in the title
+ *   - a Web Link content item that has Content Document in the title
  */
 
 function checkParams( contentInterface,wordDoc) {
@@ -430,9 +435,9 @@ function checkParams( contentInterface,wordDoc) {
         }
     }
     // Check for a Word doc link
-    //var wordDoc = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Word Document")').eq(0);
+    //var wordDoc = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Document")').eq(0);
     
-    var wordDocLink = jQuery(wordDoc).find("a:contains('Word Document')").attr('href');
+    var wordDocLink = jQuery(wordDoc).find("a:contains('Content Document')").attr('href');
     
     if ( typeof wordDocLink !== 'undefined' ) {
         paramsObj.wordDoc = wordDocLink;
