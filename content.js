@@ -626,23 +626,14 @@ function handleBlackboardMenuLink() {
         title = title.replace(/%20/g," ");
     }
     
-    // define pseudo function to do comparison to get exact match, but
-    // case insensitive
-    jQuery.expr[':'].titleEquals = jQuery.expr[':'].textEquals || jQuery.expr.createPseudo(function(arg) {
-            return function( elem ) {
-                return elem.attr("title").trim().localeCompare( arg, undefined, {
-                    sensitivity: 'base'
-                }) === 0;
-            };
-        });
-    
     /* Find the course menu link that matches */
-    var bbItem = jQuery( "#courseMenuPalette_contents > li > a > span:titleEquals(" + title + ")");
+    var bbItem = jQuery( "#courseMenuPalette_contents > li > a > span[title='"+title+"']" );
     
     if ( bbItem.length===0) {
         // not found, so add hidden_string
         spanText = jQuery(this).text();
         jQuery(this).text( spanText + hidden_string);
+        x
     } else if ( bbItem.length > 1 ) {
         console.log("Error found more than 1 (" + bbItem.length + ") entries matching " + title);
     } else if ( bbItem.length===1 ) {
