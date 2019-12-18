@@ -548,9 +548,18 @@ function handleBlackboardItem() {
  
 function handleBlackboardContentLink() {
     var hidden_string = " (not currently available)";
+    var inner = false; // indicates whether the link is insider or outer
     
     // get the title from the Blackboard Item Heading (2)
+    // This should be getting the parent of the spane, which is a link
+    // Not heading 2.
     title = jQuery(this).parent().attr('href');
+    
+    if ( typeof title === 'undefined') {
+        title = jQuery(this).find("a").first().attr('href');
+        inner = true;
+    }
+    
     if ( typeof title !== 'undefined'){
         title = title.replace(/%20/g," ");
     }
@@ -578,6 +587,7 @@ function handleBlackboardContentLink() {
         // get the link
         var link = jQuery(bbItem).children("a").attr('href');
         
+        
         // if there's no link, then check to see if it's TurnitIn
         // (which puts the link in the body)
         if ( link == null ) {
@@ -604,7 +614,11 @@ function handleBlackboardContentLink() {
             jQuery(bbItem).parent().parent().hide();
         }
         
-        jQuery(this).parent().attr('href', link);
+        if ( ! inner ) {
+            jQuery(this).parent().attr('href', link);
+        } else {
+            title = jQuery(this).find("a").first().attr('href', link);
+        }
     }
 }
 
