@@ -385,7 +385,13 @@ function setUpEdit(ci, params) {
   
   
   jQuery("#guUpdate").click( function( event ) {
-        window.location.href="https://djon.es/gu/mammoth.js/browser-demo/oneDriveMammoth.html?course=" + courseId + "&content=" + contentId + "&path=" + path;
+        // if href currently includes blaed then add parameter
+      var blaed = '';
+      var link = window.location.href;
+      if ( link.match(BLAED_LINK)!==null) {
+          blaed="&blaed=1";
+      }
+        window.location.href="https://djon.es/gu/mammoth.js/browser-demo/oneDriveMammoth.html?course=" + courseId + blaed + "&content=" + contentId + "&path=" + path ;
   } );
 }
     
@@ -616,6 +622,9 @@ function handleBlackboardContentLink() {
         
         if ( ! inner ) {
             jQuery(this).parent().attr('href', link);
+            // Kludge - occasionally Blackboard adds an onclick
+            // handler for links
+            jQuery(this).parent().attr('onclick', '');
         } else {
             title = jQuery(this).find("a").first().attr('href', link);
         }

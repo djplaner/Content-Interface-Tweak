@@ -36,7 +36,7 @@ var LMS_LINK = 'bblearn.griffith.edu.au';
  */
  
 function contentInterface($){
-
+    
     // redefine contains so that it is case insensitive
     // Used to match the Blackboard headings
     $.expr[":"].contains = $.expr.createPseudo(function(arg) {
@@ -58,8 +58,13 @@ function contentInterface($){
 	jQuery.expr[':'].textEquals = jQuery.expr[':'].textEquals || jQuery.expr.createPseudo(function(arg) {
             return function( elem ) {
                 arg = arg.replace(/\u2013|\u2014/g, "-");
+                // Convert emdash type chars to ASCII equivalents
+                elemText = elem.textContent.trim();
+                elemText = elemText.replace(/\u2013|\u2014/g, "-");
                 arg = arg.replace(/[\u201c\u201d]/g, "\"");
-                return elem.textContent.trim().localeCompare( arg, undefined, {
+                elemText = elemText.replace(/[\u201c\u201d]/g, "\"");
+                //console.log("Compre arg **" + arg + "** with **" + elemText + "**");
+                return elemText.localeCompare( arg, undefined, {
                     sensitivity: 'base'
                 }) === 0;
             };
@@ -435,7 +440,14 @@ function setUpEdit(ci, params) {
   
   
   jQuery("#guUpdate").click( function( event ) {
-        window.location.href="https://djon.es/gu/mammoth.js/browser-demo/oneDriveMammoth.html?course=" + courseId + "&content=" + contentId + "&path=" + path;
+      
+      // if href currently includes blaed then add parameter
+      var blaed = '';
+      var link = window.location.href;
+      if ( link.match(BLAED_LINK)!==null) {
+          blaed="&blaed=1";
+      }
+        window.location.href="https://djon.es/gu/mammoth.js/browser-demo/oneDriveMammoth.html?course=" + courseId + blaed + "&content=" + contentId + "&path=" + path ;
   } );
 }
     
@@ -668,6 +680,9 @@ function handleBlackboardItem() {
     /* Find the matching Blackboard element heading (h3) */
     var bbItem = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find("h3:textEquals(" + title +")");
     
+ //   console.log(" -- Looked for **" + title + "** and found " + bbItem.length);
+   // console.log(bbItem);
+    
     if ( bbItem.length===0) {
         // add the hidden_string to the heading
         linkText = jQuery(this).text();
@@ -838,7 +853,7 @@ function getReviewStatusContent( header ) {
 function handleBlackboardContentLink() {
     var hidden_string = " (not currently available)";
     var inner = false; // indicates whether the link is insider or outer
-    
+   // return false;
     // get the title from the Blackboard Item Heading (2)
     // This should be getting the parent of the spane, which is a link
     // Not heading 2.
@@ -862,9 +877,13 @@ function handleBlackboardContentLink() {
                 }) === 0;
             };
         });
-    
+        
     /* Find the matching Blackboard element heading (h3) */
     var bbItem = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find("h3:textEquals(" + title +")");
+    
+    console.log("Looking for content link title " + title + " found " + bbItem.length);
+    console.log(jQuery(this).html());
+    console.log(bbItem);
     
     if ( bbItem.length===0) {
         // not found, so add hidden_string
@@ -905,8 +924,15 @@ function handleBlackboardContentLink() {
         
         if ( ! inner ) {
             jQuery(this).parent().attr('href', link);
+            // Kludge - occasionally Blackboard adds an onclick
+            // handler for links
+            jQuery(this).parent().attr('onclick', '');
         } else {
-            title = jQuery(this).find("a").first().attr('href', link);
+            jQuery(this).find("a").first().attr('href', link);
+            // Kludge - occasionally Blackboard adds an onclick
+            // handler for links
+            jQuery(this).find("a").first().attr('onclick', '');
+            
         }
     }
 }
@@ -932,11 +958,14 @@ function handleBlackboardMenuLink() {
     /* Find the course menu link that matches */
     var bbItem = jQuery( "#courseMenuPalette_contents > li > a > span[title='"+title+"']" );
     
+    //console.log("Looking for title " + title + " found " + bbItem.length);
+    //var items = jQuery("#courseMenuPalette_contents > li > a");//.attr('title');
+    //console.log(items);
+    
     if ( bbItem.length===0) {
         // not found, so add hidden_string
         spanText = jQuery(this).text();
         jQuery(this).text( spanText + hidden_string);
-        x
     } else if ( bbItem.length > 1 ) {
         console.log("Error found more than 1 (" + bbItem.length + ") entries matching " + title);
     } else if ( bbItem.length===1 ) {
