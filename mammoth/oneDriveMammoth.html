@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Testing OneDrive</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    
+    
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link href='//fonts.googleapis.com/css?family=Roboto+Condensed:700italic,400,300,700' rel='stylesheet' type='text/css' />
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-panels.min.js"></script>
+		<script src="js/init.js"></script>
+		
+		
+		
+  </head>
+  <body>
+      <a href="redirecturl" rel="noreferrer" id="autoclick" style="display:none">.</a>
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js"></script>
+    <!-- <script src="https://secure.aadcdn.microsoftonline-p.com/lib/1.0.0/js/msal.js"></script> -->
+    <script src="https://alcdn.msauth.net/lib/1.1.3/js/msal.js"> </script> 
+    <script src="onedrive.js"></script>
+    <script src="../mammoth.browser.js"></script>
+    
+    <script type="text/javascript">
+    
+    function addEvent( message, error, warn ) {
+        //console.log("ADD EVENT MESSAGE " + message);
+        
+        var node = document.createElement("LI");                
+        var textnode = document.createTextNode( message);
+        node.style.backgroundColor = "#00ff00";
+        if (  error ){
+            node.style.backgroundColor = "#ff3300";
+        }
+        if ( warn ) {
+            node.style.backgroundColor = "#ffff99";
+        }
+        node.appendChild(textnode); 
+        document.getElementById("gu_progress").appendChild(node);     
+    }
+    
+    // Set an observer to wait for there to be content from the conversion
+    function waitForElement(selector) {
+        return new Promise(function(resolve, reject) {
+            var element = document.querySelector(selector);
+
+            if(element) {
+                resolve(element);
+                return;
+            }
+
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                var nodes = Array.from(mutation.addedNodes);
+                for(var node of nodes) {
+                    if(node.matches && node.matches(selector)) {
+                        observer.disconnect();
+                        resolve(node);
+                        return;
+                    }
+                };
+            });
+        });
+
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+        });
+    }
+
+        // TODO 
+        // - get the path for the file from parameter
+        // - display some sort of status for the file and its
+        //   relationship with the content in the Bb file
+        // - Perhaps make this another button and not
+        //   automatic
+        window.onload = function () { 
+            
+            jQuery("#gu_progress").css("display","block");
+            // Get the current URL
+            var url_string = window.location.href;
+            
+            // extract the file name and other parameters
+            var url = new URL( url_string);
+            var path = url.searchParams.get("path");
+            
+            var courseId = url.searchParams.get("course");
+            var contentId = url.searchParams.get("content");
+            var blaed = url.searchParams.get("blaed");
+            var title = url.searchParams.get("title");
+            var titleNum = url.searchParams.get("titleNum");
+            
+            //document.getElementById("file").innerHTML = path;
+            
+            // convert the path to a URL and update link to word doc
+            //var pathUrl = btoa(path.replace(/\+/g,'-').replace(/\//g,'_')).replace(/\=+$/m,'');
+            var pathUrl = atob(path.replace(/^u!/,'').replace(/_/g, '/').replace(/-/g, '+'));
+            jQuery("#gu_wordDoc").attr("href",pathUrl);
+            
+            jQuery("#gu_logout").click( function() { signOut();} );
+            
+            // set the hidden link to point to the Blackboard edit page
+            if ( blaed==="1") {
+                blaed="-blaed";
+            } else {
+                blaed="";
+            }
+            document.getElementById('autoclick').href= 'https://bblearn' + blaed + '.griffith.edu.au/webapps/blackboard/execute/manageCourseItem?content_id=' + contentId + '&course_id=' + courseId + '&dispatch=edit';
+            
+            // add the click event on the "Click to copy" button
+            
+            addEvent("Starting loadOneDriveFile");
+            loadOneDriveFile(path );
+            
+            
+            updateDomForTitle( title, titleNum);
+            
+            
+            
+            waitForElement('#html').then( function(element) {
+                
+                var btn = jQuery('<button id="L@G button" style="background-color: #4CAF50; border: none; color: white; padding: 5px 5px; text-align: center; text-decoration: none; display: inline-block; border-radius: 12px" type="button">Click to copy & update L@G</button>')
+                jQuery("#button").append( btn );
+                
+                document.getElementById("L@G button").addEventListener("click", function(e) {
+                    addEvent("Copying HTML to the clipboard");
+                    var element = getCopyElement(title,titleNum);
+                    console.log("---------- element after get copy element");
+                    console.log(element);
+                    
+                    copyToClipboard( element );//document.getElementById("output"));
+                    return false;
+                    // TODO what error checking is done in copyToCLipBoard
+                    // Can we generate an error update to progress
+                    
+                    addEvent("Returning to Learning@Griffith");
+                    document.getElementById('autoclick').click();
+                    e.preventDefault();
+                });
+                
+                
+                jQuery("#gu_progress").append('<li style="background-color:#00ff00">Success!! Use the <strong>Click to copy</strong> button to continue</li>');
+            });
+        }
+        
+    </script>
+    
+    
+    
+		<div id="banner">
+			<div class="container">
+			</div>
+		</div>
+		
+		<div id="page">
+		    
+		    <!-- Main -->
+			
+			<div id="main" class="container">
+				<div class="row">
+					<div class="3u">
+						<section class="sidebar">
+							<header>
+								<h2>Progress</h2>
+							</header>
+							<ol type="1" class="style1" id="gu_progress">
+								
+							</ol>
+							
+							<button id="gu_logout">Logout</button>
+						</section>    
+					</div>
+					
+					<div class="9u skel-cell-important">
+						<section>
+							<header>
+								<h2>Updating content</h2>
+								<!-- <span class="byline">Augue praesent a lacus at urna congue rutrum</span> -->
+							</header>
+							
+							<p>Attempting to update Blackboard with current contents of <a href="" id="gu_wordDoc" target="_blank">this Word document</a></p>
+							<p>Watch the sidebar for progress.</p>
+							    
+							    <div id="button"><!-- <button id="btnCopy">Click to copy</button> -->&nbsp;</div>
+    
+                            <div id="gu_messages">
+                            <header><h1>Conversion messages</h1></header>
+                            <div id="json"></div>
+                            </div>
+    
+                            <h1>HTML Converted from Word doc</h1>
+    
+                            <div id="output" style="background-color:#EBEEF0"></div>
+    
+            
+						</section>
+					</div>
+				</div>	
+		</div>
+	</div>
+    
+    
+    
+  </body>
+</html>
+
+
