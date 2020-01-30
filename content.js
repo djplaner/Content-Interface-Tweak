@@ -386,12 +386,24 @@ function setUpEdit(ci, params) {
   
   jQuery("#guUpdate").click( function( event ) {
         // if href currently includes blaed then add parameter
-      var blaed = '';
+      
       var link = window.location.href;
+      
+      // Determine and tell Mammoth if we're using blaed blackboard
+      var blaed = '';
       if ( link.match(BLAED_LINK)!==null) {
           blaed="&blaed=1";
       }
-        window.location.href="https://djon.es/gu/mammoth.js/browser-demo/oneDriveMammoth.html?course=" + courseId + blaed + "&content=" + contentId + "&path=" + path ;
+      
+      // Determine and tell Mammoth if we're just want a particular title section
+      var title = '';
+      if ( params.hasOwnProperty("titleNum" )) {
+          title = "&titleNum=" + params.titleNum;
+      }
+      if ( params.hasOwnProperty("title")) {
+          title = "&title=" + params.title;
+      }
+        window.location.href="https://djon.es/gu/mammoth.js/browser-demo/oneDriveMammoth.html?course=" + courseId + blaed + title + "&content=" + contentId + "&path=" + path ;
   } );
 }
     
@@ -416,7 +428,9 @@ function checkParams( contentInterface,wordDoc) {
         var m = contentInterfaceTitle.match(/content interface\s*([^<]+)/i );
         
         if (m) {
-            params = m[1].match(/\S+/g);
+            //params = m[1].match(/\S+/g);
+            
+            params=parse_parameters(m[1]);
             
             if (params) {
                 params.forEach( function(element) {
@@ -436,6 +450,12 @@ function checkParams( contentInterface,wordDoc) {
                     if ( x = element.match(/expand=([0-9]*)/i)) {
                         paramsObj.expand = x[1];
                     }
+                    if ( x=element.match(/titleNum=([0-9]*)/i) ) {
+                        paramsObj.titleNum=x[1];
+                    }
+                    if ( x=element.match(/title=(.*)/i) ) {
+                        paramsObj.title=x[1];
+                    }  
                 });
             }
         }
@@ -781,4 +801,38 @@ function openAll() {
         }).show();
         jQuery(this).attr("disabled", "disabled");
         jQuery('.close').removeAttr("disabled");
+}
+
+//---------------------------------------------------------------------
+// Given a string of parameters use some Stack Overflow provided
+// regular expression magic to split it up into its component parts
+
+function parse_parameters(cmdline) {
+//    var re_next_arg = /^\s*((?:(?:"(?:\\.|[^"])*")|(?:'[^']*')|\\.|\S)+)\s*(.*)$/;
+    var re_next_arg = /^\s*((?:(?:"(?:\\.|[^"])*")|(?:'[^']*')|\\.|\S)+)\s*(.*)$/;
+    var next_arg = ['', '', cmdline];
+    var args = [];
+    while (next_arg = re_next_arg.exec(next_arg[2])) {
+        var quoted_arg = next_arg[1];
+        var unquoted_arg = "";
+        while (quoted_arg.length > 0) {
+            if (/^"/.test(quoted_arg)) {
+                var quoted_part = /^"((?:\\.|[^"])*)"(.*)$/.exec(quoted_arg);
+                unquoted_arg += quoted_part[1].replace(/\\(.)/g, "$1");
+                quoted_arg = quoted_part[2];
+            } else if (/^'/.test(quoted_arg)) {
+                var quoted_part = /^'([^']*)'(.*)$/.exec(quoted_arg);
+                unquoted_arg += quoted_part[1];
+                quoted_arg = quoted_part[2];
+            } else if (/^\\/.test(quoted_arg)) {
+                unquoted_arg += quoted_arg[1];
+                quoted_arg = quoted_arg.substring(2);
+            } else {
+                unquoted_arg += quoted_arg[0];
+                quoted_arg = quoted_arg.substring(1);
+            }
+        }
+        args[args.length] = unquoted_arg;
+    }
+    return args;
 }
