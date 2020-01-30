@@ -115,24 +115,19 @@
             addEvent("Starting loadOneDriveFile");
             loadOneDriveFile(path );
             
-            
-            updateDomForTitle( title, titleNum);
-            
-            
-            
+            // wait for the html element to get updated
             waitForElement('#html').then( function(element) {
+                
+                updateDomForTitle( title, titleNum);
                 
                 var btn = jQuery('<button id="L@G button" style="background-color: #4CAF50; border: none; color: white; padding: 5px 5px; text-align: center; text-decoration: none; display: inline-block; border-radius: 12px" type="button">Click to copy & update L@G</button>')
                 jQuery("#button").append( btn );
                 
                 document.getElementById("L@G button").addEventListener("click", function(e) {
                     addEvent("Copying HTML to the clipboard");
-                    var element = getCopyElement(title,titleNum);
-                    console.log("---------- element after get copy element");
-                    console.log(element);
                     
-                    copyToClipboard( element );//document.getElementById("output"));
-                    return false;
+                    copyToClipboard( document.getElementById("output") );//document.getElementById("output"));
+                    
                     // TODO what error checking is done in copyToCLipBoard
                     // Can we generate an error update to progress
                     

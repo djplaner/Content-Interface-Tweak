@@ -417,46 +417,53 @@ function updateClipboard(newClip) {
 }
 
 //***************************************
+// If title and titleNum are defined then
+// 1. Select the section confined by that title
+// 2. Replace the entire DOM with just that section
 
-function getCopyElement( title, titleNum) {
+function updateDomForTitle( title, titleNum) {
     var element;
     
-    var gu_ci = jQuery( "<div></div>", {id:"GU_ContentInterface"});
+    if ( title === null && titleNum===null) {
+        return;
+    }
+    
     
     // will need to add GU_Interface div around the outside
     // of the title/titleNum elements
     if ( title !== null ) {
         console.log("Get title " + title);
     } else if ( titleNum !== null) {
-        console.log("get TitleNum " + titleNum);
-        var start = jQuery("#output").find("div.invisible").eq(titleNum-1);
-        console.log(start);
-        var end = jQuery("#output").find("div.invisible").eq(titleNum);
+        // Get the start chapter (if we can TODO handle if we can't)
+        var start = jQuery("#GU_ContentInterface").find("div.invisible").eq(titleNum-1);
+        
+        // Get the next start chapter && all the components in between
+        var end = jQuery("#GU_ContentInterface").find("div.invisible").eq(titleNum);
         element = jQuery(start).nextUntil(end);
-        console.log("------ start ");
-        console.log(jQuery(start).html());
+        
+        // Gather the HTML and update the web page
         console.log("------ end ");
         console.log(jQuery(end).html());
         
         console.log("------element -- length is "+ jQuery(element).length );
         
     //    jQuery(element).wrap( '<div id="GU_ContentInterface"></div>');
-        jQuery(gu_ci).append(element);
+        //jQuery(gu_ci).append(element);
         //gu_ci = $('<div>').append($('#GU_ContentInterface').clone()).html();
         console.log("------element -- length is "+ jQuery(element).length );
-        jQuery(gu_ci).each( function() {
-            console.log(jQuery(this).html());
+        var chapterHtml=''
+        jQuery(element).each( function() {
+            chapterHtml += jQuery(this).html();
         });
         
-        console.log(gu_ci);
-        console.log(gu_ci.get(0).outerHTML );
-        return jQuery(gu_ci).get();
-    } else {
-        console.log("Getting default");
-        element = document.getElementById("output")
-    }
-    element = document.getElementById("output")
-    return element;
+        //jQuery("#GU_ContentInterface").html( chapterHtml );
+        jQuery("#GU_ContentInterface").html("")
+        jQuery("#GU_ContentInterface").append(element);
+        
+        console.log(chapterHtml);
+        
+        
+    } 
 }
 //
 
