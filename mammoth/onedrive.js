@@ -11,8 +11,8 @@
  
 
 function loggerCallback(logLevel, message, containsPii) {
-    console.log(" HELLO LOGGER");
-   console.log(message);
+    /*console.log(" HELLO LOGGER");
+   console.log(message);*/
 }
 
 var msalConfig = {
@@ -98,7 +98,7 @@ function loadOneDriveFile( path ) {
         //Login Success
     //    showWelcomeMessage();
         
-            console.log("ADD EVENT authenticated");
+            //console.log("ADD EVENT authenticated");
            acquireTokenPopupAndCallMSGraph(path);
         }).catch(function (error) {
             console.log(error);
@@ -179,7 +179,7 @@ function acquireTokenPopupAndCallMSGraph(path) {
         addEvent("Obtained token");
             callMSGraph(path, tokenResponse.accessToken, graphAPICallback);
     }).catch(function (error) {
-        console.log("ADD EVENT - error requesting token - " + error);
+        //console.log("ADD EVENT - error requesting token - " + error);
         addEvent("Error accessing Word document " + error, true);
         // Call acquireTokenPopup(popup window)
         if (requiresInteraction(error.errorCode)) {
@@ -274,7 +274,7 @@ function callMSGraph(theUrl, accessToken, callback) {
             
             getTheFileCORS( downloadUrl, accessToken, graphAPICallback);
             } else {
-                console.log("readyState " + this.readyState);
+                //console.log("readyState " + this.readyState);
                 addEvent("Error obtaining Word doc info", true);
             }
         }
@@ -428,41 +428,42 @@ function updateDomForTitle( title, titleNum) {
         return;
     }
     
-    
     // will need to add GU_Interface div around the outside
     // of the title/titleNum elements
     if ( title !== null ) {
-        console.log("Get title " + title);
+        // TODO
+        //console.log("Get title " + title);
     } else if ( titleNum !== null) {
+        addEvent("Focusing on section with title number " + titleNum);
+        
         // Get the start chapter (if we can TODO handle if we can't)
         var start = jQuery("#GU_ContentInterface").find("div.invisible").eq(titleNum-1);
         
+        if ( start.length===0) {
+            addEvent("Unable to find title number " + titleNum, true);
+            var titles = jQuery("#GU_ContentInterface").find("div.invisible");
+            addEvent("Found " + titles.length + " titles ", true);
+            addEvent("Showing the entire document");
+            return;
+        }
+        
         // Get the next start chapter && all the components in between
         var end = jQuery("#GU_ContentInterface").find("div.invisible").eq(titleNum);
+        if ( end.length===0) {
+            addEvent("Unable to find title finish", true);
+            var titles = jQuery("#GU_ContentInterface").find("div.invisible");
+            addEvent("Found " + titles.length + " titles ", true);
+            addEvent("Showing the entire document");
+            return;
+        }
+        
         element = jQuery(start).nextUntil(end);
         
-        // Gather the HTML and update the web page
-        console.log("------ end ");
-        console.log(jQuery(end).html());
-        
-        console.log("------element -- length is "+ jQuery(element).length );
-        
-    //    jQuery(element).wrap( '<div id="GU_ContentInterface"></div>');
-        //jQuery(gu_ci).append(element);
-        //gu_ci = $('<div>').append($('#GU_ContentInterface').clone()).html();
-        console.log("------element -- length is "+ jQuery(element).length );
-        var chapterHtml=''
-        jQuery(element).each( function() {
-            chapterHtml += jQuery(this).html();
-        });
-        
-        //jQuery("#GU_ContentInterface").html( chapterHtml );
+        // Update the GU_ContentInterface
         jQuery("#GU_ContentInterface").html("")
         jQuery("#GU_ContentInterface").append(element);
         
-        console.log(chapterHtml);
-        
-        
+        addEvent("Showing content from title number " + titleNum);
     } 
 }
 //
@@ -476,8 +477,8 @@ function copyToClipboard(elem) {
     //copyText.select();
     //document.execCommand("copy");
     
-    console.log("starting copy to clipboard");
-    console.log(elem);
+    /*console.log("starting copy to clipboard");
+    console.log(elem);*/
     var targetId = "_hiddenCopyText_";
     var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
     var origSelectionStart, origSelectionEnd;
