@@ -434,6 +434,8 @@ function updateDomForTitle( title, titleNum) {
         // TODO
         //console.log("Get title " + title);
     } else if ( titleNum !== null) {
+        var titles = jQuery("#GU_ContentInterface").find("div.invisible");
+        
         addEvent("Focusing on section with title number " + titleNum);
         
         // Get the start chapter (if we can TODO handle if we can't)
@@ -441,17 +443,27 @@ function updateDomForTitle( title, titleNum) {
         
         if ( start.length===0) {
             addEvent("Unable to find title number " + titleNum, true);
-            var titles = jQuery("#GU_ContentInterface").find("div.invisible");
             addEvent("Found " + titles.length + " titles ", true);
             addEvent("Showing the entire document");
             return;
         }
         
         // Get the next start chapter && all the components in between
-        var end = jQuery("#GU_ContentInterface").find("div.invisible").eq(titleNum);
+        var end;
+        
+        // Check if titleNum is at the end
+        
+        if ( parseInt(titleNum)===titles.length) {
+            // last title, so go until the last item in GU_ContentInterface
+            end = jQuery("#GU_ContentInterface").last();
+        } else {
+            // not the last title, so go until the next title
+            end = jQuery("#GU_ContentInterface").find("div.invisible").eq(titleNum);
+        }
+        
         if ( end.length===0) {
             addEvent("Unable to find title finish", true);
-            var titles = jQuery("#GU_ContentInterface").find("div.invisible");
+            
             addEvent("Found " + titles.length + " titles ", true);
             addEvent("Showing the entire document");
             return;
