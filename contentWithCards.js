@@ -317,8 +317,14 @@ function contentInterface($){
     //jQuery("#globalNavPageNavArea").scrollTop(0);
     jQuery('.accordion_top').slice(start,end).accordion("option","active", 0);
     //if ( start === 0 && end === 1) {
-    
     //}
+    console.log('-------------------------------');
+    var journey = jQuery(contentInterface).parent().next('div.details').children('.vtbegenerated');
+    console.log(journey);
+    var child = jQuery(journey).children("#html");
+    console.log(child);
+    jQuery(child).unwrap();
+    //console.log(contentInterface);
 }
 
 /***************************************************
@@ -1707,7 +1713,8 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
        return;
    }
     // Define which template to use 
-    var template = HORIZONTAL;
+    // REVERSE what works in card. DEFAULT is no engage
+    var template = HORIZONTAL_NOENGAGE;
  	var engageVerb = 'Engage';
  	
  	// Define the text for Review Status
@@ -1755,8 +1762,8 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	                    WIDTH = "md:w-full";
 	                } else if ( element.match(/people/i)) {
 	                    template = PEOPLE;
-	                } else if (element.match(/noengage/i )) {
-	                    template = HORIZONTAL_NOENGAGE;
+	                } else if (element.match(/engage/i )) {
+	                    template = HORIZONTAL;
 	                } else if ( element.match(/logging/i)) {
 	                    LOGGING = true;
 	                } else if ( m = element.match(/engage=([^']*)/)) {
@@ -1989,6 +1996,8 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	// Insert the HTML to the selected item(s)
 	//return false;
 	jQuery(cardInterface).before( interfaceHtml);
+	// remove the vtbegenerated stuff to clean up card css??
+	//console.log(cardInterface);
 	//console.log(firstItem);
 }
 	
@@ -2093,9 +2102,9 @@ cardHtmlTemplate[VERTICAL]=`
 cardHtmlTemplate[HORIZONTAL_NOENGAGE]=`
   <div class="w-full sm:w-1/2 {WIDTH} flex flex-col p-3">
     <div class="hover:outline-none hover:shadow-outline bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col relative"> <!-- Relative could go -->
-      <a href="{LINK}"><div class="bg-cover bg-yellow-lightest h-48" style="background-image: url('{PIC_URL}');">{IFRAME}</div></a>
+      <a href="{LINK}" class="no-underline" style="text-decoration:none"><div class="bg-cover bg-yellow-lightest h-48" style="background-image: url('{PIC_URL}');">{IFRAME}</div></a>
       <div class="p-4 flex-1 flex flex-col">
-       <a href="{LINK}">
+       <a href="{LINK}" class="no-underline" style="text-decoration:none">
         {LABEL} {MODULE_NUM}
         <h3 class="mb-4 text-2xl">{TITLE}</h3>
         <div class="carddescription mb-4 flex-1">
