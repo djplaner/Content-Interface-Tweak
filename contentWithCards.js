@@ -318,13 +318,12 @@ function contentInterface($){
     jQuery('.accordion_top').slice(start,end).accordion("option","active", 0);
     //if ( start === 0 && end === 1) {
     //}
-    console.log('-------------------------------');
-    var journey = jQuery(contentInterface).parent().next('div.details').children('.vtbegenerated');
-    console.log(journey);
-    var child = jQuery(journey).children("#html");
-    console.log(child);
+    
+	// Remove the Content Interface from the vtbegenerated div so that
+	// Bb CSS doesn't override embedded Card CSS
+    var journey = jQuery(contentInterface).parent().next('div.details').children('.vtbegenerated');    
+    var child = jQuery(journey).children("#html");    
     jQuery(child).unwrap();
-    //console.log(contentInterface);
 }
 
 /***************************************************
