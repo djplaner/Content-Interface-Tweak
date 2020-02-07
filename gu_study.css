@@ -2,6 +2,25 @@
 /* APA referencing - taken from CSU Work
    https://github.com/timklapdor/learning-materials */
 
+#GU_ContentInterface button {
+    display:inline-block;
+    padding:0.3em 1.2em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:2em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    font-size:105%;
+    color:#fff;
+    background-color:#777;
+    text-align:center;
+    transition: all 0.2s;
+}
+.open:hover,.close:hover{
+    background-color:black;
+}
+
 .apa, .apa ul, .apa ol, .apa dl {
   padding-left: 0 !important;
   margin-left: 0 !important;
@@ -69,7 +88,7 @@
   margin: 0; }
 
 #GU_ContentInterface a {
-  text-decoration: none;
+  /*text-decoration: none;*/
   color: #347EA4; }
 
 #GU_ContentInterface blockquote {
