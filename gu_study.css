@@ -88,12 +88,12 @@
   margin: 0; }
 
 #GU_ContentInterface a {
-  /*text-decoration: none;*/
-  color: #347EA4; }
+  text-decoration: underline;
+  color: #347EA4 !important; }
   
-.blackboardContentLink a  {
-  /*text-decoration: none;*/
-  color: #347EA4; }
+.blackboardContentLink, .blackboardMenuLink  {
+  text-decoration: underline;
+  color: #347EA4 !important; }
 
 #GU_ContentInterface blockquote {
   border-left: 4px solid;
@@ -117,7 +117,8 @@
   padding-left: 2em !important; }
 
 #GU_ContentInterface ul {
-  padding-left: 2em !important; }
+  padding-left: 2em !important;
+  list-style: disc;}
   
 /** picture **/
 
