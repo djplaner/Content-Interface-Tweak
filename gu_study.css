@@ -90,6 +90,10 @@
 #GU_ContentInterface a {
   /*text-decoration: none;*/
   color: #347EA4; }
+  
+.blackboardContentLink a  {
+  /*text-decoration: none;*/
+  color: #347EA4; }
 
 #GU_ContentInterface blockquote {
   border-left: 4px solid;
