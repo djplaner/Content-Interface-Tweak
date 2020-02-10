@@ -6,9 +6,9 @@
  */
  
 // Wrap arounds for various types of activity 
-var READING=`<div class="image"><img src="https://djon.es/gu/icons/icons8-reading-48.png" /></div>`;
-var ACTIVITY=`<div class="image"><img src="https://djon.es/gu/icons/icons8-dancing-48.png" /></div>`;
-var NOTE=`<div class="icon"><img src="http://uimagine.edu.au/interact2-theme/fa/Blk-Warning.png"></div>`;
+var READING=`<div class="image"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png" /></div>`;
+var ACTIVITY=`<div class="image"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-dancing-48.png" /></div>`;
+var NOTE=`<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`;
 
 var EXPAND_COLLAPSE_BUTTON_HTML = `<div class="accordion-expand-holder">
 <button type="button" class="open">Expand all</button>
