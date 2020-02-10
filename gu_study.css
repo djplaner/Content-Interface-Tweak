@@ -228,18 +228,24 @@
 #GU_ContentInterface .icon {
   flex: 1 !important;
   display: flex;
-  align-items: flex-start;
+  /*align-items: flex-start;*/
   padding: .25em;
-  margin: 1em .5em; }
+  margin: 1em .5em; 
+    justify-content: center;
+  align-items: center;
+}
 
 .icon img {
-  width: 100%; }
+  max-width: 75%; height:auto;
+  justify-content: center;
+  align-items: center;
+  }
 
-#GU_ContentInterface .icon svg {
-  width: 100%; }
+/*#GU_ContentInterface .icon svg {
+  width: 100%; }*/
 
 #GU_ContentInterface .instructions {
-  flex: 4; }
+  flex: 6; }
 
 
 
@@ -547,7 +553,7 @@ figure._60 {
   flex-direction: row;
   flex-wrap: wrap;
   margin: 1em auto;
-  width: 80%;
+  max-width: 80%;
   background-color: #FFDC0B !important;
   color: #000000 !important;
     
