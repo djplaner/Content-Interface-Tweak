@@ -207,7 +207,7 @@ function contentInterface($){
             }
 	        // open external links in a new window i.e. links that don't
 	        // match the LMS or don't have a host portion at the start
-            if ( theLink.match(LMS_LINK) === null && theLink.match(/^\//)===null) {
+            if ( theLink.match(LMS_LINK) === null && theLink.match(/^\//)===null && theLink.match(/^javascript:mark/)===null) {
 	            jQuery(this).attr('target','_blank');
 	            // turn off the Blackboard onclick "stuff"
 	            jQuery(this).prop("onclick",null).off("click");
@@ -436,10 +436,11 @@ function setUpEdit(ci, params) {
   var courseId;
   var contentId;
   
-  m = current.match( /^.*course_id=(_[^&]*).*$/ );
+  m = current.match( /^.*course_id=(_[^&#]*).*$/ );
   if ( m ) {
       courseId=m[1];
   }
+  //console.log("course id " + courseId);
 
   // get the content id
   contentId = jQuery(ci).parent().attr("id");
@@ -472,6 +473,10 @@ function setUpEdit(ci, params) {
   
   jQuery("#gu_doc").attr("href", path);
   
+  // remove #6 type links from end of path (breaks conversion)
+  //console.log( "path was " + path );
+  path = path.replace(/#[0-9]*$/, '');
+ // console.log( "path is " + path );
   // encode path ready for going via URLs
   path="u!" + btoa(path).replace(/\+/g,'-').replace(/\//g,'_').replace(/\=+$/,'');
   
@@ -723,8 +728,8 @@ function handleBlackboardItem() {
     /* Find the matching Blackboard element heading (h3) */
     var bbItem = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find("h3:textEquals(" + title +")");
     
- //   console.log(" -- Looked for **" + title + "** and found " + bbItem.length);
-   // console.log(bbItem);
+    //console.log(" -- Looked for **" + title + "** and found " + bbItem.length);
+    //console.log(bbItem);
     
     if ( bbItem.length===0) {
         // add the hidden_string to the heading
@@ -924,9 +929,9 @@ function handleBlackboardContentLink() {
     /* Find the matching Blackboard element heading (h3) */
     var bbItem = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find("h3:textEquals(" + title +")");
     
-    console.log("Looking for content link title " + title + " found " + bbItem.length);
+    /*console.log("Looking for content link title " + title + " found " + bbItem.length);
     console.log(jQuery(this).html());
-    console.log(bbItem);
+    console.log(bbItem);*/
     
     if ( bbItem.length===0) {
         // not found, so add hidden_string
@@ -1092,7 +1097,7 @@ function doVideo() {
     //console.log(" Started videos");
     
     var videos = jQuery("div.video");
-    console.log(" Got " + videos.length + " videos");
+    //console.log(" Got " + videos.length + " videos");
     
     if ( videos.length===0) {
         return false;
@@ -1100,12 +1105,12 @@ function doVideo() {
     
     videos.each( function(idx){
         var text = jQuery(this).text();
-        console.log(idx + " -- " + text);
+      //  console.log(idx + " -- " + text);
         
         var matches = text.match( /x/ );
         var id = matches[1],width='640',height='480';
         
-        console.log('Match 0 ' + matches[0] + " 1 " + matches[1]);
+        //console.log('Match 0 ' + matches[0] + " 1 " + matches[1]);
         text = '<div class="youtube-article">' +
                   '<iframe class="dt-youtube" width="' + width +
                   '" height="'+height+'" src="https://www.youtube.com/embed/'+
@@ -1761,7 +1766,7 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
  	// get the content item with h3 heading containing Card Interface
  	var cardInterface = place;//jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Card Interface")').eq(0);
  	
- 	console.log("--------------- addCard Interface");
+ //	console.log("--------------- addCard Interface");
  	//console.log( cardInterface);
  	
  	WIDTH="md:w-1/3";
@@ -1834,17 +1839,17 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
     var moduleNum = 1;
     
     items.forEach( function(idx) {
-        console.log("------------------ NEW CARD ---- " );
+      //  console.log("------------------ NEW CARD ---- " );
         //************* added
         if ( typeof idx === "undefined") {
-            console.log("undefined");
+        //    console.log("undefined");
             //console.log("PPPPPPPPPPPPPPPPPPPPPPP ROBLEM");
             var text = NO_CARD_DEFINED.replace('{WIDTH}',WIDTH);
             
             cards = cards.concat(text);
             return;
         }
-        console.log("title " + idx.title)  ;
+        //console.log("title " + idx.title)  ;
         
 	    var cardHtml=cardHtmlTemplate[template];
 	    cardHtml = cardHtml.replace( '{WIDTH}', WIDTH);
@@ -1929,10 +1934,10 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	    cardHtml = cardHtml.replace('{DESCRIPTION}', description);
 	    // Does the card link to another content item?
 //	    console.log( " template is " + template + " and H_E " + HORIZONTAL_NOENGAGE);
-        console.log("title is " + idx.title + " LINK IS " + idx.link);
+       // console.log("title is " + idx.title + " LINK IS " + idx.link);
 	    if ( typeof idx.link !== "undefined" ) {
 	        // add the link
-	        console.log("ADDING LINKE to " + title);
+	        //console.log("ADDING LINKE to " + title);
 	        linkHtml = linkItemHtmlTemplate[template];
 	        linkHtml = linkHtml.replace( '{ENGAGE}',engageVerb);
 	        cardHtml = cardHtml.replace('{LINK_ITEM}',linkHtml);
@@ -1942,7 +1947,7 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	          moduleNum++;
 	        } 
 	    } else {
-	        console.log(" REMOVING LINK ");
+	        //console.log(" REMOVING LINK ");
 	        // remove the link, as there isn't one
 	        cardHtml = cardHtml.replace('{LINK_ITEM}', '');
 	        cardHtml = cardHtml.replace(/<a[^>]*href="[^"]*"[^>]*>/g,'');
@@ -1964,6 +1969,7 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	    cardHtml = cardHtml.replace(/{LINK}/g, idx.link);
 	    
 	    // Should we add a link to edit/view the original content
+	    //console.log("Location is " + location);
 	    if (location.href.indexOf("listContentEditable.jsp") > 0) {
 	        editLink = editLinkTemplate.replace('{ID}', idx.id);
 	        cardHtml = cardHtml.replace(/{EDIT_ITEM}/, editLink );
@@ -1971,8 +1977,9 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	        //cardHtml = cardHtml.replace(/{EDIT_ITEM}/,'');
 	        
 	        //editLink = editLinkTemplate.replace('{ID}', idx.id);
-	        editLink = '<div><a href="#hello">&nbsp;</a></div>';
-	        cardHtml = cardHtml.replace(/{EDIT_ITEM}/, editLink );
+	        /*editLink = '<div><a href="#hello">&nbsp;</a></div>';
+	        cardHtml = cardHtml.replace(/{EDIT_ITEM}/, editLink );*/
+	        cardHtml = cardHtml.replace(/{EDIT_ITEM}/, '&nbsp;');
 	    }
 	    
 	    // If need add the date visualisation
@@ -2024,7 +2031,7 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	    cards = cards.concat(cardHtml);
 	});
 	
-	console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
+	//console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
 	//console.log(cards);
 	// STick the cards into the complete card HTML
 	var interfaceHtml = interfaceHtmlTemplate[template];
