@@ -375,9 +375,47 @@ var CONTENT_INTERFACE_NOT_PRESENT = `
 <p>Such a content item is required before the Content Interface tweak can function.</p>
 `;
 
-var INSTRUCTIONS = `
+var OLD_INSTRUCTIONS = `
 <h3>Detailed documentation</h3>
 <p>See <a href="https://griffitheduau-my.sharepoint.com/:w:/g/personal/d_jones6_griffith_edu_au/EUbAQvhxLW1MicRKf9Hof3sBIoS2EyJP_SfkYbqZ7c3qhw?e=2S9k3Y" target="_blank" rel="noreferrer noopener">this Word document</a> for more detailed documentation on creating and changing content.</p>
+`;
+
+var INSTRUCTIONS = `
+<h3>How do I...</h3>
+
+<p>More information can be found in <a href="https://griffitheduau-my.sharepoint.com/:w:/g/personal/d_jones6_griffith_edu_au/EUbAQvhxLW1MicRKf9Hof3sBIoS2EyJP_SfkYbqZ7c3qhw?e=2S9k3Y" target="_blank">this Word document</a>, or in the links in the following table.</p>
+
+<table style="width:100%;padding:2px">
+  <tr>
+    <td bgcolor="#edebf0"> Get started </td>
+    <td bgcolor="#ebeef0"> Adding & editing content </td>
+    <td bgcolor="#f0ebeb"> Changing how it works </td>
+  </tr>
+  <tr>
+    <td bgcolor="#edebf0">
+<ul style="padding-left:1.2em">
+  <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#2">Content Interface - why?</a>
+       </li>
+  <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#4">How to set it up</a> </li>
+  <li> <a hrf="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#5">How to update content</a> </li>
+  
+  
+</ul>
+    </td>
+    <td bgcolor="#ebeef0">
+          <ul>
+            <li> <a hrf="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#6">text, headings, tables and quotes</a> </li>
+            <li> <a hrf="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#7">web content: images, links, videos & embeddable content</a> </li>
+            <li> <a hrf="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#8">study guide content: readings, activitites & notes</a> </li>
+            <li> <a hrf="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#9">Links to Blackboard activities</a> </li>
+         </ul>
+    </td>
+    <td bgcolor="#f0ebeb">
+        
+    </td>
+    </table>
+  
+
 `;
 
  
