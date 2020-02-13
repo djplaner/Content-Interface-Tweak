@@ -1003,10 +1003,11 @@ function handleBlackboardMenuLink() {
         title = title.replace(/%20/g," ");
     }
     
+    
     /* Find the course menu link that matches */
     var bbItem = jQuery( "#courseMenuPalette_contents > li > a > span[title='"+title+"']" );
     
-    //console.log("Looking for title " + title + " found " + bbItem.length);
+    console.log("Looking for title " + title + " found " + bbItem.length);
     //var items = jQuery("#courseMenuPalette_contents > li > a");//.attr('title');
     //console.log(items);
     
@@ -2070,6 +2071,7 @@ var interfaceHtmlTemplate = Array(NUM_TEMPLATES);
 //          dev to live
 //var CARDS_CSS="https://djon.es/gu/cards.css";
 var CARDS_CSS="https://s3.amazonaws.com/filebucketdave/banner.js/cards.css";
+// 
 
 
 
@@ -2077,7 +2079,7 @@ interfaceHtmlTemplate[HORIZONTAL] = `
 <link rel="stylesheet" href="{CARDS_CSS}" />
 
 
-<div id="guCardInterface" class="flex flex-wrap -m-3">
+<div class="guCardInterface flex flex-wrap -m-3">
  {CARDS}
 </div>
 `;
@@ -2104,10 +2106,10 @@ cardHtmlTemplate[HORIZONTAL]=`
       <a href="{LINK}" class="cardmainlink"></a>
       <div class="bg-cover h-48" style="background-image: url('{PIC_URL}'); background-color: rgb(255,255,204)">{IFRAME}
       </div>
-      <div class="carddescription p-4 flex-1 flex flex-col">
+      <div class="carddescription p-4 flex-1 flex flex-col text-black">
         {LABEL} {MODULE_NUM}
         <h3 class="mb-4 text-2xl">{TITLE}</h3>
-        <div class="mb-4 flex-1">
+        <div class="mb-4 flex-1 text-black">
           {DESCRIPTION}
           
         </div>
@@ -2150,8 +2152,8 @@ cardHtmlTemplate[HORIZONTAL_NOENGAGE]=`
       <div class="p-4 flex-1 flex flex-col">
        <a href="{LINK}" class="no-underline" style="text-decoration:none">
         {LABEL} {MODULE_NUM}
-        <h3 class="mb-4 text-2xl">{TITLE}</h3>
-        <div class="carddescription mb-4 flex-1">
+        <h3 class="mb-4 text-2xl text-black">{TITLE}</h3>
+        <div class="carddescription mb-4 flex-1 text-black">
           {DESCRIPTION}
         </div>
         </a>
