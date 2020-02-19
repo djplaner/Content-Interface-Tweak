@@ -397,17 +397,17 @@ var INSTRUCTIONS = `
   <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#2">Content Interface - why?</a>
        </li>
   <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#4">How to set it up</a> </li>
-  <li> <a hrf="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#5">How to update content</a> </li>
+  <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#5">How to update content</a> </li>
   
   
 </ul>
     </td>
     <td bgcolor="#ebeef0">
           <ul>
-            <li> <a hrf="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#6">text, headings, tables and quotes</a> </li>
-            <li> <a hrf="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#7">web content: images, links, videos & embeddable content</a> </li>
-            <li> <a hrf="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#8">study guide content: readings, activitites & notes</a> </li>
-            <li> <a hrf="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#9">Links to Blackboard activities</a> </li>
+            <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#6">text, headings, tables and quotes</a> </li>
+            <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#7">web content: images, links, videos & embeddable content</a> </li>
+            <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#8">study guide content: readings, activitites & notes</a> </li>
+            <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#9">Links to Blackboard activities</a> </li>
          </ul>
     </td>
     <td bgcolor="#f0ebeb">
@@ -1970,8 +1970,11 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	    cardHtml = cardHtml.replace(/{LINK}/g, idx.link);
 	    
 	    // Should we add a link to edit/view the original content
+	    // But only if we were able to find the id
 	    //console.log("Location is " + location);
-	    if (location.href.indexOf("listContentEditable.jsp") > 0) {
+	    
+	    if (location.href.indexOf("listContentEditable.jsp") > 0 &&
+	    typeof idx.id !== "undefined") {
 	        editLink = editLinkTemplate.replace('{ID}', idx.id);
 	        cardHtml = cardHtml.replace(/{EDIT_ITEM}/, editLink );
 	    } else {
@@ -2387,7 +2390,7 @@ dualDateHtmlTemplate[PEOPLE] = '';
 // Same for all templates
 var editLinkTemplate = `
 	        <div class="text-xs grey-light">
-	           [<a href="#{ID}">View original</a>]
+	           [<a href="#{ID}">View origin</a>]
 	        </div>`;
 
 // Message to display on a card if EDIT mode on and the item is hidden
