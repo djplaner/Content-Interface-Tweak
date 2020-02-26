@@ -567,3 +567,10 @@ figure._60 {
   color: #000000 !important;
     
 }
+
+@media print {
+    .ui-accordion .ui-accordion-content {
+        display:block !important;
+    }
+    
+}  
