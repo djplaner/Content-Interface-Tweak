@@ -263,7 +263,9 @@ function contentInterface($){
             console.log("ERROR - expand value (" + params.expand +") larger than number of heading 1s ");
         }
     }
-    jQuery('.accordion_top').slice(start,end).accordion("option","active", 0);
+    if ( params.scrollTo===true) {
+        jQuery('.accordion_top').slice(start,end).accordion("option","active", 0);
+    }
 }
 
 /***************************************************
@@ -457,6 +459,7 @@ function setUpEdit(ci, params) {
 function checkParams( contentInterface,wordDoc) {
     var paramsObj = {};
     paramsObj.expand = -1;
+    paramsObj.scrollTo = true;
     
     // Check parameters in the Content Interface item title
     if (contentInterface.length>0) {
@@ -471,6 +474,9 @@ function checkParams( contentInterface,wordDoc) {
             
             if (params) {
                 params.forEach( function(element) {
+                    if ( element.match( /nofirstscroll/i )) {
+                        paramsObj.scrollTo = false;
+                    }
                     if ( element.match(/expandall/i)) {
                         paramsObj.expandAll = true;
                     }
