@@ -248,8 +248,8 @@ function contentInterface($){
     var icons = jQuery(".accordion").accordion("option", "icons");
     
     // define the click function for the expand all
-    jQuery('.gu_content_open').click(function () {
-        
+    jQuery('.gu_content_open').click(function (event) {
+        event.preventDefault();
         jQuery('.ui-accordion-header').removeClass('ui-corner-all').addClass('ui-accordion-header-active ui-state-active ui-corner-top').attr({
             'aria-selected': 'true',
                 'tabindex': '0'
@@ -264,6 +264,7 @@ function contentInterface($){
     });
     // define the click functio for the collapse all
     jQuery('.gu_content_close').click(function () {
+        event.preventDefault();
         jQuery('.ui-accordion-header').removeClass('ui-accordion-header-active ui-state-active ui-corner-top').addClass('ui-corner-all').attr({
             'aria-selected': 'false',
                 'tabindex': '-1'
@@ -1003,11 +1004,13 @@ function handleBlackboardMenuLink() {
         title = title.replace(/%20/g," ");
     }
     
+    console.log("MenuLink: looking for " + title);
+    console.log(jQuery(this).html());
     
     /* Find the course menu link that matches */
     var bbItem = jQuery( "#courseMenuPalette_contents > li > a > span[title='"+title+"']" );
     
-    console.log("Looking for title " + title + " found " + bbItem.length);
+   // console.log("Looking for title " + title + " found " + bbItem.length);
     //var items = jQuery("#courseMenuPalette_contents > li > a");//.attr('title');
     //console.log(items);
     
@@ -1766,24 +1769,32 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
  	
  	// get the content item with h3 heading containing Card Interface
  	var cardInterface = place;//jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Card Interface")').eq(0);
- 	
+ 	// Support the idea of having a Bb item on the page that is the normal
+ 	// Card Interface item. It's used to pass 
+ 	var paramsCardInterface = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Card Interface")').eq(0);
+ 	if (location.href.indexOf("listContent.jsp") > 0) {
+         jQuery(paramsCardInterface).parents("li").hide(); 
+ 	}
+ 	console.log( paramsCardInterface);
  //	console.log("--------------- addCard Interface");
  	//console.log( cardInterface);
  	
  	WIDTH="md:w-1/3";
  	HIDE_IMAGES=false;
- 	if ( cardInterface.length === 0){
+ 	//if ( cardInterface.length === 0){
+ 	if ( paramsCardInterface.length===0) {
         console.log("Card: Can't find item with heading 'Card Interface' in which to insert card interface");
         return false;
     } else {
         // get the title - text only, stripped of whitespace before/after
         // **** CHECK PARAMETERS
         // - replace this with something passed in from CI
-        var cardInterfaceTitle= jQuery.trim(cardInterface.text());
-        
+        //var cardInterfaceTitle= jQuery.trim(cardInterface.text());
+        var cardInterfaceTitle= jQuery.trim(paramsCardInterface.text());
         
         //Extract parameters
         var m = cardInterfaceTitle.match(/Card Interface *([^<]*)/i );
+        
 	    if (m) {
 	        newParams = parse_parameters( m[1]);
 	        
@@ -1805,12 +1816,12 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	                    WIDTH = "md:w-full";
 	                } else if ( element.match(/people/i)) {
 	                    template = PEOPLE;
-	                } else if (element.match(/engage/i )) {
-	                    template = HORIZONTAL;
+	                /*} else if (element.match(/engage/i )) {
+	                    template = HORIZONTAL;*/
 	                } else if ( element.match(/logging/i)) {
 	                    LOGGING = true;
-	                } else if ( m = element.match(/engage=([^']*)/)) {
-	                    engageVerb = m[1];
+	                /*} else if ( m = element.match(/engage=([^']*)/)) {
+	                    engageVerb = m[1];*/
 	                } else if (m=element.match(/template=assessment/i)){
 	                    template = ASSESSMENT;
 	                } else if ( m=element.match(/set[Dd]ate=([^\s]*)/ )){
@@ -1936,7 +1947,31 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	    // Does the card link to another content item?
 //	    console.log( " template is " + template + " and H_E " + HORIZONTAL_NOENGAGE);
        // console.log("title is " + idx.title + " LINK IS " + idx.link);
-	    if ( typeof idx.link !== "undefined" ) {
+	    
+	    if ( idx.link ) {
+	        // add the link
+	        
+	        linkHtml = linkItemHtmlTemplate[template];
+	        linkHtml = linkHtml.replace( '{ENGAGE}',engageVerb);
+	        cardHtml = cardHtml.replace('{LINK_ITEM}',linkHtml);
+	        // if there is a label and no hard coded moduleNum, 
+	        //  then increment the module number
+	        if ( idx.label!=="" && ! idx.moduleNum) {
+	          moduleNum++;
+	        } 
+	    } else {// if (template!==HORIZONTAL_NOENGAGE) {
+	        // remove the link, as there isn't one
+	        cardHtml = cardHtml.replace('{LINK_ITEM}', '');
+	        cardHtml = cardHtml.replace(/<a href="{LINK}">/g,'');
+	        cardHtml = cardHtml.replace('</a>','');
+	        // remove the shadow/border effect
+	        cardHtml = cardHtml.replace('hover:outline-none','');
+	        cardHtml = cardHtml.replace('hover:shadow-outline', '');
+	        // don't count it as a module
+	        cardHtml = cardHtml.replace(idx.label + ' ' + moduleNum, '');
+	        //moduleNum--;
+	    }
+	    /* OLD STUFF if ( typeof idx.link !== "undefined" ) {
 	        // add the link
 	        //console.log("ADDING LINKE to " + title);
 	        linkHtml = linkItemHtmlTemplate[template];
@@ -1959,7 +1994,7 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	        // don't count it as a module
 	        cardHtml = cardHtml.replace(idx.label + ' ' + moduleNum, '');
 	        //moduleNum--;
-	    }
+	    } */
 	    
 	    // If there is a linkTarget in Blackboard
 	    if ( typeof idx.linkTarget!=='undefined' ) {
@@ -2147,13 +2182,33 @@ cardHtmlTemplate[VERTICAL]=`
 </a>
 `;
 
+/*cardHtmlTemplate[HORIZONTAL_NOENGAGE]=`
+  <div class="w-full sm:w-1/2 {WIDTH} flex flex-col p-3">
+    <div class="hover:outline-none hover:shadow-outline bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col relative"> <!-- Relative could go -->
+      <a href="{LINK}"><div class="bg-cover bg-yellow-lightest h-48" style="background-image: url('{PIC_URL}');">{IFRAME}</div></a>
+      <div class="p-4 flex-1 flex flex-col">
+       <a href="{LINK}">
+        {LABEL} {MODULE_NUM}
+        <h3 class="mb-4 text-2xl">{TITLE}</h3>
+        <div class="carddescription mb-4 flex-1">
+          {DESCRIPTION}
+        </div>
+        </a>
+         {DATE} 
+         {LINK_ITEM}
+         {REVIEW_ITEM}
+         {EDIT_ITEM}
+      </div>
+    </div>
+  </div>
+`;*/
 
-cardHtmlTemplate[HORIZONTAL_NOENGAGE]=`
+ cardHtmlTemplate[HORIZONTAL_NOENGAGE]=`
   <div class="w-full sm:w-1/2 {WIDTH} flex flex-col p-3">
     <div class="hover:outline-none hover:shadow-outline bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col relative"> <!-- Relative could go -->
       <a href="{LINK}" class="no-underline" style="text-decoration:none"><div class="bg-cover bg-yellow-lightest h-48" style="background-image: url('{PIC_URL}');">{IFRAME}</div></a>
       <div class="p-4 flex-1 flex flex-col">
-       <a href="{LINK}" class="no-underline" style="text-decoration:none">
+       <a href="{LINK}" class="no-underline" style="text-decoration:none; color: #000000 !important">
         {LABEL} {MODULE_NUM}
         <h3 class="mb-4 text-2xl text-black">{TITLE}</h3>
         <div class="carddescription mb-4 flex-1 text-black">
@@ -2447,6 +2502,40 @@ function setImage( card) {
     return card.picUrl;
 }    	
 
+
+//---------------------------------------------------------------------
+// Given a string of parameters use some Stack Overflow provided
+// regular expression magic to split it up into its component parts
+
+function parse_parameters(cmdline) {
+//    var re_next_arg = /^\s*((?:(?:"(?:\\.|[^"])*")|(?:'[^']*')|\\.|\S)+)\s*(.*)$/;
+    var re_next_arg = /^\s*((?:(?:"(?:\\.|[^"])*")|(?:'[^']*')|\\.|\S)+)\s*(.*)$/;
+    var next_arg = ['', '', cmdline];
+    var args = [];
+    while (next_arg = re_next_arg.exec(next_arg[2])) {
+        var quoted_arg = next_arg[1];
+        var unquoted_arg = "";
+        while (quoted_arg.length > 0) {
+            if (/^"/.test(quoted_arg)) {
+                var quoted_part = /^"((?:\\.|[^"])*)"(.*)$/.exec(quoted_arg);
+                unquoted_arg += quoted_part[1].replace(/\\(.)/g, "$1");
+                quoted_arg = quoted_part[2];
+            } else if (/^'/.test(quoted_arg)) {
+                var quoted_part = /^'([^']*)'(.*)$/.exec(quoted_arg);
+                unquoted_arg += quoted_part[1];
+                quoted_arg = quoted_part[2];
+            } else if (/^\\/.test(quoted_arg)) {
+                unquoted_arg += quoted_arg[1];
+                quoted_arg = quoted_arg.substring(2);
+            } else {
+                unquoted_arg += quoted_arg[0];
+                quoted_arg = quoted_arg.substring(1);
+            }
+        }
+        args[args.length] = unquoted_arg;
+    }
+    return args;
+}
 
 NO_CARD_DEFINED=`
   <div class="clickablecard w-full sm:w-1/2 {WIDTH} flex flex-col p-3">
