@@ -1004,8 +1004,8 @@ function handleBlackboardMenuLink() {
         title = title.replace(/%20/g," ");
     }
     
-    console.log("MenuLink: looking for " + title);
-    console.log(jQuery(this).html());
+    //console.log("MenuLink: looking for " + title);
+    //console.log(jQuery(this).html());
     
     /* Find the course menu link that matches */
     var bbItem = jQuery( "#courseMenuPalette_contents > li > a > span[title='"+title+"']" );
@@ -1775,16 +1775,18 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
  	if (location.href.indexOf("listContent.jsp") > 0) {
          jQuery(paramsCardInterface).parents("li").hide(); 
  	}
- 	console.log( paramsCardInterface);
- //	console.log("--------------- addCard Interface");
+ 	//console.log( paramsCarddCard Interface");
  	//console.log( cardInterface);
  	
  	WIDTH="md:w-1/3";
  	HIDE_IMAGES=false;
+ 	template = HORIZONTAL;
+ 	
  	//if ( cardInterface.length === 0){
  	if ( paramsCardInterface.length===0) {
-        console.log("Card: Can't find item with heading 'Card Interface' in which to insert card interface");
-        return false;
+       // console.log("Card: Can't find item with heading 'Card Interface' in //which to insert card interface");
+        
+        //return false;
     } else {
         // get the title - text only, stripped of whitespace before/after
         // **** CHECK PARAMETERS
@@ -1835,7 +1837,6 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	        }
 	    } // if no match, stay with default
     }
-    
   //  console.log("LOGGING IS " + LOGGING);
     // make the h3 for the Card Interface item disappear
     // (Can't hide the parent as then you can't edit via Bb)
