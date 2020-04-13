@@ -669,6 +669,39 @@ function createBunchesCards( bunch, index, arr) {
     place = jQuery(bunch[0].originalHTMLElement).before();
     addCardInterface( cards,place);
     
+    /** ------ cards should be created by now -- */
+	/* But make all the links in carddescription stop propagation */
+    var cardContent = jQuery(".carddescription [href]").not(".gu-engage");
+
+    for (var i=0; i<cardContent.length; i++) {
+        cardContent[i].addEventListener('click', function(e) {
+            // aim here is to allow internal links to override the 
+            // cardmainlink
+            e.stopPropagation();
+        }, false);
+    }
+    
+	/* Make all of the cards clickable by adding an event handler  */
+	// Does this unwrap actually do anything???
+	//jQuery( ".cardmainlink[href='undefined'" ).contents().unwrap();
+	//return true;
+	var cards = document.querySelectorAll(".clickablecard");
+	//var cards = document.querySelectorAll(".cardmainlink");
+    for (i=0; i<cards.length; i++) {
+    cards[i].addEventListener('click', function() {
+            var link = this.querySelector(".cardmainlink");
+            
+            if ( link!==null ) {
+                // prevent clicking on a undefined blackboard link
+                if ( link.match(/blackboard\/content\/undefined$/)) {
+                    console.log("Undefined");
+                } else {
+                    link.click();
+                }
+            }
+        }, false);
+    }
+    
     
 }
 
