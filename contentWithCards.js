@@ -860,11 +860,11 @@ function addReviewLink( item, reviewLink) {
  	if ( reviewLink.match(/markUnreviewed/)) {
  	    
  	    reviewHeadingTemplate = `
- 	<span style="float:right;background-color:green;color:white;padding:1px">Reviewed</span>
+ 	<span style="float:right" class="ui-state-disabled ui-corner-all">Reviewed</span>
  	`;
  	} else {
  	    reviewHeadingTemplate = `
- 	    <span style="float:right;background-color:yellow">Not Reviewed</span>
+ 	    <span style="float:right" class="ui-state-active ui-corner-all">Not Reviewed</span>
  	    `;
  	}
  	jQuery(item).html( linkText + reviewHeadingTemplate);
