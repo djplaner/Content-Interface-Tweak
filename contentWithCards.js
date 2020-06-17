@@ -1275,6 +1275,16 @@ function extractCardsFromContent( myCards) {
 	        description = description.replace( stringToRemove, '');
 	    }
 	    
+	    //---------------- card Image Size
+	    // Looking for contain
+	    m = description.match(/card image size *: contain/i);
+	    var bgSize = "";
+	    if (m) {
+	        bgSize = "contain";
+	        description = description.replace( "<p>"+m[0]+"</p>","");
+	        description = description.replace( m[0], "");
+	    }
+	    
 	    // Parse the date for commencing
 	    // date will be in object with start and end members
 	    var date = handleDate( description );
@@ -1415,7 +1425,8 @@ function extractCardsFromContent( myCards) {
 	        //console.log( "content item " + contentItem.html());
 	    }
 	    // save the item for later
-	    var item = {title:title, picUrl:picUrl, cardBGcolour:cardBGcolour,
+	    var item = {title:title, picUrl:picUrl, bgSize: bgSize,
+	        cardBGcolour:cardBGcolour,
 	        description:description, date:date, label:label,
 	        link:link, linkTarget:linkTarget,
 	        review:review,
@@ -2040,6 +2051,21 @@ var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 	    }
 	    cardHtml = cardHtml.replace('{LABEL}',idx.label);
 	    
+	    //------------------ set the card image
+	    
+	    // Two options for BG_SIZE
+	    // 1. cover (bg-cover)
+	    //    Default option. Image covers the entire backgroun
+	    // 2. contain (bg-contain bg-no-repeat) 
+	    //    Entire image must fit within the card
+	    
+	    if ( idx.bgSize === 'contain' ) {
+	        cardHtml = cardHtml.replace(/{BG_SIZE}/, 
+	            'bg-contain bg-no-repeat bg-center');
+	    } else { // if ( idx.bgSize === 'contain') 
+	        cardHtml = cardHtml.replace(/{BG_SIZE}/, 'bg-cover');
+	    }
+	    
 	    var picUrl = setImage( idx);
 	    
 	    // replace the {IMAGE_URL} variable if none set
@@ -2258,7 +2284,8 @@ cardHtmlTemplate[HORIZONTAL]=`
   <div class="clickablecard w-full sm:w-1/2 {WIDTH} flex flex-col p-3">
     <div class="hover:outline-none hover:shadow-outline bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col relative"> <!-- Relative could go -->
       <a href="{LINK}" class="cardmainlink"></a>
-      <div class="bg-cover h-48" style="background-image: url('{PIC_URL}'); background-color: rgb(255,255,204)">{IFRAME}
+      <div class="{BG_SIZE} h-48" style="background-image: url('{PIC_URL}');
+      background-color: rgb(255,255,255)">{IFRAME}
       </div>
       <div class="carddescription p-4 flex-1 flex flex-col text-black">
         {LABEL} {MODULE_NUM}
