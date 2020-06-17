@@ -415,8 +415,53 @@ var INSTRUCTIONS = `
         
     </td>
     </table>
+`;
   
-
+  var CHANGE_TEMPLATE = `
+<h3>Choosing a different template</h3>
+  
+  <p>Different templates are available to change the look and feel of the Content Interface.</p>
+  <p>There is a two step process:</p>
+  <ol>
+    <li> Select one of the available style templates from the following list.</p>
+<select name="styleSelector" id="styleSelector">
+<option value="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">Base</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/start/jquery-ui.css">Start</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" selected="selected">Smoothness</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/redmond/jquery-ui.css">Redmond</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/sunny/jquery-ui.css">Sunny</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/overcast/jquery-ui.css">Overcast</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/flick/jquery-ui.css">Flick</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/pepper-grinder/jquery-ui.css">Pepper Grinder</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">UI Lightness</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/ui-darkness/jquery-ui.css">UI Darkness</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/le-frog/jquery-ui.css">Le Frog</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/eggplant/jquery-ui.css">Eggplant</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/dark-hive/jquery-ui.css">Dark Hive</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css">Cupertino</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/blitzer/jquery-ui.css">Blitzer</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/south-street/jquery-ui.css">South Street</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/humanity/jquery-ui.css">Humanity</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/hot-sneaks/jquery-ui.css">Hot Sneaks</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/excite-bike/jquery-ui.css">Excite Bike</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/vader/jquery-ui.css">Vader</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/black-tie/jquery-ui.css">Black Tie</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/trontastic/jquery-ui.css">Trontastic</option>
+<option value="https://code.jquery.com/ui/1.12.1/themes/swanky-purse/jquery-ui.css">Swanky Purse</option>
+</select>
+  </li>
+  
+  <li> Modify the tweak code to use the selected template.
+      <p>To do this you need to:</p>
+      <ol>
+        <li> Edit this item. </li>
+        <li> Hit the HTML button on the Blackboard editor.</li>
+        <li>Find the following line (bold added)
+            <p><link rel="&lt;span class=" mceitemhiddenspellword="" />&lt;p&gt;&lt;link rel="stylesheet" id="gu_jqueryStyle" href="<strong>//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css</strong>" /&gt;&lt;/p&gt;</p>
+        </li>
+        <li>Replace the bold string with <strong><span id="gu_stylePath">https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css</span></strong></li>
+        <li> Save the changes. </li>
+</ol>
 `;
 
  
@@ -470,7 +515,12 @@ function setUpEdit(ci, params) {
   }
   
   //jQuery(".gu_docNotPresent").hide();
-  jQuery('#gu_update').html(UPDATE_HTML + WORD_DOC_PRESENT + INSTRUCTIONS);
+  var updateHtml = UPDATE_HTML + WORD_DOC_PRESENT + INSTRUCTIONS;
+  
+  if ( jQuery('#gu_jqueryStyle').length ) {
+      updateHtml = updateHtml + CHANGE_TEMPLATE; 
+  }
+  jQuery('#gu_update').html(updateHtml);
   
   jQuery("#gu_doc").attr("href", path);
   
@@ -498,6 +548,11 @@ function setUpEdit(ci, params) {
       }
         window.location.href="https://djon.es/gu/mammoth.js/browser-demo/oneDriveMammoth.html?course=" + courseId + blaed + "&content=" + contentId + "&path=" + path ;
   } );
+  
+  jQuery("#styleSelector").on("change", function() {
+        jQuery("#gu_jqueryStyle").attr( "href", this.value );
+        jQuery("#gu_stylePath").text(this.value);
+   });
 }
     
 /************************************************
