@@ -123,6 +123,7 @@
   
 #GU_ContentInterface ol {
   padding-left: 2em !important;
+  list-style: decimal;
 }
   
 /** picture **/
