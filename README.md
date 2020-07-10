@@ -24,14 +24,11 @@ See [this blog post](https://djon.es/blog/2019/02/24/exploring-knowledge-reuse-i
 
 ![to HTML in Blackboard](https://live.staticflickr.com/65535/50098686822_692a3634c3_c_d.jpg)
 
-# How?
-
-
-# How to use it with Blackboard Learn
+# How to use it with Blackboard Learn?
 
 The following instructions are specific for Blackboard Learn (the basics apply to other technologies) and focus on how to prepare a Content Area to host/display the HTML content.
 
-## Step 1 - Add the Javascript/CSS 
+### Step 1 - Add the Javascript/CSS 
 
 The transformation of the HTML relies on some Javascript/CSS which needs to be included in the Blackboard Learn page. To do this:
 
@@ -39,17 +36,17 @@ The transformation of the HTML relies on some Javascript/CSS which needs to be i
 1. Paste the content of [the tweak.html file](tweak.html) into the content item
    As this is HTML code, you will need to use the _HTML_ button before pasting.
 
-## Step 2 - Add space for your content (HTML)
+### Step 2 - Add space for your content (HTML)
 
 1. Add a Content Item (_Build Content_ > _Item_) give it the title _Content Interface_
 
-## Step 3 - Create/update a Word document
+### Step 3 - Create/update a Word document
 
 A standard Word document will work. However, there are additional styles used to implement certain features.
 
 The [example Word doc](https://djon.es/blog/wp-content/uploads/2020/07/output.gif) provides more detail on these styles and using Word. It can also be used as a template for your own Word documents.
 
-## Step 4 - Transform your Word document into HTML and update Blackboard
+### Step 4 - Transform your Word document into HTML and update Blackboard
 
 1. Use this [version of Mammoth](https://djon.es/gu/mammoth.js/browser-demo/) to convert your Word document into HTML
    **NOTE:** The conversion occurs entirely in the browser. Your content is never placed onto another computer.
@@ -60,7 +57,7 @@ The [example Word doc](https://djon.es/blog/wp-content/uploads/2020/07/output.gi
    - Paste the HTML into the window that pops up
    - Save the changes and return to the page
 
-## Repeat steps 3 and 4 everytime you make a change
+## Repeat steps 3 and 4 every time you make a change
 
 Never change the contenet in Blackboard.  Always make the change in Word first and then update Blackboard.
 
@@ -68,7 +65,7 @@ Never change the contenet in Blackboard.  Always make the change in Word first a
 
 If the Word document is shared (e.g. via OneDrive) then it is possible to semi-automate the update proces as illustrated in the following image.
 
-https://djon.es/blog/wp-content/uploads/2020/07/output.gif
+![semi-automated update process](https://djon.es/blog/wp-content/uploads/2020/07/output.gif)
 
 
 To do this:
