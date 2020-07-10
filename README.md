@@ -4,6 +4,8 @@ Creating content in Blackboard Learn is painful and produces ugly content that i
 
 See [the Content Interface section](https://djon.es/blog/2019/08/08/exploring-knowledge-reuse-in-design-for-digital-learning-tweaks-h5p-constructive-templates-and-casa/#contentInterface) of [this paper](https://djon.es/blog/2019/08/08/exploring-knowledge-reuse-in-design-for-digital-learning-tweaks-h5p-constructive-templates-and-casa/) for more detail.
 
+The [example Word document](Example.docx) provides more detailed instructions and background.
+
 # What?
 
 The Content Interface enables
@@ -14,36 +16,62 @@ The Content Interface enables
 
 See [this blog post](https://djon.es/blog/2019/02/24/exploring-knowledge-reuse-in-design-for-digital-learning/) for more detail on why and how it works.
 
-![Word to Blackboard](https://live.staticflickr.com/65535/50098686822_692a3634c3_c_d.jpg)
+### Editing content in Word
+
+![Word document](https://live.staticflickr.com/65535/50098693972_f0054d5904_c_d.jpg)
+
+### Transformed HTML in Blackboard Learn
+
+![to HTML in Blackboard](https://live.staticflickr.com/65535/50098686822_692a3634c3_c_d.jpg)
 
 # How?
 
-1. Content author copies and pastes [some Javascript/CSS](https://raw.githubusercontent.com/djplaner/Content-Interface-Tweak/master/tweak.html) to final destination Web page
-At this stage, the Javascript/CSS is specific for [Blackboard 9.1](https://www.blackboard.com/sites/sp6/index.html)
-1. Content author creates content using Microsoft Word and a pre-defined set of styles.
-1. When Word doc complete a customised version of [mammoth.js](https://github.com/mwilliamson/mammoth.js) is used to convert the Word doc to clean HTML.
-1. Content author copies and pastes the HTML to the final desination Web page
-> Steps 2-4 are repeated everytime a change is made to the content. These steps (without the Javascript/CSS) should work on any web-based platform. Entirely because Mammoth.js produces nice clean HTML.
-5. When web page is viewed [the Javascript/CSS](https://raw.githubusercontent.com/djplaner/Content-Interface-Tweak/master/content.js) modifies the clean HTML to improve appearance and functionality.
 
-## How to use it with Blackboard LMS
+# How to use it with Blackboard Learn
 
-The following instructions are specific for Blackboard 9.1 (the basics apply to other technologies) and focus on how to prepare a Content Area to host/display the HTML content.
+The following instructions are specific for Blackboard Learn (the basics apply to other technologies) and focus on how to prepare a Content Area to host/display the HTML content.
 
-### Add the HTML (your content)
-1. Create a Content page in Blackboard
-1. Add a Content Item (_Build Content_ > _Item_)
-1. Give the new content item the title _Content Interface_
-1. Copy and paste the HTML produced by Mammoth into the content editor.
-> 1. Make sure the [Content Editor](https://blackboardhelp.usc.edu/course-content/adding-content-and-resources/using-the-content-editor/) is in advanced mode. 
-> 1. Click on the _HTML_ button 
-> 1. Paste the HTML into the window that pops up
-> 1. Save the changes and return to the page
+## Step 1 - Add the Javascript/CSS 
 
-### Add the Javascript/CSS (to style)
+The transformation of the HTML relies on some Javascript/CSS which needs to be included in the Blackboard Learn page. To do this:
 
-1. Add another Content Item 
-1. Give the new content item the title _Tweak_
-1. Copy and paste the HTML in your customised version of [the tweak.html file](https://raw.githubusercontent.com/djplaner/Content-Interface-Tweak/master/tweak.html)
+1. Add a new Blackboard content item to the page 
+1. Paste the content of [the tweak.html file](tweak.html) into the content item
+   As this is HTML code, you will need to use the _HTML_ button before pasting.
+
+## Step 2 - Add space for your content (HTML)
+
+1. Add a Content Item (_Build Content_ > _Item_) give it the title _Content Interface_
+
+## Step 3 - Create/update a Word document
+
+A standard Word document will work. However, there are additional styles used to implement certain features.
+
+The [example Word doc](https://djon.es/blog/wp-content/uploads/2020/07/output.gif) provides more detail on these styles and using Word. It can also be used as a template for your own Word documents.
+
+## Step 4 - Transform your Word document into HTML and update Blackboard
+
+1. Use this [version of Mammoth](https://djon.es/gu/mammoth.js/browser-demo/) to convert your Word document into HTML
+   **NOTE:** The conversion occurs entirely in the browser. Your content is never placed onto another computer.
+2. Copy the HTML produced by Mammoth into your clipboard.
+3. Return to Blackboard Learn and paste the HTML into the_Content Interface_item you created above
+   - Make sure the [Content Editor](https://blackboardhelp.usc.edu/course-content/adding-content-and-resources/using-the-content-editor/) is in advanced mode. 
+   - Click on the _HTML_ button 
+   - Paste the HTML into the window that pops up
+   - Save the changes and return to the page
+
+## Repeat steps 3 and 4 everytime you make a change
+
+Never change the contenet in Blackboard.  Always make the change in Word first and then update Blackboard.
+
+## Semi-automating the update process
+
+If the Word document is shared (e.g. via OneDrive) then it is possible to semi-automate the update proces as illustrated in the following image.
+
+https://djon.es/blog/wp-content/uploads/2020/07/output.gif
 
 
+To do this:
+1. Use OneDrive (or SharePoint) to create an appropriately shared link to the document
+1. Create a web link item on the Blackboard Learn content page 
+   Call it _Content Document_ and use the shared link to the document.
