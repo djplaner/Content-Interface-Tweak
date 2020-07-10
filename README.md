@@ -57,11 +57,11 @@ The [example Word doc](https://djon.es/blog/wp-content/uploads/2020/07/output.gi
    - Paste the HTML into the window that pops up
    - Save the changes and return to the page
 
-## Repeat steps 3 and 4 every time you make a change
+### Repeat steps 3 and 4 every time you make a change
 
 Never change the contenet in Blackboard.  Always make the change in Word first and then update Blackboard.
 
-## Semi-automating the update process
+### Semi-automating the update process
 
 If the Word document is shared (e.g. via OneDrive) then it is possible to semi-automate the update proces as illustrated in the following image.
 
