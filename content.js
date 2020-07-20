@@ -68,7 +68,12 @@ function contentInterface($){
     // do nothing if we couldn't find the contentInterface item
     if ( contentInterface.length === 0){
  	    return false;
- 	}
+     }
+
+    // handle footnotes
+    // - find each footnote reference and replace with a tooltipster element
+    //   that incldues content from the actual footnote (minus some extra HTML)
+    handleFootNotes();
 
     // handle the integration of any blackboard headings/items into the
     // content interface
@@ -87,8 +92,9 @@ function contentInterface($){
  	   // console.log( "Heading text " + jQuery(this).html());
  	    jQuery(this).nextUntil('h1,h2').addBack().wrapAll('<div class="accordion"></div>');
  	    jQuery(this).nextUntil('h1,h2').wrapAll('<div></div>');
- 	});
- 	
+     });
+     
+
     // Update all the readings and activities
     jQuery("div.activity").prepend(ACTIVITY);
     jQuery("div.reading").prepend(READING);
@@ -265,6 +271,70 @@ function contentInterface($){
     }
     if ( params.scrollTo===true) {
         jQuery('.accordion_top').slice(start,end).accordion("option","active", 0);
+    }
+
+}
+
+//********************************************* */
+// handle footnotes
+// - find each footnote reference and replace with a tooltipster element
+//   that incldues content from the actual footnote (minus some extra HTML)
+
+function handleFootNotes() {
+    const footnote_re = /<a href="#footnote-ref-[0-9]*">.<\/a>/g;
+    var footnotes = jQuery('#GU_ContentInterface a[id^="footnote-ref-"');
+    var firstFootNote = ''
+
+    footnotes.each( function() {
+        // get the <sup> item wrapped around footnote
+        var supItem = jQuery(this).parent();
+
+        // get the id for the footnote content (at end of doc)
+        //  footnote-ref-??  becomes
+        //  footnote-??
+        var footnoteId = jQuery(this).attr("id");
+        var footnote = "li# " + footnoteId.replace('-ref','');
+        footnote = footnote.replace(' ', '');
+        footnoteContent = jQuery( footnote).html();
+
+        if ( firstFootNote === '') {
+            firstFootNote = footnote;
+        }
+
+        // need to remove the return link to the footnote in footnoteContent
+        var footnoteContent = footnoteContent.replace( footnote_re, '');
+
+        // need to remove the link on the footnote reference
+        var refHtml = jQuery(this).html();
+        jQuery(this).remove("a");
+        jQuery(supItem).html(refHtml);
+
+        // set the attributes for tooltipster to work
+        supItem.attr('footNoteId',footnoteId);
+        supItem.attr('class', 'ci-tooltip');
+        supItem.attr('data-tooltip-content', footnoteContent);
+    })
+
+    // if there were footnotes, then
+    if (footnotes) {
+        // add a <h3>Footnotes</h3> heading just before the list of footnote content
+        var footNoteList = jQuery( firstFootNote ).parent();
+        jQuery(footNoteList).before("<h1>Footnotes</h1>");
+        // remove the return anchor TODO replace it with something that works
+        var footNoteListHtml = jQuery(footNoteList).html().replace( footnote_re, '');
+
+        jQuery(footNoteList).html(footNoteListHtml);
+
+        // add tooltipster if there are footnotes
+        jQuery("head").append(
+            "<link id='tooltipstercss' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/tooltipster.bundle.min.css' type='text/css' rel='stylesheet' />");
+        jQuery.getScript(
+            //"https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.js",
+            "https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.min.js",
+            function() { 
+                docWidth = Math.floor(jQuery(document).width()/2);
+                jQuery('.ci-tooltip').tooltipster({ 'maxWidth': docWidth});
+            });
     }
 }
 
@@ -583,6 +653,18 @@ function checkParams( contentInterface,wordDoc) {
  * - find any span.blackboardLink in the HTML and update the link
  * - if the item is hidden don't show the link and attempt to update
  *   the text to show (not currently available)
+ * 
+ * Footnotes - plan
+ * - appear in a section as
+ *     <sup><a href="#footnote-2" id="footnote-ref-2" target="_blank">[1]</a></sup>
+ * - at the end of the file as
+ *     <li id="footnote-3"> 
+ *        <p>..footnote content. <a href="#footnote-ref-3" target="_blank">↑</a></p> 
+ *     </li> 
+ * Need to
+ * - add the title to the sup and remove the link, but add the id to the sup
+ * - if there is an ordered list with elements with id "footnote-2" e.g.  Add a small
+ *   heading just before the foot notes
  */
  
 function handleBlackboardItem() {
@@ -604,6 +686,7 @@ function handleBlackboardItem() {
     
     /* Find the matching Blackboard element heading (h3) */
     var bbItem = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find("h3:textEquals(" + title +")");
+
     
     if ( bbItem.length===0) {
         // add the hidden_string to the heading
@@ -659,6 +742,7 @@ function handleBlackboardItem() {
         jQuery(this).nextUntil(this.tagName).find(".blackboardLink").each( function() {
             jQuery(this).wrapAll(string);
         });
+
         
     }
     
