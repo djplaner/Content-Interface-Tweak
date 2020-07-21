@@ -316,7 +316,7 @@ function handleFootNotes() {
     })
 
     // if there were footnotes, then
-    if (footnotes) {
+    if (footnotes.length) {
         // add a <h3>Footnotes</h3> heading just before the list of footnote content
         var footNoteList = jQuery( firstFootNote ).parent();
         jQuery(footNoteList).before("<h1>Footnotes</h1>");
