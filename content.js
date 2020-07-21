@@ -61,7 +61,9 @@ function contentInterface($){
  	 // Hide the tweak if we're not editing
 	 if (location.href.indexOf("listContent.jsp") > 0) {
          $(".gutweak").parents("li").hide(); 
+         // hide the title for content interface
          contentInterface.parents("div.item").hide();
+         // hide the Content Document item
          jQuery(wordDoc).hide();
 	 }
 
@@ -320,11 +322,10 @@ function handleFootNotes() {
         // add a <h3>Footnotes</h3> heading just before the list of footnote content
         var footNoteList = jQuery( firstFootNote ).parent();
         jQuery(footNoteList).before("<h1>Footnotes</h1>");
-        // remove the return anchor TODO replace it with something that works
+        //remove the return anchor TODO replace it with something that works
         var footNoteListHtml = jQuery(footNoteList).html().replace( footnote_re, '');
-
+          
         jQuery(footNoteList).html(footNoteListHtml);
-
         // add tooltipster if there are footnotes
         jQuery("head").append(
             "<link id='tooltipstercss' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/tooltipster.bundle.min.css' type='text/css' rel='stylesheet' />");
@@ -685,8 +686,11 @@ function handleBlackboardItem() {
         });
     
     /* Find the matching Blackboard element heading (h3) */
-    var bbItem = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find("h3:textEquals(" + title +")");
-
+    // - ignore any headings that are within the Content Interface    
+    var bbItem = jQuery("h3:textEquals(" + title + ")").filter(function() {
+        parent = jQuery(this).parents('#GU_ContentInterface');
+        return parent.length===0;
+    });
     
     if ( bbItem.length===0) {
         // add the hidden_string to the heading
@@ -734,6 +738,8 @@ function handleBlackboardItem() {
         
         // Hide the bbitem li
         if (location.href.indexOf("listContent.jsp") > 0) {
+            console.log(bbItem);
+            console.log(jQuery(bbItem).parent().parent());
             jQuery(bbItem).parent().parent().hide();
         }
         // wrap any span class="blackboardLink" with a link

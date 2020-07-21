@@ -815,10 +815,14 @@ function handleBlackboardItem() {
     
     
     /* Find the matching Blackboard element heading (h3) */
-    var bbItem = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find("h3:textEquals(" + title +")");
+    // Ignore any within the Content Interface
+    var bbItem = jQuery("h3:textEquals(" + title + ")").filter(function() {
+        parent = jQuery(this).parents('#GU_ContentInterface');
+        return parent.length===0;
+    });
     
-    //console.log(" -- Looked for **" + title + "** and found " + bbItem.length);
-    //console.log(bbItem);
+    /*console.log(" -- Looked for **" + title + "** and found " + bbItem.length);
+    console.log(bbItem);*/
     
     if ( bbItem.length===0) {
         // add the hidden_string to the heading
