@@ -1090,10 +1090,6 @@ function handleBlackboardContentLink() {
 function handleBlackboardMenuLink() {
     var hidden_string = " (not currently available)";
     var duplicate_menu_string = " (more than 1 menu item with same name) "
-    /*console.log("Menu");
-    console.log(this);
-    console.log("parent");
-    console.log(jQuery(this).parent());*/
     
     // the title is the value of the link associated with the item
     // Either parent or child
@@ -1107,18 +1103,10 @@ function handleBlackboardMenuLink() {
     if ( typeof title !== 'undefined'){
         title = title.replace(/%20/g," ");
     }
-    //console.log("title " + title);
-    
-    //console.log("MenuLink: looking for " + title);
-    //console.log(jQuery(this).html());
-    
     /* Find the course menu link that matches */
     var bbItem = jQuery( "#courseMenuPalette_contents > li > a > span[title='"+title+"']" );
     
-    //console.log("Looking for title " + title + " found " + bbItem.length);
-    /*var items = jQuery("#courseMenuPalette_contents > li > a");//.attr('title');
-    console.log(items);*/
-    
+    // how many did we find?
     if ( bbItem.length===0) {
         // not found, so add hidden_string
         spanText = jQuery(this).text();

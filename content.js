@@ -326,6 +326,7 @@ function handleFootNotes() {
         var footNoteListHtml = jQuery(footNoteList).html().replace( footnote_re, '');
           
         jQuery(footNoteList).html(footNoteListHtml);
+        
         // add tooltipster if there are footnotes
         jQuery("head").append(
             "<link id='tooltipstercss' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/tooltipster.bundle.min.css' type='text/css' rel='stylesheet' />");
@@ -853,43 +854,38 @@ function handleBlackboardContentLink() {
  */
  
 function handleBlackboardMenuLink() {
-    var hidden_string = " (not currently available)";
+  var hidden_string = " (not currently available)";
+    var duplicate_menu_string = " (more than 1 menu item with same name) "
     
-    // get the title from the Blackboard Item Heading (2)
+    // the title is the value of the link associated with the item
+    // Either parent or child
+    var linkParent = true;
     title = jQuery(this).parent().attr('href');
+    if ( typeof title === 'undefined') {
+        linkParent = false;
+        title = jQuery(this).children("a").first().attr('href');
+    }
+    
     if ( typeof title !== 'undefined'){
         title = title.replace(/%20/g," ");
     }
     
     /* Find the course menu link that matches */
     var bbItem = jQuery( "#courseMenuPalette_contents > li > a > span[title='"+title+"']" );
-    
+    // how many did we find?
     if ( bbItem.length===0) {
         // not found, so add hidden_string
         spanText = jQuery(this).text();
-        jQuery(this).text( spanText + hidden_string);        
+        jQuery(this).text( spanText + hidden_string);
     } else if ( bbItem.length > 1 ) {
         console.log("Error found more than 1 (" + bbItem.length + ") entries matching " + title);
+        spanText = jQuery(this).text();
+        jQuery(this).text( spanText + duplicate_menu_string);
     } else if ( bbItem.length===1 ) {
-        // get the link
+        // get the link from the menu item
         var link = jQuery(bbItem).parent().attr('href');
-        
-        // if there's no link, then check to see if it's TurnitIn
-        // (which puts the link in the body)
-        if ( link == null ) {
-            // Assume it's a TurnitIn and look for "View Assignment" link
-            // Have to go up to the parent and onto the next div
-            link = jQuery(bbItem).parent().next().children(".vtbegenerated").children("a");
-            var text = link.text();
-            if ( text === 'View Assignment') {
-                // we've found a Safe Assignment link
-                link = link.attr('href');
-            }
-        }
-        
         // check to see if the course menu item is actually hidden
         hidden = jQuery(bbItem).next().attr("class" );
-        
         if ( hidden==="cmLink-hidden" ) {
             // add the hidden_string to the heading
             linkText = jQuery(this).text();
@@ -898,17 +894,13 @@ function handleBlackboardMenuLink() {
             return true;
         }
         
-        jQuery(this).parent().attr('href', link);
-        // Hide the bbitem li
-        /*if (location.href.indexOf("listContent.jsp") > 0) {
-            jQuery(bbItem).parent().parent().hide();
-        }*/
-        // wrap any span class="blackboardLink" with a link
-        //var string = '<a href="' + link + '"></a>';
-        // Try to replace just the Blackboard links for the current heading
-        /*jQuery(this).nextUntil(this.tagName).find(".blackboardLink").each( function() {
-            jQuery(this).wrapAll(string);
-        });*/
+        // change the link, depending on if we've a parent or child
+        if ( linkParent) {
+          jQuery(this).parent().attr('href', link);
+        } else {
+            jQuery(this).children("a").first().attr('href', link);
+        }
+        
         
     }
     
