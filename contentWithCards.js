@@ -101,6 +101,16 @@ function contentInterface($){
     
     
     
+    //   that incldues content from the actual footnote (minus some extra HTML)
+    handleFootNotes();    
+
+ 	// handle the integration of any blackboard headings/items into the
+    // content interface
+    jQuery("h1.blackboard").each( handleBlackboardItem );
+    jQuery("h2.blackboard").each( handleBlackboardItem );
+    jQuery("span.blackboardContentLink").each( handleBlackboardContentLink );
+    jQuery("span.blackboardMenuLink").each( handleBlackboardMenuLink );
+
     // Add a <div> </div> around all the content following H1s
  	jQuery('#GU_ContentInterface h1').each(function() {
  	    // Kludge test for changing colour
@@ -115,18 +125,12 @@ function contentInterface($){
  	    jQuery(this).nextUntil('h1,h2').addBack().wrapAll('<div class="accordion"></div>');
  	    jQuery(this).nextUntil('h1,h2').wrapAll('<div class="gu-accordion-h2-body"></div>');
  	});
- 	
- 	// handle the integration of any blackboard headings/items into the
-    // content interface
-    
-    jQuery("h1.blackboard").each( handleBlackboardItem );
-    jQuery("h2.blackboard").each( handleBlackboardItem );
-    jQuery("span.blackboardContentLink").each( handleBlackboardContentLink );
-    jQuery("span.blackboardMenuLink").each( handleBlackboardMenuLink );
+     
+    // handle footnotes
+    // - find each footnote reference and replace with a tooltipster element
     
     handleBlackboardCards();
     //jQuery("div.bbCard").each( handleBlackboardCards );
- 	
  	
     // Update all the readings and activities
     jQuery("div.activity").prepend(ACTIVITY);
@@ -327,13 +331,73 @@ function contentInterface($){
     jQuery(child).unwrap();
 }
 
+//********************************************* */
+// handle footnotes
+// - find each footnote reference and replace with a tooltipster element
+//   that incldues content from the actual footnote (minus some extra HTML)
+
+function handleFootNotes() {
+    const footnote_re = /<a href="#footnote-ref-[0-9]*">.<\/a>/g;
+    var footnotes = jQuery('#GU_ContentInterface a[id^="footnote-ref-"');
+    var firstFootNote = ''
+
+    footnotes.each( function() {
+        // get the <sup> item wrapped around footnote
+        var supItem = jQuery(this).parent();
+
+        // get the id for the footnote content (at end of doc)
+        //  footnote-ref-??  becomes
+        //  footnote-??
+        var footnoteId = jQuery(this).attr("id");
+        var footnote = "li# " + footnoteId.replace('-ref','');
+        footnote = footnote.replace(' ', '');
+        footnoteContent = jQuery( footnote).html();
+
+        if ( firstFootNote === '') {
+            firstFootNote = footnote;
+        }
+
+        // need to remove the return link to the footnote in footnoteContent
+        var footnoteContent = footnoteContent.replace( footnote_re, '');
+
+        // need to remove the link on the footnote reference
+        var refHtml = jQuery(this).html();
+        jQuery(this).remove("a");
+        jQuery(supItem).html(refHtml);
+
+        // set the attributes for tooltipster to work
+        supItem.attr('footNoteId',footnoteId);
+        supItem.attr('class', 'ci-tooltip');
+        supItem.attr('data-tooltip-content', footnoteContent);
+    })
+
+    // if there were footnotes, then
+    if (footnotes.length) {
+        // add a <h3>Footnotes</h3> heading just before the list of footnote content
+        var footNoteList = jQuery( firstFootNote ).parent();
+        jQuery(footNoteList).before("<h1>Footnotes</h1>");
+        //remove the return anchor TODO replace it with something that works
+        var footNoteListHtml = jQuery(footNoteList).html().replace( footnote_re, '');
+          
+        jQuery(footNoteList).html(footNoteListHtml);
+        
+        // add tooltipster if there are footnotes
+        jQuery("head").append(
+            "<link id='tooltipstercss' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/tooltipster.bundle.min.css' type='text/css' rel='stylesheet' />");
+        jQuery.getScript(
+            //"https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.js",
+            "https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.min.js",
+            function() { 
+                docWidth = Math.floor(jQuery(document).width()/2);
+                jQuery('.ci-tooltip').tooltipster({ 'maxWidth': docWidth});
+            });
+    }
+}
+
 /***************************************************
  * setUpEdit
  * - Set up the edit/update process
- * 
- * 
  */
- 
 
 var UPDATE_HTML = `
 <h3>Important</h3>
