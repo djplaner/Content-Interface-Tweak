@@ -239,7 +239,7 @@
   padding: .25em;
   margin: 1em .5em; 
     justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .icon img {
@@ -536,7 +536,8 @@ figure._60 {
 .icon {
   flex: 1 !important;
   display: flex;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: top;
   padding: .25em;
   margin: 1em .5em; }
 
@@ -567,7 +568,6 @@ figure._60 {
   max-width: 80%;
   background-color: #FFDC0B !important;
   color: #000000 !important;
-    
 }
 
 @media print {
