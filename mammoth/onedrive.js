@@ -318,6 +318,7 @@ function doMammoth( wordContent ) {
     
     var options = {
         styleMap: [
+            
             "p[style-name='Section Title'] => h1:fresh",
                     "p[style-name='Quote'] => blockquote",
                     "p[style-name='Quotations'] => blockquote",
@@ -340,15 +341,22 @@ function doMammoth( wordContent ) {
                     "p[style-name='Activity Title'] => div.activity > h2:fresh",
                     "p[style-name='ActivityText'] => div.activity > div.instructions > p:fresh",
                     "p[style-name='Activity Text'] => div.activity > div.instructions > p:fresh",
+                    //"r[style-name='Activity'] => div.activity > div.instructions > p:fresh",
+                    "p[style-name='Activity']:ordered-list(1) => div.activity > div.instructions > ol > li:fresh",
+                    "p[style-name='Activity']:unordered-list(1) => div.activity > div.instructions > ul > li:fresh",
                     "p[style-name='Activity'] => div.activity > div.instructions > p:fresh",
                     /*"p[style-name='Activity'] => span.activity",*/
                     "p[style-name='Bibliography'] => div.apa > p:fresh",
+                    "p[style-name='Reading']:ordered-list(1) => div.reading > div.instructions > ol > li:fresh",
+                    "p[style-name='Reading']:unordered-list(1) => div.reading > div.instructions > ul > li:fresh",
                     "p[style-name='Reading'] => div.reading > div.instructions > p:fresh",
                     "p[style-name='Title'] => div.invisible",
                     "p[style-name='Card'] => div.gu_card",
                     "r[style-name='Emphasis'] => em:fresh",
                     "p[style-name='Timeout'] => span.timeout",
                     "p[style-name='Embed'] => span.embed",
+                    "p[style-name='Note']:ordered-list(1) => div.ael-note > div.instructions > ol > li:fresh",
+                    "p[style-name='Note']:unordered-list(1) => div.ael-note > div.instructions > ul > li:fresh",
                     "p[style-name='Note'] => div.ael-note > div.instructions > p:fresh",
                     /* Adding cards */
                     "p[style-name='Blackboard Card'] => div.bbCard:fresh",
@@ -363,7 +371,9 @@ function doMammoth( wordContent ) {
                     /* tables?? */
                     "r[style-name='small'] => span.smallText",
                     "r[style-name='StrongCentered'] => span.strongCentered",
-                    "r[style-name='Centered'] => span.centered"
+                    "r[style-name='Centered'] => span.centered",
+                    // Underline
+                    "u => u"
             ]
     };
             
