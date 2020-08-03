@@ -320,9 +320,9 @@ function doMammoth( wordContent ) {
         styleMap: [
             
             "p[style-name='Section Title'] => h1:fresh",
-                    "p[style-name='Quote'] => blockquote",
-                    "p[style-name='Quotations'] => blockquote",
-                    "p[style-name='Quotation'] => blockquote",
+                    "p[style-name='Quote'] => blockquote:fresh",
+                    "p[style-name='Quotations'] => blockquote:fresh",
+                    "p[style-name='Quotation'] => blockquote:fresh",
                     "p[style-name='Body Text'] => p:fresh",
                     "p[style-name='Text'] => p:fresh",
                     "p[style-name='Default'] => p:fresh",
@@ -333,7 +333,7 @@ function doMammoth( wordContent ) {
                     "p[style-name='Picture'] => div.picture",
                     "p[style-name='Picture Right'] => div.pictureRight",
                     "p[style-name='PictureRight'] => div.pictureRight",
-                    
+                    "r[style-name='University Date'] => span.universityDate",
                     "p[style-name='Video'] => div.video",
                     "r[style-name='Checkbox Char'] => span.checkbox",
                     "p[style-name='Checkbox'] => span.checkbox",
@@ -547,4 +547,3 @@ function copyToClipboard(elem) {
  function signOut() {
      myMSALObj.logout();
  }
-
