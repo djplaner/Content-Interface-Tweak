@@ -1335,7 +1335,7 @@ var TERM_DATES = {
 
 function calculateTerm() {
     // get the right bit of the Blackboard breadcrumbs
-    courseTitle = $("#courseMenu_link").attr('title') || 
+    courseTitle = jQuery("#courseMenu_link").attr('title') || 
               "Collapse COM14 Creative and Professional Writing (COM14_3205_OT)";
 
     // get the course id which will be in brackets
