@@ -2851,7 +2851,7 @@
      //  date = March 12, 2019
      var day = '', week = '', date = '';
      m = dateText.match(
-         /.*\b(((mon|tues|wed(nes)?|thur(s)?|fri|sat(ur)?|sun)(day)?))\b *week *\b([0-9]*)/i);
+         /.*\b(((mon|tues|wed(nes)?|thur(s)?|fri|sat(ur)?|sun)(day)?))\b[,]*[ ]*week *\b([0-9]*)/i);
      if (m) {
          day = m[1];
          week = m[m.length - 1];
