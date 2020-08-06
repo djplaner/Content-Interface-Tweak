@@ -8,6 +8,11 @@
  // Default dates
  var TERM = "3191", YEAR = 2019;
  
+ // Default reviewed/mark reviewed labels
+ var MARK_REVIEWED = "Mark Reviewed";
+ var REVIEWED = "Reviewed";
+  
+  
  var tweak_bb_active_url_pattern = "listContent.jsp";
  
  // Wrap arounds for various types of activity 
@@ -647,8 +652,8 @@
          var m = contentInterfaceTitle.match(/content interface\s*([^<]+)/i );
          
          if (m) {
-             params = m[1].match(/\S+/g);
-             
+             //params = m[1].match(/\S+/g);
+             params = parse_parameters(m[1]);
              if (params) {
                  params.forEach( function(element) {
                      if ( element.match(/expandall/i)) {
@@ -666,6 +671,12 @@
                      }*/
                      if ( x = element.match(/expand=([0-9]*)/i)) {
                          paramsObj.expand = x[1];
+                     }
+                     if (m = element.match(/^reviewed=(.*)/ui)) {
+                         REVIEWED = m[1];
+                     } 
+                     if (m = element.match(/^markReviewed=(.*)/i)) {
+                         MARK_REVIEWED = m[1];
                      }
                  });
              }
@@ -983,19 +994,21 @@
      linkText = jQuery(item).text();
      
      // Add text to the heading
-      var MARK_REVIEWED = "Mark Reviewed"
-      var REVIEWED = "Reviewed";
+      //var MARK_REVIEWED = "Mark Reviewed"
+      //var REVIEWED = "Reviewed";
       
       var reviewHeadingTemplate = ''
       if ( reviewLink.match(/markUnreviewed/)) {
           
           reviewHeadingTemplate = `
-      <span style="float:right" class="ui-state-disabled ui-corner-all">Reviewed</span>
+      <span style="float:right" class="ui-state-disabled ui-corner-all">{TEXT}</span>
       `;
+          reviewHeadingTemplate = reviewHeadingTemplate.replace('{TEXT}', REVIEWED)
       } else {
           reviewHeadingTemplate = `
-          <span style="float:right" class="ui-state-active ui-corner-all">Not Reviewed</span>
+          <span style="float:right" class="ui-state-active ui-corner-all">{TEXT}</span>
           `;
+          reviewHeadingTemplate = reviewHeadingTemplate.replace('{TEXT}', MARK_REVIEWED)
       }
       jQuery(item).html( linkText + reviewHeadingTemplate);
       
@@ -3182,4 +3195,38 @@
              }
          }
      }
+ }
+ 
+ //---------------------------------------------------------------------
+ // Given a string of parameters use some Stack Overflow provided
+ // regular expression magic to split it up into its component parts
+ 
+ function parse_parameters(cmdline) {
+     //    var re_next_arg = /^\s*((?:(?:"(?:\\.|[^"])*")|(?:'[^']*')|\\.|\S)+)\s*(.*)$/;
+     var re_next_arg = /^\s*((?:(?:"(?:\\.|[^"])*")|(?:'[^']*')|\\.|\S)+)\s*(.*)$/;
+     var next_arg = ['', '', cmdline];
+     var args = [];
+     while (next_arg = re_next_arg.exec(next_arg[2])) {
+         var quoted_arg = next_arg[1];
+         var unquoted_arg = "";
+         while (quoted_arg.length > 0) {
+             if (/^"/.test(quoted_arg)) {
+                 var quoted_part = /^"((?:\\.|[^"])*)"(.*)$/.exec(quoted_arg);
+                 unquoted_arg += quoted_part[1].replace(/\\(.)/g, "$1");
+                 quoted_arg = quoted_part[2];
+             } else if (/^'/.test(quoted_arg)) {
+                 var quoted_part = /^'([^']*)'(.*)$/.exec(quoted_arg);
+                 unquoted_arg += quoted_part[1];
+                 quoted_arg = quoted_part[2];
+             } else if (/^\\/.test(quoted_arg)) {
+                 unquoted_arg += quoted_arg[1];
+                 quoted_arg = quoted_arg.substring(2);
+             } else {
+                 unquoted_arg += quoted_arg[0];
+                 quoted_arg = quoted_arg.substring(1);
+             }
+         }
+         args[args.length] = unquoted_arg;
+     }
+     return args;
  }
