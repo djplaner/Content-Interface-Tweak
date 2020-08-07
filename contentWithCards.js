@@ -12,12 +12,13 @@
  var MARK_REVIEWED = "Mark Reviewed";
  var REVIEWED = "Reviewed";
   
+ var DEFAULT_CSS="https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css"
   
  var tweak_bb_active_url_pattern = "listContent.jsp";
  
  // Wrap arounds for various types of activity 
- var READING=`<div class="image"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png" /></div>`;
- var ACTIVITY=`<div class="image"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-dancing-48.png" /></div>`;
+ var READING=`<div class="readingImage"></div>`;
+ var ACTIVITY=`<div class="activityImage"></div>`;
  var NOTE=`<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`;
  
  //
@@ -644,6 +645,8 @@
  function checkParams( contentInterface,wordDoc) {
      var paramsObj = {};
      paramsObj.expand = -1;
+
+     var cssURL = DEFAULT_CSS;
      
      // Check parameters in the Content Interface item title
      if (contentInterface.length>0) {
@@ -678,10 +681,16 @@
                      if (m = element.match(/^markReviewed=(.*)/i)) {
                          MARK_REVIEWED = m[1];
                      }
+                     if ( x = element.match(/css=([^ ]*)/ )) {
+                        cssURL=x[1];
+                     }
                  });
              }
          }
      }
+
+     console.log("CSS is " + cssURL );
+     addCSS( cssURL );
      // Check for a Word doc link
      //var wordDoc = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Document")').eq(0);
      
@@ -3229,4 +3238,21 @@
          args[args.length] = unquoted_arg;
      }
      return args;
+ }
+
+ /*************************************************************
+ * addCSS( url )
+ * - given the URL for a CSS file add it to the document
+ * https://makitweb.com/dynamically-include-script-and-css-file-with-javascript/
+ * (and other places)
+ */
+
+function addCSS( urlString ) {
+    var head = document.getElementsByTagName('head')[0];
+
+    var style = document.createElement('link');
+    style.href = urlString;
+    style.type = 'text/css';
+    style.rel = 'stylesheet';
+    head.append(style);
  }
