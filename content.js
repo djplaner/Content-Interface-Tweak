@@ -9,14 +9,16 @@
 var TERM = "3191", YEAR = 2019;
 
 // Wrap arounds for various types of activity 
-var READING = `<div class="image"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png" /></div>`;
-var ACTIVITY = `<div class="image"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-dancing-48.png" /></div>`;
+var READING = `<div class="readingImage"></div>`;
+var ACTIVITY = `<div class="activityImage"></div>`;
 var NOTE = `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`;
 
 var EXPAND_COLLAPSE_BUTTON_HTML = `<div class="accordion-expand-holder">
 <button type="button" class="open">Expand all</button>
 <button type="button" class="close">Collapse all</button>
 </div>`;
+
+var DEFAULT_CSS="https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css"
 
 // simple definition for using pure.css tables
 // TODO need to replace this.
@@ -260,9 +262,12 @@ function contentInterface($) {
     var end;
     numAccordions = jQuery('.accordion_top').length;
     start = parseInt(start, 10) - 1;
+    // if there wasn't a number to open, just open the first one
     if ((!Number.isInteger(start)) || (start > numAccordions - 1)) {
         start = 0;
         end = 1;
+        // This is where the local storage thing could happen,
+        // just set start/end to the appropriate value
     } else {
         end = start + 1;
     }
@@ -602,6 +607,8 @@ function checkParams(contentInterface, wordDoc) {
     paramsObj.expand = -1;
     paramsObj.scrollTo = true;
 
+    var cssURL = DEFAULT_CSS;
+
     // Check parameters in the Content Interface item title
     if (contentInterface.length > 0) {
         var contentInterfaceTitle = jQuery.trim(contentInterface.text());
@@ -615,6 +622,7 @@ function checkParams(contentInterface, wordDoc) {
 
             if (params) {
                 params.forEach(function (element) {
+                    console.log("param " + element);
                     if (element.match(/nofirstscroll/i)) {
                         paramsObj.scrollTo = false;
                     }
@@ -631,6 +639,9 @@ function checkParams(contentInterface, wordDoc) {
                     /*if ( x = element.match(/wordDoc=([^ ]*)/i) ) {
                         paramsObj.wordDoc = x[1];
                     }*/
+                    if ( x = element.match(/css=([^ ]*)/ )) {
+                        cssURL=x[1];
+                    }
                     if (x = element.match(/expand=([0-9]*)/i)) {
                         paramsObj.expand = x[1];
                     }
@@ -644,6 +655,9 @@ function checkParams(contentInterface, wordDoc) {
             }
         }
     }
+
+    addCSS( cssURL);
+
     // Check for a Word doc link
     //var wordDoc = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Document")').eq(0);
 
@@ -1397,3 +1411,20 @@ function calculateTerm() {
         }
     }
 }
+
+/*************************************************************
+ * addCSS( url )
+ * - given the URL for a CSS file add it to the document
+ * https://makitweb.com/dynamically-include-script-and-css-file-with-javascript/
+ * (and other places)
+ */
+
+ function addCSS( urlString ) {
+    var head = document.getElementsByTagName('head')[0];
+
+    var style = document.createElement('link');
+    style.href = urlString;
+    style.type = 'text/css';
+    style.rel = 'stylesheet';
+    head.append(style);
+ }

@@ -1,6 +1,6 @@
 
-/* APA referencing - taken from CSU Work
-   https://github.com/timklapdor/learning-materials */
+
+/* Used for jQuery expand all/close all */
 
    #GU_ContentInterface button {
     display:inline-block;
@@ -21,6 +21,9 @@
     background-color:black;
 }
 
+/* APA referencing - taken from CSU Work
+   https://github.com/timklapdor/learning-materials */
+
 .apa, .apa ul, .apa ol, .apa dl {
   padding-left: 0 !important;
   margin-left: 0 !important;
@@ -35,7 +38,8 @@
   margin-top: 1em !important;
   text-indent: -2em !important; }
   
-/* Base classes */
+/*****************************************************/
+/* Main body elements */
 
 #GU_ContentInterface h1 {
   font-size: 120%;
@@ -126,16 +130,9 @@
   list-style: decimal;
 }
   
-/** picture **/
-
-#GU_ContentInterface .pictureRight {
-    float:right;
-}
-
-#GU_ContentInterface .picture {
-}
 
 /** video **/
+/* deprecated - use embed for videos */
 
 .video {
   position: relative;
@@ -201,8 +198,22 @@
   margin-left: auto;
   margin-right: auto;
   width: 95%; 
-    border-radius: 10px;
+    border-radius: 1em;
     padding: 1em;
+}
+
+#GU_ContentInterface .activityImage {
+  width: 5%;
+  background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-dancing-48.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#GU_ContentInterface .readingImage {
+  width: 5%;
+  background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 #GU_ContentInterface .activityNarrow  {
@@ -229,6 +240,7 @@
   margin-right: auto;
   width: 95%;
   padding: 1em;
+  border-radius: 1em;
     
 }
 
@@ -553,10 +565,16 @@ figure._60 {
   background-color: #c02424 !important;
   color: #FFFFFF !important; }
   
-/*#GU_ContentInterface*/
+/** picture **/
 
-.pictureRight { font-size: 75%; text-align: center; }
-.picture { font-size: 75%; text-align:center; }
+#GU_ContentInterface .pictureRight {
+    float:right;
+    font-size: 75%; text-align: center; 
+}
+
+#GU_ContentInterface .picture {
+    font-size: 75%; text-align: center; 
+}
 
 .ael-note { 
   border-radius: 1em;
