@@ -829,7 +829,7 @@ function handleBlackboardContentLink() {
 
     if (bbItem.length === 0) {
         // not found, so add hidden_string
-        spanText = jQuery(this).text();
+        let spanText = jQuery(this).text();
         jQuery(this).text(spanText + hidden_string);
     } else if (bbItem.length > 1) {
         console.log("Error found more than 1 (" + bbItem.length + ") entries matching " + title);
