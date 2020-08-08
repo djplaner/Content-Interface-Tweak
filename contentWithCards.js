@@ -5,11 +5,13 @@
  * - Implement a variety of transformations
  */
 
+ /*jshint esversion: 6 */
+
 import { calculateTerm, getTermDate, TERM_DATES } from './modules/termDates.js';
 
 jQuery( document ).ready(function( $ ) { 
     contentInterface($);
-})
+});
 
 
  // Default dates
@@ -19,7 +21,7 @@ jQuery( document ).ready(function( $ ) {
  var MARK_REVIEWED = "Mark Reviewed";
  var REVIEWED = "Reviewed";
   
- var DEFAULT_CSS="https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css"
+ var DEFAULT_CSS="https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
   
  var tweak_bb_active_url_pattern = "listContent.jsp";
  
@@ -163,10 +165,10 @@ function contentInterface($){
      //doVideo();
      
      // convert the embed code
-     var embeds = jQuery(".embed");
+     let embeds = jQuery(".embed");
      embeds.each( function(idx){
-         var embed = jQuery(this).html();
-         var decoded = jQuery("<div/>").html(embed).text();
+         let embed = jQuery(this).html();
+         let decoded = jQuery("<div/>").html(embed).text();
          jQuery(this).html(decoded);
          
      });
@@ -269,7 +271,7 @@ function contentInterface($){
      
      // TODO move this to a string and make it look prettier
      jQuery( "#GU_ContentInterface").prepend(EXPAND_COLLAPSE_BUTTON_HTML);
-     var icons = jQuery(".accordion").accordion("option", "icons");
+     let icons = jQuery(".accordion").accordion("option", "icons");
      
      // define the click function for the expand all
      jQuery('.gu_content_open').click(function (event) {
@@ -346,8 +348,8 @@ function contentInterface($){
      
      // Remove the Content Interface from the vtbegenerated div so that
      // Bb CSS doesn't override embedded Card CSS
-     var journey = jQuery(contentInterface).parent().next('div.details').children('.vtbegenerated');    
-     var child = jQuery(journey).children("#html");    
+     let journey = jQuery(contentInterface).parent().next('div.details').children('.vtbegenerated');    
+     let child = jQuery(journey).children("#html");    
      jQuery(child).unwrap();
  }
  
@@ -358,30 +360,30 @@ function contentInterface($){
  
  function handleFootNotes() {
      const footnote_re = /<a href="#footnote-ref-[0-9]*">.<\/a>/g;
-     var footnotes = jQuery('#GU_ContentInterface a[id^="footnote-ref-"');
-     var firstFootNote = ''
+     let footnotes = jQuery('#GU_ContentInterface a[id^="footnote-ref-"');
+     let firstFootNote = '';
  
      footnotes.each( function() {
          // get the <sup> item wrapped around footnote
-         var supItem = jQuery(this).parent();
+         let supItem = jQuery(this).parent();
  
          // get the id for the footnote content (at end of doc)
          //  footnote-ref-??  becomes
          //  footnote-??
-         var footnoteId = jQuery(this).attr("id");
-         var footnote = "li# " + footnoteId.replace('-ref','');
+         let footnoteId = jQuery(this).attr("id");
+         let footnote = "li# " + footnoteId.replace('-ref','');
          footnote = footnote.replace(' ', '');
-         footnoteContent = jQuery( footnote).html();
+         let footnoteContent = jQuery( footnote).html();
  
          if ( firstFootNote === '') {
              firstFootNote = footnote;
          }
  
          // need to remove the return link to the footnote in footnoteContent
-         var footnoteContent = footnoteContent.replace( footnote_re, '');
+         footnoteContent = footnoteContent.replace( footnote_re, '');
  
          // need to remove the link on the footnote reference
-         var refHtml = jQuery(this).html();
+         let refHtml = jQuery(this).html();
          jQuery(this).remove("a");
          jQuery(supItem).html(refHtml);
  
@@ -389,7 +391,7 @@ function contentInterface($){
          supItem.attr('footNoteId',footnoteId);
          supItem.attr('class', 'ci-tooltip');
          supItem.attr('data-tooltip-content', footnoteContent);
-     })
+     });
  
      // if there were footnotes, then
      if (footnotes.length) {
@@ -585,10 +587,10 @@ function contentInterface($){
    
    if ( typeof path === 'undefined'){
      // Word document is not defined
-     var html = UPDATE_HTML + WORD_DOC_NOT_PRESENT
+     let html = UPDATE_HTML + WORD_DOC_NOT_PRESENT;
  
      // add in link to edit the content item
-     var editContent = 'into the <a href="https://bblearn-blaed.griffith.edu.au/webapps/blackboard/execute/manageCourseItem?content_id=' + contentId + '&course_id=' + courseId + '&dispatch=edit">Content Interface content item</a>';
+     let editContent = 'into the <a href="https://bblearn-blaed.griffith.edu.au/webapps/blackboard/execute/manageCourseItem?content_id=' + contentId + '&course_id=' + courseId + '&dispatch=edit">Content Interface content item</a>';
      
      html = html.replace( "{EDIT_CONTENT_ITEM}", editContent);
      
@@ -598,7 +600,7 @@ function contentInterface($){
    }
    
    //jQuery(".gu_docNotPresent").hide();
-   var updateHtml = UPDATE_HTML + WORD_DOC_PRESENT + INSTRUCTIONS;
+   let updateHtml = UPDATE_HTML + WORD_DOC_PRESENT + INSTRUCTIONS;
    
    if ( jQuery('#gu_jqueryStyle').length ) {
        updateHtml = updateHtml + CHANGE_TEMPLATE; 
@@ -624,8 +626,8 @@ function contentInterface($){
    jQuery("#guUpdate").click( function( event ) {
        
        // if href currently includes blaed then add parameter
-       var blaed = '';
-       var link = window.location.href;
+       let blaed = '';
+       let link = window.location.href;
        if ( link.match(BLAED_LINK)!==null) {
            blaed="&blaed=1";
        }
@@ -718,7 +720,7 @@ function contentInterface($){
  function handleBlackboardCards() {
      
      //----------------- organise card elements into bunches for conversion
-     var listOfCardBunches = []
+     var listOfCardBunches = [];
      
      // Get list of all cards
      var cardElements = jQuery("div.bbCard");
@@ -740,7 +742,7 @@ function contentInterface($){
              // - originalHTMLElement is from Mammoth output
              // - bbItem is the matching Blackboard Item from which the
              //   card information will be extracted
-             var cardObject = new Object();
+             var cardObject = {};
              cardObject.originalHTMLElement = cardElements[currentCard];
              // Find the Bb Item matching this cardElement
              cardObject.bbItem = getCardBbItem( cardObject.originalHTMLElement);
@@ -807,7 +809,7 @@ function contentInterface($){
      // Will have to handle the undefined items
      
      //console.log("Starting extract cards");
-     var cards = extractCardsFromContent( bbItems);
+     let cards = extractCardsFromContent( bbItems);
      
      /*console.log( cards );
      console.log("done extract cards");*/
@@ -836,7 +838,7 @@ function contentInterface($){
      // Does this unwrap actually do anything???
      //jQuery( ".cardmainlink[href='undefined'" ).contents().unwrap();
      //return true;
-     var cards = document.querySelectorAll(".clickablecard");
+     cards = document.querySelectorAll(".clickablecard");
      //var cards = document.querySelectorAll(".cardmainlink");
      for (i=0; i<cards.length; i++) {
      cards[i].addEventListener('click', function() {
@@ -872,7 +874,7 @@ function contentInterface($){
      
      if ( bbItem.length===0) {
          //console.log("  -- Didn't find match");
-         return undefined
+         return undefined;
      } 
      
      /*console.log("Get Card Bb Item found");
@@ -904,7 +906,7 @@ function contentInterface($){
      var hidden_string = " (not currently available)";
      
      // get the title from the Blackboard Item Heading (2)
-     title = jQuery(this).text()
+     title = jQuery(this).text();
      
      // define pseudo function to do comparison to get exact match, but
      // case insensitive
@@ -1011,18 +1013,18 @@ function contentInterface($){
       //var MARK_REVIEWED = "Mark Reviewed"
       //var REVIEWED = "Reviewed";
       
-      var reviewHeadingTemplate = ''
+      var reviewHeadingTemplate = '';
       if ( reviewLink.match(/markUnreviewed/)) {
           
           reviewHeadingTemplate = `
       <span style="float:right" class="ui-state-disabled ui-corner-all">{TEXT}</span>
       `;
-          reviewHeadingTemplate = reviewHeadingTemplate.replace('{TEXT}', REVIEWED)
+          reviewHeadingTemplate = reviewHeadingTemplate.replace('{TEXT}', REVIEWED);
       } else {
           reviewHeadingTemplate = `
           <span style="float:right" class="ui-state-active ui-corner-all">{TEXT}</span>
           `;
-          reviewHeadingTemplate = reviewHeadingTemplate.replace('{TEXT}', MARK_REVIEWED)
+          reviewHeadingTemplate = reviewHeadingTemplate.replace('{TEXT}', MARK_REVIEWED);
       }
       jQuery(item).html( linkText + reviewHeadingTemplate);
       
@@ -1039,7 +1041,7 @@ function contentInterface($){
                      <span class="font-bold rounded-full px-2 py-1 bg-green text-white">&#10003; {TEXT}</span>&nbsp;</button></a>
  </div>
  `;
-         reviewBodyTemplate = reviewBodyTemplate.replace('{TEXT}',REVIEWED)
+         reviewBodyTemplate = reviewBodyTemplate.replace('{TEXT}',REVIEWED);
       } else {
    
           reviewBodyTemplate = `
@@ -1048,7 +1050,7 @@ function contentInterface($){
       <span class="font-bold rounded-full px-2 py-1 bg-yellow text-black">&#x26a0;</span>&nbsp; {TEXT}</button></a>
  </div>
          `;      
-         reviewBodyTemplate = reviewBodyTemplate.replace('{TEXT}',MARK_REVIEWED)
+         reviewBodyTemplate = reviewBodyTemplate.replace('{TEXT}',MARK_REVIEWED);
       }
       reviewBodyTemplate = reviewBodyTemplate.replace('{LINK}', reviewLink);
       // insert the reviewed button before the first item after the heading
@@ -1074,7 +1076,7 @@ function contentInterface($){
      review = jQuery(details).find("a.button-5");
      
      if ( review.length === 0) {
-         return undefined
+         return undefined;
      } else {
          return jQuery(review).attr("href");
      }
@@ -1188,7 +1190,7 @@ function contentInterface($){
   
  function handleBlackboardMenuLink() {
      var hidden_string = " (not currently available)";
-     var duplicate_menu_string = " (more than 1 menu item with same name) "
+     var duplicate_menu_string = " (more than 1 menu item with same name) ";
      
      // the title is the value of the link associated with the item
      // Either parent or child
@@ -1370,7 +1372,7 @@ function contentInterface($){
          review = getReviewStatus( jthis );
          
          // Parse the description and remove the Card Image data	    
-         var description = jQuery(jthis).html(),picUrl;
+         var description = jQuery(jthis).html();
          
          //console.log(description)
          
@@ -1469,7 +1471,7 @@ function contentInterface($){
              description = description.replace( "<p>"+m[0]+"</p>","");
              description = description.replace( m[0], "");
              if (number.match(/none/i)) {
-                 number='&nbsp;'
+                 number='&nbsp;';
              }
          }
          // Get Image IFrame
@@ -1617,7 +1619,7 @@ function contentInterface($){
      review = jQuery(parent).find("a.button-5");
      
      if ( review.length === 0) {
-         return undefined
+         return undefined;
      } else {
          return jQuery(review).attr("href");
      }
@@ -1642,7 +1644,7 @@ function contentInterface($){
      var month,endMonth,date,endDate,week="",endWeek="";
      var empty1 = { date:"",week:""};
      var empty2 = { date:"",week:""};
-     var date = { start: empty1, stop: empty2 } ; // object to return 
+     date = { start: empty1, stop: empty2 } ; // object to return 
      // date by griffith week    
      
      m = description.match(/card date *: *week ([0-9]*)/i);
@@ -1653,7 +1655,7 @@ function contentInterface($){
      //        console.log('ZZZZZZZZZZZZZZZZZZZZZZ handling a range');
              week = x[1];
              endWeek = x[2];
-             date.stop = getTermDate( endWeek, false);
+             date.stop = getTermDate( TERM, endWeek, false);
              //console.log(date.stop);
                  
              description = description.replace( "<p>"+x[0]+"</p>","");
@@ -1666,10 +1668,7 @@ function contentInterface($){
              description = description.replace(m[0],"");
          }
          
-         date.start = getTermDate( week )
-         //console.log( date);
-             
-              
+         date.start = getTermDate( TERM, week );
      } else {
          // TODO need to handle range here
          m = description.match(/card date *: *([a-z]+) ([0-9]+)/i);
@@ -1678,8 +1677,8 @@ function contentInterface($){
              x = description.match(/card date *: *([a-z]+) ([0-9]+)-+([a-z]+) ([0-9]+)/i);
              if (x) {
                  
-                 date.start = { month: x[1],date: x[2] }
-                 date.stop = { month: x[3], date: x[4] }
+                 date.start = { month: x[1],date: x[2] };
+                 date.stop = { month: x[3], date: x[4] };
  
                  description = description.replace( "<p>"+x[0]+"</p>","");
                  description = description.replace(x[0],"");
@@ -1694,8 +1693,8 @@ function contentInterface($){
              m = description.match(/card date *: *exam *(period)*/i );
              if (m) {
                  //console.log("match exam period");
-                 date.start = getTermDate( 'exam');
-                 date.stop = getTermDate('exam', false);
+                 date.start = getTermDate( TERM, 'exam');
+                 date.stop = getTermDate(TERM, 'exam', false);
                  description = description.replace( "<p>"+m[0]+"</p>","");
                  description = description.replace(m[0],"");
                  //console.log('Exam date is ' );
@@ -1744,38 +1743,6 @@ function contentInterface($){
      return value;
  }
  
- //*********************
- // getTermDate( week )
- // - given a week of Griffith semester return date for the 
- //   start of that week
- 
-/* function getTermDate( week, startWeek=true ) {
-     //console.log("TERM is " + TERM + " week is " + week);
-     var date = { date: "", month: "", week: week };
-     if (( week<0) || (week>15) ) {
-         if (week!=='exam') {
-             return date;
-         }
-     }
-     var start;
-     if ( startWeek===true ) {
-         // setting start week
-          if ( typeof TERM_DATES[TERM][week] !== 'undefined') {
-             start = TERM_DATES[TERM][week].start;//[week].start;
-          }
-     } else {
-         start = TERM_DATES[TERM][week].stop;
-     }
-     //console.log(" Starting date " + start);
-     var d = new Date(start);
-     date.month=MONTHS[d.getMonth()];
-     date.date=d.getDate();
-     
-     return date;
- }
- */    
-     
- //var TERM="3191",YEAR=2019, SET_DATE="";
  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
      
      
@@ -1811,7 +1778,7 @@ function contentInterface($){
       var engageVerb = 'Engage';
       
       // Define the text for Review Status
-      var MARK_REVIEWED = "Mark Reviewed"
+      var MARK_REVIEWED = "Mark Reviewed";
       var REVIEWED = "Reviewed";
       
       // get the content item with h3 heading containing Card Interface
@@ -1932,12 +1899,12 @@ function contentInterface($){
              //   reviewed
              if ( idx.review.match(/markUnreviewed/)) {
                  reviewTemplate = markUnReviewedLinkHtmlTemplate[template];
-                 reviewTemplate = reviewTemplate.replace('{REVIEWED}', REVIEWED)
+                 reviewTemplate = reviewTemplate.replace('{REVIEWED}', REVIEWED);
              } else {
                  // it's the other one which indicates it has not been reviewed
                  reviewTemplate = markReviewLinkHtmlTemplate[template];
                  
-                 reviewTemplate = reviewTemplate.replace('{MARK_REVIEWED}', MARK_REVIEWED)
+                 reviewTemplate = reviewTemplate.replace('{MARK_REVIEWED}', MARK_REVIEWED);
              }
              // set the right link
              reviewTemplate = reviewTemplate.replace('{LINK}',idx.review);
@@ -1962,7 +1929,7 @@ function contentInterface($){
              // So that the card doesn't duplicate it, but the information is 
              // still there in Blackboard
              var regex = new RegExp( '^' + idx.label + '\\s*' + checkForNum +
-                                  '\\s*[-:]*\\s*(.*)')
+                                  '\\s*[-:]*\\s*(.*)');
              var m = idx.title.match(regex );
              if (m) {
                  idx.title = m[1];
@@ -1995,7 +1962,7 @@ function contentInterface($){
          } else {
              cardHtml = cardHtml.replace(/{IFRAME}/g, idx.iframe);
              // set pic URl to empty so non is provided
-             picUrl = ''
+             picUrl = '';
          }
          cardHtml = cardHtml.replace(/{PIC_URL}/g, picUrl);
          cardHtml = cardHtml.replace('{TITLE}', idx.title);
@@ -2083,6 +2050,8 @@ function contentInterface($){
              cardHtml = cardHtml.replace(/{EDIT_ITEM}/, editLink );*/
              cardHtml = cardHtml.replace(/{EDIT_ITEM}/, '&nbsp;');
          }
+
+         let weekHtml;
          
          // If need add the date visualisation
          if ( idx.date.start.month ) {
@@ -2105,7 +2074,7 @@ function contentInterface($){
                  } else {
                      // if exam, use that template
                      // other wise construct dual week
-                     var weekHtml = examPeriodTemplate;
+                     weekHtml = examPeriodTemplate;
                      if (idx.date.start.week!=='exam') {
                          weekHtml = dualWeekHtmlTemplate.replace('{WEEK_START}', 
                                  idx.date.start.week);
@@ -2123,7 +2092,7 @@ function contentInterface($){
                  if ( !idx.date.start.hasOwnProperty('week')) {
                      cardHtml = cardHtml.replace('{WEEK}','');
                  } else
-                     var weekHtml = weekHtmlTemplate.replace('{WEEK}', idx.date.start.week);
+                     weekHtml = weekHtmlTemplate.replace('{WEEK}', idx.date.start.week);
                      cardHtml = cardHtml.replace('{WEEK}',weekHtml);
              }
          } else {
@@ -2573,19 +2542,19 @@ var HIDDEN_FROM_STUDENTS = `<div class="inline-block bg-yellow text-black text-x
  
  function parse_parameters(cmdline) {
  //    var re_next_arg = /^\s*((?:(?:"(?:\\.|[^"])*")|(?:'[^']*')|\\.|\S)+)\s*(.*)$/;
-     var re_next_arg = /^\s*((?:(?:"(?:\\.|[^"])*")|(?:'[^']*')|\\.|\S)+)\s*(.*)$/;
-     var next_arg = ['', '', cmdline];
-     var args = [];
+     let re_next_arg = /^\s*((?:(?:"(?:\\.|[^"])*")|(?:'[^']*')|\\.|\S)+)\s*(.*)$/;
+     let next_arg = ['', '', cmdline];
+     let args = [];
      while (next_arg = re_next_arg.exec(next_arg[2])) {
-         var quoted_arg = next_arg[1];
-         var unquoted_arg = "";
+         let quoted_arg = next_arg[1];
+         let unquoted_arg = "";
          while (quoted_arg.length > 0) {
              if (/^"/.test(quoted_arg)) {
-                 var quoted_part = /^"((?:\\.|[^"])*)"(.*)$/.exec(quoted_arg);
+                 let quoted_part = /^"((?:\\.|[^"])*)"(.*)$/.exec(quoted_arg);
                  unquoted_arg += quoted_part[1].replace(/\\(.)/g, "$1");
                  quoted_arg = quoted_part[2];
              } else if (/^'/.test(quoted_arg)) {
-                 var quoted_part = /^'([^']*)'(.*)$/.exec(quoted_arg);
+                 let quoted_part = /^'([^']*)'(.*)$/.exec(quoted_arg);
                  unquoted_arg += quoted_part[1];
                  quoted_arg = quoted_part[2];
              } else if (/^\\/.test(quoted_arg)) {
@@ -2631,7 +2600,7 @@ var NO_CARD_DEFINED=`
   */
  
  function handleUniversityDate() {
-     let dateText = jQuery(this).text()
+     let dateText = jQuery(this).text();
  
      // extract the day and week
      // Wednesday Week 5 becomes
@@ -2655,337 +2624,6 @@ var NO_CARD_DEFINED=`
      dateText = dateText + " (" + date + ")";
      jQuery(this).html(dateText);
  }
-/* 
- //*********************
- // getTermDate( week, day )
- // - given a week and a day of Griffith semester return actual
- //   date for matching that study period
- // - weeks start on Monday
- 
- function getTermDate(week, dayOfWeek = 'Monday') {
- 
-     dayOfWeek = dayOfWeek.toLowerCase()
-     var start;
- 
-     // if the week is not within the term return empty string
-     if (typeof TERM_DATES[TERM][week] === 'undefined') {
-         return "";
-     }
- 
-     // else calculate the date and generate usable string
-     start = TERM_DATES[TERM][week].start;
-     var d = new Date(start);
- 
-     // if dayOfWeek is not Monday, add some days to the start of the week
-     if (dayOfWeek !== 'monday') {
-         var dayToNum = { 'tuesday': 1, 'wednesday': 2, 'thursday': 3, 'friday': 4, 'saturday': 5, 'sunday': 6 };
-         if (dayOfWeek in dayToNum) {
-             d.setDate(d.getDate() + dayToNum[dayOfWeek.toLowerCase()]);
-         }
-     }
-     // generate string from date with given options
-     const options = { weekday: undefined, year: 'numeric', month: 'long', day: 'numeric' };
-     dateString = d.toLocaleDateString(undefined, options);
- 
-     return dateString;
- }
- 
- var TERM_DATES = {
-     // OUA 2020 Study Period 1
-     "2201": {
-         "0": { "start": "2020-02-24", "stop": "2020-03-01" },
-         "1": { "start": "2020-03-02", "stop": "2020-03-08" },
-         "2": { "start": "2020-03-09", "stop": "2020-03-15" },
-         "3": { "start": "2020-03-16", "stCop": "2020-03-22" },
-         "4": { "start": "2020-03-23", "stop": "2020-03-29" },
-         "5": { "start": "2020-03-30", "stop": "2020-04-05" },
-         "6": { "start": "2020-04-06", "stop": "2020-04-12" },
-         "7": { "start": "2020-04-13", "stop": "2020-04-19" },
-         "8": { "start": "2020-04-20", "stop": "2020-04-26" },
-         "9": { "start": "2020-04-27", "stop": "2020-05-03" },
-         "10": { "start": "2020-05-04", "stop": "2020-05-10" },
-         "11": { "start": "2020-05-11", "stop": "2020-05-17" },
-         "12": { "start": "2020-05-18", "stop": "2020-05-24" },
-         "13": { "start": "2020-05-25", "stop": "2020-05-31" },
-         "14": { "start": "2020-06-01", "stop": "2020-06-05" },
-         // End of study period 4 
-         "exam": { "start": "2020-06-01", "stop": "2020-06-05" },
-         // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }
-     },
-     // OUA 2020 Study Period 2
-     "2203": {
-         "0": { "start": "2020-05-25", "stop": "2020-05-31" },
-         "1": { "start": "2020-06-01", "stop": "2020-06-07" },
-         "2": { "start": "2020-06-08", "stop": "2020-06-14" },
-         "3": { "start": "2020-06-15", "stop": "2020-06-21" },
-         "4": { "start": "2020-06-22", "stop": "2020-06-28" },
-         "5": { "start": "2020-06-29", "stop": "2020-07-05" },
-         "6": { "start": "2020-07-06", "stop": "2020-07-12" },
-         "7": { "start": "2020-07-13", "stop": "2020-07-19" },
-         "8": { "start": "2020-07-20", "stop": "2020-07-26" },
-         "9": { "start": "2020-07-27", "stop": "2020-08-02" },
-         "10": { "start": "2020-08-03", "stop": "2020-08-09" },
-         "11": { "start": "2020-08-10", "stop": "2020-05-17" },
-         "12": { "start": "2020-08-17", "stop": "2020-05-24" },
-         "13": { "start": "2020-08-24", "stop": "2020-05-31" },
-         "14": { "start": "2020-08-31", "stop": "2020-09-06" },
-         // End of study period 4 
-         "exam": { "start": "2020-08-31", "stop": "2020-09-04" },
-         // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }
-     },
-     // OUA 2020 Study Period 3
-     "2205": {
-         "0": { "start": "2020-08-31", "stop": "2020-09-06" },
-         "1": { "start": "2020-09-07", "stop": "2020-09-13" },
-         "2": { "start": "2020-09-14", "stop": "2020-09-20" },
-         "3": { "start": "2020-09-21", "stop": "2020-09-27" },
-         "4": { "start": "2020-09-28", "stop": "2020-10-04" },
-         "5": { "start": "2020-10-05", "stop": "2020-10-11" },
-         "6": { "start": "2020-10-12", "stop": "2020-10-19" },
-         "7": { "start": "2020-10-19", "stop": "2020-10-25" },
-         "8": { "start": "2020-10-26", "stop": "2020-11-01" },
-         "9": { "start": "2020-11-02", "stop": "2020-11-08" },
-         "10": { "start": "2020-11-09", "stop": "2020-11-15" },
-         "11": { "start": "2020-11-16", "stop": "2020-11-22" },
-         "12": { "start": "2020-11-23", "stop": "2020-11-29" },
-         "13": { "start": "2020-11-30", "stop": "2020-12-06" },
-         "14": { "start": "2020-12-07", "stop": "2020-12-13" },
-         // End of study period 4 
-         "exam": { "start": "2020-12-07", "stop": "2020-12-13" },
-         // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }
-     },
-     // OUA 2020 Study Period 4
-     "2207": {
-         "0": { "start": "2020-11-30", "stop": "2020-12-06" },
-         "1": { "start": "2020-12-07", "stop": "2020-12-13" },
-         "2": { "start": "2020-12-14", "stop": "2020-12-20" },
-         "3": { "start": "2020-12-21", "stop": "2020-12-27" },
-         "4": { "start": "2020-12-28", "stop": "2021-01-03" },
-         "5": { "start": "2021-01-04", "stop": "2021-01-10" },
-         "6": { "start": "2021-01-11", "stop": "2021-01-17" },
-         "7": { "start": "2021-01-18", "stop": "2021-01-24" },
-         "8": { "start": "2021-01-25", "stop": "2021-01-31" },
-         "9": { "start": "2021-02-01", "stop": "2021-02-07" },
-         "10": { "start": "2021-02-08", "stop": "2021-02-14" },
-         "11": { "start": "2021-02-15", "stop": "2021-02-21" },
-         "12": { "start": "2021-02-22", "stop": "2021-02-28" },
-         "13": { "start": "2021-03-01", "stop": "2021-03-07" },
-         "14": { "start": "2021-03-08", "stop": "2021-03-14" },
-         // End of study period 4 
-         "exam": { "start": "2021-03-08", "stop": "2021-03-14" },
-         // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }
-     },
-     // Griffith 2020 Trimester 2
-     "3205": {
-         "0": { "start": "2020-07-06", "stop": "2020-07-12" },
-         "1": { "start": "2020-07-13", "stop": "2020-07-19" },
-         "2": { "start": "2020-07-20", "stop": "2020-08-26" },
-         "3": { "start": "2020-07-27", "stop": "2020-08-02" },
-         "4": { "start": "2020-08-03", "stop": "2020-08-16" },
-         "5": { "start": "2020-08-17", "stop": "2020-08-23" },
-         "6": { "start": "2020-08-24", "stop": "2020-08-30" },
-         "7": { "start": "2020-08-31", "stop": "2020-09-06" },
-         "8": { "start": "2020-09-07", "stop": "2020-09-13" },
-         "9": { "start": "2020-09-14", "stop": "2020-09-20" },
-         "10": { "start": "2020-09-21", "stop": "2020-09-27" },
-         "11": { "start": "2020-09-28", "stop": "2020-10-04" },
-         "12": { "start": "2020-10-05", "stop": "2020-10-11" },
-         "13": { "start": "2020-10-12", "stop": "2020-10-18" },
-         "14": { "start": "2020-10-19", "stop": "2020-10-25" },
-         "15": { "start": "2020-10-27", "stop": "2020-11-01" },
-         "exam": { "start": "2020-10-12", "stop": "2020-10-18" }
-     },
-     // Griffith 2020 Trimester 1
-     "3201": {
-         "0": { "start": "2020-02-17", "stop": "2020-02-23" },
-         "1": { "start": "2020-02-24", "stop": "2020-03-01" },
-         "2": { "start": "2020-03-02", "stop": "2020-03-08" },
-         "3": { "start": "2020-03-09", "stop": "2020-03-15" },
-         "4": { "start": "2020-03-16", "stop": "2020-03-22" },
-         "5": { "start": "2020-03-23", "stop": "2020-03-29" },
-         "6": { "start": "2020-03-30", "stop": "2020-04-05" },
-         "7": { "start": "2020-04-13", "stop": "2020-04-19" },
-         "8": { "start": "2020-04-20", "stop": "2020-04-26" },
-         "9": { "start": "2020-04-27", "stop": "2020-05-03" },
-         "10": { "start": "2020-05-04", "stop": "2020-05-10" },
-         "11": { "start": "2020-05-11", "stop": "2020-05-17" },
-         "12": { "start": "2020-05-18", "stop": "2020-05-24" },
-         "13": { "start": "2020-05-25", "stop": "2020-05-31" },
-         "exam": { "start": "2020-06-01", "stop": "2020-06-07" }
-     },
-     // Griffith 2019 Trimester 3
-     "3198": {
-         "0": { "start": "2019-10-21", "stop": "2019-10-27" },
-         "1": { "start": "2019-10-28", "stop": "2019-11-03" },
-         "2": { "start": "2019-11-04", "stop": "2019-11-10" },
-         "3": { "start": "2019-11-11", "stop": "2019-11-17" },
-         "4": { "start": "2019-11-18", "stop": "2019-11-24" },
-         "5": { "start": "2019-11-25", "stop": "2019-12-1" },
-         "6": { "start": "2019-12-02", "stop": "2019-12-08" },
-         "7": { "start": "2019-12-09", "stop": "2019-12-15" },
-         "8": { "start": "2019-12-16", "stop": "2019-12-22" },
-         "9": { "start": "2020-01-06", "stop": "2020-01-12" },
-         "10": { "start": "2020-01-13", "stop": "2020-01-19" },
-         "11": { "start": "2020-01-20", "stop": "2020-01-26" },
-         "12": { "start": "2020-01-27", "stop": "2020-02-02" },
-         "13": { "start": "2020-02-03", "stop": "2020-02-09" },
-         "exam": { "start": "2020-02-06", "stop": "2020-02-15" }
-         // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }
-     },
-     // OUA Study Period 4 2019
-     "2197": {
-         "0": { "start": "2019-11-18", "stop": "2019-11-24" },
-         "1": { "start": "2019-11-25", "stop": "2019-12-01" },
-         "2": { "start": "2019-12-02", "stop": "2019-12-08" },
-         "3": { "start": "2019-12-09", "stop": "2019-12-15" },
-         "4": { "start": "2019-12-16", "stop": "2019-12-22" },
-         "5": { "start": "2019-12-23", "stop": "2019-09-29" },
-         "6": { "start": "2019-12-30", "stop": "2020-01-05" },
-         "7": { "start": "2020-01-06", "stop": "2020-01-12" },
-         "8": { "start": "2020-01-13", "stop": "2020-01-19" },
-         "9": { "start": "2020-01-20", "stop": "2020-01-26" },
-         "10": { "start": "2020-01-27", "stop": "2020-02-02" },
-         "11": { "start": "2020-02-03", "stop": "2020-02-09" },
-         "12": { "start": "2020-02-10", "stop": "2020-02-16" },
-         "13": { "start": "2019-02-17", "stop": "2020-02-23" },
-         // End of study period 4 
-         "14": { "start": "2020-02-24", "stop": "2020-03-01" },
-         "15": { "start": "2020-03-02", "stop": "2020-03-08" },
-         // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }
-     },
-     // OUA Study Period 3 2019
-     "2195": {
-         "0": { "start": "2019-08-19", "stop": "2019-09-25" },
-         "1": { "start": "2019-08-26", "stop": "2019-09-01" },
-         "2": { "start": "2019-09-02", "stop": "2019-09-18" },
-         "3": { "start": "2019-09-09", "stop": "2019-09-15" },
-         "4": { "start": "2019-09-16", "stop": "2019-09-22" },
-         "5": { "start": "2019-09-23", "stop": "2019-09-29" },
-         "6": { "start": "2019-09-30", "stop": "2019-10-06" },
-         "7": { "start": "2019-10-07", "stop": "2019-10-13" },
-         "8": { "start": "2019-10-14", "stop": "2019-08-20" },
-         "9": { "start": "2019-10-21", "stop": "2019-10-27" },
-         "10": { "start": "2019-10-28", "stop": "2019-11-03" },
-         "11": { "start": "2019-11-04", "stop": "2019-11-10" },
-         "12": { "start": "2019-11-11", "stop": "2019-11-17" },
-         "13": { "start": "2019-11-18", "stop": "2019-11-24" },
-         // End of study period 3 
-         "14": { "start": "2019-11-25", "stop": "2019-12-01" },
-         "15": { "start": "2019-10-07", "stop": "2019-10-13" },
-         // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }
-     },
-     // Griffith 2019 Trimester 2
-     "3195": {
-         "0": { "start": "2019-07-01", "stop": "2019-07-07" },
-         "1": { "start": "2019-07-08", "stop": "2019-07-14" },
-         "2": { "start": "2019-07-15", "stop": "2019-07-21" },
-         "3": { "start": "2019-07-22", "stop": "2019-07-28" },
-         "4": { "start": "2019-07-29", "stop": "2019-08-04" },
-         "5": { "start": "2019-08-05", "stop": "2019-08-11" },
-         "6": { "start": "2019-08-19", "stop": "2019-08-25" },
-         "7": { "start": "2019-08-26", "stop": "2019-09-01" },
-         "8": { "start": "2019-09-02", "stop": "2019-09-08" },
-         "9": { "start": "2019-09-09", "stop": "2019-09-15" },
-         "10": { "start": "2019-09-16", "stop": "2019-09-22" },
-         "11": { "start": "2019-09-23", "stop": "2019-09-29" },
-         "12": { "start": "2019-09-30", "stop": "2019-10-06" },
-         "13": { "start": "2019-10-07", "stop": "2019-10-13" },
-         "14": { "start": "2019-10-14", "stop": "2019-10-20" },
-         "15": { "start": "2019-10-21", "stop": "2019-10-27" },
-         "exam": { "start": "2019-10-10", "stop": "2019-10-19" }
-     },
-     "3191": {
-         "0": { "start": "2019-02-18", "stop": "2019-02-24" },
-         "1": { "start": "2019-02-25", "stop": "2019-03-03" },
-         "2": { "start": "2019-03-04", "stop": "2019-03-10" },
-         "3": { "start": "2019-03-11", "stop": "2019-03-17" },
-         "4": { "start": "2019-03-18", "stop": "2019-03-24" },
-         "5": { "start": "2019-03-25", "stop": "2019-03-31" },
-         "6": { "start": "2019-04-01", "stop": "2019-04-07" },
-         "7": { "start": "2019-04-08", "stop": "2019-04-14" },
-         "8": { "start": "2019-04-22", "stop": "2019-04-28" },
-         "9": { "start": "2019-04-29", "stop": "2019-05-05" },
-         "10": { "start": "2019-05-06", "stop": "2019-05-12" },
-         "11": { "start": "2019-05-13", "stop": "2019-05-19" },
-         "12": { "start": "2019-05-20", "stop": "2019-05-26" },
-         "13": { "start": "2019-05-27", "stop": "2019-06-02" },
-         "14": { "start": "2019-06-03", "stop": "2019-06-09" },
-         "15": { "start": "2019-06-10", "stop": "2019-06-17" },
-         "exam": { "start": "2019-05-30", "stop": "2019-06-08" }
-     }
- 
- }; */
- 
- /*********************************************************************
-  * calculateTerm()
-  * - check the location and other bits of Blackboard to calculate
-  *   the trimester etc
-  */
-/* 
- function calculateTerm() {
-     // get the right bit of the Blackboard breadcrumbs
-     courseTitle = jQuery("#courseMenu_link").attr('title') || 
-               "Collapse COM14 Creative and Professional Writing (COM14_3205_OT)";
- 
-     // get the course id which will be in brackets
-     m = courseTitle.match(/^.*\((.+)\)/);
- 
-     // we found a course Id, get the STRM value
-     if (m) {
-         id = m[1];
-         // break the course Id up into its components
-         // This is the RE for COMM10 - OUA course?
-         breakIdRe = new RegExp('^([A-Z]+[0-9]+)_([0-9][0-9][0-9][0-9])_([A-Z][A-Z])$');
-         m = id.match(breakIdRe);
- 
-         // found an actual course site (rather than org site)	    
-         if (m) {
-             TERM = m[2];
- 
-             // set the year
-             mm = TERM.match(/^[0-9]([0-9][0-9])[0-9]$/);
-             if (mm) {
-                 YEAR = 20 + mm[1];
-             } else {
-                 YEAR = 2019;
-             }
-         } else {
-             // check for a normal GU course
-             breakIdRe = new RegExp('^([0-9]+[A-Z]+)_([0-9][0-9][0-9][0-9])_([A-Z][A-Z])$');
-             // Following is broken
- 
-             m = id.match(breakIdRe);
- 
-             // found an actual course site (rather than org site)	    
-             if (m) {
-                 TERM = m[2];
-                 // set the year
-                 mm = TERM.match(/^[0-9]([0-9][0-9])[0-9]$/);
-                 if (mm) {
-                     YEAR = 20 + mm[1];
-                 } else {
-                     YEAR = 2019;
-                 }
-             } else {
-                 breakIdRe = new RegExp('^([0-9]+[A-Z]+)_([0-9][0-9][0-9][0-9])$');
- 
-                 m = id.match(breakIdRe);
- 
-                 // found an actual course site (rather than org site)	    
-                 if (m) {
-                     TERM = m[2];
-                     // set the year
-                     mm = TERM.match(/^[0-9]([0-9][0-9])[0-9]$/);
-                     if (mm) {
-                         YEAR = 20 + mm[1];
-                     } else {
-                         YEAR = 2019;
-                     }
-                 }
-             }
-         }
-     }
- } */
  
  /*************************************************************
  * addCSS( url )
