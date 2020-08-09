@@ -1,40 +1,17 @@
+/*************************************************************
+ * termDate.js
+ * Implement methods and data structures to handle the calculation of dates based on
+ * university trimester/calendar
+ * - calculateTerm - figure out which TERM/YEAR it is based on Blackboard settings
+ * - TERM_DATES - hash of hashes specifying weeks/dates for each trimester
+ * - getTermDate - given a week, term and day of week return a date string
+ */
+/*jshint esversion: 6*/
+
 export { getTermDate, calculateTerm, TERM_DATES };
 
-var DEFAULT_TERM=3191, DEFAULT_YEAR=2019
+var DEFAULT_TERM=3191, DEFAULT_YEAR=2019;
 
-//*********************
- // getTermDate( term, week, day )
- // - given a week and a day of Griffith semester return actual
- //   date for matching that study period
- // - weeks start on Monday
- 
- function getTermDate(term, week, dayOfWeek = 'Monday') {
- 
-    dayOfWeek = dayOfWeek.toLowerCase()
-    var start;
-
-    // if the week is not within the term return empty string
-    if (typeof TERM_DATES[term][week] === 'undefined') {
-        return "";
-    }
-
-    // else calculate the date and generate usable string
-    start = TERM_DATES[term][week].start;
-    var d = new Date(start);
-
-    // if dayOfWeek is not Monday, add some days to the start of the week
-    if (dayOfWeek !== 'monday') {
-        var dayToNum = { 'tuesday': 1, 'wednesday': 2, 'thursday': 3, 'friday': 4, 'saturday': 5, 'sunday': 6 };
-        if (dayOfWeek in dayToNum) {
-            d.setDate(d.getDate() + dayToNum[dayOfWeek.toLowerCase()]);
-        }
-    }
-    // generate string from date with given options
-    const options = { weekday: undefined, year: 'numeric', month: 'long', day: 'numeric' };
-    let dateString = d.toLocaleDateString(undefined, options);
-
-    return dateString;
-}
 
 const TERM_DATES = {
     // OUA 2020 Study Period 1
@@ -261,6 +238,40 @@ const TERM_DATES = {
     }
 
 };
+
+//*********************
+ // getTermDate( term, week, day )
+ // - given a week and a day of Griffith semester return actual
+ //   date for matching that study period
+ // - weeks start on Monday
+ 
+ function getTermDate(term, week, dayOfWeek = 'Monday') {
+ 
+    dayOfWeek = dayOfWeek.toLowerCase();
+    var start;
+
+    // if the week is not within the term return empty string
+    if (typeof TERM_DATES[term][week] === 'undefined') {
+        return "";
+    }
+
+    // else calculate the date and generate usable string
+    start = TERM_DATES[term][week].start;
+    var d = new Date(start);
+
+    // if dayOfWeek is not Monday, add some days to the start of the week
+    if (dayOfWeek !== 'monday') {
+        var dayToNum = { 'tuesday': 1, 'wednesday': 2, 'thursday': 3, 'friday': 4, 'saturday': 5, 'sunday': 6 };
+        if (dayOfWeek in dayToNum) {
+            d.setDate(d.getDate() + dayToNum[dayOfWeek.toLowerCase()]);
+        }
+    }
+    // generate string from date with given options
+    const options = { weekday: undefined, year: 'numeric', month: 'long', day: 'numeric' };
+    let dateString = d.toLocaleDateString(undefined, options);
+
+    return dateString;
+}
 
 /*********************************************************************
  * calculateTerm()
