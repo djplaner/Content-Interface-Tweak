@@ -9,6 +9,8 @@
 
 import { calculateTerm, getTermDate, TERM_DATES } from './modules/termDates.js';
 
+$.noConflict();
+
 jQuery( document ).ready(function( $ ) { 
     contentInterface($);
 });

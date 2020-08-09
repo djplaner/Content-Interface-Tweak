@@ -10,6 +10,8 @@ import { calculateTerm, getTermDate, TERM_DATES } from './modules/termDates.js';
 import { ciModel } from './modules/ciModel.js';
 import { ciView } from './modules/ciView.js';
 
+$.noConflict();
+
 jQuery( document ).ready(function( $ ) { 
     contentInterface($);
 });
