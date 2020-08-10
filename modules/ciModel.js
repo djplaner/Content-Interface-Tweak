@@ -17,7 +17,7 @@
  */
 /*jshint esversion: 6*/
 
-import { calculateTerm } from './termDates.js'
+import { calculateTerm } from './termDates.js';
 
 var DEFAULT_CSS="https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
 

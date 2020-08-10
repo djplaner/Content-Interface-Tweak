@@ -8,7 +8,10 @@
 
 import { calculateTerm, getTermDate, TERM_DATES } from './modules/termDates.js';
 import { ciModel } from './modules/ciModel.js';
-import { ciView } from './modules/ciView.js';
+//import { ciView } from './modules/ciView.js';
+import { ciContentView } from './modules/views/ciContentView.js';
+import { ciTweakView } from './modules/views/ciTweakView.js';
+import { ciInterfaceView } from './modules/views/ciInterfaceView.js';
 
 $.noConflict();
 
@@ -28,13 +31,17 @@ function contentInterface($) {
     let model = new ciModel();
     console.log(model);
 
-    let view = new ciView( model);
-    view.setUpEdit();
-    view.transformContent();
-    view.finaliseInterface();
+    let tweakView = new ciTweakView(model);
+    tweakView.view();
 
     // do nothing if we couldn't find the contentInterface item
     if (model.contentInterface.length === 0) {
         return false;
     }
+
+    let contentView = new ciContentView(model);
+    contentView.view();
+    let interfaceView = new ciInterfaceView(model);
+    interfaceView.view();
+
 }
