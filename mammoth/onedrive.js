@@ -335,6 +335,7 @@ function doMammoth( wordContent ) {
                     "p[style-name='PictureRight'] => div.pictureRight",
                     "r[style-name='University Date'] => span.universityDate",
                     "p[style-name='Video'] => div.video",
+                    "p[style-name='Film Watching Options'] => div.filmWatchingOptions",
                     "r[style-name='Checkbox Char'] => span.checkbox",
                     "p[style-name='Checkbox'] => span.checkbox",
                     "p[style-name='ActivityTitle'] => div.activity > h2:fresh",

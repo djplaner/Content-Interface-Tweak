@@ -86,6 +86,7 @@ function contentInterface($) {
     // - find each footnote reference and replace with a tooltipster element
     //   that incldues content from the actual footnote (minus some extra HTML)
     handleFootNotes();
+    jQuery("div.filmWatchingOptions").each(handleFilmWatchingOptions);
 
     // handle the integration of any blackboard headings/items into the
     // content interface
@@ -1428,3 +1429,24 @@ function calculateTerm() {
     style.rel = 'stylesheet';
     head.append(style);
  }
+ 
+ /*****************************************************************
+ * handleFilmWatchingOptions
+ * - given a span with the name of a film convert it into text
+ *    We've been unable to provide a copy of this fil..
+ */
+
+function handleFilmWatchingOptions() {
+    let filmName = jQuery(this).text().trim();
+    let filmNameEsc = encodeURIComponent(filmName);
+    
+    let html = `
+    <div class="filmWatchingOptions">
+      <div class="filmWatchingOptionsImage"></div>
+      <div class="instructions">
+         <p>We've been unable to provide a copy <em>${filmName}</em>.</p>
+         <p><a href="https://www.justwatch.com/au/search?q=${filmNameEsc}" target="_blank">This search on JustWatch</a> may provide pointers to where you can find it online.</p>
+       </div>
+    </div>`;
+    jQuery(this).replaceWith(html);
+}
