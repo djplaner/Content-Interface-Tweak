@@ -115,8 +115,9 @@ export class ciView {
             //autoHeight:true
             heightStyle: 'content',
             activate: function (event, ui) {
-                if (!$.isEmptyObject(ui.newHeader.offset())) {
-                    $('html:not(:animated), body:not(:animated)').animate({ scrollTop: ui.newHeader.offset().top }, 'slow');
+                if (!jQuery.isEmptyObject(ui.newHeader.offset())) {
+                    jQuery('html:not(:animated), body:not(:animated)').animate(
+                        { scrollTop: ui.newHeader.offset().top }, 'slow');
                     // send resize to ensure that h5p iframe appears correct
                     // size
                     window.dispatchEvent(new Event('resize'));
@@ -546,7 +547,7 @@ function handleBlackboardItem() {
     var hidden_string = " (not currently available)";
 
     // get the title from the Blackboard Item Heading (2)
-    title = jQuery(this).text();
+    let title = jQuery(this).text();
 
     // define pseudo function to do comparison to get exact match, but
     // case insensitive
@@ -567,7 +568,7 @@ function handleBlackboardItem() {
 
     if (bbItem.length === 0) {
         // add the hidden_string to the heading
-        linkText = jQuery(this).text();
+        let linkText = jQuery(this).text();
         jQuery(this).text(linkText + hidden_string);
 
         // add the hidden_string to the link

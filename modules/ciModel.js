@@ -28,9 +28,9 @@ export class ciModel {
         [this.term,this.year] = calculateTerm();
 
         // define method for case insensitve search for elements
-        $.expr[":"].contains = $.expr.createPseudo(function (arg) {
+        jQuery.expr[":"].contains = jQuery.expr.createPseudo(function (arg) {
             return function (elem) {
-                return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+                return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
             };
         });
 
