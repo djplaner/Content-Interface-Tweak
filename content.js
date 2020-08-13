@@ -18,7 +18,7 @@ var EXPAND_COLLAPSE_BUTTON_HTML = `<div class="accordion-expand-holder">
 <button type="button" class="close">Collapse all</button>
 </div>`;
 
-var DEFAULT_CSS="https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css"
+var DEFAULT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css"
 
 // simple definition for using pure.css tables
 // TODO need to replace this.
@@ -640,8 +640,8 @@ function checkParams(contentInterface, wordDoc) {
                     /*if ( x = element.match(/wordDoc=([^ ]*)/i) ) {
                         paramsObj.wordDoc = x[1];
                     }*/
-                    if ( x = element.match(/css=([^ ]*)/ )) {
-                        cssURL=x[1];
+                    if (x = element.match(/css=([^ ]*)/)) {
+                        cssURL = x[1];
                     }
                     if (x = element.match(/expand=([0-9]*)/i)) {
                         paramsObj.expand = x[1];
@@ -657,7 +657,7 @@ function checkParams(contentInterface, wordDoc) {
         }
     }
 
-    addCSS( cssURL);
+    addCSS(cssURL);
 
     // Check for a Word doc link
     //var wordDoc = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Document")').eq(0);
@@ -1350,8 +1350,8 @@ var TERM_DATES = {
 
 function calculateTerm() {
     // get the right bit of the Blackboard breadcrumbs
-    courseTitle = jQuery("#courseMenu_link").attr('title') || 
-              "Collapse COM14 Creative and Professional Writing (COM14_3205_OT)";
+    courseTitle = jQuery("#courseMenu_link").attr('title') ||
+        "Collapse COM14 Creative and Professional Writing (COM14_3205_OT)";
 
     // get the course id which will be in brackets
     m = courseTitle.match(/^.*\((.+)\)/);
@@ -1420,7 +1420,7 @@ function calculateTerm() {
  * (and other places)
  */
 
- function addCSS( urlString ) {
+function addCSS(urlString) {
     var head = document.getElementsByTagName('head')[0];
 
     var style = document.createElement('link');
@@ -1428,19 +1428,56 @@ function calculateTerm() {
     style.type = 'text/css';
     style.rel = 'stylesheet';
     head.append(style);
- }
- 
- /*****************************************************************
- * handleFilmWatchingOptions
- * - given a span with the name of a film convert it into text
- *    We've been unable to provide a copy of this fil..
- */
+}
+
+/*****************************************************************
+* handleFilmWatchingOptions
+* - given a span with the name of a film convert it into text
+*    We've been unable to provide a copy of this fil..
+*/
+
+var FILM_WATCHING_FLOW = 'https://prod-04.australiasoutheast.logic.azure.com:443/workflows/c029bb16a6dd4c689cfccdb23dc706b8/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=it90pfA0KqAyET1nYBFAOM0GI7gV_MG2QiHDpyJ3DRc';
+
+async function fetchFilmURL(filmName) {
+    let data = {};
+    data.filmTitle = filmName;
+
+    console.log("body is " + JSON.stringify(data));
+    console.log(" sending off to " + FILM_WATCHING_FLOW);
+    const response = await fetch(FILM_WATCHING_FLOW, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+    return response.json();
+}
 
 function handleFilmWatchingOptions() {
     let filmName = jQuery(this).text().trim();
     let filmNameEsc = encodeURIComponent(filmName);
-    
-    let html = `
+
+    let filmUrl;
+
+    fetchFilmURL(filmName).then(data => {
+        console.log(data);
+
+        let html;
+        if ('url' in data && data.url !== '') {
+            filmUrl = data.url;
+            console.log("film is at " + filmUrl);
+
+            html = convertMedia( data.url, filmName);
+            console.log(html);
+/*            html = `
+            <p><a href="${filmUrl}">Watch ${filmName} here</a></p>
+            `;*/
+        } else {
+            // didn't find film
+            console.log("no found film");
+
+            html = `
     <div class="filmWatchingOptions">
       <div class="filmWatchingOptionsImage"></div>
       <div class="instructions">
@@ -1448,5 +1485,68 @@ function handleFilmWatchingOptions() {
          <p><a href="https://www.justwatch.com/au/search?q=${filmNameEsc}" target="_blank">This search on JustWatch</a> may provide pointers to where you can find it online.</p>
        </div>
     </div>`;
-    jQuery(this).replaceWith(html);
+        }
+        jQuery(this).replaceWith(html);
+
+    });
+
 }
+
+/*Stream 
+https://web.microsoftstream.com/video/843a0d9b-5240-44ab-9c9c-edba9e17d457
+
+embed
+<iframe width="640" height="360" src="https://web.microsoftstream.com/embed/video/843a0d9b-5240-44ab-9c9c-edba9e17d457?autoplay=false&amp;showinfo=true" allowfullscreen style="border:noneiframe>
+*/
+
+/************************************
+ * html = convertMedia(link)
+ * - given a link to a video return the iframe embed player
+ * - support: Stream, YouTube, Vimeo, Kanopy
+ */
+
+
+function convertMedia(html, filmName) {
+    // based on: http://jsfiddle.net/oriadam/v7b5edo8/   http://jsfiddle.net/88Ms2/378/   https://stackoverflow.com/a/22667308/3356679
+    var cls = 'class="embedded-media"';
+    var frm = '<iframe width="640" height="480" '+cls+' src="//_URL_" frameborder="0" allowfullscreen></iframe>';
+
+    if ( html.match( /griffith.kanopy.com/)) {
+        return `
+    <div class="filmWatchingOptions">
+      <div class="filmWatchingOptionsImage"></div>
+      <div class="instructions">
+         <p>You can watch <em>${filmName}</em> on <a href="{$html}">Kanopy</a></p>
+       </div>
+    </div>`;
+    }
+
+    var converts = [
+        {
+            rx: /^.*microsoftstream.com\/video\/([^\/]+)$/g,
+            tmpl: frm.replace('_URL_',"web.microsoftstream.com/embed/video/$1")
+        },
+        {
+            rx: /^(?:https?:)?\/\/(?:www\.)?vimeo\.com\/([^\?&"]+).*$/g,
+            tmpl: frm.replace('_URL_',"player.vimeo.com/video/$1")
+        },
+        {
+            rx: /^.*(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|user\/.+\/)?([^\?&"]+).*$/g,
+            tmpl: frm.replace('_URL_',"www.youtube.com/embed/$1")
+        },
+        {
+            rx: /^.*(?:https?:\/\/)?(?:www\.)?(?:youtube-nocookie\.com)\/(?:watch\?v=|embed\/|v\/|user\/.+\/)?([^\?&"]+).*$/g,
+            tmpl: frm.replace('_URL_',"www.youtube-nocookie.com/embed/$1")
+        },
+        {
+            rx: /(^[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?\.(?:jpe?g|gif|png|svg)\b.*$)/gi,
+            tmpl: '<a '+cls+' href="$1" target="_blank"><img src="$1" /></a>'
+        },
+    ];
+    for (var i in converts)
+        if (converts[i].rx.test(html.trim())) {
+
+            return html.trim().replace(converts[i].rx, converts[i].tmpl);
+        }
+    return false;
+};
