@@ -31,6 +31,35 @@ var CHECKBOX = `<input type="checkbox" name="gu_dummy" />`;
 var BLAED_LINK = 'bblearn-blaed.griffith.edu.au';
 var LMS_LINK = 'bblearn.griffith.edu.au';
 
+var PARAMS = {};
+
+/************************** *
+ * ITEM_LINK_PARAMETERS defines the parameters to be looked for as Content Items
+ * all of which define links as their value
+ * 
+ * The key for each item is the expected title of the Blackboard item
+ * - element 
+ *   The paramsObj attribute name to point to the jQuery element. Used to
+ *   access (and hide) the element if editing is turned off
+ * - item 
+ *   The paramsObject attribute name to contain the link
+ */ 
+
+var ITEM_LINK_PARAMETERS = {
+    'Content Document': { 
+        'element': 'wordDocElement', 
+        'item': 'wordDoc' 
+    },
+    'Film Watching Flow': {
+        'element': 'filmWatchingOptionsElement',
+        'item': 'filmWatchingOptionsFlowURL',
+    },
+    'cssURL' : {
+        'element': 'cssURLElement',
+        'item' : 'cssURL'
+    }
+};
+
 /****************************************************************************/
 
 /* Main function
@@ -59,12 +88,15 @@ function contentInterface($) {
     // Find the item in which the content is contained
     var contentInterface = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(".item h3").filter(':contains("Content Interface")').eq(0);
     // Find any Word Document link that's been added
-    var wordDoc = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(".item h3").filter(':contains("Content Document")').eq(0);
+    //    var wordDoc = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(".item h3").filter(':contains("Content Document")').eq(0);
 
     // calculate the term etc
     calculateTerm();
 
-    params = checkParams(contentInterface, wordDoc);
+    params = checkParams(contentInterface); //, wordDoc);
+    // kludge to work with the jQuery each functions
+    PARAMS = params;
+
     setUpEdit(contentInterface, params);
 
     // check parameters passed in
@@ -73,13 +105,28 @@ function contentInterface($) {
         $(".gutweak").parents("li").hide();
         // hide the title for content interface
         contentInterface.parents("div.item").hide();
-        // hide the Content Document item
-        jQuery(wordDoc).hide();
+
+        // hide all the items found for ITEM_LINK_PARAMETERS
+        for ( var paramKey in ITEM_LINK_PARAMETERS) {
+            let elem = ITEM_LINK_PARAMETERS[paramKey].element;
+            console.log(" Do I need to hide " + paramKey);
+
+            // if we found an item for this param, hide it
+            if ( elem in params) {
+                console.log( " ----- YES");
+                jQuery( params[elem]).parents("li").hide();
+            } 
+        }
     }
 
     // do nothing if we couldn't find the contentInterface item
     if (contentInterface.length === 0) {
         return false;
+    }
+
+    // the if isn't required
+    if ( "cssURL" in params) { 
+        addCSS(params.cssURL);
     }
 
     // handle footnotes
@@ -603,12 +650,13 @@ function setUpEdit(ci, params) {
  *   - a Web Link content item that has Content Document in the title
  */
 
-function checkParams(contentInterface, wordDoc) {
+function checkParams(contentInterface) {
     var paramsObj = {};
+
+    // define some default parameters
     paramsObj.expand = -1;
     paramsObj.scrollTo = true;
-
-    var cssURL = DEFAULT_CSS;
+    paramsObj.cssURL = DEFAULT_CSS;
 
     // Check parameters in the Content Interface item title
     if (contentInterface.length > 0) {
@@ -623,52 +671,65 @@ function checkParams(contentInterface, wordDoc) {
 
             if (params) {
                 params.forEach(function (element) {
-                    console.log("param " + element);
                     if (element.match(/nofirstscroll/i)) {
                         paramsObj.scrollTo = false;
-                    }
-                    if (element.match(/expandall/i)) {
+                    } else if (element.match(/expandall/i)) {
                         paramsObj.expandAll = true;
-                    }
-                    if (element.match(/collapseall/i)) {
+                    } else if (element.match(/collapseall/i)) {
                         //console.log("Collapse all");
                         paramsObj.collapseAll = true;
-                    }
-                    if (element.match(/noaccordion/i)) {
+                    } else if (element.match(/noaccordion/i)) {
                         paramsObj.noAccordion = true;
+                    } else if (x = element.match(/css=([^ ]*)/)) {
+                        paramsObj.cssURL = x[1];
+                    } else {
+                        x = element.match(/^([^=]*)=(.*)/);
+                        if (x) {
+                            paramsObj[x[1]] = x[2];
+                        }
                     }
-                    /*if ( x = element.match(/wordDoc=([^ ]*)/i) ) {
-                        paramsObj.wordDoc = x[1];
-                    }*/
-                    if (x = element.match(/css=([^ ]*)/)) {
-                        cssURL = x[1];
-                    }
-                    if (x = element.match(/expand=([0-9]*)/i)) {
-                        paramsObj.expand = x[1];
-                    }
-                    if (x = element.match(/titleNum=([0-9]*)/i)) {
-                        paramsObj.titleNum = x[1];
-                    }
-                    if (x = element.match(/title=(.*)/i)) {
-                        paramsObj.title = x[1];
-                    }
+                    /*                    if (x = element.match(/titleNum=([0-9]*)/i)) {
+                                            paramsObj.titleNum = x[1];
+                                        }
+                                        if (x = element.match(/title=(.*)/i)) {
+                                            paramsObj.title = x[1];
+                                        } */
+                    /*                    if (x = element.match(/expand=([0-9]*)/i)) {
+                                            paramsObj.expand = x[1];
+                                        } */
                 });
             }
         }
     }
 
-    addCSS(cssURL);
+//   console.log("---------------------");
+//    console.log(paramsObj);
 
-    // Check for a Word doc link
-    //var wordDoc = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Document")').eq(0);
 
-    var wordDocLink = jQuery(wordDoc).find("a:contains('Content Document')").attr('href');
+    /**********
+     * check other content items for other parameters that are Content Items
+     * - Only look for those defined in global ITEM_LINK_PARAMETERS 
+     * - Looking for the link associated with item, what they are pointing to
+     * - ITEM_PARAMS defines
+     *   - key - is the expected title of the Blackboard item
+     *   - element - define attribute name to add to paramsObj to contain jQuery element 
+     *              to find in the Blackboard item
+     *   - item - define pramsObj attribute name for the actual value 
+     */
 
-    if (typeof wordDocLink !== 'undefined') {
-        paramsObj.wordDoc = wordDocLink;
-    }
+    for ( var paramKey in ITEM_LINK_PARAMETERS) {
+        const obj = ITEM_LINK_PARAMETERS[paramKey];
 
-    //console.log(paramsObj);
+        // element is the h3 wrapped around the link
+        element = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(
+            ".item h3").filter(':contains("' + paramKey + '")').eq(0);
+        // only if it's found
+        if ( element.length > 0 ) {
+            paramsObj[obj.element] = element; 
+            paramsObj[obj.item] = jQuery(paramsObj[obj.element]).children("a").attr('href');
+        }
+    }; 
+
     return paramsObj;
 }
 
@@ -1436,15 +1497,21 @@ function addCSS(urlString) {
 *    We've been unable to provide a copy of this fil..
 */
 
-var FILM_WATCHING_FLOW = 'https://prod-04.australiasoutheast.logic.azure.com:443/workflows/c029bb16a6dd4c689cfccdb23dc706b8/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=it90pfA0KqAyET1nYBFAOM0GI7gV_MG2QiHDpyJ3DRc';
 
-async function fetchFilmURL(filmName) {
+/**** 
+ * fetchFilmUrl
+ * Given name of a film and a flow URL generate an async JSON request
+ * to get the available URL for the film
+ */
+
+async function fetchFilmURL(filmName,flowUrl) {
     let data = {};
     data.filmTitle = filmName;
 
-    console.log("body is " + JSON.stringify(data));
-    console.log(" sending off to " + FILM_WATCHING_FLOW);
-    const response = await fetch(FILM_WATCHING_FLOW, {
+//        'item': 'filmWatchingOptionsFlowURL',
+//    console.log("body is " + JSON.stringify(data));
+//    console.log(" sending off to " + FILM_WATCHING_FLOW);
+    const response = await fetch(flowUrl, {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
@@ -1459,24 +1526,20 @@ function handleFilmWatchingOptions() {
     let filmNameEsc = encodeURIComponent(filmName);
 
     let filmUrl;
+    let flowUrl = PARAMS.filmWatchingOptionsFlowURL;
 
-    fetchFilmURL(filmName).then(data => {
-        console.log(data);
-
+    // Get the film's URL
+    fetchFilmURL(filmName,flowUrl).then(data => {
         let html;
+
         if ('url' in data && data.url !== '') {
+            // Found a URL for the film
             filmUrl = data.url;
-            console.log("film is at " + filmUrl);
 
-            html = convertMedia( data.url, filmName);
-            console.log(html);
-/*            html = `
-            <p><a href="${filmUrl}">Watch ${filmName} here</a></p>
-            `;*/
+            // convert it into an embeddable player (if possible)
+            html = convertMedia(data.url, filmName);
         } else {
-            // didn't find film
-            console.log("no found film");
-
+            // didn't find film do the default justWatch search
             html = `
     <div class="filmWatchingOptions">
       <div class="filmWatchingOptionsImage"></div>
@@ -1487,17 +1550,9 @@ function handleFilmWatchingOptions() {
     </div>`;
         }
         jQuery(this).replaceWith(html);
-
     });
 
 }
-
-/*Stream 
-https://web.microsoftstream.com/video/843a0d9b-5240-44ab-9c9c-edba9e17d457
-
-embed
-<iframe width="640" height="360" src="https://web.microsoftstream.com/embed/video/843a0d9b-5240-44ab-9c9c-edba9e17d457?autoplay=false&amp;showinfo=true" allowfullscreen style="border:noneiframe>
-*/
 
 /************************************
  * html = convertMedia(link)
@@ -1509,9 +1564,10 @@ embed
 function convertMedia(html, filmName) {
     // based on: http://jsfiddle.net/oriadam/v7b5edo8/   http://jsfiddle.net/88Ms2/378/   https://stackoverflow.com/a/22667308/3356679
     var cls = 'class="embedded-media"';
-    var frm = '<iframe width="640" height="480" '+cls+' src="//_URL_" frameborder="0" allowfullscreen></iframe>';
+    var frm = '<iframe width="640" height="480" ' + cls + ' src="//_URL_" frameborder="0" allowfullscreen></iframe>';
 
-    if ( html.match( /griffith.kanopy.com/)) {
+    // Haven't figured out how to generate an embeddable player for Kanopy yet
+    if (html.match(/griffith.kanopy.com/)) {
         return `
     <div class="filmWatchingOptions">
       <div class="filmWatchingOptionsImage"></div>
@@ -1524,23 +1580,23 @@ function convertMedia(html, filmName) {
     var converts = [
         {
             rx: /^.*microsoftstream.com\/video\/([^\/]+)$/g,
-            tmpl: frm.replace('_URL_',"web.microsoftstream.com/embed/video/$1")
+            tmpl: frm.replace('_URL_', "web.microsoftstream.com/embed/video/$1")
         },
         {
             rx: /^(?:https?:)?\/\/(?:www\.)?vimeo\.com\/([^\?&"]+).*$/g,
-            tmpl: frm.replace('_URL_',"player.vimeo.com/video/$1")
+            tmpl: frm.replace('_URL_', "player.vimeo.com/video/$1")
         },
         {
             rx: /^.*(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|user\/.+\/)?([^\?&"]+).*$/g,
-            tmpl: frm.replace('_URL_',"www.youtube.com/embed/$1")
+            tmpl: frm.replace('_URL_', "www.youtube.com/embed/$1")
         },
         {
             rx: /^.*(?:https?:\/\/)?(?:www\.)?(?:youtube-nocookie\.com)\/(?:watch\?v=|embed\/|v\/|user\/.+\/)?([^\?&"]+).*$/g,
-            tmpl: frm.replace('_URL_',"www.youtube-nocookie.com/embed/$1")
+            tmpl: frm.replace('_URL_', "www.youtube-nocookie.com/embed/$1")
         },
         {
             rx: /(^[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?\.(?:jpe?g|gif|png|svg)\b.*$)/gi,
-            tmpl: '<a '+cls+' href="$1" target="_blank"><img src="$1" /></a>'
+            tmpl: '<a ' + cls + ' href="$1" target="_blank"><img src="$1" /></a>'
         },
     ];
     for (var i in converts)
