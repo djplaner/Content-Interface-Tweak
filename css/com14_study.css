@@ -203,6 +203,19 @@
     background-color: #efd25c;
 }
 
+#GU_ContentInterface .filmWatchingOptions  {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 1em 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%; 
+    border-radius: 1em;
+    padding: 1em;
+  }
+
 #GU_ContentInterface .activityImage {
   width: 5%;
   background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Tweety.svg/133px-Tweety.svg.png');
@@ -213,6 +226,13 @@
 #GU_ContentInterface .readingImage {
   width: 5%;
   background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#GU_ContentInterface .filmWatchingOptionsImage {
+  width: 5%;
+  background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png');
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -573,10 +593,14 @@ figure._60 {
 #GU_ContentInterface .pictureRight {
     float:right;
     font-size: 75%; text-align: center; 
+    margin-left: 2em;
+    margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 #GU_ContentInterface .picture {
     font-size: 75%; text-align: center; 
+    margin: 2em;
 }
 
 .ael-note { 

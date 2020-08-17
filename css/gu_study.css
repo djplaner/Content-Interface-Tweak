@@ -592,9 +592,13 @@ color: #FFFFFF !important; }
 #GU_ContentInterface .pictureRight {
   float:right;
   font-size: 75%; text-align: center; 
+  margin-left: 2em;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 #GU_ContentInterface .picture {
+  margin: 2em;
   font-size: 75%; text-align: center; 
 }
 
