@@ -1634,74 +1634,75 @@
  //          Card Date: Week 3-5
  
  function handleDate( description ) {
-     var month,endMonth,date,endDate,week="",endWeek="";
-     var empty1 = { date:"",week:""};
-     var empty2 = { date:"",week:""};
-     var date = { start: empty1, stop: empty2 } ; // object to return 
-     // date by griffith week    
-     
-     m = description.match(/card date *: *week ([0-9]*)/i);
-     if (m) {
-         // check to see if a range was specified
-         x = description.match(/card date *: *week ([0-9]*)-([0-9]*)/i);
-         if (x) {
-     //        console.log('ZZZZZZZZZZZZZZZZZZZZZZ handling a range');
-             week = x[1];
-             endWeek = x[2];
-             date.stop = getTermDate( endWeek, false);
-             //console.log(date.stop);
-                 
-             description = description.replace( "<p>"+x[0]+"</p>","");
-             description = description.replace(x[0],"");
-         } else {
-       //      console.log('ZZZZ week date, but not a range');
-             week = m[1];
-                
-             description = description.replace( "<p>"+m[0]+"</p>","");
-             description = description.replace(m[0],"");
-         }
-         
-         date.start = getTermDate( week )
-         //console.log( date);
-             
-              
-     } else {
-         // TODO need to handle range here
-         m = description.match(/card date *: *([a-z]+) ([0-9]+)/i);
-         if (m) {
-             
-             x = description.match(/card date *: *([a-z]+) ([0-9]+)-+([a-z]+) ([0-9]+)/i);
-             if (x) {
-                 
-                 date.start = { month: x[1],date: x[2] }
-                 date.stop = { month: x[3], date: x[4] }
- 
-                 description = description.replace( "<p>"+x[0]+"</p>","");
-                 description = description.replace(x[0],"");
-             } else {
-             
-                 date.start = { month:m[1],date:m[2]};
-                 description = description.replace( "<p>"+m[0]+"</p>","");
-                 description = description.replace(m[0],"");
-             } 
-         } else {
-             // Fall back to check for exam period
-             m = description.match(/card date *: *exam *(period)*/i );
-             if (m) {
-                 //console.log("match exam period");
-                 date.start = getTermDate( 'exam');
-                 date.stop = getTermDate('exam', false);
-                 description = description.replace( "<p>"+m[0]+"</p>","");
-                 description = description.replace(m[0],"");
-                 //console.log('Exam date is ' );
-                 //console.log(date.start);
-                 //console.log(date.stop);
-             }
-         }
-     }
-     date.descrip = description;
-     return date;
- } 
+    var month, endMonth, date, endDate, week = "", endWeek = "";
+    var empty1 = { date: "", week: "" };
+    var empty2 = { date: "", week: "" };
+    var date = { start: empty1, stop: empty2 }; // object to return 
+    // date by griffith week    
+
+    m = description.match(/card date *: *week ([0-9]*)/i);
+    if (m) {
+        // check to see if a range was specified
+        x = description.match(/card date *: *week ([0-9]*)-([0-9]*)/i);
+        if (x) {
+            week = x[1];
+            endWeek = x[2];
+            date.stop = getTermDateCards(endWeek, false);
+
+            description = description.replace("<p>" + x[0] + "</p>", "");
+            description = description.replace(x[0], "");
+        } else {
+            week = m[1];
+
+            description = description.replace("<p>" + m[0] + "</p>", "");
+            description = description.replace(m[0], "");
+        }
+        date.start = getTermDateCards(week)
+    } else {
+        // Handle the day of a semester week 
+        // start date becomes start of week + number of days in
+        m = description.match(
+            /card date: *\b(((mon|tues|wed(nes)?|thur(s)?|fri|sat(ur)?|sun)(day)?))\b *week *([0-9]*)/i);
+        if (m) {
+            day = m[1];
+            week = m[m.length - 1];
+            description = description.replace("<p>" + m[0] + "</p>", "");
+            description = description.replace(m[0], "");
+            date.start = getTermDateCards(week, true, day)
+        } else {
+            // TODO need to handle range here 
+            m = description.match(/card date *: *([a-z]+) ([0-9]+)/i);
+            if (m) {
+                x = description.match(/card date *: *([a-z]+) ([0-9]+)-+([a-z]+) ([0-9]+)/i);
+                if (x) {
+
+                    date.start = { month: x[1], date: x[2] }
+                    date.stop = { month: x[3], date: x[4] }
+
+                    description = description.replace("<p>" + x[0] + "</p>", "");
+                    description = description.replace(x[0], "");
+                } else {
+
+                    date.start = { month: m[1], date: m[2] };
+                    description = description.replace("<p>" + m[0] + "</p>", "");
+                    description = description.replace(m[0], "");
+                }
+            } else {
+                // Fall back to check for exam period
+                m = description.match(/card date *: *exam *(period)*/i);
+                if (m) {
+                    date.start = getTermDateCards('exam');
+                    date.stop = getTermDateCards('exam', false);
+                    description = description.replace("<p>" + m[0] + "</p>", "");
+                    description = description.replace(m[0], "");
+                }
+            }
+        }
+    }
+    date.descrip = description;
+    return date;
+}
+
  
  //**************************************************************
  // cardBGcolour = identifyCardBackgroundColour( value );
@@ -1744,7 +1745,7 @@
  // - given a week of Griffith semester return date for the 
  //   start of that week
  
- function getTermDate( week, startWeek=true ) {
+ function getTermDateCards( week, startWeek=true ) {
      //console.log("TERM is " + TERM + " week is " + week);
      var date = { date: "", month: "", week: week };
      if (( week<0) || (week>15) ) {
@@ -2304,9 +2305,9 @@
          }
          
          // If need add the date visualisation
-         if ( idx.date.start.month ) {
+         if ( typeof idx.date.start.month !== "undefined" ) {
              // Do we have dual dates - both start and stop?
-             if ( idx.date.stop.month ) {
+             if ( typeof idx.date.stop.month !== "undefined" ) {
                  // start and stop dates
                  cardHtml = cardHtml.replace('{DATE}', dualDateHtmlTemplate[template] );
                  cardHtml = cardHtml.replace(/{MONTH_START}/g, 
