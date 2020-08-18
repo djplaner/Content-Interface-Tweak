@@ -38,6 +38,8 @@
  var BLAED_LINK = 'bblearn-blaed.griffith.edu.au';
  var LMS_LINK = 'bblearn.griffith.edu.au';
  
+ var LOCATION = location.href.indexOf("listContent.jsp");
+ 
  /****************************************************************************/
  
  /* Main function
@@ -689,7 +691,6 @@
          }
      }
 
-     console.log("CSS is " + cssURL );
      addCSS( cssURL );
      // Check for a Word doc link
      //var wordDoc = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Document")').eq(0);
@@ -1582,10 +1583,12 @@
          // only add the card to display if
          // - VIEW MODE is on and it's not hidden
          // - EDIT MODE is on 
+         item.hidden = false;
          if ( hidden.length===0 || LOCATION < 0) {
              // add message that item is hidden to students when EDIT mode on
              if ( hidden.length===1) {
                  item.description = item.description.concat( HIDDEN_FROM_STUDENTS);
+                 item.hidden = true;
              }
              items.push(item);
          } 
@@ -2119,23 +2122,25 @@
      var moduleNum = 1;
      
      items.forEach( function(idx) {
-       //  console.log("------------------ NEW CARD ---- " );
          //************* added
-         if ( typeof idx === "undefined") {
-         //    console.log("undefined");
-             //console.log("PPPPPPPPPPPPPPPPPPPPPPP ROBLEM");
-             var text = NO_CARD_DEFINED.replace('{WIDTH}',WIDTH);
+         if ( typeof idx === "undefined" ) {
              
-             cards = cards.concat(text);
+             // if we're editing, show missing card
+             if ( LOCATION<0) {
+                var text = NO_CARD_DEFINED.replace('{WIDTH}',WIDTH);
+             
+                cards = cards.concat(text);
+             } 
              return;
          }
          //console.log("title " + idx.title)  ;
+         
          
          var cardHtml=cardHtmlTemplate[template];
          cardHtml = cardHtml.replace( '{WIDTH}', WIDTH);
          // replace the default background colour if a different one
          // is specific
-         if ( idx.cardBGcolour ) {
+         if ( typeof idx.cardBGcolour!=="undefined" ) {
              cardHtml = cardHtml.replace(/background-color:\s*rgb\(255,255,255\)/i, 'background-color: '+idx.cardBGcolour );
          }
          
