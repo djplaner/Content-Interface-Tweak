@@ -38,7 +38,9 @@
  var BLAED_LINK = 'bblearn-blaed.griffith.edu.au';
  var LMS_LINK = 'bblearn.griffith.edu.au';
  
+ // new global kludges for Cards
  var LOCATION = location.href.indexOf("listContent.jsp");
+ var MODULE_NUM;
  
  /****************************************************************************/
  
@@ -765,6 +767,9 @@
      
      // In essence, this will be a mini card interface
      
+     // initial  module_num for all cards at the start to have
+     // consistent numbering across all bunches
+     MODULE_NUM=1;
      listOfCardBunches.forEach( createBunchesCards );
  }
  
@@ -2119,7 +2124,6 @@
       // Use the card HTML template and the data in items to generate
       // HTML for each card
      var cards = "" ;
-     var moduleNum = 1;
      
      items.forEach( function(idx) {
          //************* added
@@ -2178,8 +2182,8 @@
              } else {
                  // use the one we're calculating
                  //cardHtml = cardHtml.replace('{MODULE_NUM}',moduleNum);
-                 cardHtml = cardHtml.replace(/\{MODULE_NUM\}/g,moduleNum);
-                 checkForNum = moduleNum;
+                 cardHtml = cardHtml.replace(/\{MODULE_NUM\}/g,MODULE_NUM);
+                 checkForNum = MODULE_NUM;
               }
               
               // Update the title, check to see if it starts with label and 
@@ -2245,7 +2249,7 @@
              // if there is a label and no hard coded moduleNum, 
              //  then increment the module number
              if ( idx.label!=="" && ! idx.moduleNum) {
-               moduleNum++;
+               MODULE_NUM++;
              } 
          } else {// if (template!==HORIZONTAL_NOENGAGE) {
              // remove the link, as there isn't one
@@ -2256,7 +2260,7 @@
              cardHtml = cardHtml.replace('hover:outline-none','');
              cardHtml = cardHtml.replace('hover:shadow-outline', '');
              // don't count it as a module
-             cardHtml = cardHtml.replace(idx.label + ' ' + moduleNum, '');
+             cardHtml = cardHtml.replace(idx.label + ' ' + MODULE_NUM, '');
              //moduleNum--;
          }
          /* OLD STUFF if ( typeof idx.link !== "undefined" ) {
