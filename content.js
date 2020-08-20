@@ -793,9 +793,10 @@ function handleBlackboardItem() {
     });
 
     if (bbItem.length === 0) {
-        // if edit on, add the hiden string
-        // etsting
-        //window.tweak_bb.display_view = true;
+        // no Blackboard content item found with matching name
+        // either not present, slight difference in the name (look out special chars)
+        // or adaptive release is hiding it from students
+
         if (window.tweak_bb.display_view) {
             // if edit off, remove the heading and its section disappear
             let nextHeading = jQuery(this).nextUntil(this.tagName);
