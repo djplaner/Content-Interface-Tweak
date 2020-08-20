@@ -298,11 +298,12 @@ function contentInterface($) {
         // if active is true, then we're opening an accordion
         // thus save which one it is
         let active = this.classList.contains("ui-state-active");
+        console.log(this);
 
         if (active) {
             console.log("We need to store new open accordion");
             console.log("The id of our element opening is " + this.id);
-            console.log(this);
+            window.localStorage.setItem(window.location.href, this.id);
         }
 
         // misc other stuff
@@ -325,9 +326,8 @@ function contentInterface($) {
     if ((!Number.isInteger(start)) || (start > numAccordions - 1)) {
         start = 0;
         end = 1;
-        // This is where the local storage thing could happen,
-        // just set start/end to the appropriate value
-        console.log("Change which accordion should open ");
+
+        openWhereYouLeftOff();
     } else {
         end = start + 1;
     }
@@ -351,6 +351,40 @@ function contentInterface($) {
         jQuery('.accordion_top').slice(start, end).accordion("option", "active", 0);
     }
 
+}
+
+/*********************************************************
+ * openWhereYouLeftOff()
+ * - check local storage, if we've been here before open the
+ *   accordion that was open last time
+ */
+
+function openWhereYouLeftOff() {
+    // Check to see if 
+    let storageStart = window.localStorage.getItem(window.location.href);
+    if (typeof storageStart !== 'undefined') {
+        // want to find the H1 or H2 that has the id in m[1]
+        let heading = jQuery("h1#" + storageStart + ",h2#" + storageStart);
+        // do we need to do something different for h2?
+        // Maybe open the h1 element and then the h2 element?
+        // but then we want to find the something or other that wraps it
+        if (heading.length === 1) {
+            let accord;
+            let tagName = heading[0].tagName;
+
+            if (tagName === 'H1') {
+                accord = jQuery(heading[0]).parent();
+                jQuery(accord).accordion("option", "active", 0);
+            } else {
+                // if H2, then open the H1 accordion 
+                let p1 = jQuery(heading).parents("div.accordion_top"); // the top level DIV for h1
+                jQuery(p1).accordion("option", "active", 0);
+                // now open the H2 accordion
+                let accordP = jQuery(accord).parent();
+                jQuery(accordP).accordion("option", "active", 0);
+            }
+        }
+    }
 }
 
 //********************************************* */
