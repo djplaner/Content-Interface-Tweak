@@ -43,20 +43,20 @@ var PARAMS = {};
  *   access (and hide) the element if editing is turned off
  * - item 
  *   The paramsObject attribute name to contain the link
- */ 
+ */
 
 var ITEM_LINK_PARAMETERS = {
-    'Content Document': { 
-        'element': 'wordDocElement', 
-        'item': 'wordDoc' 
+    'Content Document': {
+        'element': 'wordDocElement',
+        'item': 'wordDoc'
     },
     'Film Watching Flow': {
         'element': 'filmWatchingOptionsElement',
         'item': 'filmWatchingOptionsFlowURL',
     },
-    'cssURL' : {
+    'cssURL': {
         'element': 'cssURLElement',
-        'item' : 'cssURL'
+        'item': 'cssURL'
     }
 };
 
@@ -107,15 +107,15 @@ function contentInterface($) {
         contentInterface.parents("div.item").hide();
 
         // hide all the items found for ITEM_LINK_PARAMETERS
-        for ( var paramKey in ITEM_LINK_PARAMETERS) {
+        for (var paramKey in ITEM_LINK_PARAMETERS) {
             let elem = ITEM_LINK_PARAMETERS[paramKey].element;
             console.log(" Do I need to hide " + paramKey);
 
             // if we found an item for this param, hide it
-            if ( elem in params) {
-                console.log( " ----- YES");
-                jQuery( params[elem]).parents("li").hide();
-            } 
+            if (elem in params) {
+                console.log(" ----- YES");
+                jQuery(params[elem]).parents("li").hide();
+            }
         }
     }
 
@@ -125,7 +125,7 @@ function contentInterface($) {
     }
 
     // the if isn't required
-    if ( "cssURL" in params) { 
+    if ("cssURL" in params) {
         addCSS(params.cssURL);
     }
 
@@ -299,7 +299,7 @@ function contentInterface($) {
         // thus save which one it is
         let active = this.classList.contains("ui-state-active");
 
-        if ( active ) {
+        if (active) {
             console.log("We need to store new open accordion");
             console.log("The id of our element opening is " + this.id);
             console.log(this);
@@ -715,8 +715,8 @@ function checkParams(contentInterface) {
         }
     }
 
-//   console.log("---------------------");
-//    console.log(paramsObj);
+    //   console.log("---------------------");
+    //    console.log(paramsObj);
 
 
     /**********
@@ -730,18 +730,18 @@ function checkParams(contentInterface) {
      *   - item - define pramsObj attribute name for the actual value 
      */
 
-    for ( var paramKey in ITEM_LINK_PARAMETERS) {
+    for (var paramKey in ITEM_LINK_PARAMETERS) {
         const obj = ITEM_LINK_PARAMETERS[paramKey];
 
         // element is the h3 wrapped around the link
         element = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(
             ".item h3").filter(':contains("' + paramKey + '")').eq(0);
         // only if it's found
-        if ( element.length > 0 ) {
-            paramsObj[obj.element] = element; 
+        if (element.length > 0) {
+            paramsObj[obj.element] = element;
             paramsObj[obj.item] = jQuery(paramsObj[obj.element]).children("a").attr('href');
         }
-    }; 
+    };
 
     return paramsObj;
 }
@@ -770,7 +770,7 @@ function checkParams(contentInterface) {
 
 function handleBlackboardItem() {
 
-    var hidden_string = " (not currently available)";
+    var hidden_string = " (not currently available - will be hidden from students)";
 
     // get the title from the Blackboard Item Heading (2)
     title = jQuery(this).text()
@@ -793,15 +793,25 @@ function handleBlackboardItem() {
     });
 
     if (bbItem.length === 0) {
-        // add the hidden_string to the heading
-        linkText = jQuery(this).text();
-        jQuery(this).text(linkText + hidden_string);
-
-        // add the hidden_string to the link
-        jQuery(this).nextUntil(this.tagName).find(".blackboardLink").each(function () {
+        // if edit on, add the hiden string
+        // etsting
+        //window.tweak_bb.display_view = true;
+        if (window.tweak_bb.display_view) {
+            // if edit off, remove the heading and its section disappear
+            let nextHeading = jQuery(this).nextUntil(this.tagName);
+            jQuery(this).remove();
+            jQuery(nextHeading).remove();
+        } else {
+            // add the hidden_string to the heading
             linkText = jQuery(this).text();
             jQuery(this).text(linkText + hidden_string);
-        });
+
+            // add the hidden_string to the link
+            jQuery(this).nextUntil(this.tagName).find(".blackboardLink").each(function () {
+                linkText = jQuery(this).text();
+                jQuery(this).text(linkText + hidden_string);
+            });
+        }
     } else if (bbItem.length > 1) {
         console.log("Error found more than 1 (" + bbItem.length + ") entries matching " + title);
     } else if (bbItem.length === 1) {
@@ -1518,13 +1528,13 @@ function addCSS(urlString) {
  * to get the available URL for the film
  */
 
-async function fetchFilmURL(filmName,flowUrl) {
+async function fetchFilmURL(filmName, flowUrl) {
     let data = {};
     data.filmTitle = filmName;
 
-//        'item': 'filmWatchingOptionsFlowURL',
-//    console.log("body is " + JSON.stringify(data));
-//    console.log(" sending off to " + FILM_WATCHING_FLOW);
+    //        'item': 'filmWatchingOptionsFlowURL',
+    //    console.log("body is " + JSON.stringify(data));
+    //    console.log(" sending off to " + FILM_WATCHING_FLOW);
     const response = await fetch(flowUrl, {
         method: 'post',
         headers: {
@@ -1543,7 +1553,7 @@ function handleFilmWatchingOptions() {
     let flowUrl = PARAMS.filmWatchingOptionsFlowURL;
 
     // Get the film's URL
-    fetchFilmURL(filmName,flowUrl).then(data => {
+    fetchFilmURL(filmName, flowUrl).then(data => {
         let html;
 
         if ('url' in data && data.url !== '') {
