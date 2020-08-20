@@ -38,6 +38,10 @@
  var BLAED_LINK = 'bblearn-blaed.griffith.edu.au';
  var LMS_LINK = 'bblearn.griffith.edu.au';
  
+ // new global kludges for Cards
+ var LOCATION = location.href.indexOf("listContent.jsp");
+ var MODULE_NUM;
+ 
  /****************************************************************************/
  
  /* Main function
@@ -689,7 +693,6 @@
          }
      }
 
-     console.log("CSS is " + cssURL );
      addCSS( cssURL );
      // Check for a Word doc link
      //var wordDoc = jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Content Document")').eq(0);
@@ -764,6 +767,9 @@
      
      // In essence, this will be a mini card interface
      
+     // initial  module_num for all cards at the start to have
+     // consistent numbering across all bunches
+     MODULE_NUM=1;
      listOfCardBunches.forEach( createBunchesCards );
  }
  
@@ -1582,10 +1588,12 @@
          // only add the card to display if
          // - VIEW MODE is on and it's not hidden
          // - EDIT MODE is on 
+         item.hidden = false;
          if ( hidden.length===0 || LOCATION < 0) {
              // add message that item is hidden to students when EDIT mode on
              if ( hidden.length===1) {
                  item.description = item.description.concat( HIDDEN_FROM_STUDENTS);
+                 item.hidden = true;
              }
              items.push(item);
          } 
@@ -1634,74 +1642,75 @@
  //          Card Date: Week 3-5
  
  function handleDate( description ) {
-     var month,endMonth,date,endDate,week="",endWeek="";
-     var empty1 = { date:"",week:""};
-     var empty2 = { date:"",week:""};
-     var date = { start: empty1, stop: empty2 } ; // object to return 
-     // date by griffith week    
-     
-     m = description.match(/card date *: *week ([0-9]*)/i);
-     if (m) {
-         // check to see if a range was specified
-         x = description.match(/card date *: *week ([0-9]*)-([0-9]*)/i);
-         if (x) {
-     //        console.log('ZZZZZZZZZZZZZZZZZZZZZZ handling a range');
-             week = x[1];
-             endWeek = x[2];
-             date.stop = getTermDate( endWeek, false);
-             //console.log(date.stop);
-                 
-             description = description.replace( "<p>"+x[0]+"</p>","");
-             description = description.replace(x[0],"");
-         } else {
-       //      console.log('ZZZZ week date, but not a range');
-             week = m[1];
-                
-             description = description.replace( "<p>"+m[0]+"</p>","");
-             description = description.replace(m[0],"");
-         }
-         
-         date.start = getTermDate( week )
-         //console.log( date);
-             
-              
-     } else {
-         // TODO need to handle range here
-         m = description.match(/card date *: *([a-z]+) ([0-9]+)/i);
-         if (m) {
-             
-             x = description.match(/card date *: *([a-z]+) ([0-9]+)-+([a-z]+) ([0-9]+)/i);
-             if (x) {
-                 
-                 date.start = { month: x[1],date: x[2] }
-                 date.stop = { month: x[3], date: x[4] }
- 
-                 description = description.replace( "<p>"+x[0]+"</p>","");
-                 description = description.replace(x[0],"");
-             } else {
-             
-                 date.start = { month:m[1],date:m[2]};
-                 description = description.replace( "<p>"+m[0]+"</p>","");
-                 description = description.replace(m[0],"");
-             } 
-         } else {
-             // Fall back to check for exam period
-             m = description.match(/card date *: *exam *(period)*/i );
-             if (m) {
-                 //console.log("match exam period");
-                 date.start = getTermDate( 'exam');
-                 date.stop = getTermDate('exam', false);
-                 description = description.replace( "<p>"+m[0]+"</p>","");
-                 description = description.replace(m[0],"");
-                 //console.log('Exam date is ' );
-                 //console.log(date.start);
-                 //console.log(date.stop);
-             }
-         }
-     }
-     date.descrip = description;
-     return date;
- } 
+    var month, endMonth, date, endDate, week = "", endWeek = "";
+    var empty1 = { date: "", week: "" };
+    var empty2 = { date: "", week: "" };
+    var date = { start: empty1, stop: empty2 }; // object to return 
+    // date by griffith week    
+
+    m = description.match(/card date *: *week ([0-9]*)/i);
+    if (m) {
+        // check to see if a range was specified
+        x = description.match(/card date *: *week ([0-9]*)-([0-9]*)/i);
+        if (x) {
+            week = x[1];
+            endWeek = x[2];
+            date.stop = getTermDateCards(endWeek, false);
+
+            description = description.replace("<p>" + x[0] + "</p>", "");
+            description = description.replace(x[0], "");
+        } else {
+            week = m[1];
+
+            description = description.replace("<p>" + m[0] + "</p>", "");
+            description = description.replace(m[0], "");
+        }
+        date.start = getTermDateCards(week)
+    } else {
+        // Handle the day of a semester week 
+        // start date becomes start of week + number of days in
+        m = description.match(
+            /card date: *\b(((mon|tues|wed(nes)?|thur(s)?|fri|sat(ur)?|sun)(day)?))\b *week *([0-9]*)/i);
+        if (m) {
+            day = m[1];
+            week = m[m.length - 1];
+            description = description.replace("<p>" + m[0] + "</p>", "");
+            description = description.replace(m[0], "");
+            date.start = getTermDateCards(week, true, day)
+        } else {
+            // TODO need to handle range here 
+            m = description.match(/card date *: *([a-z]+) ([0-9]+)/i);
+            if (m) {
+                x = description.match(/card date *: *([a-z]+) ([0-9]+)-+([a-z]+) ([0-9]+)/i);
+                if (x) {
+
+                    date.start = { month: x[1], date: x[2] }
+                    date.stop = { month: x[3], date: x[4] }
+
+                    description = description.replace("<p>" + x[0] + "</p>", "");
+                    description = description.replace(x[0], "");
+                } else {
+
+                    date.start = { month: m[1], date: m[2] };
+                    description = description.replace("<p>" + m[0] + "</p>", "");
+                    description = description.replace(m[0], "");
+                }
+            } else {
+                // Fall back to check for exam period
+                m = description.match(/card date *: *exam *(period)*/i);
+                if (m) {
+                    date.start = getTermDateCards('exam');
+                    date.stop = getTermDateCards('exam', false);
+                    description = description.replace("<p>" + m[0] + "</p>", "");
+                    description = description.replace(m[0], "");
+                }
+            }
+        }
+    }
+    date.descrip = description;
+    return date;
+}
+
  
  //**************************************************************
  // cardBGcolour = identifyCardBackgroundColour( value );
@@ -1744,7 +1753,7 @@
  // - given a week of Griffith semester return date for the 
  //   start of that week
  
- function getTermDate( week, startWeek=true ) {
+ function getTermDateCards( week, startWeek=true ) {
      //console.log("TERM is " + TERM + " week is " + week);
      var date = { date: "", month: "", week: week };
      if (( week<0) || (week>15) ) {
@@ -1811,26 +1820,26 @@
           /* End of study period 4 */
           "exam" : { "start" : "2020-08-31", "stop":"2020-09-04" },
           // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }
-     },
-     // OUA 2020 Study Period 3
-     "2205" :  {
-          "0" : { "start" : "2020-08-31", "stop":"2020-09-06" } ,
-          "1" : { "start" : "2020-09-07", "stop":"2020-09-13" } ,
-          "2" : { "start" : "2020-09-14", "stop":"2020-09-20" } ,
-          "3" : { "start" : "2020-09-21", "stop":"2020-09-27" } ,
-          "4" : { "start" : "2020-09-28", "stop":"2020-10-04" } ,
-          "5" : { "start" : "2020-10-05", "stop":"2020-10-11" } ,
-          "6" : { "start" : "2020-10-12", "stop":"2020-10-19" } ,
-          "7" : { "start" : "2020-10-19", "stop":"2020-10-25" } ,
-          "8" : { "start" : "2020-10-26", "stop":"2020-11-01" } ,
-          "9" : { "start" : "2020-11-02", "stop":"2020-11-08" } ,
-          "10" : { "start" : "2020-11-09", "stop":"2020-11-15" } ,
-          "11" : { "start" : "2020-11-16", "stop":"2020-11-22" } ,
-          "12" : { "start" : "2020-11-23", "stop":"2020-11-29" } ,
-          "13" : { "start" : "2020-11-30", "stop":"2020-12-06" },
-          "14" : { "start" : "2020-12-07", "stop":"2020-12-13" },
+     }, // OUA 2020 Study Period 3 
+     "2205": { 
+         "0": { "start": "2020-08-24", "stop": "2020-09-30" },
+     "1": { "start": "2020-08-31", "stop": "2020-09-06" },
+     "2": { "start": "2020-09-07", "stop": "2020-09-13" },
+     "3": { "start": "2020-09-14", "stop": "2020-09-20" },
+     "4": { "start": "2020-09-21", "stop": "2020-09-27" },
+     "5": { "start": "2020-09-28", "stop": "2020-10-04" },
+     "6": { "start": "2020-10-05", "stop": "2020-10-11" },
+     "7": { "start": "2020-10-12", "stop": "2020-10-19" },
+     "8": { "start": "2020-10-19", "stop": "2020-10-25" },
+     "9": { "start": "2020-10-26", "stop": "2020-11-01" },
+     "10": { "start": "2020-11-02", "stop": "2020-11-08" },
+     "11": { "start": "2020-11-09", "stop": "2020-11-15" },
+     "12": { "start": "2020-11-16", "stop": "2020-11-22" },
+     "13": { "start": "2020-11-23", "stop": "2020-11-29" },
+     "14": { "start": "2020-11-30", "stop": "2020-12-06" },
+     "15": { "start": "2020-12-07", "stop": "2020-12-13" },
           /* End of study period 4 */
-          "exam" : { "start" : "2020-12-07", "stop":"2020-12-13" },
+          "exam" : { "start" : "2020-12-07", "stop":"2020-12-13" }
           // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }
      },
      // OUA 2020 Study Period 4
@@ -2115,26 +2124,27 @@
       // Use the card HTML template and the data in items to generate
       // HTML for each card
      var cards = "" ;
-     var moduleNum = 1;
      
      items.forEach( function(idx) {
-       //  console.log("------------------ NEW CARD ---- " );
          //************* added
-         if ( typeof idx === "undefined") {
-         //    console.log("undefined");
-             //console.log("PPPPPPPPPPPPPPPPPPPPPPP ROBLEM");
-             var text = NO_CARD_DEFINED.replace('{WIDTH}',WIDTH);
+         if ( typeof idx === "undefined" ) {
              
-             cards = cards.concat(text);
+             // if we're editing, show missing card
+             if ( LOCATION<0) {
+                var text = NO_CARD_DEFINED.replace('{WIDTH}',WIDTH);
+             
+                cards = cards.concat(text);
+             } 
              return;
          }
          //console.log("title " + idx.title)  ;
+         
          
          var cardHtml=cardHtmlTemplate[template];
          cardHtml = cardHtml.replace( '{WIDTH}', WIDTH);
          // replace the default background colour if a different one
          // is specific
-         if ( idx.cardBGcolour ) {
+         if ( typeof idx.cardBGcolour!=="undefined" ) {
              cardHtml = cardHtml.replace(/background-color:\s*rgb\(255,255,255\)/i, 'background-color: '+idx.cardBGcolour );
          }
          
@@ -2172,8 +2182,8 @@
              } else {
                  // use the one we're calculating
                  //cardHtml = cardHtml.replace('{MODULE_NUM}',moduleNum);
-                 cardHtml = cardHtml.replace(/\{MODULE_NUM\}/g,moduleNum);
-                 checkForNum = moduleNum;
+                 cardHtml = cardHtml.replace(/\{MODULE_NUM\}/g,MODULE_NUM);
+                 checkForNum = MODULE_NUM;
               }
               
               // Update the title, check to see if it starts with label and 
@@ -2239,7 +2249,7 @@
              // if there is a label and no hard coded moduleNum, 
              //  then increment the module number
              if ( idx.label!=="" && ! idx.moduleNum) {
-               moduleNum++;
+               MODULE_NUM++;
              } 
          } else {// if (template!==HORIZONTAL_NOENGAGE) {
              // remove the link, as there isn't one
@@ -2250,7 +2260,7 @@
              cardHtml = cardHtml.replace('hover:outline-none','');
              cardHtml = cardHtml.replace('hover:shadow-outline', '');
              // don't count it as a module
-             cardHtml = cardHtml.replace(idx.label + ' ' + moduleNum, '');
+             cardHtml = cardHtml.replace(idx.label + ' ' + MODULE_NUM, '');
              //moduleNum--;
          }
          /* OLD STUFF if ( typeof idx.link !== "undefined" ) {
@@ -2304,9 +2314,9 @@
          }
          
          // If need add the date visualisation
-         if ( idx.date.start.month ) {
+         if ( typeof idx.date.start.month !== "undefined" ) {
              // Do we have dual dates - both start and stop?
-             if ( idx.date.stop.month ) {
+             if ( typeof idx.date.stop.month !== "undefined" ) {
                  // start and stop dates
                  cardHtml = cardHtml.replace('{DATE}', dualDateHtmlTemplate[template] );
                  cardHtml = cardHtml.replace(/{MONTH_START}/g, 
@@ -2970,7 +2980,7 @@
          "13": { "start": "2020-11-30", "stop": "2020-12-06" },
          "14": { "start": "2020-12-07", "stop": "2020-12-13" },
          /* End of study period 4 */
-         "exam": { "start": "2020-12-07", "stop": "2020-12-13" },
+         "exam": { "start": "2020-12-07", "stop": "2020-12-13" }
          // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }
      },
      // OUA 2020 Study Period 4
