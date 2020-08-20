@@ -280,7 +280,7 @@ function contentInterface($) {
         jQuery(this).attr("disabled", "disabled");
         jQuery('.close').removeAttr("disabled");
     });
-    // define the click functio for the collapse all
+    // define the click function for the collapse all
     jQuery('.close').click(function () {
         jQuery('.ui-accordion-header').removeClass('ui-accordion-header-active ui-state-active ui-corner-top').addClass('ui-corner-all').attr({
             'aria-selected': 'false',
@@ -294,11 +294,22 @@ function contentInterface($) {
         jQuery(this).attr("disabled", "disabled");
         jQuery('.open').removeAttr("disabled");
     });
-    jQuery('.ui-accordion-header').click(function () {
+    jQuery('.ui-accordion-header').click(function (e) {
+        // if active is true, then we're opening an accordion
+        // thus save which one it is
+        let active = this.classList.contains("ui-state-active");
+
+        if ( active ) {
+            console.log("We need to store new open accordion");
+            console.log("The id of our element opening is " + this.id);
+            console.log(this);
+        }
+
+        // misc other stuff
         jQuery('.open').removeAttr("disabled");
         jQuery('.close').removeAttr("disabled");
-        //console.log('click header ' + jQuery(this).html());
     });
+
 
     // figure out which accordion to open
     // - by default it is the first 0
@@ -316,9 +327,11 @@ function contentInterface($) {
         end = 1;
         // This is where the local storage thing could happen,
         // just set start/end to the appropriate value
+        console.log("Change which accordion should open ");
     } else {
         end = start + 1;
     }
+
     // want all expanded, figure out num accordions and set end appropriately
     if (params.expandAll === true) {
         start = 0;
