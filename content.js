@@ -298,12 +298,10 @@ function contentInterface($) {
         // if active is true, then we're opening an accordion
         // thus save which one it is
         let active = this.classList.contains("ui-state-active");
-        console.log(this);
 
         if (active) {
-            console.log("We need to store new open accordion");
-            console.log("The id of our element opening is " + this.id);
-            window.localStorage.setItem(window.location.href, this.id);
+            let hrefId = getHrefId( window.location.href );
+            window.localStorage.setItem(hrefId, this.id);
         }
 
         // misc other stuff
@@ -353,6 +351,33 @@ function contentInterface($) {
 
 }
 
+
+/************************************************************************
+ * getHrefId( href )
+ * Given a URL extract the blackboard course and content id and combine
+ * them into an id (concatentate with a _)
+ * Return that id.
+ * Return href
+ */
+
+function getHrefId( href ) {
+    let courseId,contentId;
+    // get the courseId
+    m = href.match(/^.*course_id=(_[0-9_]+).*$/);
+    if ( ! m ){
+        return href
+    }
+    courseId = m[1];
+    // get the contentId
+    m = href.match(/^.*content_id=(_[0-9_]+).*$/);
+    if ( ! m ){
+        return href
+    }
+    contentId = m[1];
+
+    return courseId + "/" + contentId;
+ }
+
 /*********************************************************
  * openWhereYouLeftOff()
  * - check local storage, if we've been here before open the
@@ -361,7 +386,9 @@ function contentInterface($) {
 
 function openWhereYouLeftOff() {
     // Check to see if 
-    let storageStart = window.localStorage.getItem(window.location.href);
+    let hrefId = getHrefId( window.location.href );
+    let storageStart = window.localStorage.getItem(hrefId);
+
     if (typeof storageStart !== 'undefined') {
         // want to find the H1 or H2 that has the id in m[1]
         let heading = jQuery("h1#" + storageStart + ",h2#" + storageStart);
