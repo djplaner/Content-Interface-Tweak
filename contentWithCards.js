@@ -332,9 +332,8 @@ function contentInterface($) {
         console.log(this);
 
         if (active) {
-            console.log("We need to store new open accordion");
-            console.log("The id of our element opening is " + this.id);
-            window.localStorage.setItem(window.location.href, this.id);
+            let hrefId = getHrefId( window.location.href );
+            window.localStorage.setItem(hrefId, this.id);
         }
 
         jQuery('.gu_content_open').removeAttr("disabled");
@@ -389,6 +388,32 @@ function contentInterface($) {
 }
 
 
+/************************************************************************
+ * getHrefId( href )
+ * Given a URL extract the blackboard course and content id and combine
+ * them into an id (concatentate with a _)
+ * Return that id.
+ * Return href
+ */
+
+ function getHrefId( href ) {
+    let courseId,contentId;
+    // get the courseId
+    m = href.match(/^.*course_id=(_[0-9_]+).*$/);
+    if ( ! m ){
+        return href
+    }
+    courseId = m[1];
+    // get the contentId
+    m = href.match(/^.*content_id=(_[0-9_]+).*$/);
+    if ( ! m ){
+        return href
+    }
+    contentId = m[1];
+
+    return courseId + "/" + contentId;
+ }
+
 /*********************************************************
  * openWhereYouLeftOff()
  * - check local storage, if we've been here before open the
@@ -397,7 +422,8 @@ function contentInterface($) {
 
 function openWhereYouLeftOff() {
     // Check to see if 
-    let storageStart = window.localStorage.getItem(window.location.href);
+    let hrefId = getHrefId( window.location.href );
+    let storageStart = window.localStorage.getItem(hrefId);
     if (typeof storageStart !== 'undefined') {
         // want to find the H1 or H2 that has the id in m[1]
         let heading = jQuery("h1#" + storageStart + ",h2#" + storageStart);
@@ -412,15 +438,11 @@ function openWhereYouLeftOff() {
                 accord = jQuery(heading[0]).parent();
                 jQuery(accord).accordion("option", "active", 0);
             } else {
-                console.log(" WANT TO OPEN H@");
                 // if H2, then open the H1 accordion 
-                console.log(heading);
                 let p1 = jQuery(heading).parents("div.accordion_top"); // the top level DIV for h1
-                console.log(p1);
                 jQuery(p1).accordion("option", "active", 0);
                 // now open the H2 accordion
                 let accordP = jQuery(heading).parent();
-                console.log(accordP);
                 jQuery(accordP).accordion("option", "active", 0);
             }
         }
@@ -852,7 +874,7 @@ function handleBlackboardCards() {
             // If the next HTML element for the card that was just added to 
             // the bunch is NOT another card.  Then the bunch has ended
             // get out of the loop and start again
-            if (currentCard > 0 && jQuery(cardElements[currentCard - 1]).next().is("div.bbCard")) {
+            if (! jQuery(cardElements[currentCard - 1]).next().is("div.bbCard")) {
                 //      console.log("  ---- bunch ends");
                 break;
             }
