@@ -18,7 +18,7 @@ var EXPAND_COLLAPSE_BUTTON_HTML = `<div class="accordion-expand-holder">
 <button type="button" class="close">Collapse all</button>
 </div>`;
 
-var DEFAULT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css"
+var DEFAULT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
 
 // simple definition for using pure.css tables
 // TODO need to replace this.
@@ -365,13 +365,13 @@ function getHrefId( href ) {
     // get the courseId
     m = href.match(/^.*course_id=(_[0-9_]+).*$/);
     if ( ! m ){
-        return href
+        return href;
     }
     courseId = m[1];
     // get the contentId
     m = href.match(/^.*content_id=(_[0-9_]+).*$/);
     if ( ! m ){
-        return href
+        return href;
     }
     contentId = m[1];
 
@@ -421,7 +421,7 @@ function openWhereYouLeftOff() {
 function handleFootNotes() {
     const footnote_re = /<a href="#footnote-ref-[0-9]*">.<\/a>/g;
     var footnotes = jQuery('#GU_ContentInterface a[id^="footnote-ref-"');
-    var firstFootNote = ''
+    var firstFootNote = '';
 
     footnotes.each(function () {
         // get the <sup> item wrapped around footnote
@@ -451,7 +451,7 @@ function handleFootNotes() {
         supItem.attr('footNoteId', footnoteId);
         supItem.attr('class', 'ci-tooltip');
         supItem.attr('data-tooltip-content', footnoteContent);
-    })
+    });
 
     // if there were footnotes, then
     if (footnotes.length) {
@@ -652,7 +652,7 @@ function setUpEdit(ci, params) {
 
     if (typeof path === 'undefined') {
         // Word document is not defined
-        var html = UPDATE_HTML + WORD_DOC_NOT_PRESENT
+        var html = UPDATE_HTML + WORD_DOC_NOT_PRESENT;
 
         // add in link to edit the content item
         var editContent = 'into the <a href="https://bblearn-blaed.griffith.edu.au/webapps/blackboard/execute/manageCourseItem?content_id=' + contentId + '&course_id=' + courseId + '&dispatch=edit">Content Interface content item</a>';
@@ -801,7 +801,7 @@ function checkParams(contentInterface) {
             paramsObj[obj.element] = element;
             paramsObj[obj.item] = jQuery(paramsObj[obj.element]).children("a").attr('href');
         }
-    };
+    }
 
     return paramsObj;
 }
@@ -833,7 +833,7 @@ function handleBlackboardItem() {
     var hidden_string = " (not currently available - will be hidden from students)";
 
     // get the title from the Blackboard Item Heading (2)
-    title = jQuery(this).text()
+    title = jQuery(this).text();
 
     // define pseudo function to do comparison to get exact match, but
     // case insensitive
@@ -1025,7 +1025,7 @@ function handleBlackboardContentLink() {
 
 function handleBlackboardMenuLink() {
     var hidden_string = " (not currently available)";
-    var duplicate_menu_string = " (more than 1 menu item with same name) "
+    var duplicate_menu_string = " (more than 1 menu item with same name) ";
 
     // the title is the value of the link associated with the item
     // Either parent or child
@@ -1171,11 +1171,11 @@ function parse_parameters(cmdline) {
         var unquoted_arg = "";
         while (quoted_arg.length > 0) {
             if (/^"/.test(quoted_arg)) {
-                var quoted_part = /^"((?:\\.|[^"])*)"(.*)$/.exec(quoted_arg);
+                let quoted_part = /^"((?:\\.|[^"])*)"(.*)$/.exec(quoted_arg);
                 unquoted_arg += quoted_part[1].replace(/\\(.)/g, "$1");
                 quoted_arg = quoted_part[2];
             } else if (/^'/.test(quoted_arg)) {
-                var quoted_part = /^'([^']*)'(.*)$/.exec(quoted_arg);
+                let quoted_part = /^'([^']*)'(.*)$/.exec(quoted_arg);
                 unquoted_arg += quoted_part[1];
                 quoted_arg = quoted_part[2];
             } else if (/^\\/.test(quoted_arg)) {
@@ -1202,7 +1202,7 @@ function parse_parameters(cmdline) {
  */
 
 function handleUniversityDate() {
-    dateText = jQuery(this).text()
+    dateText = jQuery(this).text();
 
     // extract the day and week
     // Wednesday Week 5 becomes
@@ -1235,7 +1235,7 @@ function handleUniversityDate() {
 
 function getTermDate(week, dayOfWeek = 'Monday') {
 
-    dayOfWeek = dayOfWeek.toLowerCase()
+    dayOfWeek = dayOfWeek.toLowerCase();
     var start;
 
     // if the week is not within the term return empty string
@@ -1690,4 +1690,4 @@ function convertMedia(html, filmName) {
             return html.trim().replace(converts[i].rx, converts[i].tmpl);
         }
     return false;
-};
+}
