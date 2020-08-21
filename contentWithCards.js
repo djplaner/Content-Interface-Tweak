@@ -3,6 +3,7 @@
  * - Given a Blackboard page containing a content item with  
      HTML generated from Mammoth
  * - Implement a variety of transformations
+ * esversion: 6
  */
 
 // Default dates
@@ -12,7 +13,7 @@ var TERM = "3191", YEAR = 2019;
 var MARK_REVIEWED = "Mark Reviewed";
 var REVIEWED = "Reviewed";
 
-var DEFAULT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css"
+var DEFAULT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
 
 var tweak_bb_active_url_pattern = "listContent.jsp";
 
@@ -401,13 +402,13 @@ function contentInterface($) {
     // get the courseId
     m = href.match(/^.*course_id=(_[0-9_]+).*$/);
     if ( ! m ){
-        return href
+        return href;
     }
     courseId = m[1];
     // get the contentId
     m = href.match(/^.*content_id=(_[0-9_]+).*$/);
     if ( ! m ){
-        return href
+        return href;
     }
     contentId = m[1];
 
@@ -458,7 +459,7 @@ function openWhereYouLeftOff() {
 function handleFootNotes() {
     const footnote_re = /<a href="#footnote-ref-[0-9]*">.<\/a>/g;
     var footnotes = jQuery('#GU_ContentInterface a[id^="footnote-ref-"');
-    var firstFootNote = ''
+    var firstFootNote = '';
 
     footnotes.each(function () {
         // get the <sup> item wrapped around footnote
@@ -488,7 +489,7 @@ function handleFootNotes() {
         supItem.attr('footNoteId', footnoteId);
         supItem.attr('class', 'ci-tooltip');
         supItem.attr('data-tooltip-content', footnoteContent);
-    })
+    });
 
     // if there were footnotes, then
     if (footnotes.length) {
@@ -685,7 +686,7 @@ function setUpEdit(ci, params) {
 
     if (typeof path === 'undefined') {
         // Word document is not defined
-        var html = UPDATE_HTML + WORD_DOC_NOT_PRESENT
+        var html = UPDATE_HTML + WORD_DOC_NOT_PRESENT;
 
         // add in link to edit the content item
         var editContent = 'into the <a href="https://bblearn-blaed.griffith.edu.au/webapps/blackboard/execute/manageCourseItem?content_id=' + contentId + '&course_id=' + courseId + '&dispatch=edit">Content Interface content item</a>';
@@ -778,13 +779,16 @@ function checkParams(contentInterface, wordDoc) {
                     /*if ( x = element.match(/wordDoc=([^ ]*)/i) ) {
                         paramsObj.wordDoc = x[1];
                     }*/
-                    if (x = element.match(/expand=([0-9]*)/i)) {
+                    x = element.match(/expand=([0-9]*)/i);
+                    if (x) {
                         paramsObj.expand = x[1];
                     }
-                    if (m = element.match(/^reviewed=(.*)/ui)) {
+                    m = element.match(/^reviewed=(.*)/ui);
+                    if (m ) {
                         REVIEWED = m[1];
                     }
-                    if (m = element.match(/^markReviewed=(.*)/i)) {
+                    m = element.match(/^markReviewed=(.*)/i);
+                    if (m ) {
                         MARK_REVIEWED = m[1];
                     }
                     /*                     if ( x = element.match(/css=([^ ]*)/ )) {
@@ -817,7 +821,7 @@ function checkParams(contentInterface, wordDoc) {
             paramsObj[obj.element] = element;
             paramsObj[obj.item] = jQuery(paramsObj[obj.element]).children("a").attr('href');
         }
-    };
+    }
 
     //     addCSS( cssURL );
     // Check for a Word doc link
@@ -842,7 +846,7 @@ function checkParams(contentInterface, wordDoc) {
 function handleBlackboardCards() {
 
     //----------------- organise card elements into bunches for conversion
-    var listOfCardBunches = []
+    var listOfCardBunches = [];
 
     // Get list of all cards
     var cardElements = jQuery("div.bbCard");
@@ -862,7 +866,7 @@ function handleBlackboardCards() {
             // - originalHTMLElement is from Mammoth output
             // - bbItem is the matching Blackboard Item from which the
             //   card information will be extracted
-            var cardObject = new Object();
+            var cardObject = {};
             cardObject.originalHTMLElement = cardElements[currentCard];
             // Find the Bb Item matching this cardElement
             cardObject.bbItem = getCardBbItem(cardObject.originalHTMLElement);
@@ -961,7 +965,7 @@ function createBunchesCards(bunch, index, arr) {
     // Does this unwrap actually do anything???
     //jQuery( ".cardmainlink[href='undefined'" ).contents().unwrap();
     //return true;
-    var cards = document.querySelectorAll(".clickablecard");
+    cards = document.querySelectorAll(".clickablecard");
     //var cards = document.querySelectorAll(".cardmainlink");
     for (i = 0; i < cards.length; i++) {
         cards[i].addEventListener('click', function () {
@@ -997,7 +1001,7 @@ function getCardBbItem(element) {
 
     if (bbItem.length === 0) {
         //console.log("  -- Didn't find match");
-        return undefined
+        return undefined;
     }
 
     /*console.log("Get Card Bb Item found");
@@ -1029,7 +1033,7 @@ function handleBlackboardItem() {
     var hidden_string = " (not currently available)";
 
     // get the title from the Blackboard Item Heading (2)
-    title = jQuery(this).text()
+    title = jQuery(this).text();
 
     // define pseudo function to do comparison to get exact match, but
     // case insensitive
@@ -1136,18 +1140,18 @@ function addReviewLink(item, reviewLink) {
     //var MARK_REVIEWED = "Mark Reviewed"
     //var REVIEWED = "Reviewed";
 
-    var reviewHeadingTemplate = ''
+    var reviewHeadingTemplate = '';
     if (reviewLink.match(/markUnreviewed/)) {
 
         reviewHeadingTemplate = `
       <span style="float:right" class="ui-state-disabled ui-corner-all">{TEXT}</span>
       `;
-        reviewHeadingTemplate = reviewHeadingTemplate.replace('{TEXT}', REVIEWED)
+        reviewHeadingTemplate = reviewHeadingTemplate.replace('{TEXT}', REVIEWED);
     } else {
         reviewHeadingTemplate = `
           <span style="float:right" class="ui-state-active ui-corner-all">{TEXT}</span>
           `;
-        reviewHeadingTemplate = reviewHeadingTemplate.replace('{TEXT}', MARK_REVIEWED)
+        reviewHeadingTemplate = reviewHeadingTemplate.replace('{TEXT}', MARK_REVIEWED);
     }
     jQuery(item).html(linkText + reviewHeadingTemplate);
 
@@ -1164,7 +1168,7 @@ function addReviewLink(item, reviewLink) {
                      <span class="font-bold rounded-full px-2 py-1 bg-green text-white">&#10003; {TEXT}</span>&nbsp;</button></a>
  </div>
  `;
-        reviewBodyTemplate = reviewBodyTemplate.replace('{TEXT}', REVIEWED)
+        reviewBodyTemplate = reviewBodyTemplate.replace('{TEXT}', REVIEWED);
     } else {
 
         reviewBodyTemplate = `
@@ -1173,7 +1177,7 @@ function addReviewLink(item, reviewLink) {
       <span class="font-bold rounded-full px-2 py-1 bg-yellow text-black">&#x26a0;</span>&nbsp; {TEXT}</button></a>
  </div>
          `;
-        reviewBodyTemplate = reviewBodyTemplate.replace('{TEXT}', MARK_REVIEWED)
+        reviewBodyTemplate = reviewBodyTemplate.replace('{TEXT}', MARK_REVIEWED);
     }
     reviewBodyTemplate = reviewBodyTemplate.replace('{LINK}', reviewLink);
     // insert the reviewed button before the first item after the heading
@@ -1199,7 +1203,7 @@ function getReviewStatusContent(header) {
     review = jQuery(details).find("a.button-5");
 
     if (review.length === 0) {
-        return undefined
+        return undefined;
     } else {
         return jQuery(review).attr("href");
     }
@@ -1313,7 +1317,7 @@ function handleBlackboardContentLink() {
 
 function handleBlackboardMenuLink() {
     var hidden_string = " (not currently available)";
-    var duplicate_menu_string = " (more than 1 menu item with same name) "
+    var duplicate_menu_string = " (more than 1 menu item with same name) ";
 
     // the title is the value of the link associated with the item
     // Either parent or child
@@ -1495,7 +1499,7 @@ function extractCardsFromContent(myCards) {
         review = getReviewStatus(jthis);
 
         // Parse the description and remove the Card Image data	    
-        var description = jQuery(jthis).html(), picUrl;
+        var description = jQuery(jthis).html();
 
         //console.log(description)
 
@@ -1594,7 +1598,7 @@ function extractCardsFromContent(myCards) {
             description = description.replace("<p>" + m[0] + "</p>", "");
             description = description.replace(m[0], "");
             if (number.match(/none/i)) {
-                number = '&nbsp;'
+                number = '&nbsp;';
             }
         }
         // Get Image IFrame
@@ -1745,7 +1749,7 @@ function getReviewStatus(vtbgen) {
     review = jQuery(parent).find("a.button-5");
 
     if (review.length === 0) {
-        return undefined
+        return undefined;
     } else {
         return jQuery(review).attr("href");
     }
@@ -1767,7 +1771,7 @@ function getReviewStatus(vtbgen) {
 //          Card Date: Week 3-5
 
 function handleDate(description) {
-    var month, endMonth, date, endDate, week = "", endWeek = "";
+    var month, endMonth, endDate, week = "", endWeek = "";
     var empty1 = { date: "", week: "" };
     var empty2 = { date: "", week: "" };
     var date = { start: empty1, stop: empty2 }; // object to return 
@@ -1790,7 +1794,7 @@ function handleDate(description) {
             description = description.replace("<p>" + m[0] + "</p>", "");
             description = description.replace(m[0], "");
         }
-        date.start = getTermDateCards(week)
+        date.start = getTermDateCards(week);
     } else {
         // Handle the day of a semester week 
         // start date becomes start of week + number of days in
@@ -1801,7 +1805,7 @@ function handleDate(description) {
             week = m[m.length - 1];
             description = description.replace("<p>" + m[0] + "</p>", "");
             description = description.replace(m[0], "");
-            date.start = getTermDateCards(week, true, day)
+            date.start = getTermDateCards(week, true, day);
         } else {
             // TODO need to handle range here 
             m = description.match(/card date *: *([a-z]+) ([0-9]+)/i);
@@ -1809,8 +1813,8 @@ function handleDate(description) {
                 x = description.match(/card date *: *([a-z]+) ([0-9]+)-+([a-z]+) ([0-9]+)/i);
                 if (x) {
 
-                    date.start = { month: x[1], date: x[2] }
-                    date.stop = { month: x[3], date: x[4] }
+                    date.start = { month: x[1], date: x[2] };
+                    date.stop = { month: x[3], date: x[4] };
 
                     description = description.replace("<p>" + x[0] + "</p>", "");
                     description = description.replace(x[0], "");
@@ -2164,7 +2168,7 @@ function addCardInterface(items, place) {
     var engageVerb = 'Engage';
 
     // Define the text for Review Status
-    var MARK_REVIEWED = "Mark Reviewed"
+    var MARK_REVIEWED = "Mark Reviewed";
     var REVIEWED = "Reviewed";
 
     // get the content item with h3 heading containing Card Interface
@@ -2286,12 +2290,12 @@ function addCardInterface(items, place) {
             //   reviewed
             if (idx.review.match(/markUnreviewed/)) {
                 reviewTemplate = markUnReviewedLinkHtmlTemplate[template];
-                reviewTemplate = reviewTemplate.replace('{REVIEWED}', REVIEWED)
+                reviewTemplate = reviewTemplate.replace('{REVIEWED}', REVIEWED);
             } else {
                 // it's the other one which indicates it has not been reviewed
                 reviewTemplate = markReviewLinkHtmlTemplate[template];
 
-                reviewTemplate = reviewTemplate.replace('{MARK_REVIEWED}', MARK_REVIEWED)
+                reviewTemplate = reviewTemplate.replace('{MARK_REVIEWED}', MARK_REVIEWED);
             }
             // set the right link
             reviewTemplate = reviewTemplate.replace('{LINK}', idx.review);
@@ -2316,7 +2320,7 @@ function addCardInterface(items, place) {
             // So that the card doesn't duplicate it, but the information is 
             // still there in Blackboard
             var regex = new RegExp('^' + idx.label + '\\s*' + checkForNum +
-                '\\s*[-:]*\\s*(.*)')
+                '\\s*[-:]*\\s*(.*)');
             var m = idx.title.match(regex);
             if (m) {
                 idx.title = m[1];
@@ -2349,7 +2353,7 @@ function addCardInterface(items, place) {
         } else {
             cardHtml = cardHtml.replace(/{IFRAME}/g, idx.iframe);
             // set pic URl to empty so non is provided
-            picUrl = ''
+            picUrl = '';
         }
         cardHtml = cardHtml.replace(/{PIC_URL}/g, picUrl);
         cardHtml = cardHtml.replace('{TITLE}', idx.title);
@@ -2470,14 +2474,16 @@ function addCardInterface(items, place) {
                 }
             } else {
                 // just start date
+                let weekHtml;
                 cardHtml = cardHtml.replace('{DATE}', dateHtmlTemplate[template]);
                 cardHtml = cardHtml.replace(/{MONTH}/g, idx.date.start.month);
                 cardHtml = cardHtml.replace(/{DATE}/g, idx.date.start.date);
                 cardHtml = cardHtml.replace(/{DATE_LABEL}/g, idx.dateLabel);
                 if (!idx.date.start.hasOwnProperty('week')) {
                     cardHtml = cardHtml.replace('{WEEK}', '');
-                } else
-                    var weekHtml = weekHtmlTemplate.replace('{WEEK}', idx.date.start.week);
+                } else {
+                    weekHtml = weekHtmlTemplate.replace('{WEEK}', idx.date.start.week);
+                }
                 cardHtml = cardHtml.replace('{WEEK}', weekHtml);
             }
         } else {
@@ -2935,11 +2941,11 @@ function parse_parameters(cmdline) {
         var unquoted_arg = "";
         while (quoted_arg.length > 0) {
             if (/^"/.test(quoted_arg)) {
-                var quoted_part = /^"((?:\\.|[^"])*)"(.*)$/.exec(quoted_arg);
+                let quoted_part = /^"((?:\\.|[^"])*)"(.*)$/.exec(quoted_arg);
                 unquoted_arg += quoted_part[1].replace(/\\(.)/g, "$1");
                 quoted_arg = quoted_part[2];
             } else if (/^'/.test(quoted_arg)) {
-                var quoted_part = /^'([^']*)'(.*)$/.exec(quoted_arg);
+                let quoted_part = /^'([^']*)'(.*)$/.exec(quoted_arg);
                 unquoted_arg += quoted_part[1];
                 quoted_arg = quoted_part[2];
             } else if (/^\\/.test(quoted_arg)) {
@@ -2985,7 +2991,7 @@ NO_CARD_DEFINED = `
  */
 
 function handleUniversityDate() {
-    dateText = jQuery(this).text()
+    dateText = jQuery(this).text();
 
     // extract the day and week
     // Wednesday Week 5 becomes
@@ -3018,7 +3024,7 @@ function handleUniversityDate() {
 
 function getTermDate(week, dayOfWeek = 'Monday') {
 
-    dayOfWeek = dayOfWeek.toLowerCase()
+    dayOfWeek = dayOfWeek.toLowerCase();
     var start;
 
     // if the week is not within the term return empty string
@@ -3341,40 +3347,6 @@ function calculateTerm() {
     }
 }
 
-//---------------------------------------------------------------------
-// Given a string of parameters use some Stack Overflow provided
-// regular expression magic to split it up into its component parts
-
-function parse_parameters(cmdline) {
-    //    var re_next_arg = /^\s*((?:(?:"(?:\\.|[^"])*")|(?:'[^']*')|\\.|\S)+)\s*(.*)$/;
-    var re_next_arg = /^\s*((?:(?:"(?:\\.|[^"])*")|(?:'[^']*')|\\.|\S)+)\s*(.*)$/;
-    var next_arg = ['', '', cmdline];
-    var args = [];
-    while (next_arg = re_next_arg.exec(next_arg[2])) {
-        var quoted_arg = next_arg[1];
-        var unquoted_arg = "";
-        while (quoted_arg.length > 0) {
-            if (/^"/.test(quoted_arg)) {
-                var quoted_part = /^"((?:\\.|[^"])*)"(.*)$/.exec(quoted_arg);
-                unquoted_arg += quoted_part[1].replace(/\\(.)/g, "$1");
-                quoted_arg = quoted_part[2];
-            } else if (/^'/.test(quoted_arg)) {
-                var quoted_part = /^'([^']*)'(.*)$/.exec(quoted_arg);
-                unquoted_arg += quoted_part[1];
-                quoted_arg = quoted_part[2];
-            } else if (/^\\/.test(quoted_arg)) {
-                unquoted_arg += quoted_arg[1];
-                quoted_arg = quoted_arg.substring(2);
-            } else {
-                unquoted_arg += quoted_arg[0];
-                quoted_arg = quoted_arg.substring(1);
-            }
-        }
-        args[args.length] = unquoted_arg;
-    }
-    return args;
-}
-
 /*************************************************************
 * addCSS( url )
 * - given the URL for a CSS file add it to the document
@@ -3507,4 +3479,4 @@ function convertMedia(html, filmName) {
             return html.trim().replace(converts[i].rx, converts[i].tmpl);
         }
     return false;
-};
+}
