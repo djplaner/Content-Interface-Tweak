@@ -380,7 +380,7 @@ function openWhereYouLeftOff() {
                 let p1 = jQuery(heading).parents("div.accordion_top"); // the top level DIV for h1
                 jQuery(p1).accordion("option", "active", 0);
                 // now open the H2 accordion
-                let accordP = jQuery(accord).parent();
+                let accordP = jQuery(heading).parent();
                 jQuery(accordP).accordion("option", "active", 0);
             }
         }

@@ -38,7 +38,7 @@ var CHECKBOX = `<input type="checkbox" name="gu_dummy" />`;
 var BLAED_LINK = 'bblearn-blaed.griffith.edu.au';
 var LMS_LINK = 'bblearn.griffith.edu.au';
 
-var PARAMS={};
+var PARAMS = {};
 
 // new global kludges for Cards
 var LOCATION = location.href.indexOf("listContent.jsp");
@@ -326,6 +326,17 @@ function contentInterface($) {
         jQuery('.gu_content_open').removeAttr("disabled");
     });
     jQuery('.ui-accordion-header').click(function () {
+        // if active is true, then we're opening an accordion
+        // thus save which one it is
+        let active = this.classList.contains("ui-state-active");
+        console.log(this);
+
+        if (active) {
+            console.log("We need to store new open accordion");
+            console.log("The id of our element opening is " + this.id);
+            window.localStorage.setItem(window.location.href, this.id);
+        }
+
         jQuery('.gu_content_open').removeAttr("disabled");
         jQuery('.gu_content_close').removeAttr("disabled");
         //console.log('click header ' + jQuery(this).html());
@@ -344,6 +355,8 @@ function contentInterface($) {
     if ((!Number.isInteger(start)) || (start > numAccordions - 1)) {
         start = 0;
         end = 1;
+
+        openWhereYouLeftOff();
     } else {
         end = start + 1;
     }
@@ -374,6 +387,46 @@ function contentInterface($) {
     var child = jQuery(journey).children("#html");
     jQuery(child).unwrap();
 }
+
+
+/*********************************************************
+ * openWhereYouLeftOff()
+ * - check local storage, if we've been here before open the
+ *   accordion that was open last time
+ */
+
+function openWhereYouLeftOff() {
+    // Check to see if 
+    let storageStart = window.localStorage.getItem(window.location.href);
+    if (typeof storageStart !== 'undefined') {
+        // want to find the H1 or H2 that has the id in m[1]
+        let heading = jQuery("h1#" + storageStart + ",h2#" + storageStart);
+        // do we need to do something different for h2?
+        // Maybe open the h1 element and then the h2 element?
+        // but then we want to find the something or other that wraps it
+        if (heading.length === 1) {
+            let accord;
+            let tagName = heading[0].tagName;
+
+            if (tagName === 'H1') {
+                accord = jQuery(heading[0]).parent();
+                jQuery(accord).accordion("option", "active", 0);
+            } else {
+                console.log(" WANT TO OPEN H@");
+                // if H2, then open the H1 accordion 
+                console.log(heading);
+                let p1 = jQuery(heading).parents("div.accordion_top"); // the top level DIV for h1
+                console.log(p1);
+                jQuery(p1).accordion("option", "active", 0);
+                // now open the H2 accordion
+                let accordP = jQuery(heading).parent();
+                console.log(accordP);
+                jQuery(accordP).accordion("option", "active", 0);
+            }
+        }
+    }
+}
+
 
 //********************************************* */
 // handle footnotes
