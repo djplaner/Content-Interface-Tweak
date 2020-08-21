@@ -388,7 +388,6 @@ function openWhereYouLeftOff() {
     // Check to see if 
     let hrefId = getHrefId( window.location.href );
     let storageStart = window.localStorage.getItem(hrefId);
-
     if (typeof storageStart !== 'undefined') {
         // want to find the H1 or H2 that has the id in m[1]
         let heading = jQuery("h1#" + storageStart + ",h2#" + storageStart);
