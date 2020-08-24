@@ -109,7 +109,6 @@ function contentInterface($) {
         // hide all the items found for ITEM_LINK_PARAMETERS
         for (var paramKey in ITEM_LINK_PARAMETERS) {
             let elem = ITEM_LINK_PARAMETERS[paramKey].element;
-            console.log(" Do I need to hide " + paramKey);
 
             // if we found an item for this param, hide it
             if (elem in params) {
