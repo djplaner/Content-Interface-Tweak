@@ -3446,7 +3446,7 @@ function convertMedia(html, filmName) {
     <div class="filmWatchingOptions">
       <div class="filmWatchingOptionsImage"></div>
       <div class="instructions">
-         <p>You can watch <em>${filmName}</em> on <a href="{$html}">Kanopy</a></p>
+         <p>You can watch <em>${filmName}</em> on <a href="${html}">Kanopy</a></p>
        </div>
     </div>`;
     }

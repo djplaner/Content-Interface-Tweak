@@ -947,9 +947,12 @@ function handleBlackboardContentLink() {
         title = jQuery(this).find("a").first().attr('href');
         inner = true;
     }
+    console.log(this);
+    console.log("title is " + title);
 
     if (typeof title !== 'undefined') {
         title = title.replace(/%20/g, " ");
+        // also need to remove 
     }
 
     // define pseudo function to do comparison to get exact match, but
@@ -1003,12 +1006,21 @@ function handleBlackboardContentLink() {
         }
 
         if (!inner) {
+            // the parent element was a link, replace the href with link
             jQuery(this).parent().attr('href', link);
             // Kludge - occasionally Blackboard adds an onclick
             // handler for links
             jQuery(this).parent().attr('onclick', '');
         } else {
-            title = jQuery(this).find("a").first().attr('href', link);
+            // the link was an element inside the this
+            // - remove the internal links
+            jQuery(this).find("a").each( function() {
+               let link = jQuery(this);
+               link.after(link.text());
+               link.remove();
+            });
+            // - wrap with a single link
+            jQuery(this).wrapInner("<a href='" + link + "'></a>");
         }
     }
 }
