@@ -3395,6 +3395,7 @@ async function fetchFilmURL(filmName, flowUrl) {
     return response.json();
 }
 
+
 function handleFilmWatchingOptions() {
     let filmName = jQuery(this).text().trim();
     let filmNameEsc = encodeURIComponent(filmName);
@@ -3402,17 +3403,40 @@ function handleFilmWatchingOptions() {
     let filmUrl;
     let flowUrl = PARAMS.filmWatchingOptionsFlowURL;
 
+    // stop if flowUrl isn't defined
+    if ( typeof flowUrl === 'undefined') {
+        console.log("Error: no flow URL defined");
+        return false;
+    }
+    
     // Get the film's URL
     fetchFilmURL(filmName, flowUrl).then(data => {
-        let html;
-
+        var html = '';
+        
+        // Flow returned a URL
         if ('url' in data && data.url !== '') {
             // Found a URL for the film
             filmUrl = data.url;
 
             // convert it into an embeddable player (if possible)
             html = convertMedia(data.url, filmName);
-        } else {
+            
+            
+            // if it wasn't converted, just do the URL
+            if ( html === '') {
+                html = `
+                <div class="filmWatchingOptions">
+      <div class="filmWatchingOptionsImage"></div>
+      <div class="instructions">
+         <p>Access a copy of <a href="${data.url}"><em>${filmName}</em> here</a></p>
+       </div>
+    </div>
+                `;
+            }
+        } 
+        
+        // if still no HTML, then point to JustWatch
+        if ( html === '' ) {
             // didn't find film do the default justWatch search
             html = `
     <div class="filmWatchingOptions">
@@ -3422,7 +3446,8 @@ function handleFilmWatchingOptions() {
          <p><a href="https://www.justwatch.com/au/search?q=${filmNameEsc}" target="_blank">This search on JustWatch</a> may provide pointers to where you can find it online.</p>
        </div>
     </div>`;
-        }
+        } 
+        
         jQuery(this).replaceWith(html);
     });
 
@@ -3451,7 +3476,12 @@ function convertMedia(html, filmName) {
     </div>`;
     }
 
+
     var converts = [
+        {
+            rx: /^.*archive.org\/details\/([^\/]+)$/g,
+            tmpl: frm.replace('_URL_', "archive.org/embed/$1")
+        },
         {
             rx: /^.*microsoftstream.com\/video\/([^\/]+)$/g,
             tmpl: frm.replace('_URL_', "web.microsoftstream.com/embed/video/$1")
@@ -3473,10 +3503,13 @@ function convertMedia(html, filmName) {
             tmpl: '<a ' + cls + ' href="$1" target="_blank"><img src="$1" /></a>'
         },
     ];
-    for (var i in converts)
-        if (converts[i].rx.test(html.trim())) {
-
-            return html.trim().replace(converts[i].rx, converts[i].tmpl);
+    
+    let returning = '';
+    converts.forEach( function(elem) {
+      m = elem.rx.match( html.trim() );
+        if (m) {
+            returning = html.trim().replace(elem.rx, elem.tmpl);
         }
-    return false;
+    });
+    return returning;
 }
