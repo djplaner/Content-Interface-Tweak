@@ -102,6 +102,7 @@ function contentInterface($) {
     // check parameters passed in
     // Hide the tweak if we're not editing
     if (location.href.indexOf("listContent.jsp") > 0) {
+        console.log("Head the tweak");
         $(".gutweak").parents("li").hide();
         // hide the title for content interface
         contentInterface.parents("div.item").hide();
@@ -531,6 +532,79 @@ var CONTENT_INTERFACE_NOT_PRESENT = `
 var OLD_INSTRUCTIONS = `
 <h3>Detailed documentation</h3>
 <p>See <a href="https://griffitheduau-my.sharepoint.com/:w:/g/personal/d_jones6_griffith_edu_au/EUbAQvhxLW1MicRKf9Hof3sBIoS2EyJP_SfkYbqZ7c3qhw?e=2S9k3Y" target="_blank" rel="noreferrer noopener">this Word document</a> for more detailed documentation on creating and changing content.</p>
+<div class="box-content mx-auto border-none h-auto py-0 px-4 m-0">
+<div class="flex flex-wrap -mx-1 lg:-mx-4">
+    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <article class="overlow-hidden rounded-lg shadow-lg h-full">
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                <h1 class="text-lg">
+                        Getting started
+                </h1>
+            </header>
+            <div class="p-2 md:p-4">
+                Learn about
+                <ul class="p-0 m-0">
+                 <li class="p-0"> the <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110115_1&amp;course_id=_82534_1&amp;mode=quick">
+                   what and why</a> of the Card Interface.</li>
+                  <li> <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110120_1&amp;course_id=_82534_1&amp;content_id=_5110129_1">
+               adding the Card Interface</a> to a new Blackboard page. </li>
+              </ul>
+
+            </div>
+        </article>
+    </div>
+
+    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <article class="overlow-hidden rounded-lg shadow-lg h-full">
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                <h1 class="text-lg">
+                        Changing a card
+                </h1>
+            </header>
+            <div class="p-2 md:p-4">
+    How do you...
+    <ul>
+       <li> Add an image to a card <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#2">using a URL</a> or <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#3">by uploading</a>. 
+      </li>
+       <li> <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#4">Make an image fit neatly</a> in a card. </li>
+       <li> <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#5">Use a background colour</a>, rather than an image. </li>
+       <li> Add or <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#6">change the date</a>. </li>
+       <li> Use <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#7">different card types and labels</a>. </li>
+       <li> Hide <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#8">a card</a>. </li>
+    </ul>
+
+            </div>
+        </article>
+    </div>
+
+    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <article class="overlow-hidden rounded-lg shadow-lg h-full">
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                <h1 class="text-lg">
+                       Change appearance of all cards 
+                </h1>
+            </header>
+            <div class="p-2 md:p-4">
+    How do you...   
+     <ul>
+       <li> Change the <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110122_1&amp;course_id=_82534_1&amp;content_id=_5110408_1#4">
+          number of cards per row</a> </li>
+        <li> Change or remove <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110122_1&amp;course_id=_82534_1&amp;content_id=_5110408_1#6">
+          the engage button</a> </li>
+         <li> Arrange <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110122_1&amp;course_id=_82534_1&amp;content_id=_5110408_1#3">
+           cards vertically</a> </li>
+         <li> Learn the basics of <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110122_1&amp;course_id=_82534_1&amp;content_id=_5110408_1#2">
+              templates and attributes</a> </li>
+         <li> Use the <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110122_1&amp;course_id=_82534_1&amp;content_id=_5110408_1#5">
+            assessment template</a> </li>
+      </ul>
+
+            </div>
+        </article>
+    </div>
+
+</div>
+</div>
 `;
 
 var INSTRUCTIONS = `
@@ -538,35 +612,6 @@ var INSTRUCTIONS = `
 
 <p>More information can be found in <a href="https://griffitheduau-my.sharepoint.com/:w:/g/personal/d_jones6_griffith_edu_au/EUbAQvhxLW1MicRKf9Hof3sBIoS2EyJP_SfkYbqZ7c3qhw?e=2S9k3Y" target="_blank">this Word document</a>, or in the links in the following table.</p>
 
-<table style="width:100%;padding:2px">
-  <tr>
-    <td bgcolor="#edebf0"> Get started </td>
-    <td bgcolor="#ebeef0"> Adding & editing content </td>
-    <td bgcolor="#f0ebeb"> Changing how it works </td>
-  </tr>
-  <tr>
-    <td bgcolor="#edebf0">
-<ul style="padding-left:1.2em">
-  <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#2">Content Interface - why?</a>
-       </li>
-  <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#4">How to set it up</a> </li>
-  <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#5">How to update content</a> </li>
-  
-  
-</ul>
-    </td>
-    <td bgcolor="#ebeef0">
-          <ul>
-            <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#6">text, headings, tables and quotes</a> </li>
-            <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#7">web content: images, links, videos & embeddable content</a> </li>
-            <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#8">study guide content: readings, activitites & notes</a> </li>
-            <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#9">Links to Blackboard activities</a> </li>
-         </ul>
-    </td>
-    <td bgcolor="#f0ebeb">
-        
-    </td>
-    </table>
     `;
 
 
@@ -764,15 +809,6 @@ function checkParams(contentInterface) {
                             paramsObj[x[1]] = x[2];
                         }
                     }
-                    /*                    if (x = element.match(/titleNum=([0-9]*)/i)) {
-                                            paramsObj.titleNum = x[1];
-                                        }
-                                        if (x = element.match(/title=(.*)/i)) {
-                                            paramsObj.title = x[1];
-                                        } */
-                    /*                    if (x = element.match(/expand=([0-9]*)/i)) {
-                                            paramsObj.expand = x[1];
-                                        } */
                 });
             }
         }
@@ -912,8 +948,8 @@ function handleBlackboardItem() {
 
         // Hide the bbitem li
         if (location.href.indexOf("listContent.jsp") > 0) {
-            console.log(bbItem);
-            console.log(jQuery(bbItem).parent().parent());
+            //console.log(bbItem);
+            //console.log(jQuery(bbItem).parent().parent());
             jQuery(bbItem).parent().parent().hide();
         }
         // wrap any span class="blackboardLink" with a link
@@ -951,8 +987,6 @@ function handleBlackboardContentLink() {
         title = jQuery(this).find("a").first().attr('href');
         inner = true;
     }
-    console.log(this);
-    console.log("title is " + title);
 
     if (typeof title !== 'undefined') {
         title = title.replace(/%20/g, " ");
