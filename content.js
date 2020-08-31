@@ -112,7 +112,7 @@ function contentInterface($) {
 
             // if we found an item for this param, hide it
             if (elem in params) {
-                console.log(" ----- YES");
+//                console.log(" ----- YES");
                 jQuery(params[elem]).parents("li").hide();
             }
         }
@@ -126,6 +126,10 @@ function contentInterface($) {
     // the if isn't required
     if ("cssURL" in params) {
         addCSS(params.cssURL);
+    }
+    
+    if ("theme" in params ) {
+        changeJqueryTheme( params.theme); 
     }
 
     // handle footnotes
@@ -774,8 +778,8 @@ function checkParams(contentInterface) {
         }
     }
 
-    //   console.log("---------------------");
-    //    console.log(paramsObj);
+//    console.log("---------------------");
+//    console.log(paramsObj);
 
 
     /**********
@@ -1586,6 +1590,46 @@ function addCSS(urlString) {
     style.rel = 'stylesheet';
     head.append(style);
 }
+
+/******************************************************************
+ * changeJqueryTheme( themeName)
+ * - given a theme name, remove the old jQuery theme css and replace
+ *   it with the new one
+ */
+
+var JQUERY_THEMES = [ 'base', 'start', 'smoothness', 'redmond', 'sunny',
+'overcast', 'flick', 'pepper-grinder', 'ui-lightness', 'ui-darkness', 
+'le-frog', 'eggplant', 'dark-hive', 'cupertino', 'blitzer', 'south-street', 
+'humanity', 'hot-sneaks', 'excite-bike', 'vader', 'black-tie', 'trontastic',
+'swanky-purse'
+];
+
+ function changeJqueryTheme( themeName) {
+    // Convert the themeName to lower case with dash separation
+    themeName = themeName.toLowerCase().replace( /\s+/g, '-');
+
+    // does the new theme CSS file actually exist? / is it a valid theme name
+    if ( ! JQUERY_THEMES.includes(themeName)) {
+        return false;
+    }
+
+    // remove the old theme CSS
+    jQuery( "#gu_jqueryTheme").attr("disabled","disabled");
+
+    // add the new one
+    let urlString = `
+    //code.jquery.com/ui/1.12.1/themes/${themeName}/jquery-ui.css
+    `;
+
+    var head = document.getElementsByTagName('head')[0];
+
+    var style = document.createElement('link');
+    style.href = urlString;
+    style.id = "gu_jqueryTheme";
+    style.type = 'text/css';
+    style.rel = 'stylesheet';
+    head.append(style);
+ }
 
 /*****************************************************************
 * handleFilmWatchingOptions
