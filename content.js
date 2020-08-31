@@ -1694,21 +1694,20 @@ function convertMedia(html, filmName) {
     </div>`;
     }
 
-
     var converts = [
-        {
+        {  // Internet archive
             rx: /^.*archive.org\/details\/([^\/]+)$/g,
             tmpl: frm.replace('_URL_', "archive.org/embed/$1")
         },
-        {
+        {  // MS-Stream
             rx: /^.*microsoftstream.com\/video\/([^\/]+)$/g,
             tmpl: frm.replace('_URL_', "web.microsoftstream.com/embed/video/$1")
         },
-        {
+        {  // Vimeo
             rx: /^(?:https?:)?\/\/(?:www\.)?vimeo\.com\/([^\?&"]+).*$/g,
             tmpl: frm.replace('_URL_', "player.vimeo.com/video/$1")
         },
-        {
+        {  // YouTube
             rx: /^.*(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|user\/.+\/)?([^\?&"]+).*$/g,
             tmpl: frm.replace('_URL_', "www.youtube.com/embed/$1")
         },
