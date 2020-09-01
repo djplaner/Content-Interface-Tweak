@@ -19,6 +19,9 @@ var EXPAND_COLLAPSE_BUTTON_HTML = `<div class="accordion-expand-holder">
 </div>`;
 
 var DEFAULT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
+// Used for documentation
+var CARDS_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/cards.css";
+var FONT_AWESOME_JS="https://kit.fontawesome.com/3bd759c8f5.js";
 
 // simple definition for using pure.css tables
 // TODO need to replace this.
@@ -116,6 +119,10 @@ function contentInterface($) {
                 jQuery(params[elem]).parents("li").hide();
             }
         }
+    } else {
+        // add the cards for documentation
+        addCSS(CARDS_CSS);
+        addJS(FONT_AWESOME_JS);
     }
 
     // do nothing if we couldn't find the contentInterface item
@@ -528,9 +535,9 @@ var CONTENT_INTERFACE_NOT_PRESENT = `
 <p>Such a content item is required before the Content Interface tweak can function.</p>
 `;
 
-var OLD_INSTRUCTIONS = `
-<h3>Detailed documentation</h3>
-<p>See <a href="https://griffitheduau-my.sharepoint.com/:w:/g/personal/d_jones6_griffith_edu_au/EUbAQvhxLW1MicRKf9Hof3sBIoS2EyJP_SfkYbqZ7c3qhw?e=2S9k3Y" target="_blank" rel="noreferrer noopener">this Word document</a> for more detailed documentation on creating and changing content.</p>
+var INSTRUCTIONS = `
+<h3>How do I...</h3>
+
 <div class="box-content mx-auto border-none h-auto py-0 px-4 m-0">
 <div class="flex flex-wrap -mx-1 lg:-mx-4">
     <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
@@ -541,12 +548,23 @@ var OLD_INSTRUCTIONS = `
                 </h1>
             </header>
             <div class="p-2 md:p-4">
-                Learn about
-                <ul class="p-0 m-0">
-                 <li class="p-0"> the <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110115_1&amp;course_id=_82534_1&amp;mode=quick">
-                   what and why</a> of the Card Interface.</li>
+                Background
+                <ul> 
+                  <li> the <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578504_1">
+                   what and why</a> of the Content Interface.</li>
+                  <!-- li> peruse examples in <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578503_1">
+                        the Design Gallery</a>. </li -->
                   <li> <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110120_1&amp;course_id=_82534_1&amp;content_id=_5110129_1">
                adding the Card Interface</a> to a new Blackboard page. </li>
+               </ul>
+               Basics
+               <ul>
+                  <li> <i class="fas fa-hammer"></i> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578505_1">
+                        how it works and its components</a> </li>
+                  <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578507_1">
+                        how to set it up in Blackboard</a> </li>
+                  <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578508_1">
+                        how to create and modify content</a> (an overview) </li>
               </ul>
 
             </div>
@@ -557,21 +575,32 @@ var OLD_INSTRUCTIONS = `
         <article class="overlow-hidden rounded-lg shadow-lg h-full">
             <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
                 <h1 class="text-lg">
-                        Changing a card
+                  Create <a href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1">
+                    text content</a>
                 </h1>
             </header>
             <div class="p-2 md:p-4">
-    How do you...
+    How do you create and edit
     <ul>
-       <li> Add an image to a card <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#2">using a URL</a> or <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#3">by uploading</a>. 
-      </li>
-       <li> <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#4">Make an image fit neatly</a> in a card. </li>
-       <li> <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#5">Use a background colour</a>, rather than an image. </li>
-       <li> Add or <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#6">change the date</a>. </li>
-       <li> Use <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#7">different card types and labels</a>. </li>
-       <li> Hide <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110121_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5110132_1#8">a card</a>. </li>
+       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#2">
+            normal text content</a> 
+       </li>
+       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#3">
+            headings</a> 
+       </li>
+       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#4">
+            tables</a> 
+       </li>
+       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#5">
+            quotes</a> 
+       </li>
+       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#6">
+            reference lists</a> 
+       </li>
+       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#7">
+            footnotes</a> 
+       </li>
     </ul>
-
             </div>
         </article>
     </div>
@@ -580,37 +609,135 @@ var OLD_INSTRUCTIONS = `
         <article class="overlow-hidden rounded-lg shadow-lg h-full">
             <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
                 <h1 class="text-lg">
-                       Change appearance of all cards 
+                 Create <a href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1">web content</a>
                 </h1>
             </header>
             <div class="p-2 md:p-4">
     How do you...   
      <ul>
-       <li> Change the <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110122_1&amp;course_id=_82534_1&amp;content_id=_5110408_1#4">
-          number of cards per row</a> </li>
-        <li> Change or remove <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110122_1&amp;course_id=_82534_1&amp;content_id=_5110408_1#6">
-          the engage button</a> </li>
-         <li> Arrange <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110122_1&amp;course_id=_82534_1&amp;content_id=_5110408_1#3">
-           cards vertically</a> </li>
-         <li> Learn the basics of <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110122_1&amp;course_id=_82534_1&amp;content_id=_5110408_1#2">
-              templates and attributes</a> </li>
-         <li> Use the <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110122_1&amp;course_id=_82534_1&amp;content_id=_5110408_1#5">
-            assessment template</a> </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#2">
+                 Images
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#3">
+               Links
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#4">
+                 Embedding videos and more
+            </a>
+         </li>
+         </li>
       </ul>
+            </div>
+        </article>
+    </div>
 
+    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <article class="overlow-hidden rounded-lg shadow-lg h-full">
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                <h1 class="text-lg">
+                 Create University content
+                </h1>
+            </header>
+            <div class="p-2 md:p-4">
+    How do you...   
+     <ul>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#2">
+         Activities
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#3">
+         Notes
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#4">
+         Readings
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#5">
+         Trimester (university) dates
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#6">
+         Film Watching Options
+            </a>
+         </li>
+      </ul>
+            </div>
+        </article>
+    </div>
+
+    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <article class="overlow-hidden rounded-lg shadow-lg h-full">
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                <h1 class="text-lg">
+                  Use Blackboard items and features
+                </h1>
+            </header>
+            <div class="p-2 md:p-4">
+    How do you...   
+     <ul>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1">
+           link to a Blackboard Menu item
+            </a>
+            <i class="fas fa-hammer"></i> 
+         </li>
+         <li> <a target="_blank" href="">
+           link to a Blackboard content item
+            </a>
+            <i class="fas fa-hammer"></i> 
+         </li>
+         <li> <a target="_blank" href="">
+           link to a Blackboard page/tool
+            </a>
+            <i class="fas fa-hammer"></i> 
+         </li>
+         <li> 
+            use adaptive release
+            <i class="fas fa-hammer"></i> 
+         </li>
+         <li> 
+            use mark review 
+            <i class="fas fa-hammer"></i> 
+         </li>
+      </ul>
+            </div>
+        </article>
+    </div>
+
+
+    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <article class="overlow-hidden rounded-lg shadow-lg h-full">
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                <h1 class="text-lg">
+                 Customise the interface
+                </h1>
+            </header>
+            <div class="p-2 md:p-4">
+    How do you customise...   
+     <ul>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?content_id=_5578515_1&course_id=_82534_1">
+              which accordion opens first
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578516_1">
+             the accordion theme
+            </a>
+            <i class="fas fa-hammer"></i> 
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578519_1">
+              appearance of the content
+            </a>
+         </li>
+
+      </ul>
             </div>
         </article>
     </div>
 
 </div>
 </div>
-`;
-
-var INSTRUCTIONS = `
-<h3>How do I...</h3>
-
-<p>More information can be found in <a href="https://griffitheduau-my.sharepoint.com/:w:/g/personal/d_jones6_griffith_edu_au/EUbAQvhxLW1MicRKf9Hof3sBIoS2EyJP_SfkYbqZ7c3qhw?e=2S9k3Y" target="_blank">this Word document</a>, or in the links in the following table.</p>
-
     `;
 
 
@@ -1614,13 +1741,29 @@ function calculateTerm() {
  */
 
 function addCSS(urlString) {
-    var head = document.getElementsByTagName('head')[0];
+    let head = document.getElementsByTagName('head')[0];
 
-    var style = document.createElement('link');
+    let style = document.createElement('link');
     style.href = urlString;
     style.type = 'text/css';
     style.rel = 'stylesheet';
     head.append(style);
+}
+
+/*************************************************************
+ * addJS( url )
+ * - given the URL for a JS file add it to the document
+ * https://makitweb.com/dynamically-include-script-and-css-file-with-javascript/
+ * (and other places)
+ */
+
+function addJS(urlString) {
+    let head = document.getElementsByTagName('head')[0];
+
+    let js = document.createElement('script');
+    js.src = urlString;
+    js.crossorgin = 'anonymous';
+    head.append(js);
 }
 
 /******************************************************************
@@ -1775,7 +1918,7 @@ function convertMedia(html, filmName) {
 
     var converts = [
         {  // Internet archive
-            rx: /^.*archive.org\/details\/([^\/]+)$/g,
+            rx: new RegExp( '^.*archive.org\/details\/([^\/]+)$', 'g'),
             tmpl: frm.replace('_URL_', "archive.org/embed/$1")
         },
         {  // MS-Stream
@@ -1802,7 +1945,7 @@ function convertMedia(html, filmName) {
     
     let returning = '';
     converts.forEach( function(elem) {
-      m = elem.rx.match( html.trim() );
+        m = html.trim().match( elem.rx );
         if (m) {
             returning = html.trim().replace(elem.rx, elem.tmpl);
         }
