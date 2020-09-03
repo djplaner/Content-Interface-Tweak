@@ -595,12 +595,17 @@ color: #FFFFFF !important; }
   margin-left: 2em;
   margin-top: 2em;
   margin-bottom: 2em;
+  padding: 5px;
+  border: solid 2px #EFEFEF;
+  border-radius: 4px;
 }
 
 #GU_ContentInterface .picture {
-  margin: 2em;
-  font-size: 75%; text-align: center; 
+    margin: 2em;
+    font-size: 75%;
+    text-align: center;
 }
+
 
 .ael-note { 
 border-radius: 1em;

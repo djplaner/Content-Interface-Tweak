@@ -493,16 +493,61 @@ function handleFootNotes() {
  * 
  */
 
+var HOW_TO = "";
+var UPDATE_HTML = () => `
+<style>
+#gu_nopadding{
+    padding-left: 1em;
+    margin-top: 0;
+}
+</style>
+  <div class="mx-auto border-none box-content px-4 py-2">
+    <div class="flex flex-wrap -mx-1 lg:-mx-4 p-0">
 
-var UPDATE_HTML = `
-<h3>Important</h3>
-<ol>
-<li><strong>No changes to this item</strong> - do not edit or remove content from this tweak code item. The tweak code implements the Content interface. Changes may break the Content interface.</li>
-<li><strong>Do not hide this item from students.</strong> - the tweak in this item will hide the item from students. They will not see it. If you use Blackboard to hide this tweak from students, it will NOT work and students won't see the accordion interface.</li>
-</ol>
-<p>For some help on using this feature, please peruse <a href="https://github.com/djplaner/Content-Interface-Tweak/blob/master/README.md">the README page</a></p>
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h1 class="text-lg">
+                      How to update the content
+                    </h1>
+                </header>
+                <div class="p-2 md:p-4">
+                ${HOW_TO}
+                </div>
+            </article>
+        </div>
 
- <h3>Updating and editing</h3>
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h1 class="text-lg">
+                            <i class="fa fa-exclamation-triangle text-red"></i>
+                            No changes to this item
+                    </h1>
+                </header>
+                <div class="p-2 md:p-4">
+                    <p>Any changes to this item will stop the Content Interface from working.</p>
+                </div>
+            </article>
+        </div>
+
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h1 class="text-lg">
+                            <i class="fa fa-exclamation-triangle text-red"></i>
+                            Do not hide this item
+                    </h1>
+                </header>
+                <div class="p-2 md:p-4">
+                   <p>If you make this item unavailable to students, the Content Interface will not work for them.</p>
+                  <p>This item is only visible when <a href="https://elearn.southampton.ac.uk/blackboard/quickedit/">Edit Mode</a> is on. i.e. typically only visible to teaching staff.</p>
+                </div>
+            </article>
+        </div>
+
+    </div>
+</div>
 
 `;
 
@@ -513,19 +558,14 @@ var WORD_DOC_PRESENT = `
   </ol>
 `;
 
-var WORD_DOC_NOT_PRESENT = `<ol>
-<li>Make any change in the matching Word document.</li>
+var WORD_DOC_NOT_PRESENT = `
+<ol id="gu_nopadding">
+<li>Edit the Word document.</li>
 <li><a href="https://djon.es/gu/mammoth.js/browser-demo/" target="_blank" rel="noreferrer noopener">Convert the Word document into HTML</a>.</li>
-<li>Copy and paste the HTML into {EDIT_CONTENT_ITEM}. <br />
-<p>See this <a href="http://www.bu.edu/tech/services/teaching/lms/blackboard/how-to/copypaste-into-blackboard-learn/">explanation on how to copy and paste HTML</a> into Blackboard content items.</p>
+<li>Paste the HTML into {EDIT_CONTENT_ITEM}. (Remember: to use <a href="http://www.bu.edu/tech/services/teaching/lms/blackboard/how-to/copypaste-into-blackboard-learn/">HTML code view</a></p>
 </li>
 </ol>
-<p>To semi-automate this process, you can:</p>
-<ol>
-  <li> Share the Word document via OneDrive or Sharepoint and copy the share URL.<br />(<a href="https://support.office.com/en-us/article/share-a-document-using-sharepoint-or-onedrive-807de6cf-1ece-41b9-a2b3-250d9a48f1e8">How to share a document using SharePoint or OneDrive</a>) </li>
-  <li> Create a <em>Web Link</em> item on this page using the name <em>Content Document</em> and the URL as the shared URL created in the first step.<br />(<a href="https://help.blackboard.com/Learn/Instructor/Course_Content/Create_Content/Create_Course_Materials/Link_to_Websites">How to create a Web Link item in Blackboard</a>) </li>
-</ol>
-
+<p>You can also <a target="_blank" href="">semi-automate this process</a></p>
 `;
 
 var CONTENT_INTERFACE_NOT_PRESENT = `
@@ -544,27 +584,18 @@ var INSTRUCTIONS = `
         <article class="overlow-hidden rounded-lg shadow-lg h-full">
             <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
                 <h1 class="text-lg">
-                        Getting started
+                        Get started
                 </h1>
             </header>
             <div class="p-2 md:p-4">
-                Background
-                <ul> 
-                  <li> the <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578504_1">
-                   what and why</a> of the Content Interface.</li>
-                  <!-- li> peruse examples in <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578503_1">
-                        the Design Gallery</a>. </li -->
-                  <li> <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5110120_1&amp;course_id=_82534_1&amp;content_id=_5110129_1">
-               adding the Card Interface</a> to a new Blackboard page. </li>
-               </ul>
-               Basics
-               <ul>
-                  <li> <i class="fas fa-hammer"></i> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578505_1">
-                        how it works and its components</a> </li>
+                <p><a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578504_1">
+                   Content Interface: what and why</a></p>
+               <p>How to...</p>
+               <ul id="gu_nopadding">
                   <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578507_1">
-                        how to set it up in Blackboard</a> </li>
+                        set it up in Blackboard</a> </li>
                   <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578508_1">
-                        how to create and modify content</a> (an overview) </li>
+                        create and modify content</a> (an overview) </li>
               </ul>
 
             </div>
@@ -580,8 +611,7 @@ var INSTRUCTIONS = `
                 </h1>
             </header>
             <div class="p-2 md:p-4">
-    How do you create and edit
-    <ul>
+    <ul id="gu_nopadding">
        <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#2">
             normal text content</a> 
        </li>
@@ -613,8 +643,7 @@ var INSTRUCTIONS = `
                 </h1>
             </header>
             <div class="p-2 md:p-4">
-    How do you...   
-     <ul>
+     <ul id="gu_nopadding">
          <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#2">
                  Images
             </a>
@@ -641,8 +670,7 @@ var INSTRUCTIONS = `
                 </h1>
             </header>
             <div class="p-2 md:p-4">
-    How do you...   
-     <ul>
+     <ul id="gu_nopadding">
          <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#2">
          Activities
             </a>
@@ -677,7 +705,7 @@ var INSTRUCTIONS = `
             </header>
             <div class="p-2 md:p-4">
     How do you...   
-     <ul>
+     <ul id="gu_nopadding">
          <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1">
            link to a Blackboard Menu item
             </a>
@@ -716,7 +744,7 @@ var INSTRUCTIONS = `
             </header>
             <div class="p-2 md:p-4">
     How do you customise...   
-     <ul>
+     <ul id="gu_nopadding">
          <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?content_id=_5578515_1&course_id=_82534_1">
               which accordion opens first
             </a>
@@ -738,6 +766,8 @@ var INSTRUCTIONS = `
 
 </div>
 </div>
+
+</div> <!-- end gu_ci_instructions -->
     `;
 
 
@@ -822,11 +852,13 @@ function setUpEdit(ci, params) {
     }
 
     // Has a link  to the word doc been shared
-    var path = params.wordDoc;
+    let path = params.wordDoc;
+
 
     if (typeof path === 'undefined') {
         // Word document is not defined
-        var html = UPDATE_HTML + WORD_DOC_NOT_PRESENT;
+        HOW_TO = WORD_DOC_NOT_PRESENT;
+        let html = UPDATE_HTML() + INSTRUCTIONS;
 
         // add in link to edit the content item
         var editContent = 'into the <a href="https://bblearn-blaed.griffith.edu.au/webapps/blackboard/execute/manageCourseItem?content_id=' + contentId + '&course_id=' + courseId + '&dispatch=edit">Content Interface content item</a>';
@@ -839,7 +871,8 @@ function setUpEdit(ci, params) {
     }
 
     //jQuery(".gu_docNotPresent").hide();
-    var updateHtml = UPDATE_HTML + WORD_DOC_PRESENT + INSTRUCTIONS;
+    HOW_TO = WORD_DOC_PRESENT;
+    let updateHtml = UPDATE_HTML() + INSTRUCTIONS;
 
     if (jQuery('#gu_jqueryStyle').length) {
         updateHtml = updateHtml + CHANGE_TEMPLATE;
