@@ -338,6 +338,8 @@ function doMammoth( wordContent ) {
                     "p[style-name='Film Watching Options'] => div.filmWatchingOptions",
                     "r[style-name='Checkbox Char'] => span.checkbox",
                     "p[style-name='Checkbox'] => span.checkbox",
+                    "p[style-name='Example'] => div.example > p:fresh",
+                    "p[style-name='ExampleCentered'] => div.exampleCentered > p:fresh",
                     "p[style-name='ActivityTitle'] => div.activity > h2:fresh",
                     "p[style-name='Activity Title'] => div.activity > h2:fresh",
                     "p[style-name='ActivityText'] => div.activity > div.instructions > p:fresh",
@@ -548,3 +550,4 @@ function copyToClipboard(elem) {
  function signOut() {
      myMSALObj.logout();
  }
+
