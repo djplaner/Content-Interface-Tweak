@@ -631,6 +631,19 @@ figure._60 {
 }
 
 
+#GU_ContentInterface .exampleCentered {
+  text-align: center;
+  border-radius: 3px;
+  /*position: relative;  /*  <--- */
+  padding: 1rem 1.2rem;
+  width: 80%;  
+  color: #4a4a4a;
+  margin: 1rem 1em 1em 2rem;
+  color: #4a4a4a;
+  background: #E8E8E8;
+}
+
+
 .ael-note { 
   border-radius: 1em;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
@@ -655,6 +668,6 @@ figure._60 {
 }
 
 
-.tooltipster-sidetip.tooltipster-shadow.tooltipster-shadow-customized .tooltipster-content s {
+.tooltipster-sidetip.tooltipster-noir.tooltipster-noir-customized .tooltipster-content s {
   text-decoration-thickness: 4px;
 }

@@ -492,7 +492,7 @@ function handleFootNotes() {
         jQuery("head").append(
             "<link id='tooltipstercss' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/tooltipster.bundle.min.css' type='text/css' rel='stylesheet' />");
         jQuery("head").append(
-            "<link id='tooltipstercssShadow' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-shadow.min.css' type='text/css' rel='stylesheet' />");
+            "<link id='tooltipstercssNoir' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-noir.min.css' type='text/css' rel='stylesheet' />");
             
         jQuery.getScript(
             //"https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.js",
@@ -500,7 +500,7 @@ function handleFootNotes() {
             function () {
                 docWidth = Math.floor(jQuery(document).width() / 2);
                 jQuery('.ci-tooltip').tooltipster({ 'maxWidth': docWidth,
-                    theme: ['tooltipster-shadow', 'tooltipster-shadow-customized']});
+                    theme: ['tooltipster-noir', 'tooltipster-noir-customized']});
             });
     }
 }

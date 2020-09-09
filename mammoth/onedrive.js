@@ -17,7 +17,6 @@ function loggerCallback(logLevel, message, containsPii) {
 
 var msalConfig = {
     auth: {
-        //clientId: "cd3eae92-4f64-457e-9bfc-a2a441920144",
         clientId: "4e260176-5f5d-4a11-b419-8920aff4b13f",
         authority: "https://login.microsoftonline.com/common"
     },
@@ -339,7 +338,7 @@ function doMammoth( wordContent ) {
                     "r[style-name='Checkbox Char'] => span.checkbox",
                     "p[style-name='Checkbox'] => span.checkbox",
                     "p[style-name='Example'] => div.example > p:fresh",
-                    "p[style-name='ExampleCentered'] => div.exampleCentered > p:fresh",
+                    "p[style-name='Example Centered'] => div.exampleCentered > p:fresh",
                     "p[style-name='ActivityTitle'] => div.activity > h2:fresh",
                     "p[style-name='Activity Title'] => div.activity > h2:fresh",
                     "p[style-name='ActivityText'] => div.activity > div.instructions > p:fresh",
