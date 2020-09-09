@@ -491,12 +491,16 @@ function handleFootNotes() {
         // add tooltipster if there are footnotes
         jQuery("head").append(
             "<link id='tooltipstercss' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/tooltipster.bundle.min.css' type='text/css' rel='stylesheet' />");
+        jQuery("head").append(
+            "<link id='tooltipstercssShadow' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-shadow.min.css' type='text/css' rel='stylesheet' />");
+            
         jQuery.getScript(
             //"https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.js",
             "https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.min.js",
             function () {
                 docWidth = Math.floor(jQuery(document).width() / 2);
-                jQuery('.ci-tooltip').tooltipster({ 'maxWidth': docWidth });
+                jQuery('.ci-tooltip').tooltipster({ 'maxWidth': docWidth,
+                    theme: ['tooltipster-shadow', 'tooltipster-shadow-customized']});
             });
     }
 }
@@ -760,7 +764,6 @@ var INSTRUCTIONS = `
          <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578516_1">
              the accordion theme
             </a>
-            <i class="fas fa-hammer"></i> 
          </li>
          <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578519_1">
               appearance of the content

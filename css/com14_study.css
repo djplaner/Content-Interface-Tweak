@@ -647,5 +647,14 @@ figure._60 {
     .ui-accordion .ui-accordion-content {
         display:block !important;
     }
-    
 }  
+
+#GU_ContentInterface s {
+  /*text-decoration-style: wavy; */
+  text-decoration-thickness: 4px;
+}
+
+
+.tooltipster-sidetip.tooltipster-shadow.tooltipster-shadow-customized .tooltipster-content s {
+  text-decoration-thickness: 4px;
+}
