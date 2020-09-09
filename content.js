@@ -8,6 +8,10 @@
 // Default dates
 var TERM = "3191", YEAR = 2019;
 
+// Default reviewed/mark reviewed labels
+var MARK_REVIEWED = "Mark Reviewed";
+var REVIEWED = "Reviewed";
+
 // Wrap arounds for various types of activity 
 var READING = `<div class="readingImage"></div>`;
 var ACTIVITY = `<div class="activityImage"></div>`;
@@ -105,7 +109,6 @@ function contentInterface($) {
     // check parameters passed in
     // Hide the tweak if we're not editing
     if (location.href.indexOf("listContent.jsp") > 0) {
-        console.log("Head the tweak");
         $(".gutweak").parents("li").hide();
         // hide the title for content interface
         contentInterface.parents("div.item").hide();
@@ -228,6 +231,14 @@ function contentInterface($) {
     // Also convert blaed links to normal bblean links
     jQuery("#GU_ContentInterface a").each(function (idx) {
         // check if it's a blackboard link
+        // but ignore any with class gu-bb-review, these are added for
+        // review status
+
+        linkClass = jQuery(this).attr("class");
+        if (linkClass === "gu-bb-review") {
+            return;
+        }
+        
         var theLink = jQuery(this).attr('href');
 
         if (typeof theLink !== 'undefined') {
@@ -251,7 +262,8 @@ function contentInterface($) {
     if (params.noAccordion === true) {
         // This actually greys out the accordion, rather than not
         // using it
-        //accordionDisabled = true;
+        accordionDisabled = true;
+        return false;
     }
     // check if there is actually an accordion, if not don't go any further
 
@@ -277,7 +289,7 @@ function contentInterface($) {
     var icons = jQuery(".accordion").accordion("option", "icons");
     // define the click function for the expand all
     jQuery('.open').click(function () {
-        console.log("Open click");
+        event.preventDefault();
         jQuery('.ui-accordion-header').removeClass('ui-corner-all').addClass('ui-accordion-header-active ui-state-active ui-corner-top').attr({
             'aria-selected': 'true',
             'tabindex': '0'
@@ -334,8 +346,10 @@ function contentInterface($) {
     if ((!Number.isInteger(start)) || (start > numAccordions - 1)) {
         start = 0;
         end = 1;
-
-        openWhereYouLeftOff();
+        if ( params.scrollTo === true ) {
+           openWhereYouLeftOff();    
+        }
+        
     } else {
         end = start + 1;
     }
@@ -355,6 +369,7 @@ function contentInterface($) {
             console.log("ERROR - expand value (" + params.expand + ") larger than number of heading 1s ");
         }
     }
+    
     if (params.scrollTo === true) {
         jQuery('.accordion_top').slice(start, end).accordion("option", "active", 0);
     }
@@ -706,28 +721,21 @@ var INSTRUCTIONS = `
             <div class="p-2 md:p-4">
     How do you...   
      <ul id="gu_nopadding">
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1">
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1#2">
            link to a Blackboard Menu item
             </a>
-            <i class="fas fa-hammer"></i> 
          </li>
-         <li> <a target="_blank" href="">
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#3">
            link to a Blackboard content item
             </a>
-            <i class="fas fa-hammer"></i> 
-         </li>
-         <li> <a target="_blank" href="">
-           link to a Blackboard page/tool
-            </a>
-            <i class="fas fa-hammer"></i> 
          </li>
          <li> 
-            use adaptive release
-            <i class="fas fa-hammer"></i> 
+            use <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#4"> 
+            review status</a>
          </li>
          <li> 
-            use mark review 
-            <i class="fas fa-hammer"></i> 
+            use <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#5"> 
+            adaptive release</a>
          </li>
       </ul>
             </div>
@@ -962,6 +970,10 @@ function checkParams(contentInterface) {
                         paramsObj.noAccordion = true;
                     } else if (x = element.match(/css=([^ ]*)/)) {
                         paramsObj.cssURL = x[1];
+                    } else if (x = element.match(/^reviewed=(.*)/ui)) {
+                            REVIEWED = x[1];
+                    } else if ( x=element.match(/^markReviewed=(.*)/i)) {
+                            MARK_REVIEWED = x[1];
                     } else {
                         x = element.match(/^([^=]*)=(.*)/);
                         if (x) {
@@ -974,7 +986,9 @@ function checkParams(contentInterface) {
     }
 
 //    console.log("---------------------");
-//    console.log(paramsObj);
+    /*console.log(paramsObj);
+    console.log("REVIEWED " + REVIEWED);
+    console.log("MARK REVIEWED " + MARK_REVIEWED);*/
 
 
     /**********
@@ -1074,6 +1088,19 @@ function handleBlackboardItem() {
     } else if (bbItem.length > 1) {
         console.log("Error found more than 1 (" + bbItem.length + ") entries matching " + title);
     } else if (bbItem.length === 1) {
+        
+        // check if need to add Review Status
+        reviewLink = getReviewStatusContent(bbItem);
+        //console.log("title " + title + " review link is " + reviewLink);
+        if (typeof reviewLink !== "undefined") {
+            //-- update the title
+            addReviewLink(this, reviewLink);
+
+            //-- add the button to the content
+            // - need to find content body
+
+        }
+
         // get the link
         var link = jQuery(bbItem).children("a").attr('href');
 
@@ -1282,6 +1309,92 @@ function handleBlackboardMenuLink() {
     }
 
 }
+
+
+//----------------------------------------------------------------
+// addReviewLink
+// - given the jQuery element for the heading of an accordion (item).
+// - and the reviewLink taken from a matching Blackboard item
+// - Modify the title of the accordion item
+// - Modify the content
+
+function addReviewLink(item, reviewLink) {
+
+    linkText = jQuery(item).text();
+
+    // Add text to the heading
+    //var MARK_REVIEWED = "Mark Reviewed"
+    //var REVIEWED = "Reviewed";
+
+    var reviewHeadingTemplate = '';
+    if (reviewLink.match(/markUnreviewed/)) {
+
+        reviewHeadingTemplate = `
+      <span style="float:right" class="ui-state-disabled ui-corner-all">{TEXT}</span>
+      `;
+        reviewHeadingTemplate = reviewHeadingTemplate.replace('{TEXT}', REVIEWED);
+    } else {
+        reviewHeadingTemplate = `
+          <span style="float:right" class="ui-state-active ui-corner-all">{TEXT}</span>
+          `;
+        reviewHeadingTemplate = reviewHeadingTemplate.replace('{TEXT}', MARK_REVIEWED);
+    }
+    jQuery(item).html(linkText + reviewHeadingTemplate);
+
+    // change the body"
+    content = jQuery(item).next();
+
+    reviewBodyTemplate = '';
+
+    if (reviewLink.match(/markUnreviewed/)) {
+        reviewBodyTemplate = `
+          <!--<div class="p-4 absolute pin-l" style="float:right">-->
+ <div class="p-4" style="margin:auto; width:100%; text-align:right">
+     <a class="gu-bb-review" href="{LINK}"><button class="bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded">
+                     <span class="font-bold rounded-full px-2 py-1 bg-green text-white">&#10003; {TEXT}</span>&nbsp;</button></a>
+ </div>
+ `;
+        reviewBodyTemplate = reviewBodyTemplate.replace('{TEXT}', REVIEWED);
+    } else {
+
+        reviewBodyTemplate = `
+ <div class="p-4" style="margin:auto; width:100%; text-align:right"> 
+      <a class="gu-bb-review" href="{LINK}"><button class="bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded">
+      <span class="font-bold rounded-full px-2 py-1 bg-yellow text-black">&#x26a0;</span>&nbsp; {TEXT}</button></a>
+ </div>
+         `;
+        reviewBodyTemplate = reviewBodyTemplate.replace('{TEXT}', MARK_REVIEWED);
+    }
+    reviewBodyTemplate = reviewBodyTemplate.replace('{LINK}', reviewLink);
+    // insert the reviewed button before the first item after the heading
+    jQuery(content).before(reviewBodyTemplate);
+
+}
+//-----------------------------------------------------------------
+// getReviewStatusContent
+// - given the h3 item (header) from Bb Item, check to see if the
+//   parent div contains a review status element (anchor with class
+//   button-5)
+// - if not return NULL
+// - if there is one return the link (which indicates with it's
+//   mark reviewed, or reviewed)
+
+function getReviewStatusContent(header) {
+    // get the details div for this header that should contain the
+    // mark reviewed link
+    var details = jQuery(header).parent().parent().find("div.details");
+    //console.log(details);
+
+    // check to see if it has the anchor with class button-5
+    review = jQuery(details).find("a.button-5");
+
+    if (review.length === 0) {
+        return undefined;
+    } else {
+        return jQuery(review).attr("href");
+    }
+}
+
 /*********************************************************************
  * Replaces commonly-used Windows 1252 encoded chars that do not exist 
  * in ASCII or ISO-8859-1 with ISO-8859-1 cognates.
