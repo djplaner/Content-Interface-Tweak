@@ -505,6 +505,7 @@ function handleFootNotes() {
     }
 }
 
+<br clear="all" />
 /***************************************************
  * setUpEdit
  * - Set up the edit/update process

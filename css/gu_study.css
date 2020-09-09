@@ -600,21 +600,26 @@ color: #FFFFFF !important; }
   border-radius: 4px;
 }
 
+#GU_ContentInterface .ci_container {
+  display: flex;
+  justify-content: center;
+}
+
 #GU_ContentInterface .picture {
-    margin: 2em;
-    font-size: 75%;
-    text-align: center;
-    padding: 5px;
-    border: solid 2px #CFCFCF;
-    border-radius: 4px;
-    background-color: #DFDFDF;
+  margin: 2em;
+  font-size: 75%;
+  text-align: center;
+  padding: 5px;
+  border: solid 2px #CFCFCF;
+  border-radius: 4px;
+  background-color: #DFDFDF;
+  display: inline-block;
 }
 
 .picture img {
     width:95%;
     margin-bottom: 1em;
 }
-
 
 #GU_ContentInterface .example {
     border-radius: 3px;

@@ -603,6 +603,11 @@ figure._60 {
 }
 
 
+#GU_ContentInterface .ci_container {
+  display: flex;
+  justify-content: center;
+}
+
 #GU_ContentInterface .picture {
   margin: 2em;
   font-size: 75%;
@@ -611,13 +616,13 @@ figure._60 {
   border: solid 2px #CFCFCF;
   border-radius: 4px;
   background-color: #DFDFDF;
+  display: inline-block;
 }
 
 .picture img {
-  width:95%;
+  max-width:95%;
   margin-bottom: 1em;
 }
-
 
 #GU_ContentInterface .example {
   border-radius: 3px;
