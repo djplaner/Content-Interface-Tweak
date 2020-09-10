@@ -17,6 +17,7 @@ function loggerCallback(logLevel, message, containsPii) {
 
 var msalConfig = {
     auth: {
+        //clientId: "cd3eae92-4f64-457e-9bfc-a2a441920144",
         clientId: "4e260176-5f5d-4a11-b419-8920aff4b13f",
         authority: "https://login.microsoftonline.com/common"
     },
@@ -329,7 +330,7 @@ function doMammoth( wordContent ) {
                     "p[style-name='Normal'] => p:fresh",
                     "p[style-name='Text body'] => p:fresh",
                     "p[style-name='Textbody1'] => p:fresh",
-                    "p[style-name='Picture'] => div.picture",
+                    "p[style-name='Picture'] => div.ci_container > div.picture",
                     "p[style-name='Picture Right'] => div.pictureRight",
                     "p[style-name='PictureRight'] => div.pictureRight",
                     "r[style-name='University Date'] => span.universityDate",
@@ -549,4 +550,3 @@ function copyToClipboard(elem) {
  function signOut() {
      myMSALObj.logout();
  }
-
