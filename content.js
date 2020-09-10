@@ -15,6 +15,7 @@ var REVIEWED = "Reviewed";
 // Wrap arounds for various types of activity 
 var READING = `<div class="readingImage"></div>`;
 var ACTIVITY = `<div class="activityImage"></div>`;
+var COMING_SOON = `<div class="comingSoonImage"></div>`;
 var NOTE = `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`;
 
 var EXPAND_COLLAPSE_BUTTON_HTML = `<div class="accordion-expand-holder">
@@ -169,11 +170,11 @@ function contentInterface($) {
         jQuery(this).nextUntil('h1,h2').wrapAll('<div></div>');
     });
 
-
     // Update all the readings and activities
     jQuery("div.activity").prepend(ACTIVITY);
     jQuery("div.reading").prepend(READING);
     jQuery("div.ael-note").prepend(NOTE);
+    jQuery("div.comingSoon").prepend(COMING_SOON);
     //updateReadings(contentInterface);
     // Handle the blackboard items
 
@@ -492,7 +493,7 @@ function handleFootNotes() {
         jQuery("head").append(
             "<link id='tooltipstercss' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/tooltipster.bundle.min.css' type='text/css' rel='stylesheet' />");
         jQuery("head").append(
-            "<link id='tooltipstercssNoir' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-noir.min.css' type='text/css' rel='stylesheet' />");
+            "<link id='tooltipstercssShadow' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-shadow.min.css' type='text/css' rel='stylesheet' />");
             
         jQuery.getScript(
             //"https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.js",
@@ -500,12 +501,11 @@ function handleFootNotes() {
             function () {
                 docWidth = Math.floor(jQuery(document).width() / 2);
                 jQuery('.ci-tooltip').tooltipster({ 'maxWidth': docWidth,
-                    theme: ['tooltipster-noir', 'tooltipster-noir-customized']});
+                    theme: ['tooltipster-shadow', 'tooltipster-shadow-customized']});
             });
     }
 }
 
-<br clear="all" />
 /***************************************************
  * setUpEdit
  * - Set up the edit/update process
