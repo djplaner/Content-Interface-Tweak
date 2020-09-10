@@ -1,4 +1,12 @@
 
+#GU_ContentInterface .accordion {
+  clear: both;
+}
+
+#GU_ContentInterface .accordion_top {
+  clear: both;
+}
+
 /* Used for jQuery expand all/close all */
 
 #GU_ContentInterface button {
