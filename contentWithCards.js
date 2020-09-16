@@ -132,6 +132,10 @@ function contentInterface($) {
                 jQuery(params[elem]).parents("li").hide();
             }
         }
+    } else {
+         // add the cards for documentation
+         addCSS(CARDS_CSS);
+         addJS(FONT_AWESOME_JS);
     }
 
     // do nothing if we couldn't find the contentInterface item
@@ -278,6 +282,9 @@ function contentInterface($) {
         }
     });
 
+    addExpandPrintButtons();
+
+
     // Apply the jQuery accordion
     accordionDisabled = false;
 
@@ -307,7 +314,6 @@ function contentInterface($) {
     });
 
     // TODO move this to a string and make it look prettier
-    jQuery("#GU_ContentInterface").prepend(EXPAND_COLLAPSE_BUTTON_HTML);
     var icons = jQuery(".accordion").accordion("option", "icons");
 
     // define the click function for the expand all
@@ -533,17 +539,64 @@ function handleFootNotes() {
  * - Set up the edit/update process
  */
 
-var UPDATE_HTML = `
- <h3>Important</h3>
- <ol>
- <li><strong>No changes to this item</strong> - do not edit or remove content from this tweak code item. The tweak code implements the Card interface. Changes may break the Card interface.</li>
- <li><strong>Do not hide this item from students.</strong> - the tweak in this item will hide the item from students. They will not see it. If you use Blackboard to hide this tweak from students, it will NOT work and students won't see the accordion interface.</li>
- </ol>
- <p>For some help on using this feature, please peruse <a href="https://github.com/djplaner/Content-Interface-Tweak/blob/master/README.md">the README page</a></p>
- 
-  <h3>Updating and editing</h3>
- 
- `;
+var HOW_TO = "";
+var UPDATE_HTML = () => `
+<style>
+#gu_nopadding{
+    padding-left: 1em;
+    margin-top: 0;
+}
+</style>
+  <div class="mx-auto border-none box-content px-4 py-2">
+    <div class="flex flex-wrap -mx-1 lg:-mx-4 p-0">
+
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h1 class="text-lg">
+                      How to update the content
+                    </h1>
+                </header>
+                <div class="p-2 md:p-4">
+                ${HOW_TO}
+                </div>
+            </article>
+        </div>
+
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h1 class="text-lg">
+                            <i class="fa fa-exclamation-triangle text-red"></i>
+                            No changes to this item
+                    </h1>
+                </header>
+                <div class="p-2 md:p-4">
+                    <p>Any changes to this item will stop the Content Interface from working.</p>
+                </div>
+            </article>
+        </div>
+
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h1 class="text-lg">
+                            <i class="fa fa-exclamation-triangle text-red"></i>
+                            Do not hide this item
+                    </h1>
+                </header>
+                <div class="p-2 md:p-4">
+                   <p>If you make this item unavailable to students, the Content Interface will not work for them.</p>
+                  <p>This item is only visible when <a href="https://elearn.southampton.ac.uk/blackboard/quickedit/">Edit Mode</a> is on. i.e. typically only visible to teaching staff.</p>
+                </div>
+            </article>
+        </div>
+
+    </div>
+</div>
+
+`;
+
 
 var WORD_DOC_PRESENT = `
  <ol>
@@ -579,41 +632,193 @@ var OLD_INSTRUCTIONS = `
  <p>See <a href="https://griffitheduau-my.sharepoint.com/:w:/g/personal/d_jones6_griffith_edu_au/EUbAQvhxLW1MicRKf9Hof3sBIoS2EyJP_SfkYbqZ7c3qhw?e=2S9k3Y" target="_blank" rel="noreferrer noopener">this Word document</a> for more detailed documentation on creating and changing content.</p>
  `;
 
-var INSTRUCTIONS = `
- <h3>How do I...</h3>
- 
- <p>More information can be found in <a href="https://griffitheduau-my.sharepoint.com/:w:/g/personal/d_jones6_griffith_edu_au/EUbAQvhxLW1MicRKf9Hof3sBIoS2EyJP_SfkYbqZ7c3qhw?e=2S9k3Y" target="_blank">this Word document</a>, or in the links in the following table.</p>
- 
- <table style="width:100%;padding:2px">
-   <tr>
-     <td bgcolor="#edebf0"> Get started </td>
-     <td bgcolor="#ebeef0"> Adding & editing content </td>
-     <td bgcolor="#f0ebeb"> Changing how it works </td>
-   </tr>
-   <tr>
-     <td bgcolor="#edebf0">
- <ul style="padding-left:1.2em">
-   <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#2">Content Interface - why?</a>
-        </li>
-   <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#4">How to set it up</a> </li>
-   <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#5">How to update content</a> </li>
-   
-   
- </ul>
-     </td>
-     <td bgcolor="#ebeef0">
-           <ul>
-             <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#6">text, headings, tables and quotes</a> </li>
-             <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#7">web content: images, links, videos & embeddable content</a> </li>
-             <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#8">study guide content: readings, activitites & notes</a> </li>
-             <li> <a href="/webapps/blackboard/content/listContent.jsp?content_id=_5110116_1&course_id=_82534_1#9">Links to Blackboard activities</a> </li>
-          </ul>
-     </td>
-     <td bgcolor="#f0ebeb">
-         
-     </td>
-     </table>
- `;
+ var INSTRUCTIONS = `
+<h3>How do I...</h3>
+
+<div class="box-content mx-auto border-none h-auto py-0 px-4 m-0">
+<div class="flex flex-wrap -mx-1 lg:-mx-4">
+    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <article class="overlow-hidden rounded-lg shadow-lg h-full">
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                <h1 class="text-lg">
+                        Get started
+                </h1>
+            </header>
+            <div class="p-2 md:p-4">
+                <p><a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578504_1">
+                   Content Interface: what and why</a></p>
+               <p>How to...</p>
+               <ul id="gu_nopadding">
+                  <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578507_1">
+                        set it up in Blackboard</a> </li>
+                  <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578508_1">
+                        create and modify content</a> (an overview) </li>
+              </ul>
+
+            </div>
+        </article>
+    </div>
+
+    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <article class="overlow-hidden rounded-lg shadow-lg h-full">
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                <h1 class="text-lg">
+                  Create <a href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1">
+                    text content</a>
+                </h1>
+            </header>
+            <div class="p-2 md:p-4">
+    <ul id="gu_nopadding">
+       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#2">
+            normal text content</a> 
+       </li>
+       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#3">
+            headings</a> 
+       </li>
+       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#4">
+            tables</a> 
+       </li>
+       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#5">
+            quotes</a> 
+       </li>
+       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#6">
+            reference lists</a> 
+       </li>
+       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#7">
+            footnotes</a> 
+       </li>
+    </ul>
+            </div>
+        </article>
+    </div>
+
+    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <article class="overlow-hidden rounded-lg shadow-lg h-full">
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                <h1 class="text-lg">
+                 Create <a href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1">web content</a>
+                </h1>
+            </header>
+            <div class="p-2 md:p-4">
+     <ul id="gu_nopadding">
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#2">
+                 Images
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#3">
+               Links
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#4">
+                 Embedding videos and more
+            </a>
+         </li>
+         </li>
+      </ul>
+            </div>
+        </article>
+    </div>
+
+    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <article class="overlow-hidden rounded-lg shadow-lg h-full">
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                <h1 class="text-lg">
+                 Create University content
+                </h1>
+            </header>
+            <div class="p-2 md:p-4">
+     <ul id="gu_nopadding">
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#2">
+         Activities
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#3">
+         Notes
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#4">
+         Readings
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#5">
+         Trimester (university) dates
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#6">
+         Film Watching Options
+            </a>
+         </li>
+      </ul>
+            </div>
+        </article>
+    </div>
+
+    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <article class="overlow-hidden rounded-lg shadow-lg h-full">
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                <h1 class="text-lg">
+                  Use Blackboard items and features
+                </h1>
+            </header>
+            <div class="p-2 md:p-4">
+    How do you...   
+     <ul id="gu_nopadding">
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1#2">
+           link to a Blackboard Menu item
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#3">
+           link to a Blackboard content item
+            </a>
+         </li>
+         <li> 
+            use <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#4"> 
+            review status</a>
+         </li>
+         <li> 
+            use <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#5"> 
+            adaptive release</a>
+         </li>
+      </ul>
+            </div>
+        </article>
+    </div>
+
+
+    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <article class="overlow-hidden rounded-lg shadow-lg h-full">
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                <h1 class="text-lg">
+                 Customise the interface
+                </h1>
+            </header>
+            <div class="p-2 md:p-4">
+    How do you customise...   
+     <ul id="gu_nopadding">
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?content_id=_5578515_1&course_id=_82534_1">
+              which accordion opens first
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578516_1">
+             the accordion theme
+            </a>
+         </li>
+         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578519_1">
+              appearance of the content
+            </a>
+         </li>
+
+      </ul>
+            </div>
+        </article>
+    </div>
+
+</div>
+</div>
+
+</div> <!-- end gu_ci_instructions -->
+    `;
+
 
 var CHANGE_TEMPLATE = `
  <h3>Choosing a different template</h3>
@@ -700,7 +905,8 @@ function setUpEdit(ci, params) {
 
     if (typeof path === 'undefined') {
         // Word document is not defined
-        var html = UPDATE_HTML + WORD_DOC_NOT_PRESENT;
+        HOW_TO = WORD_DOC_NOT_PRESENT;
+        let html = UPDATE_HTML() + INSTRUCTIONS;
 
         // add in link to edit the content item
         var editContent = 'into the <a href="https://bblearn-blaed.griffith.edu.au/webapps/blackboard/execute/manageCourseItem?content_id=' + contentId + '&course_id=' + courseId + '&dispatch=edit">Content Interface content item</a>';
@@ -713,7 +919,8 @@ function setUpEdit(ci, params) {
     }
 
     //jQuery(".gu_docNotPresent").hide();
-    var updateHtml = UPDATE_HTML + WORD_DOC_PRESENT + INSTRUCTIONS;
+    HOW_TO = WORD_DOC_PRESENT;
+    let updateHtml = UPDATE_HTML() + INSTRUCTIONS;
 
     if (jQuery('#gu_jqueryStyle').length) {
         updateHtml = updateHtml + CHANGE_TEMPLATE;
@@ -2551,6 +2758,8 @@ var interfaceHtmlTemplate = Array(NUM_TEMPLATES);
 //          dev to live
 //var CARDS_CSS="https://djon.es/gu/cards.css";
 var CARDS_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/cards.css";
+var FONT_AWESOME_JS = "https://kit.fontawesome.com/3bd759c8f5.js";
+
 // 
 
 
@@ -3383,6 +3592,22 @@ function addCSS(urlString) {
     head.append(style);
 }
 
+/*************************************************************
+ * addJS( url )
+ * - given the URL for a JS file add it to the document
+ * https://makitweb.com/dynamically-include-script-and-css-file-with-javascript/
+ * (and other places)
+ */
+
+function addJS(urlString) {
+    let head = document.getElementsByTagName('head')[0];
+
+    let js = document.createElement('script');
+    js.src = urlString;
+    js.crossorgin = 'anonymous';
+    head.append(js);
+}
+
 
 /******************************************************************
  * changeJqueryTheme( themeName)
@@ -3573,4 +3798,52 @@ function convertMedia(html, filmName) {
         }
     });
     return returning;
+}
+
+// ****************************************************
+// addExpandPrintButtons
+// - check if URL is set up to provide a print version
+// - if so add a print button to 
+
+const PRINT_URLS = {
+    'http://127.0.0.1:8080/test/': 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1',
+    "id82017155861081" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1'
+}
+
+function addExpandPrintButtons() {
+
+    // add the expand buttons
+    jQuery("#GU_ContentInterface").prepend(EXPAND_COLLAPSE_BUTTON_HTML);
+
+    // should we add a print button?
+    pdfUrl = getPrintButtons();
+    if (pdfUrl) {
+        const print_button = `
+    <button href="type="button" onclick="window.open('${pdfUrl}')"
+      >Download PDF</button>
+    `;
+        jQuery('.accordion-expand-holder').append(print_button);
+    }
+}
+
+function getPrintButtons() {
+    const x = window.location.href;
+
+    // handle the simple test case
+    if (x in PRINT_URLS) {
+        return PRINT_URLS[x]
+    }
+    // break the Bb URL into script (listContent.jsp) courseId contentId
+    let hrefId = getHrefId(x);
+    // able to extract hrefId
+    if (hrefId !== x) {
+        hrefId = "id" + hrefId.replaceAll('/','');
+        hrefId = hrefId.replaceAll('_','');
+        console.log("hrefid " + hrefId);
+        if (hrefId in PRINT_URLS) {
+            return PRINT_URLS[hrefId]
+        }
+    }
+
+    return false;
 }
