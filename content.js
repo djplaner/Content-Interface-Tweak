@@ -16,7 +16,7 @@ var REVIEWED = "Reviewed";
 var READING = `<div class="readingImage"></div>`;
 var ACTIVITY = `<div class="activityImage"></div>`;
 var COMING_SOON = `<div class="comingSoonImage"></div>`;
-var NOTE = `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`;
+var NOTE = `<div class="noteImage"></div>`;
 
 var EXPAND_COLLAPSE_BUTTON_HTML = `<div class="accordion-expand-holder">
 <button type="button" class="open">Expand all</button>

@@ -236,6 +236,13 @@ background-repeat: no-repeat;
 background-size: contain;
 }
 
+.noteImage {
+  width: 5%;
+  background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  }
+
 #GU_ContentInterface .filmWatchingOptionsImage {
 width: 5%;
 background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png');
