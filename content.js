@@ -2112,7 +2112,7 @@ function convertMedia(html, filmName) {
 
 const PRINT_URLS = {
     'http://127.0.0.1:8080/test/': 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1',
-    '_82071_/_5586108_1' : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1'
+    "id82017155861081" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1'
 }
 
 function addExpandPrintButtons() {
@@ -2139,10 +2139,12 @@ function getPrintButtons() {
         return PRINT_URLS[x]
     }
     // break the Bb URL into script (listContent.jsp) courseId contentId
-    const hrefId = getHrefId(x);
-
+    let hrefId = getHrefId(x);
     // able to extract hrefId
     if (hrefId !== x) {
+        hrefId = "id" + hrefId.replaceAll('/','');
+        hrefId = hrefId.replaceAll('_','');
+        console.log("hrefid " + hrefId);
         if (hrefId in PRINT_URLS) {
             return PRINT_URLS[hrefId]
         }
