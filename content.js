@@ -2151,7 +2151,7 @@ const PRINT_URLS = {
     "id82017155859501" : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EWqc_YnmVyZCsfInw968XaQBPjPOB4kbToSVYzqnQoiw4g?download=1",
     // Resources
     "id82017155859601" : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ER3stuIbjQFEi2TFu22qMvgBB_TQPKr3YQqp25RatuxqQA?download=1"
-}
+};
 
 function addExpandPrintButtons() {
 
@@ -2174,7 +2174,7 @@ function getPrintButtons() {
 
     // handle the simple test case
     if (x in PRINT_URLS) {
-        return PRINT_URLS[x]
+        return PRINT_URLS[x];
     }
     // break the Bb URL into script (listContent.jsp) courseId contentId
     let hrefId = getHrefId(x);
@@ -2184,7 +2184,7 @@ function getPrintButtons() {
         hrefId = hrefId.replaceAll('_','');
         console.log("hrefid " + hrefId);
         if (hrefId in PRINT_URLS) {
-            return PRINT_URLS[hrefId]
+            return PRINT_URLS[hrefId];
         }
     }
 

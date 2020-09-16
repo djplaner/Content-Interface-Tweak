@@ -629,7 +629,7 @@ color: #FFFFFF !important; }
   padding: 5px;
   border: solid 2px #EFEFEF;
   border-radius: 4px;
-  display: inline-block;
+/*  display: inline-block; */
 }
 
 #GU_ContentInterface .ci_container {
