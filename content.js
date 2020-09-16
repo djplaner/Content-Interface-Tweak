@@ -26,7 +26,7 @@ var EXPAND_COLLAPSE_BUTTON_HTML = `<div class="accordion-expand-holder">
 var DEFAULT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
 // Used for documentation
 var CARDS_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/cards.css";
-var FONT_AWESOME_JS="https://kit.fontawesome.com/3bd759c8f5.js";
+var FONT_AWESOME_JS = "https://kit.fontawesome.com/3bd759c8f5.js";
 
 // simple definition for using pure.css tables
 // TODO need to replace this.
@@ -138,9 +138,9 @@ function contentInterface($) {
     if ("cssURL" in params) {
         addCSS(params.cssURL);
     }
-    
-    if ("theme" in params ) {
-        changeJqueryTheme( params.theme); 
+
+    if ("theme" in params) {
+        changeJqueryTheme(params.theme);
     }
 
     // handle footnotes
@@ -190,6 +190,8 @@ function contentInterface($) {
 
     });
 
+    addExpandPrintButtons();
+
     // Find all the div.picture and add a <p> </p> around
     // text after the image
     jQuery("#GU_ContentInterface div.picture").each(function (idx) {
@@ -221,7 +223,6 @@ function contentInterface($) {
         }
     });
 
-
     // check for any spans class checkbox and replace with checkbox
     jQuery("#GU_ContentInterface span.checkbox").each(function (idx) {
         //console.log(idx + " found checkbox " + jQuery(this).html());
@@ -239,7 +240,7 @@ function contentInterface($) {
         if (linkClass === "gu-bb-review") {
             return;
         }
-        
+
         var theLink = jQuery(this).attr('href');
 
         if (typeof theLink !== 'undefined') {
@@ -286,7 +287,6 @@ function contentInterface($) {
         }
     });
     // TODO move this to a string and make it look prettier
-    jQuery("#GU_ContentInterface").prepend(EXPAND_COLLAPSE_BUTTON_HTML);
     var icons = jQuery(".accordion").accordion("option", "icons");
     // define the click function for the expand all
     jQuery('.open').click(function () {
@@ -323,7 +323,7 @@ function contentInterface($) {
         let active = this.classList.contains("ui-state-active");
 
         if (active) {
-            let hrefId = getHrefId( window.location.href );
+            let hrefId = getHrefId(window.location.href);
             window.localStorage.setItem(hrefId, this.id);
         }
 
@@ -347,10 +347,10 @@ function contentInterface($) {
     if ((!Number.isInteger(start)) || (start > numAccordions - 1)) {
         start = 0;
         end = 1;
-        if ( params.scrollTo === true ) {
-           openWhereYouLeftOff();    
+        if (params.scrollTo === true) {
+            openWhereYouLeftOff();
         }
-        
+
     } else {
         end = start + 1;
     }
@@ -370,7 +370,7 @@ function contentInterface($) {
             console.log("ERROR - expand value (" + params.expand + ") larger than number of heading 1s ");
         }
     }
-    
+
     if (params.scrollTo === true) {
         jQuery('.accordion_top').slice(start, end).accordion("option", "active", 0);
     }
@@ -386,23 +386,23 @@ function contentInterface($) {
  * Return href
  */
 
-function getHrefId( href ) {
-    let courseId,contentId;
+function getHrefId(href) {
+    let courseId, contentId;
     // get the courseId
     m = href.match(/^.*course_id=(_[0-9_]+).*$/);
-    if ( ! m ){
+    if (!m) {
         return href;
     }
     courseId = m[1];
     // get the contentId
     m = href.match(/^.*content_id=(_[0-9_]+).*$/);
-    if ( ! m ){
+    if (!m) {
         return href;
     }
     contentId = m[1];
 
     return courseId + "/" + contentId;
- }
+}
 
 /*********************************************************
  * openWhereYouLeftOff()
@@ -412,7 +412,7 @@ function getHrefId( href ) {
 
 function openWhereYouLeftOff() {
     // Check to see if 
-    let hrefId = getHrefId( window.location.href );
+    let hrefId = getHrefId(window.location.href);
     let storageStart = window.localStorage.getItem(hrefId);
     if (typeof storageStart !== 'undefined') {
         // want to find the H1 or H2 that has the id in m[1]
@@ -494,14 +494,16 @@ function handleFootNotes() {
             "<link id='tooltipstercss' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/tooltipster.bundle.min.css' type='text/css' rel='stylesheet' />");
         jQuery("head").append(
             "<link id='tooltipstercssShadow' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-shadow.min.css' type='text/css' rel='stylesheet' />");
-            
+
         jQuery.getScript(
             //"https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.js",
             "https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.min.js",
             function () {
                 docWidth = Math.floor(jQuery(document).width() / 2);
-                jQuery('.ci-tooltip').tooltipster({ 'maxWidth': docWidth,
-                    theme: ['tooltipster-shadow', 'tooltipster-shadow-customized']});
+                jQuery('.ci-tooltip').tooltipster({
+                    'maxWidth': docWidth,
+                    theme: ['tooltipster-shadow', 'tooltipster-shadow-customized']
+                });
             });
     }
 }
@@ -975,9 +977,9 @@ function checkParams(contentInterface) {
                     } else if (x = element.match(/css=([^ ]*)/)) {
                         paramsObj.cssURL = x[1];
                     } else if (x = element.match(/^reviewed=(.*)/ui)) {
-                            REVIEWED = x[1];
-                    } else if ( x=element.match(/^markReviewed=(.*)/i)) {
-                            MARK_REVIEWED = x[1];
+                        REVIEWED = x[1];
+                    } else if (x = element.match(/^markReviewed=(.*)/i)) {
+                        MARK_REVIEWED = x[1];
                     } else {
                         x = element.match(/^([^=]*)=(.*)/);
                         if (x) {
@@ -989,7 +991,7 @@ function checkParams(contentInterface) {
         }
     }
 
-//    console.log("---------------------");
+    //    console.log("---------------------");
     /*console.log(paramsObj);
     console.log("REVIEWED " + REVIEWED);
     console.log("MARK REVIEWED " + MARK_REVIEWED);*/
@@ -1092,7 +1094,7 @@ function handleBlackboardItem() {
     } else if (bbItem.length > 1) {
         console.log("Error found more than 1 (" + bbItem.length + ") entries matching " + title);
     } else if (bbItem.length === 1) {
-        
+
         // check if need to add Review Status
         reviewLink = getReviewStatusContent(bbItem);
         //console.log("title " + title + " review link is " + reviewLink);
@@ -1241,10 +1243,10 @@ function handleBlackboardContentLink() {
         } else {
             // the link was an element inside the this
             // - remove the internal links
-            jQuery(this).find("a").each( function() {
-               let link = jQuery(this);
-               link.after(link.text());
-               link.remove();
+            jQuery(this).find("a").each(function () {
+                let link = jQuery(this);
+                link.after(link.text());
+                link.remove();
             });
             // - wrap with a single link
             jQuery(this).wrapInner("<a href='" + link + "'></a>");
@@ -1922,24 +1924,24 @@ function addJS(urlString) {
  *   it with the new one
  */
 
-var JQUERY_THEMES = [ 'base', 'start', 'smoothness', 'redmond', 'sunny',
-'overcast', 'flick', 'pepper-grinder', 'ui-lightness', 'ui-darkness', 
-'le-frog', 'eggplant', 'dark-hive', 'cupertino', 'blitzer', 'south-street', 
-'humanity', 'hot-sneaks', 'excite-bike', 'vader', 'black-tie', 'trontastic',
-'swanky-purse'
+var JQUERY_THEMES = ['base', 'start', 'smoothness', 'redmond', 'sunny',
+    'overcast', 'flick', 'pepper-grinder', 'ui-lightness', 'ui-darkness',
+    'le-frog', 'eggplant', 'dark-hive', 'cupertino', 'blitzer', 'south-street',
+    'humanity', 'hot-sneaks', 'excite-bike', 'vader', 'black-tie', 'trontastic',
+    'swanky-purse'
 ];
 
- function changeJqueryTheme( themeName) {
+function changeJqueryTheme(themeName) {
     // Convert the themeName to lower case with dash separation
-    themeName = themeName.toLowerCase().replace( /\s+/g, '-');
+    themeName = themeName.toLowerCase().replace(/\s+/g, '-');
 
     // does the new theme CSS file actually exist? / is it a valid theme name
-    if ( ! JQUERY_THEMES.includes(themeName)) {
+    if (!JQUERY_THEMES.includes(themeName)) {
         return false;
     }
 
     // remove the old theme CSS
-    jQuery( "#gu_jqueryTheme").attr("disabled","disabled");
+    jQuery("#gu_jqueryTheme").attr("disabled", "disabled");
 
     // add the new one
     let urlString = `
@@ -1954,7 +1956,7 @@ var JQUERY_THEMES = [ 'base', 'start', 'smoothness', 'redmond', 'sunny',
     style.type = 'text/css';
     style.rel = 'stylesheet';
     head.append(style);
- }
+}
 
 /*****************************************************************
 * handleFilmWatchingOptions
@@ -1994,15 +1996,15 @@ function handleFilmWatchingOptions() {
     let flowUrl = PARAMS.filmWatchingOptionsFlowURL;
 
     // stop if flowUrl isn't defined
-    if ( typeof flowUrl === 'undefined') {
+    if (typeof flowUrl === 'undefined') {
         console.log("Error: no flow URL defined");
         return false;
     }
-    
+
     // Get the film's URL
     fetchFilmURL(filmName, flowUrl).then(data => {
         var html = '';
-        
+
         // Flow returned a URL
         if ('url' in data && data.url !== '') {
             // Found a URL for the film
@@ -2010,10 +2012,10 @@ function handleFilmWatchingOptions() {
 
             // convert it into an embeddable player (if possible)
             html = convertMedia(data.url, filmName);
-            
-            
+
+
             // if it wasn't converted, just do the URL
-            if ( html === '') {
+            if (html === '') {
                 html = `
                 <div class="filmWatchingOptions">
       <div class="filmWatchingOptionsImage"></div>
@@ -2023,10 +2025,10 @@ function handleFilmWatchingOptions() {
     </div>
                 `;
             }
-        } 
-        
+        }
+
         // if still no HTML, then point to JustWatch
-        if ( html === '' ) {
+        if (html === '') {
             // didn't find film do the default justWatch search
             html = `
     <div class="filmWatchingOptions">
@@ -2036,8 +2038,8 @@ function handleFilmWatchingOptions() {
          <p><a href="https://www.justwatch.com/au/search?q=${filmNameEsc}" target="_blank">This search on JustWatch</a> may provide pointers to where you can find it online.</p>
        </div>
     </div>`;
-        } 
-        
+        }
+
         jQuery(this).replaceWith(html);
     });
 
@@ -2068,7 +2070,7 @@ function convertMedia(html, filmName) {
 
     var converts = [
         {  // Internet archive
-            rx: new RegExp( '^.*archive.org\/details\/([^\/]+)$', 'g'),
+            rx: new RegExp('^.*archive.org\/details\/([^\/]+)$', 'g'),
             tmpl: frm.replace('_URL_', "archive.org/embed/$1")
         },
         {  // MS-Stream
@@ -2092,13 +2094,59 @@ function convertMedia(html, filmName) {
             tmpl: '<a ' + cls + ' href="$1" target="_blank"><img src="$1" /></a>'
         },
     ];
-    
+
     let returning = '';
-    converts.forEach( function(elem) {
-        m = html.trim().match( elem.rx );
+    converts.forEach(function (elem) {
+        m = html.trim().match(elem.rx);
         if (m) {
             returning = html.trim().replace(elem.rx, elem.tmpl);
         }
     });
     return returning;
+}
+
+// ****************************************************
+// addExpandPrintButtons
+// - check if URL is set up to provide a print version
+// - if so add a print button to 
+
+const PRINT_URLS = {
+    'http://127.0.0.1:8080/test/': 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1',
+    '_82071_/_5586108_1' : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1'
+}
+
+function addExpandPrintButtons() {
+
+    // add the expand buttons
+    jQuery("#GU_ContentInterface").prepend(EXPAND_COLLAPSE_BUTTON_HTML);
+
+    // should we add a print button?
+    pdfUrl = getPrintButtons();
+    if (pdfUrl) {
+        const print_button = `
+    <button href="type="button" onclick="window.open('${pdfUrl}')"
+      >Download PDF</button>
+    `;
+        jQuery('.accordion-expand-holder').append(print_button);
+    }
+}
+
+function getPrintButtons() {
+    const x = window.location.href;
+
+    // handle the simple test case
+    if (x in PRINT_URLS) {
+        return PRINT_URLS[x]
+    }
+    // break the Bb URL into script (listContent.jsp) courseId contentId
+    const hrefId = getHrefId(x);
+
+    // able to extract hrefId
+    if (hrefId !== x) {
+        if (hrefId in PRINT_URLS) {
+            return PRINT_URLS[hrefId]
+        }
+    }
+
+    return false;
 }
