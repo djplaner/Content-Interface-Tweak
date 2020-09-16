@@ -1,4 +1,11 @@
 
+#GU_ContentInterface .accordion {
+  clear: both;
+}
+
+#GU_ContentInterface .accordion_top {
+  clear: both;
+}
 
 /* Used for jQuery expand all/close all */
 
@@ -216,6 +223,20 @@
     padding: 1em;
   }
 
+#GU_ContentInterface .comingSoon  {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 1em 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%; 
+    border-radius: 1em;
+    padding: 1em;
+/*    background-color: #efd25c;*/
+}
+
 #GU_ContentInterface .activityImage {
   width: 5%;
   background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Tweety.svg/133px-Tweety.svg.png');
@@ -233,6 +254,13 @@
 #GU_ContentInterface .filmWatchingOptionsImage {
   width: 5%;
   background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#GU_ContentInterface .comingSoonImage {
+  width: 15%;
+  background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/comingSoon.jpg');
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -591,17 +619,65 @@ figure._60 {
 /** picture **/
 
 #GU_ContentInterface .pictureRight {
-    float:right;
-    font-size: 75%; text-align: center; 
-    margin-left: 2em;
-    margin-top: 2em;
-    margin-bottom: 2em;
+  float:right;
+  font-size: 75%; text-align: center; 
+  margin-left: 2em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  padding: 5px;
+  border: solid 2px #EFEFEF;
+  border-radius: 4px;
+  background-color: #DFDFDF;
+}
+
+
+#GU_ContentInterface .ci_container {
+  display: flex;
+  justify-content: center;
 }
 
 #GU_ContentInterface .picture {
-    font-size: 75%; text-align: center; 
-    margin: 2em;
+  margin: 2em;
+  font-size: 75%;
+  float:right;
+  text-align: center;
+  padding: 5px;
+  border: solid 2px #CFCFCF;
+  border-radius: 4px;
+  background-color: #DFDFDF;
 }
+
+.picture img {
+  max-width:95%;
+  margin-bottom: 1em;
+}
+
+#GU_ContentInterface .example {
+  border-radius: 3px;
+  /*position: relative;  /*  <--- */
+  padding: 1rem 1.2rem;
+  max-width: 80%;  
+  color: #4a4a4a;
+  margin: 1rem 1em 1em 2rem;
+  color: #4a4a4a;
+  background: #E8E8E8;
+  overflow: hidden;
+}
+
+
+#GU_ContentInterface .exampleCentered {
+  text-align: center;
+  border-radius: 3px;
+  /*position: relative;  /*  <--- */
+  padding: 1rem 1.2rem;
+  max-width: 80%;  
+  color: #4a4a4a;
+  margin: 1rem 1em 1em 2rem;
+  color: #4a4a4a;
+  background: #E8E8E8;
+  overflow: hidden;
+}
+
 
 .ael-note { 
   border-radius: 1em;
@@ -619,5 +695,14 @@ figure._60 {
     .ui-accordion .ui-accordion-content {
         display:block !important;
     }
-    
 }  
+
+#GU_ContentInterface s {
+  /*text-decoration-style: wavy; */
+  text-decoration-thickness: 4px;
+}
+
+
+.tooltipster-sidetip.tooltipster-noir.tooltipster-noir-customized .tooltipster-content s {
+  text-decoration-thickness: 4px;
+}

@@ -122,6 +122,16 @@ function contentInterface($) {
         $(".gutweak").parents("li").hide();
         contentInterface.parents("div.item").hide();
         jQuery(wordDoc).hide();
+        
+        // hide all the items found for ITEM_LINK_PARAMETERS
+        for (var paramKey in ITEM_LINK_PARAMETERS) {
+            let elem = ITEM_LINK_PARAMETERS[paramKey].element;
+
+            // if we found an item for this param, hide it
+            if (elem in params) {
+                jQuery(params[elem]).parents("li").hide();
+            }
+        }
     }
 
     // do nothing if we couldn't find the contentInterface item

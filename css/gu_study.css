@@ -1,4 +1,12 @@
 
+#GU_ContentInterface .accordion {
+  clear: both;
+}
+
+#GU_ContentInterface .accordion_top {
+  clear: both;
+}
+
 /* Used for jQuery expand all/close all */
 
 #GU_ContentInterface button {
@@ -285,7 +293,7 @@ width: 100%; }*/
 
 #GU_ContentInterface .instructions {
 flex: 6; 
-margin-left: 2em;
+margin-left: 1em;
 }
 
 #GU_ContentInterface .audio-container {
@@ -595,12 +603,61 @@ color: #FFFFFF !important; }
   margin-left: 2em;
   margin-top: 2em;
   margin-bottom: 2em;
+  padding: 5px;
+  border: solid 2px #EFEFEF;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+#GU_ContentInterface .ci_container {
+  display: flex;
+  justify-content: center;
 }
 
 #GU_ContentInterface .picture {
   margin: 2em;
-  font-size: 75%; text-align: center; 
+  font-size: 75%;
+  text-align: center;
+  padding: 5px;
+  border: solid 2px #CFCFCF;
+  border-radius: 4px;
+  background-color: #DFDFDF;
+  display: inline-block;
 }
+
+.picture img {
+    width:95%;
+    margin-bottom: 1em;
+}
+
+
+#GU_ContentInterface .example {
+  border-radius: 3px;
+  /*position: relative;  /*  <--- */
+  padding: 1rem 1.2rem;
+  max-width: 80%;  
+  color: #4a4a4a;
+  margin: 1rem 1em 1em 2rem;
+  color: #4a4a4a;
+  background: #E8E8E8;
+  overflow: hidden;
+}
+
+
+#GU_ContentInterface .exampleCentered {
+  text-align: center;
+  border-radius: 3px;
+  /*position: relative;  /*  <--- */
+  padding: 1rem 1.2rem;
+  max-width: 80%;  
+  color: #4a4a4a;
+  margin: 1rem 1em 1em 2rem;
+  color: #4a4a4a;
+  background: #E8E8E8;
+  overflow: hidden;
+}
+
+
 
 .ael-note { 
 border-radius: 1em;
