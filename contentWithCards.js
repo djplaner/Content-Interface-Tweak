@@ -105,7 +105,13 @@ function contentInterface($) {
 
 
     // Find the item in which the content is contained
-    var contentInterface = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(".item h3").filter(':contains("Content Interface")').eq(0);
+    var contentInterface = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(
+        ".item h3").filter(':contains("Content Interface")').eq(0);
+        var contentInterface = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(".item h3").filter( function(x) {
+            return this.innerText.toLowerCase().includes("content interface");
+        }
+        ).eq(0);
+
     // Find any Word Document link that's been added
     var wordDoc = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(".item h3").filter(':contains("Content Document")').eq(0);
 
