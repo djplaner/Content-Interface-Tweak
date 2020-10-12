@@ -15,7 +15,14 @@ DESTINATION=r"\\staff.ad.griffith.edu.au\ud\fr\s2986288\Documents\GitHub\Content
 
 print( os.name)
 print(Path.home())
-SOURCE=r"C:\\Users\\s2986288\\OneDrive - Griffith University\\Software Development\\Documentation\\Content Interface docs - v2"
+#SOURCE=r"C:\\Users\\s2986288\\OneDrive - Griffith University\\Software Development\\Documentation\\Content Interface docs - v2"
+
+SOURCE= r"c:\\Users\\s2986288\\OneDrive - Griffith University\\Software Development\\Documentation\\Content Interface docs - v2"
+
+CSS= """
+<link rel="stylesheet" type="text/css" 
+   href="https://s3.amazonaws.com/filebucketdave/banner.js/gu_study_md.css">
+"""
 
 STYLE_MAP = """
      p[style-name='Section Title'] => h1:fresh
@@ -78,22 +85,52 @@ STYLE_MAP = """
 
 PAGES = [
     {
-        "SOURCE" : r"%s\Background - What and why\content.docx" % SOURCE,
-        "DESTINATION" : r"%s\\whatWhy.md" % DESTINATION
-    } #,
-#    {
-#        "SOURCE" : r"%s\001 - How to create cards\How to create cards.docx" % SOURCE,
-#        "DESTINATION" : r"%s\\createCards.md" % DESTINATION
-#    },
-#    {
-#        "SOURCE" : r"%s\002 - How to customise a card\How to customise individual cards.docx" % SOURCE,
-#        "DESTINATION" : r"%s\\customiseACard.md" % DESTINATION
-#    },
-#    {
-#        "SOURCE" : r"%s\003 - How to customise the card interface\How to customise the card interface.docx" % SOURCE,
-#        "DESTINATION" : r"%s\\customiseAllCards.md" % DESTINATION
-#    }
+        "SOURCE" : r"%s\\Background - What and why\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\background\\whatWhy.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Background - How it works\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\background\\howWorks.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Using - Set up\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\using\\setup.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Using - Create and modify content\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\using\\createAndModify.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Creating - Text\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\creating\\textualContent.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Creating - Web content\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\creating\\webContent.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Creating - University content\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\creating\\universityContent.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Creating - Blackboard\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\creating\\blackboardContent.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Customising - Accordion opening\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\customising\\accordionOpening.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Customising - Accordion appearance\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\customising\\accordionApperance.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Customising - Content appearance\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\customising\\contentApperance.md" % DESTINATION
+    }
 ]
+
+
 
 for page in PAGES: 
     print("WOrking on %s " % page["SOURCE"] )
@@ -102,5 +139,6 @@ for page in PAGES:
 
         md = html2markdown.convert(result.value)
         with open( page["DESTINATION"], "w", encoding="utf-8") as md_file:
+           md_file.write(CSS) # add some css at the end
            md_file.write(md) 
 #        print(result.value)

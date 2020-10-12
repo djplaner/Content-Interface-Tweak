@@ -14,6 +14,21 @@ theme:
 
 nav:
   - Home: 'index.md'
+  - Background: 
+    - What & Why: 'background/whatWhy.md'
+    - How does it work: 'background/howWorks.md'
+  - Using:
+    - Set up: 'using/setup.md'
+    - Create and modify: 'using/createAndModify.md'
+  - Creating:
+    - Textual: 'creating/textualContent.md'
+    - Web: 'creating/webContent.md'
+    - University: 'creating/universityContent.md'
+    - Blackboard: 'creating/blackboardContent.md' 
+  - Customising:
+    - Accordion opening: 'customising/accordionOpening.md'
+    - Accordion appearance: 'customising/accordionAppearance.md'
+    - Content appearance: 'customising/contentAppearance.md'
 markdown_extensions:
   - toc:
       permalink: '#'

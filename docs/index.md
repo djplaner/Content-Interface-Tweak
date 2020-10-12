@@ -21,7 +21,7 @@ Learn more about:
             <article class="overlow-hidden rounded-lg shadow-lg h-full">
                 <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
                     <h4 id="anonymous_element_27">
-                      <a href="whatWhy/">What and why?</a>
+                      <a href="background/ hatWhy/">What and why?</a>
                     </h4>
                 </header>
                 <div class="p-2 md:p-4">
