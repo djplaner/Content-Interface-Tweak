@@ -1,0 +1,350 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Assemblage of technologies to enable use of Microsoft Word for content creation and updating for Blackboard Learn">
+      
+      
+        <link rel="canonical" href="https://djplaner.github.io/Content-Interface-Tweak/">
+      
+      
+        <meta name="author" content="David Jones">
+      
+      <link rel="shortcut icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.12">
+    
+    
+      
+        <title>Content Interface</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.4dd2dd8d.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#content-interface-tweak-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://djplaner.github.io/Content-Interface-Tweak/" title="Content Interface" class="md-header-nav__button md-logo" aria-label="Content Interface">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Content Interface
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://djplaner.github.io/Content-Interface-Tweak/" title="Content Interface" class="md-nav__button md-logo" aria-label="Content Interface">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Content Interface
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Home
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="." title="Home" class="md-nav__link md-nav__link--active">
+      Home
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="content-interface-tweak-documentation">Content Interface Tweak documentation<a class="headerlink" href="#content-interface-tweak-documentation" title="Permanent link">#</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h2>
+<h1 id="why">Why?<a class="headerlink" href="#why" title="Permanent link">#</a></h1>
+<p>Creating content in Blackboard Learn is painful and produces ugly content that is not maintainable. No real support is provided for standard authoring functionality (e.g. version control, grammar checking, citation management etc.) No surprise then that most people upload documents (PDF, Word, PowerPoint etc.).</p>
+<p>See <a href="https://djon.es/blog/2019/08/08/exploring-knowledge-reuse-in-design-for-digital-learning-tweaks-h5p-constructive-templates-and-casa/#contentInterface">the Content Interface section</a> of <a href="https://djon.es/blog/2019/08/08/exploring-knowledge-reuse-in-design-for-digital-learning-tweaks-h5p-constructive-templates-and-casa/">this paper</a> for more detail.</p>
+<p>The <a href="Example.docx">example Word document</a> provides more detailed instructions and background.</p>
+<h1 id="what">What?<a class="headerlink" href="#what" title="Permanent link">#</a></h1>
+<p>The Content Interface enables</p>
+<ol>
+<li>Use of Microsoft Word to create content.</li>
+<li>Conversion of Word into HTML</li>
+<li>Javascript/CSS that transforms the HTML in various ways.</li>
+</ol>
+<p>See <a href="https://djon.es/blog/2019/02/24/exploring-knowledge-reuse-in-design-for-digital-learning/">this blog post</a> for more detail on why and how it works.</p>
+<h3 id="editing-content-in-word">Editing content in Word<a class="headerlink" href="#editing-content-in-word" title="Permanent link">#</a></h3>
+<p><img alt="Word document" src="https://live.staticflickr.com/65535/50098693972_f0054d5904_c_d.jpg" /></p>
+<h3 id="transformed-html-in-blackboard-learn">Transformed HTML in Blackboard Learn<a class="headerlink" href="#transformed-html-in-blackboard-learn" title="Permanent link">#</a></h3>
+<p><img alt="to HTML in Blackboard" src="https://live.staticflickr.com/65535/50098686822_692a3634c3_c_d.jpg" /></p>
+<h1 id="how-to-use-it-with-blackboard-learn">How to use it with Blackboard Learn?<a class="headerlink" href="#how-to-use-it-with-blackboard-learn" title="Permanent link">#</a></h1>
+<p>The following instructions are specific for Blackboard Learn (the basics apply to other technologies) and focus on how to prepare a Content Area to host/display the HTML content.</p>
+<h3 id="step-1-add-the-javascriptcss">Step 1 - Add the Javascript/CSS<a class="headerlink" href="#step-1-add-the-javascriptcss" title="Permanent link">#</a></h3>
+<p>The transformation of the HTML relies on some Javascript/CSS which needs to be included in the Blackboard Learn page. To do this:</p>
+<ol>
+<li>Add a new Blackboard content item to the page </li>
+<li>Paste the content of <a href="tweak.html">the tweak.html file</a> into the content item
+   As this is HTML code, you will need to use the <em>HTML</em> button before pasting.</li>
+</ol>
+<h3 id="step-2-add-space-for-your-content-html">Step 2 - Add space for your content (HTML)<a class="headerlink" href="#step-2-add-space-for-your-content-html" title="Permanent link">#</a></h3>
+<ol>
+<li>Add a Content Item (<em>Build Content</em> &gt; <em>Item</em>) give it the title <em>Content Interface</em></li>
+</ol>
+<h3 id="step-3-createupdate-a-word-document">Step 3 - Create/update a Word document<a class="headerlink" href="#step-3-createupdate-a-word-document" title="Permanent link">#</a></h3>
+<p>A standard Word document will work. However, there are additional styles used to implement certain features.</p>
+<p>The <a href="https://djon.es/blog/wp-content/uploads/2020/07/output.gif">example Word doc</a> provides more detail on these styles and using Word. It can also be used as a template for your own Word documents.</p>
+<h3 id="step-4-transform-your-word-document-into-html-and-update-blackboard">Step 4 - Transform your Word document into HTML and update Blackboard<a class="headerlink" href="#step-4-transform-your-word-document-into-html-and-update-blackboard" title="Permanent link">#</a></h3>
+<ol>
+<li>Use this <a href="https://djon.es/gu/mammoth.js/browser-demo/">version of Mammoth</a> to convert your Word document into HTML
+   <strong>NOTE:</strong> The conversion occurs entirely in the browser. Your content is never placed onto another computer.</li>
+<li>Copy the HTML produced by Mammoth into your clipboard.</li>
+<li>Return to Blackboard Learn and paste the HTML into the_Content Interface_item you created above</li>
+<li>Make sure the <a href="https://blackboardhelp.usc.edu/course-content/adding-content-and-resources/using-the-content-editor/">Content Editor</a> is in advanced mode. </li>
+<li>Click on the <em>HTML</em> button </li>
+<li>Paste the HTML into the window that pops up</li>
+<li>Save the changes and return to the page</li>
+</ol>
+<h3 id="repeat-steps-3-and-4-every-time-you-make-a-change">Repeat steps 3 and 4 every time you make a change<a class="headerlink" href="#repeat-steps-3-and-4-every-time-you-make-a-change" title="Permanent link">#</a></h3>
+<p>Never change the contenet in Blackboard.  Always make the change in Word first and then update Blackboard.</p>
+<h3 id="semi-automating-the-update-process">Semi-automating the update process<a class="headerlink" href="#semi-automating-the-update-process" title="Permanent link">#</a></h3>
+<p>If the Word document is shared (e.g. via OneDrive) then it is possible to semi-automate the update proces as illustrated in the following image.</p>
+<p><img alt="semi-automated update process" src="https://djon.es/blog/wp-content/uploads/2020/07/output.gif" /></p>
+<p>To do this:
+1. Use OneDrive (or SharePoint) to create an appropriately shared link to the document
+1. Create a web link item on the Blackboard Learn content page 
+   Call it <em>Content Document</em> and use the shared link to the document.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="assets/javascripts/vendor.3636a4ec.min.js"></script>
+      <script src="assets/javascripts/bundle.e9fe3281.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: ".",
+          features: [],
+          search: Object.assign({
+            worker: "assets/javascripts/worker/search.5eca75d3.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
