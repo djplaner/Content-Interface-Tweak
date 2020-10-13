@@ -1,6 +1,6 @@
 
 <link rel="stylesheet" type="text/css" 
-   href="https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css">
+   href="https://s3.amazonaws.com/filebucketdave/banner.js/gu_study_md.css">
 # Creating Blackboard content
 
 ## What?

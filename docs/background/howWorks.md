@@ -1,6 +1,6 @@
 
 <link rel="stylesheet" type="text/css" 
-   href="https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css">
+   href="https://s3.amazonaws.com/filebucketdave/banner.js/gu_study_md.css">
 # How does it work
 
 ## Purpose
@@ -52,4 +52,10 @@ _To be done_
 
 ### Semi-automated method
 
-<span class="embed">&lt;iframe src="https://griffith.h5p.com/content/1291061357553202529/embed" width="1088" height="637" frameborder="0" allowfullscreen="allowfullscreen" allow="geolocation \*; microphone \*; camera \*; midi \*; encrypted-media \*"&gt;&lt;/iframe&gt;&lt;script src="https://griffith.h5p.com/js/h5p-resizer.js" charset="UTF-8"&gt;&lt;/script&gt;</span>
+<span class="embed">
+
+<iframe allow="geolocation *; microphone *; camera *; midi *; encrypted-media *" allowfullscreen="allowfullscreen" frameborder="0" height="637" src="https://griffith.h5p.com/content/1291061357553202529/embed" width="1088"></iframe>
+
+<script charset="UTF-8" src="https://griffith.h5p.com/js/h5p-resizer.js"></script>
+
+</span>

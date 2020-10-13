@@ -1,6 +1,6 @@
 
 <link rel="stylesheet" type="text/css" 
-   href="https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css">
+   href="https://s3.amazonaws.com/filebucketdave/banner.js/gu_study_md.css">
 # Create and modify
 
 ## Purpose
@@ -98,7 +98,13 @@ If you have set up your Content Interface page to include a __Content Document__
 
 The annotated video below illustrates the semi-automated process. It assumes you’ve already edited the Word document and starts from step 2. The video will pause at certain points to provide time to consider what’s been shown. Press play to go to the next step.
 
-<span class="embed">&lt;iframe src="https://griffith.h5p.com/content/1291061357553202529/embed" width="1088" height="637" frameborder="0" allowfullscreen="allowfullscreen" allow="geolocation \*; microphone \*; camera \*; midi \*; encrypted-media \*"&gt;&lt;/iframe&gt;&lt;script src="https://griffith.h5p.com/js/h5p-resizer.js" charset="UTF-8"&gt;&lt;/script&gt;</span>
+<span class="embed">
+
+<iframe allow="geolocation *; microphone *; camera *; midi *; encrypted-media *" allowfullscreen="allowfullscreen" frameborder="0" height="637" src="https://griffith.h5p.com/content/1291061357553202529/embed" width="1088"></iframe>
+
+<script charset="UTF-8" src="https://griffith.h5p.com/js/h5p-resizer.js"></script>
+
+</span>
 
 ### 1. Edit the Word document
 
