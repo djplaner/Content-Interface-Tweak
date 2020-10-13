@@ -17,11 +17,11 @@ Learn more about:
 <link rel="stylesheet" href="https://s3.amazonaws.com/filebucketdave/banner.js/cards.css">
 <div class="mx-auto border-none box-content px-4 py-2">
     <div class="flex flex-wrap -mx-1 lg:-mx-4 p-0">
-        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
             <article class="overlow-hidden rounded-lg shadow-lg h-full">
                 <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
                     <h4 id="anonymous_element_27">
-                      <a href="background/ hatWhy/">What and why?</a>
+                      <a href="background/WhatWhy/">What and why?</a>
                     </h4>
                 </header>
                 <div class="p-2 md:p-4">
@@ -30,11 +30,11 @@ Learn more about:
                 </div>
             </article>
         </div>
-        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
             <article class="overlow-hidden rounded-lg shadow-lg h-full">
                 <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
                     <h4 id="anonymous_element_28">
-                            How does it work?
+                            <a href="background/howWorks">How does it work?</a>
                     </h4>
                 </header>
                 <div class="p-2 md:p-4" class="text-small">
@@ -48,14 +48,137 @@ Learn more about:
 
 ## Using
 
+<div class="mx-auto border-none box-content px-4 py-2">
+    <div class="flex flex-wrap -mx-1 lg:-mx-4 p-0">
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h4 id="anonymous_element_27">
+                      <a href="using/setup">Set up</a>
+                    </h4>
+                </header>
+                <div class="p-2 md:p-4">
+                  How do you set up a Blackboard page to use the Content Interface?
+                </div>
+            </article>
+        </div>
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h4 id="anonymous_element_28">
+                            <a href="using/createAndModify">Create and modify</a>
+                    </h4>
+                </header>
+                <div class="p-2 md:p-4" class="text-small">
+                  How do you create and modify content in Blackboard using the Content Interface?
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+
 
 ## Creating
+
+<div class="mx-auto border-none box-content px-4 py-2">
+    <div class="flex flex-wrap -mx-1 lg:-mx-4 p-0">
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h4 id="anonymous_element_27">
+                      <a href="creating/textualContent">Textual content</a>
+                    </h4>
+                </header>
+                <div class="p-2 md:p-4">
+                  How do you create headings, text, tables, quotes, footnotes and other normal word processor content using Microsoft Word.
+                </div>
+            </article>
+        </div>
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h4 id="anonymous_element_28">
+                            <a href="creating/webContent">Web content</a>
+                    </h4>
+                </header>
+                <div class="p-2 md:p-4" class="text-small">
+                How do you include web content, including: links, images, and video and other types of embeddable content (e.g. H5P elements?)
+                </div>
+            </article>
+        </div>
+    </div>
+    <div class="flex flex-wrap -mx-1 lg:-mx-4 p-0">
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h4 id="anonymous_element_27">
+                      <a href="creating/universityContent">University content</a>
+                    </h4>
+                </header>
+                <div class="p-2 md:p-4">
+                  How do you add Griffith University specifics, including: University dates, activities, notes, readings, and Film Watching Options.
+                </div>
+            </article>
+        </div>
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h4 id="anonymous_element_28">
+                            <a href="creating/blackboardContent">Blackboard content</a>
+                    </h4>
+                </header>
+                <div class="p-2 md:p-4" class="text-small">
+                How do you integrate Blackboard content and functionality, including: links to content and menu items, assessment activities, adaptive release, and review status?
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
 
 
 ## Customising
 
 
+<div class="mx-auto border-none box-content px-4 py-2">
+    <div class="flex flex-wrap -mx-1 lg:-mx-4 p-0">
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h4 id="anonymous_element_27">
+                      <a href="customising/accordionOpening">Accordion opening</a>
+                    </h4>
+                </header>
+                <div class="p-2 md:p-4">
+                  How do you link to specific parts of the content? How do you control which accordions are open?
+                </div>
+            </article>
+        </div>
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h4 id="anonymous_element_28">
+                            <a href="customising/accordionAppearance">Accordion appearance</a>
+                    </h4>
+                </header>
+                <div class="p-2 md:p-4" class="text-small">
+                How do you change the colour scheme of the accordion interface?
+                </div>
+            </article>
+        </div>
+    </div>
+        <div class="flex flex-wrap -mx-1 lg:-mx-4 p-0">
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h4 id="anonymous_element_27">
+                      <a href="customising/contentAppearance">Content appearance</a>
+                    </h4>
+                </header>
+                <div class="p-2 md:p-4">
+                  How can the appearance of your content on the Web be changed?
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
 
-### Attribution
-
-[Question-mark-grey.jpg](https://commons.wikimedia.org/wiki/File:Question-mark-grey.jpg) is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.en)
