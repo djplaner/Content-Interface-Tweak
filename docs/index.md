@@ -7,6 +7,7 @@ Ever found it difficult to create and maintain content for Blackboard Learn? Eve
 The Content Interface tweak is intended to help make it easier (but not simple) to address both these problems.
 
 Learn more about:
+
 1. Background – What can it do? how do you use it? How does it work? 
 2. Using – What are the major steps in using it? 
 3. Creating - How and what types of content can you create with it? 
