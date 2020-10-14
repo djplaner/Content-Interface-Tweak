@@ -382,7 +382,9 @@ function contentInterface($) {
         start = 0;
         end = 1;
 
-        openWhereYouLeftOff();
+        if ( params.scrollTo ){ 
+            openWhereYouLeftOff();
+        }
     } else {
         end = start + 1;
     }
@@ -403,7 +405,10 @@ function contentInterface($) {
     }
 
     //jQuery("#globalNavPageNavArea").scrollTop(0);
-    jQuery('.accordion_top').slice(start, end).accordion("option", "active", 0);
+    if (params.scrollTo) {
+        jQuery('.accordion_top').slice(start, end).accordion("option", "active", 0);
+    }
+
     //if ( start === 0 && end === 1) {
     //}
 
@@ -981,6 +986,7 @@ function checkParams(contentInterface, wordDoc) {
     paramsObj.expand = -1;
 
     paramsObj.cssURL = DEFAULT_CSS;
+    paramsObj.scrollTo = true;
 
     // Check parameters in the Content Interface item title
     if (contentInterface.length > 0) {
@@ -993,6 +999,9 @@ function checkParams(contentInterface, wordDoc) {
             params = parse_parameters(m[1]);
             if (params) {
                 params.forEach(function (element) {
+                    if (element.match(/nofirstscroll/i)) {
+                        paramsObj.scrollTo = false;
+                    }
                     if (element.match(/expandall/i)) {
                         paramsObj.expandAll = true;
                     }
@@ -3923,7 +3932,6 @@ function getPrintButtons() {
     if (hrefId !== x) {
         hrefId = "id" + hrefId.replaceAll('/','');
         hrefId = hrefId.replaceAll('_','');
-        console.log("hrefid " + hrefId);
         if (hrefId in PRINT_URLS) {
             return PRINT_URLS[hrefId];
         }

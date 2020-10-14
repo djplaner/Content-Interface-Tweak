@@ -378,7 +378,9 @@ function contentInterface($) {
         start = 0;
         end = 1;
 
-        openWhereYouLeftOff();
+        if ( params.scrollTo){ 
+            openWhereYouLeftOff();
+        }
     } else {
         end = start + 1;
     }
@@ -399,7 +401,9 @@ function contentInterface($) {
     }
 
     //jQuery("#globalNavPageNavArea").scrollTop(0);
-    jQuery('.accordion_top').slice(start, end).accordion("option", "active", 0);
+    if (params.scrollTo) {
+        jQuery('.accordion_top').slice(start, end).accordion("option", "active", 0);
+    }
     //if ( start === 0 && end === 1) {
     //}
 
@@ -976,6 +980,7 @@ function checkParams(contentInterface, wordDoc) {
     var paramsObj = {};
     paramsObj.expand = -1;
 
+    paramsObj.scrollTo = true;
     paramsObj.cssURL = DEFAULT_CSS;
 
     // Check parameters in the Content Interface item title
@@ -989,6 +994,9 @@ function checkParams(contentInterface, wordDoc) {
             params = parse_parameters(m[1]);
             if (params) {
                 params.forEach(function (element) {
+                    if (element.match(/nofirstscroll/i)) {
+                        paramsObj.scrollTo = false;
+                    }
                     if (element.match(/expandall/i)) {
                         paramsObj.expandAll = true;
                     }
