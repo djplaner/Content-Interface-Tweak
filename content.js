@@ -150,6 +150,7 @@ function contentInterface($) {
         addCSS(params.cssURL);
     }
 
+    changeJqueryTheme( "smoothness");
     if ("theme" in params ) {
         changeJqueryTheme( params.theme); 
     }
