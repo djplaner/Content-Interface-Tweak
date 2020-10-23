@@ -154,6 +154,8 @@ function contentInterface($) {
     if ("theme" in params ) {
         changeJqueryTheme( params.theme); 
     }
+    // kludge for com14
+    cleanUpPlaceHolder();
 
     // remove the vtbegenerated class as it's screwing with CSS in the content
     // PROBLEM if you do this all the normal styles e.g. <LI> revert to
@@ -3650,4 +3652,17 @@ function getPrintButtons() {
     }
 
     return false;
+}
+
+//**********************************************************
+// cleanUpPlaceHolder()
+// - COM14 has cards with <br /> tags that disrupt the Blackboard
+//   breadcrumbs
+// - this fixes that issue
+
+function cleanUpPlaceHolder() {
+    let placeholder = jQuery(".placeholder");
+    let text = placeholder.text().replaceAll("<br />", ". ").replaceAll(":.", ":");
+    placeholder.text(text);
+    document.title = text;
 }
