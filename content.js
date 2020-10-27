@@ -116,7 +116,10 @@ function contentInterface($) {
     params = checkParams(contentInterface, wordDoc);
     // kludge for jQuery each functions
     PARAMS = params;
+    
     setUpEdit(contentInterface, params);
+    
+    
 
     // check parameters passed in
     // Hide the tweak if we're not editing
@@ -1051,6 +1054,10 @@ function checkParams(contentInterface, wordDoc) {
 
     for (var paramKey in ITEM_LINK_PARAMETERS) {
         const obj = ITEM_LINK_PARAMETERS[paramKey];
+        
+        if ( paramKey in paramsObj ) {
+            continue;
+        }
 
         // element is the h3 wrapped around the link
         element = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(

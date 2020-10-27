@@ -1056,6 +1056,10 @@ function checkParams(contentInterface, wordDoc) {
     for (var paramKey in ITEM_LINK_PARAMETERS) {
         const obj = ITEM_LINK_PARAMETERS[paramKey];
 
+        if ( paramKey in paramsObj ) {
+            continue;
+        }        
+
         // element is the h3 wrapped around the link
         element = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(
             ".item h3").filter(':contains("' + paramKey + '")').eq(0);
