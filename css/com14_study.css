@@ -706,3 +706,11 @@ figure._60 {
 .tooltipster-sidetip.tooltipster-noir.tooltipster-noir-customized .tooltipster-content s {
   text-decoration-thickness: 4px;
 }
+
+#GU_ContentInterface .blue {
+  color: blue;
+}
+
+#GU_ContentInterface .red {
+  color: red;
+}

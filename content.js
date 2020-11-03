@@ -119,8 +119,6 @@ function contentInterface($) {
     
     setUpEdit(contentInterface, params);
     
-    
-
     // check parameters passed in
     // Hide the tweak if we're not editing
     if (location.href.indexOf("listContent.jsp") > 0) {
@@ -153,9 +151,11 @@ function contentInterface($) {
         addCSS(params.cssURL);
     }
 
-    changeJqueryTheme( "smoothness");
+    
     if ("theme" in params ) {
         changeJqueryTheme( params.theme); 
+    } else {
+        changeJqueryTheme( "smoothness");
     }
     // kludge for com14
     cleanUpPlaceHolder();
@@ -1055,9 +1055,9 @@ function checkParams(contentInterface, wordDoc) {
     for (var paramKey in ITEM_LINK_PARAMETERS) {
         const obj = ITEM_LINK_PARAMETERS[paramKey];
         
-        if ( paramKey in paramsObj ) {
+        /*if ( paramKey in paramsObj ) {
             continue;
-        }
+        }*/
 
         // element is the h3 wrapped around the link
         element = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(
@@ -3449,9 +3449,7 @@ var JQUERY_THEMES = [ 'base', 'start', 'smoothness', 'redmond', 'sunny',
     jQuery( "#gu_jqueryTheme").attr("disabled","disabled");
 
     // add the new one
-    let urlString = `
-    //code.jquery.com/ui/1.12.1/themes/${themeName}/jquery-ui.css
-    `;
+    let urlString = `https://code.jquery.com/ui/1.12.1/themes/${themeName}/jquery-ui.css`;
 
     var head = document.getElementsByTagName('head')[0];
 
