@@ -3446,7 +3446,13 @@ var JQUERY_THEMES = [ 'base', 'start', 'smoothness', 'redmond', 'sunny',
     }
 
     // remove the old theme CSS
+    // - proper new style css
     jQuery( "#gu_jqueryTheme").attr("disabled","disabled");
+    // - also handle the old style 
+    let oldCssLink = jQuery('link[href*="code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"]');
+    if ( oldCssLink ) {
+        jQuery('link[href*="code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"]').remove();
+    }
 
     // add the new one
     let urlString = `https://code.jquery.com/ui/1.12.1/themes/${themeName}/jquery-ui.css`;
