@@ -20,6 +20,7 @@ var tweak_bb_active_url_pattern = "listContent.jsp";
 // Wrap arounds for various types of activity 
 var READING = `<div class="readingImage"></div>`;
 var ACTIVITY = `<div class="activityImage"></div>`;
+var FLASHBACK = `<div class="flashbackImage"></div>`;
 var NOTE = `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`;
 
 //
@@ -205,6 +206,7 @@ function contentInterface($) {
 
     // Update all the readings and activities
     jQuery("div.activity").prepend(ACTIVITY);
+    jQuery("div.flashback").prepend(FLASHBACK);
     jQuery("div.reading").prepend(READING);
     jQuery("div.ael-note").prepend(NOTE);
     //updateReadings(contentInterface);

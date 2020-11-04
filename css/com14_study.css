@@ -714,3 +714,27 @@ figure._60 {
 #GU_ContentInterface .red {
   color: red;
 }
+
+#GU_ContentInterface .flashback { 
+/*  background-image: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url('https://djon.es/images/flashback.png'); 
+  background-size: contain; 
+  background-repeat: no-repeat; 
+  background-position: center; 
+  color: white; */
+
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
+  margin: 1em 0;
+  margin-left: auto;
+  margin-right:auto;
+  width: 95%;
+  border-radius: 1em;
+  padding: 1em;
+  background: #ffd266;
+}
+
+#GU_ContentInterface .flashbackImage {
+  width: 15%;
+  background-image: url('https://djon.es/images/flashback.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}

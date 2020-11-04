@@ -342,6 +342,7 @@ function doMammoth( wordContent ) {
                     "r[style-name='Red'] => span.red",
                     "p[style-name='Example'] => div.example > p:fresh",
                     "p[style-name='Example Centered'] => div.exampleCentered > p:fresh",
+                    "p[style-name='Flashback'] => div.flashback > p:fresh",
                     "p[style-name='Coming Soon'] => div.comingSoon > p:fresh",
                     "p[style-name='ActivityTitle'] => div.activity > h2:fresh",
                     "p[style-name='Activity Title'] => div.activity > h2:fresh",
