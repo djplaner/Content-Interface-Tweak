@@ -3657,7 +3657,6 @@ function getPrintButtons() {
     let hrefId = getHrefId(x);
     // able to extract hrefId
     if (hrefId !== x) {
-       // hrefId = "id" + hrefId.replaceAll('/','');
         hrefId = "id" + hrefId.replace(/\//g,'');
         hrefId = hrefId.replace(/_/g,'');
         if (hrefId in PRINT_URLS) {
@@ -3676,7 +3675,7 @@ function getPrintButtons() {
 
 function cleanUpPlaceHolder() {
     let placeholder = jQuery(".placeholder");
-    let text = placeholder.text().replace(/<br \/>/g, ". ").replaceAll(/:./g, ":");
+    let text = placeholder.text().replace(/<br \/>/g, ". ").replace(/:./g, ":");
     placeholder.text(text);
     document.title = text;
 }
