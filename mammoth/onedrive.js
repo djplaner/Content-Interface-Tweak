@@ -259,17 +259,26 @@ function callMSGraph(theUrl, accessToken, callback) {
     
     addEvent("Requesting Word doc info");
     var xmlHttp = new XMLHttpRequest();
+    xmlHttp.responseType='json';
     xmlHttp.onreadystatechange = function () {
         if (this.readyState == 4 ) {
             
             // Success means that we information about the shared file
             // Including the downloadUrl
             if ( this.status == 200) {
-                addEvent("Obtained Word doc info")
+                let size = this.response['size']/1024;
+                let n = size.toFixed(0);
+                addEvent(`Obtained Word doc info`);
                 
+                if ( size>1024) {
+                  addEvent(`Word doc size ${n}Kb > 1024Kb`,false,true);   
+                  addEvent("Large size can slow copy/paste",false,true);
+                  addEvent("May not work with Chrome",false,true);
+                  addEvent("Firefox works better",false,true);
+                }
             //
             //callback(JSON.parse(this.responseText));
-            r = JSON.parse(this.responseText);
+            r = this.response; //JSON.parse(this.responseText);
             downloadUrl = r['@microsoft.graph.downloadUrl'];
             
             getTheFileCORS( downloadUrl, accessToken, graphAPICallback);
@@ -342,7 +351,18 @@ function doMammoth( wordContent ) {
                     "r[style-name='Red'] => span.red",
                     "p[style-name='Example'] => div.example > p:fresh",
                     "p[style-name='Example Centered'] => div.exampleCentered > p:fresh",
+                    "p[style-name='Flashback']:ordered-list(1) => div.flashback > ol > li:fresh",
+                    "p[style-name='Flashback']:unordered-list(1) => div.flashback > ul > li:fresh",
                     "p[style-name='Flashback'] => div.flashback > p:fresh",
+
+                    "p[style-name='Weekly Workout']:ordered-list(1) => div.weeklyWorkout > ol > li:fresh",
+                    "p[style-name='Weekly Workout']:unordered-list(1) => div.weeklyWorkout > ul > li:fresh",
+                    "p[style-name='Weekly Workout'] => div.flashback > p:fresh",
+                    
+                    
+                    "p[style-name='Canary Exercise']:ordered-list(1) => div.canaryExercise > div.instructions > ol > li:fresh",
+                    "p[style-name='Canary Exercise']:unordered-list(1) => div.canaryExercise > div.instructions > ul > li:fresh",
+                    "p[style-name='Canary Exercise'] => div.canaryExercise > div.instructions > p:fresh",
                     "p[style-name='Coming Soon'] => div.comingSoon > p:fresh",
                     "p[style-name='ActivityTitle'] => div.activity > h2:fresh",
                     "p[style-name='Activity Title'] => div.activity > h2:fresh",

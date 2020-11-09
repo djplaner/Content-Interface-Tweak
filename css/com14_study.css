@@ -207,7 +207,7 @@
   width: 95%; 
     border-radius: 1em;
     padding: 1em;
-    background-color: #efd25c;
+    background-color: #edf5e1; 
 }
 
 #GU_ContentInterface .filmWatchingOptions  {
@@ -239,8 +239,8 @@
 
 #GU_ContentInterface .activityImage {
   width: 5%;
-  background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Tweety.svg/133px-Tweety.svg.png');
-  background-repeat: no-repeat;
+  background-image: url('https://djon.es/images/task.png');
+ background-repeat: no-repeat;
   background-size: contain;
 }
 
@@ -735,6 +735,45 @@ figure._60 {
 #GU_ContentInterface .flashbackImage {
   width: 15%;
   background-image: url('https://djon.es/images/flashback.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+
+#GU_ContentInterface .canaryExercise  {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
+  margin: 1em 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%; 
+    border-radius: 1em;
+    padding: 1em;
+  background-color: #efd25c;
+}
+
+#GU_ContentInterface .canaryImage {
+  width: 5%;
+  background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Tweety.svg/133px-Tweety.svg.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#GU_ContentInterface .weeklyWorkout  {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 1em 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%; 
+    border-radius: 1em;
+    padding: 1em;
+  background-color: #cafafe;
+}
+
+#GU_ContentInterface .weeklyWorkoutImage {
+  width: 5%;
+  background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Tweety.svg/133px-Tweety.svg.png');
   background-repeat: no-repeat;
   background-size: contain;
 }

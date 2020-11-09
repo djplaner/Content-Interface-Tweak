@@ -18,10 +18,18 @@ var DEFAULT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.cs
 var tweak_bb_active_url_pattern = "listContent.jsp";
 
 // Wrap arounds for various types of activity 
-var READING = `<div class="readingImage"></div>`;
-var ACTIVITY = `<div class="activityImage"></div>`;
-var FLASHBACK = `<div class="flashbackImage"></div>`;
-var NOTE = `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`;
+// - key indicates <div style to be preprended
+// - value is what will be prepended
+var STYLE_PREPEND = {
+    "reading" : `<div class="readingImage"></div>`,
+    "activity": `<div class="activityImage"></div>`, 
+    "flashback" : `<img src="https://djon.es/images/flashback.png" width="25%" height="25%" style="float:right;padding:1em" alt="Flashback logo" />`, 
+    //"canaryExercise" : `<div class="canaryImage"></div>`,
+    "canaryExercise" : `<img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Tweety.svg/133px-Tweety.svg.png" style="float:right;padding:1em" alt="Tweety bird" width="10%" height="10%" />`,
+    "ael-note" : `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
+    "weeklyWorkout" : `<img src="https://djon.es/images/taz.png" width="25%" height="25%" style="float:right;padding:1em" alt="Taz lifting weights" />`, 
+    
+}
 
 //
 var EXPAND_COLLAPSE_BUTTON_HTML = `<div class="accordion-expand-holder">
@@ -204,11 +212,12 @@ function contentInterface($) {
     handleBlackboardCards();
     //jQuery("div.bbCard").each( handleBlackboardCards );
 
-    // Update all the readings and activities
-    jQuery("div.activity").prepend(ACTIVITY);
-    jQuery("div.flashback").prepend(FLASHBACK);
-    jQuery("div.reading").prepend(READING);
-    jQuery("div.ael-note").prepend(NOTE);
+    // Update the HTML for various defined styles
+    for (var divstyle in STYLE_PREPEND) {
+        let query = `div.${divstyle}`;
+        jQuery(query).prepend( STYLE_PREPEND[divstyle])
+    }
+   
     //updateReadings(contentInterface);
     // Handle the blackboard items
 
@@ -3657,6 +3666,7 @@ function getPrintButtons() {
     let hrefId = getHrefId(x);
     // able to extract hrefId
     if (hrefId !== x) {
+       // hrefId = "id" + hrefId.replaceAll('/','');
         hrefId = "id" + hrefId.replace(/\//g,'');
         hrefId = hrefId.replace(/_/g,'');
         if (hrefId in PRINT_URLS) {
