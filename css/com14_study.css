@@ -136,6 +136,10 @@
   padding-left: 2em !important;
   list-style: decimal;
 }
+
+#GU_ContentInterface li {
+  margin-bottom: 0.4em;
+}
   
 
 /** video **/

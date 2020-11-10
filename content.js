@@ -3278,7 +3278,8 @@ function handleUniversityDate() {
     //  date = March 12, 2019
     var day = '', week = '', date = '';
     m = dateText.match(
-        /.*\b((mon|tue|wed(nes)?|thur|thurs|fri|sat(ur)?|sun)(day)?)([,]*) *(,|of|:|;|\-|\u2013|\u2014) *week *([0-9]+)/i );
+          /.*\b((mon|tue|wed(nes)?|thur|thurs|fri|sat(ur)?|sun)(day)?)[, ]*(of|:|;|\-|\u2013|\u2014| )*week *([0-9]+)/i );
+ //       /.*\b((mon|tue|wed(nes)?|thur|thurs|fri|sat(ur)?|sun)(day)?)([,]*) *(,|of|:|;|\-|\u2013|\u2014) *week *([0-9]+)/i );
 // old RE didn't handle week of
 //        /.*\b(((mon|tues|wed(nes)?|thur(s)?|fri|sat(ur)?|sun)(day)?))\b[,]*[ ]*week *\b([0-9]*)/i);
     if (m) {
