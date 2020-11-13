@@ -734,6 +734,7 @@ figure._60 {
   border-radius: 1em;
   padding: 1em;
   background: #ffd266;
+  overflow: hidden;
 }
 
 #GU_ContentInterface .flashbackImage {
@@ -753,6 +754,7 @@ figure._60 {
     border-radius: 1em;
     padding: 1em;
   background-color: #efd25c;
+  overflow: hidden;
 }
 
 #GU_ContentInterface .canaryImage {
@@ -773,6 +775,7 @@ figure._60 {
     border-radius: 1em;
     padding: 1em;
   background-color: #cafafe;
+  overflow: hidden;
 }
 
 #GU_ContentInterface .weeklyWorkoutImage {
