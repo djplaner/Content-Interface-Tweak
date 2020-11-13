@@ -737,14 +737,6 @@ figure._60 {
   overflow: hidden;
 }
 
-#GU_ContentInterface .flashbackImage {
-  width: 15%;
-  background-image: url('https://djon.es/images/flashback.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-
 #GU_ContentInterface .canaryExercise  {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
   margin: 1em 0;
@@ -755,13 +747,6 @@ figure._60 {
     padding: 1em;
   background-color: #efd25c;
   overflow: hidden;
-}
-
-#GU_ContentInterface .canaryImage {
-  width: 5%;
-  background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Tweety.svg/133px-Tweety.svg.png');
-  background-repeat: no-repeat;
-  background-size: contain;
 }
 
 #GU_ContentInterface .weeklyWorkout  {
@@ -776,11 +761,4 @@ figure._60 {
     padding: 1em;
   background-color: #cafafe;
   overflow: hidden;
-}
-
-#GU_ContentInterface .weeklyWorkoutImage {
-  width: 5%;
-  background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Tweety.svg/133px-Tweety.svg.png');
-  background-repeat: no-repeat;
-  background-size: contain;
 }
