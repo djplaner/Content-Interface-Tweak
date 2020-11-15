@@ -25,10 +25,11 @@ var STYLE_PREPEND = {
     "activity": `<div class="activityImage"></div>`, 
     "flashback" : `<img src="https://djon.es/images/flashback.png" width="25%" height="25%" style="float:right;padding:1em" alt="Flashback logo" />`, 
     //"canaryExercise" : `<div class="canaryImage"></div>`,
+    // COM14
     "canaryExercise" : `<img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Tweety.svg/133px-Tweety.svg.png" style="float:right;padding:1em" alt="Tweety bird" width="10%" height="10%" />`,
     "ael-note" : `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
-    "weeklyWorkout" : `<img src="https://djon.es/images/taz.png" width="25%" height="25%" style="float:right;padding:1em" alt="Taz lifting weights" />`, 
-    
+    "weeklyWorkout" : `<img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/weeklyWorkout.png" width="25%" height="25%" style="float:right;padding:1em" alt="Taz lifting weights" />`, 
+    "comingSoon" : `<div class="comingSoonImage"></div>`,
 }
 
 //
@@ -2230,21 +2231,22 @@ var TERM_DATES = {
     },
     // OUA 2020 Study Period 4
     "2207": {
-        "0": { "start": "2020-11-30", "stop": "2020-12-06" },
-        "1": { "start": "2020-12-07", "stop": "2020-12-13" },
-        "2": { "start": "2020-12-14", "stop": "2020-12-20" },
-        "3": { "start": "2020-12-21", "stop": "2020-12-27" },
-        "4": { "start": "2020-12-28", "stop": "2021-01-03" },
-        "5": { "start": "2021-01-04", "stop": "2021-01-10" },
-        "6": { "start": "2021-01-11", "stop": "2021-01-17" },
-        "7": { "start": "2021-01-18", "stop": "2021-01-24" },
-        "8": { "start": "2021-01-25", "stop": "2021-01-31" },
-        "9": { "start": "2021-02-01", "stop": "2021-02-07" },
-        "10": { "start": "2021-02-08", "stop": "2021-02-14" },
-        "11": { "start": "2021-02-15", "stop": "2021-02-21" },
-        "12": { "start": "2021-02-22", "stop": "2021-02-28" },
-        "13": { "start": "2021-03-01", "stop": "2021-03-07" },
-        "14": { "start": "2021-03-08", "stop": "2021-03-14" },
+        "0": { "start": "2020-11-23", "stop": "2020-11-29" },
+        "1": { "start": "2020-11-30", "stop": "2020-12-06" },
+        "2": { "start": "2020-12-07", "stop": "2020-12-13" },
+        "3": { "start": "2020-12-14", "stop": "2020-12-20" },
+        "4": { "start": "2020-12-21", "stop": "2020-12-27" },
+        "5": { "start": "2020-12-28", "stop": "2021-01-03" },
+        "6": { "start": "2021-01-04", "stop": "2021-01-10" },
+        "7": { "start": "2021-01-11", "stop": "2021-01-17" },
+        "8": { "start": "2021-01-18", "stop": "2021-01-24" },
+        "9": { "start": "2021-01-25", "stop": "2021-01-31" },
+        "10": { "start": "2021-02-01", "stop": "2021-02-07" },
+        "11": { "start": "2021-02-08", "stop": "2021-02-14" },
+        "12": { "start": "2021-02-15", "stop": "2021-02-21" },
+        "13": { "start": "2021-02-22", "stop": "2021-02-28" },
+        "14": { "start": "2021-03-01", "stop": "2021-03-07" },
+        "15": { "start": "2021-03-08", "stop": "2021-03-14" },
         /* End of study period 4 */
         "exam": { "start": "2021-03-08", "stop": "2021-03-14" },
         // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }

@@ -227,20 +227,6 @@
     padding: 1em;
   }
 
-#GU_ContentInterface .comingSoon  {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: 1em 0;
-  margin-left: auto;
-  margin-right: auto;
-  width: 95%; 
-    border-radius: 1em;
-    padding: 1em;
-/*    background-color: #efd25c;*/
-}
-
 #GU_ContentInterface .activityImage {
   width: 5%;
   background-image: url('https://djon.es/images/task.png');
@@ -258,13 +244,6 @@
 #GU_ContentInterface .filmWatchingOptionsImage {
   width: 5%;
   background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-#GU_ContentInterface .comingSoonImage {
-  width: 15%;
-  background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/comingSoon.jpg');
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -720,12 +699,6 @@ figure._60 {
 }
 
 #GU_ContentInterface .flashback { 
-/*  background-image: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url('https://djon.es/images/flashback.png'); 
-  background-size: contain; 
-  background-repeat: no-repeat; 
-  background-position: center; 
-  color: white; */
-
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
   margin: 1em 0;
   margin-left: auto;
@@ -761,4 +734,25 @@ figure._60 {
     padding: 1em;
   background-color: #cafafe;
   overflow: hidden;
+}
+
+#GU_ContentInterface .comingSoon  {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 1em 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  padding: 1em;
+  border-radius: 1em;
+    
+}
+
+#GU_ContentInterface .comingSoonImage {
+  width: 15%;
+  background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/comingSoon.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
 }

@@ -363,7 +363,7 @@ function doMammoth( wordContent ) {
                     "p[style-name='Canary Exercise']:ordered-list(1) => div.canaryExercise > div.instructions > ol > li:fresh",
                     "p[style-name='Canary Exercise']:unordered-list(1) => div.canaryExercise > div.instructions > ul > li:fresh",
                     "p[style-name='Canary Exercise'] => div.canaryExercise > div.instructions > p:fresh",
-                    "p[style-name='Coming Soon'] => div.comingSoon > p:fresh",
+                    "p[style-name='Coming Soon'] => div.comingSoon > div.instructions > p:fresh",
                     "p[style-name='ActivityTitle'] => div.activity > h2:fresh",
                     "p[style-name='Activity Title'] => div.activity > h2:fresh",
                     "p[style-name='ActivityText'] => div.activity > div.instructions > p:fresh",
