@@ -23,12 +23,13 @@ var tweak_bb_active_url_pattern = "listContent.jsp";
 var STYLE_PREPEND = {
     "reading" : `<div class="readingImage"></div>`,
     "activity": `<div class="activityImage"></div>`, 
-    "flashback" : `<img src="https://djon.es/images/flashback.png" width="25%" height="25%" style="float:right;padding:1em" alt="Flashback logo" />`, 
+    //"flashback" : `<img src="https://djon.es/images/flashback.png" width="25%" height="25%" style="float:right;padding:1em" alt="Flashback logo" />`, 
+    "flashback" : `<div class="flashbackImage"><img src="https://s3.amazonaws.com/filebucketdave/banner.js/images/com14/flashback.png" alt="Flashback logo" /></div>`,
     //"canaryExercise" : `<div class="canaryImage"></div>`,
     // COM14
-    "canaryExercise" : `<img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Tweety.svg/133px-Tweety.svg.png" style="float:right;padding:1em" alt="Tweety bird" width="10%" height="10%" />`,
+    "canaryExercise" : `<div class="canaryImage"><img src="https://s3.amazonaws.com/filebucketdave/banner.js/images/com14/Tweety.svg.png"  alt="Tweety bird"  /></div>`,
     "ael-note" : `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
-    "weeklyWorkout" : `<img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/weeklyWorkout.png" width="25%" height="25%" style="float:right;padding:1em" alt="Taz lifting weights" />`, 
+    "weeklyWorkout" : `<div class="weeklyWorkoutImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/weeklyWorkout.png" alt="Female weight lifter" /></div>`, 
     "comingSoon" : `<div class="comingSoonImage"></div>`,
 }
 

@@ -710,6 +710,34 @@ figure._60 {
   overflow: hidden;
 }
 
+#GU_ContentInterface .flashbackImage {
+  width: 25%;
+  float: right;
+}
+
+.flashbackImage img {
+  width: 95%;
+}
+
+#GU_ContentInterface .canaryImage {
+  width: 10%;
+  float: right;
+}
+
+.canaryImage img {
+  width: 95%;
+}
+
+#GU_ContentInterface .weeklyWorkoutImage {
+  width: 30%;
+  float: right;
+}
+
+.weeklyWorkoutImage img {
+  width: 95%;
+}
+
+
 #GU_ContentInterface .canaryExercise  {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
   margin: 1em 0;
