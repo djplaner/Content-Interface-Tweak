@@ -3640,7 +3640,49 @@ function convertMedia(html, filmName) {
 
 const PRINT_URLS = {
     'http://127.0.0.1:8080/test/': 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1',
-    "id82017155861081" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1'
+    // --- COM10 **id82017155859681id82017155859681id82017155859681TODO** Need to move the IDs to something based on the title and the course id (to make it study period independent?)
+    // Intro
+    "id82017155859681" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXvTIKSc3S1OvJj-0zdBCt0BfLm32pxEB6j3euLMuaLciA?download=1',
+    // 1
+    "id82017155859821" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EeAq5L5wb41Gns6slW0A-LwB3Yq83TythhGI6ggFcBTndg?download=1',
+    // 2
+    "id82017155859981" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EbAqgkfJIx5Nqvd_jK1U5NIB6CPlm-EXVEQdkJwQiRWLMA?download=1',
+    // 3 
+    "id82017155860101" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EWNzglpqvdVEjTgpgmtNNpwB-FAAejeXf2-EfrMbelEBBw?download=1',
+    // 4
+    "id82017155860221" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EQpfz6EuZmVHn8nlehy86u4BCoBPoLCMQbEClzbtTOtA6Q?download=1',
+    // 5 
+    "id82017155860361" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ERVcxqM6xI9PnlXJTIqWleABB9vN7i6NMkYZvey6aLmbvw?download=1',
+    // 6
+    "id82017155860471" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EaMscQciQ2pLrFZLcEoOXccB1n24bXe1nLSKOpYkjV2N5w?download=1',
+    // 7 
+    "id82017155860591" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EULKp4LeFF1LujF5UFl8OHABeWORvVEkOo_ylQvzvY_40Q?download=1',
+    // 8
+    "id82017155860721" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EYiaNSNnTYJNm3VBn4Qe350BFlUIdGhtVov0HEq81RRU5g?download=1',
+    // 9
+    "id82017155860821" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EeWjaWYjEgpHlizwaT0Lf-gBE8eJF8gqSIS6Gdx_-0VAbw?download=1',
+    // 10
+    "id82017155860921" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ES7T_sNVEEJCgTNCCSBvBMgBygkyvthRxCFe0esIQBbjgQ?download=1',
+    // 11
+    "id82017155861001" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ES4-c714D-1Liv7CE0XTNJABhpiF9bJxs3NywdwrZA72Vg?download=1',
+    //12
+    "id82017155861081" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1',
+    "id82017155861101" : 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1',
+    //13
+    "id82017155861181" :"https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXO1cl-sEeZEj3H9O9acJikBghpbdwyyoKa3UDOPt4mvSQ?download=1",
+    "id82017155861161" :"https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXO1cl-sEeZEj3H9O9acJikBghpbdwyyoKa3UDOPt4mvSQ?download=1",
+    // assessment
+    // 1
+    "id82017155859351" : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EaovQ_phUEVBuUcv6T_-Nq8Beo9pfI5gGLTeXgZor8SteQ?download=1",
+    // 2
+    "id82017155859441" : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/Ed1VsUZpHT1KlnNenO-MxugBfkzxvGw-ipxMjCZaHqej_Q?download=1",
+    // 3
+    "id82017155859501" : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EWqc_YnmVyZCsfInw968XaQBPjPOB4kbToSVYzqnQoiw4g?download=1",
+    // Resources
+    "id82017155859601" : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ER3stuIbjQFEi2TFu22qMvgBB_TQPKr3YQqp25RatuxqQA?download=1",
+    // --- COM14 SP4, 2020
+    "id82046152719131" : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ESqR--AbSgdFt7qK_Nl8OTEB07buAy3WIuZznYcYQPgCcw?download=1"
+
 }
 
 function addExpandPrintButtons() {
