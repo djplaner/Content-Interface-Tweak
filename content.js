@@ -28,7 +28,8 @@ var STYLE_PREPEND = {
     //"canaryExercise" : `<div class="canaryImage"></div>`,
     // COM14
     "canaryExercise" : `<div class="canaryImage"><img src="https://s3.amazonaws.com/filebucketdave/banner.js/images/com14/Tweety.svg.png"  alt="Tweety bird"  /></div>`,
-    "ael-note" : `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
+    //"ael-note" : `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
+    "ael-note" : `<div class="noteImage"></div>`,
     "weeklyWorkout" : `<div class="weeklyWorkoutImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/weeklyWorkout.png" alt="Female weight lifter" /></div>`, 
     "comingSoon" : `<div class="comingSoonImage"></div>`,
 }
@@ -3681,8 +3682,48 @@ const PRINT_URLS = {
     // Resources
     "id82017155859601" : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ER3stuIbjQFEi2TFu22qMvgBB_TQPKr3YQqp25RatuxqQA?download=1",
     // --- COM14 SP4, 2020
-    "id82046152719131" : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ESqR--AbSgdFt7qK_Nl8OTEB07buAy3WIuZznYcYQPgCcw?download=1"
-
+    "id82046152719131" : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ESqR--AbSgdFt7qK_Nl8OTEB07buAy3WIuZznYcYQPgCcw?download=1",
+    // --- CWR111 SP4, 2020
+// welcome and orientation
+'id82172154304321': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EdtbB7EU1-VNiuuWgB6LCB8BvdkFEe4T5YwpboZnSrmz4Q?e=oxqscx",
+// topic 1
+'id82172154304341': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXHaMp41xBxJgkUrGBJ05vABvwUpgqGjKb1Vlxv75hdW_Q?e=fCG7XI",
+// topic 2
+'id82172154304401': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EfJmQ-jYEM1Cr4lCegZqUUgBY2lNRjd8wA4cloqqSP21sA?e=9YXKfr",
+// topic 3
+'id82172154304411': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EYh6J3b0Y_lAog8iLcq1OEABtSfQhwv0af0vk_a37KzA-g?e=DAJOW8",
+// topic 4
+'id82172154304421': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EUbQutZ32i1EvulV7xSN76kBSyTeFkg_fhk6jbZqF3u5jg?e=5p6rJs",
+// topic 5
+'id82172154304431': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ETG-b9QlDaNIqTM6ZdZ_CrMBJ5XUSTWZd1iXzybEiCtzPA?e=hovWdD",
+// topic 6
+'id82172154304441': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EZZbKdDg6v5GtMGU0kcYp2IBwGA6aA8WYcARkKWCBo8ryQ?e=K8CZFv",
+// topic 7
+'id82172154304461': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EWAR5LNz_2BDtzf9XBA7NjABvoJ5NpqDixMQ8piSLmqhRg?e=MSNQ09",
+// topic 8
+'id82172154304471': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ESGdxEcctO9GlhCHbvfir20BS_cLrgcYzwnLC28hJdxK-g?e=6gIpuf",
+// topic 9
+'id82172154304481': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXVPj64V4BlPnyyBM8mNg_8BjczIJ1wchsKRoRp4tmZMXA?e=1loFnc",
+// topic 10
+'id82172154304501': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EQaHF2tR9oBBvrlszRQMV98BbtWSP6MQnQAzQATKx2IEEg?e=D25Cso",
+// topic 11
+'id82172154304511': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EbkQFoUVXWdEo2BJF1TzXBwBBo6gspDleUbrwhpSmp7QYQ?e=ZvgGPI",
+// topic 12
+'id82172154304521': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EUhHW-ML-mhGpVbAC7p82c4BUOpF3cfEL8DFJ0hFdoOAcA?e=G2F4KI",
+// On the exegesis
+'id82172154304561': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EVkmN8cfHNZInJWK4cQsZ64BGgSBSv-9NhFmdHQhUuNtPQ?e=F7lpRI",
+// On the critical review
+'id82172154304611': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EfEwCaXXlr1JrI_UhDD0q1YB6fkHTZKCeVIOf47JLUW2Mw?e=QNdn7J",
+// A1 Online discussion
+'id82172154304821' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EYg7ai0HybNHmZDJttzTZOMB8zmi6vVZUrP6EeEkTXQv9A?e=8kkhpW",
+// A2 folio 1
+'id82172154304861': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EdYRpjiS41RAoHNewugYi2oB2rTeHttgKxzd5Ib7otgcLw?e=atMPA7",
+// A3 Critical review
+'id82172154304881': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EZRA0bwPel1Ho0nBf9pYXXABeXoMnGmmPX1_4n0CjBoS1w?e=16TNBt",
+// A4 Folio 2
+'id82172154306061': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ESbqa1F3H8tLjA8eSfklAm8BbrGVWg6kYg8oyUaZT6UXhA?e=WDQ9XM",
+// Assessment resources
+'id82172156823011': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/Edy-fjSBvTBNuIDTLekhmD4BWNkKbO08YSS1jPatjkJiMg?e=Ch0XIA",    
 }
 
 function addExpandPrintButtons() {

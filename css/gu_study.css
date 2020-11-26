@@ -257,6 +257,7 @@ background-size: contain;
   background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png');
   background-repeat: no-repeat;
   background-size: contain;
+  margin-top: 1em;
   }
 
 #GU_ContentInterface .filmWatchingOptionsImage {
