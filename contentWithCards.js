@@ -3941,7 +3941,82 @@ const PRINT_URLS = {
     // 3
     "id82017155859501" : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EWqc_YnmVyZCsfInw968XaQBPjPOB4kbToSVYzqnQoiw4g?download=1",
     // Resources
-    "id82017155859601" : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ER3stuIbjQFEi2TFu22qMvgBB_TQPKr3YQqp25RatuxqQA?download=1"
+    "id82017155859601" : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ER3stuIbjQFEi2TFu22qMvgBB_TQPKr3YQqp25RatuxqQA?download=1",
+
+    
+//************************************* COM14 SP4 */
+// Basecamp
+'id82046153058251': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXctyASVrPBKlpUFGeAOZ3cBSL3kSTfWM_iOXDLtleogpQ?e=Fac9nI",
+// Week 1        
+'id82046152719131': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EX7kjt6DSZlMkRfnMW3lc5UB2RZDJFDqvU5QZSMxSL3wTw?e=D8yTZf",
+// Week 2        
+'id82046152751351': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/Edl0bp_YCUxJt8_v51gCWlUB-iaxdThid_KHY5__CRNDSQ?e=GzVuaf",
+// Week 3
+'id82046152751361': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ESeh1-hLRB9Mt0I4OOQVDq4BdaFh-uhOeMtnMlMri3bTeQ?e=EtasCM",
+// Week 4
+'id82046152751371': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EYbrxc4SZqFIv78lIFZ-KXIBBeQOc6JOOuWgL4nMquK_fw?e=PuRhiZ",
+// Week 5
+'id82046152751381': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EQhWuKYitbZFqbwdcw3ck1wBSpYt-r4WBT0uZ7IK9lGvNQ?e=VOjb7W",
+// Week 6
+'id82046152751391': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EfGRWAFkzMVEo0Kkr56SwmsBbwluOvh_1zegtzd-1zIzOQ?e=OXjNXf",
+// Week 7
+'id82046152751401': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EVtcN20P46RPlwP6u0gd6ZABi4KUKqr7JzNEcZ9a8C_9vA?e=Ceu5T3",
+// Week 8
+'id82046155704981': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EURi4tkebBxBmxgrYfnXnsoBsZtkqaDehQcZ8kvXc-Ye6Q?e=PNfibl",
+// Week 9
+'id82046155704991': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXPTG6tmjWBKqxKKnDkRyq0BvXzVtr0GNZCsc3VREjdGzw?e=XKX6Ql",
+// Week 10
+'id82046155705001': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/Ed7ddppaDelCoO2QOmebIFYBvOiRIwar6g7C6Pyheg0_nA?e=fsKnvd",
+// Week 11
+'id82046155705011': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ET3kQVtSXV9KvWO7Ov6NddkBQ_pWg2EaoQ6HR267wr4WOA?e=QtpJgY",
+// Week 12
+'id82046155705021': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXSx4-dPhrhDuRSp50zvBNABvwV8if2LiLzNpSvYk-sVvA?e=gbuVn2",
+// Week 13
+'id82046155852241': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXjBvkyA2CtHpp-gatiBI4ABJ0WdyGqj75br-m88ft3mXA?e=3EuRZP",
+// a1 - writing portfolio
+'id82046155644091': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ETUdOwoa0YZFj-JHF3BgOTAB_PVSPtCguOqiaCfPDJ8JOA?e=cAulJI",
+// a2 - weekly workouts
+'id82046155644301': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EUyCE4QuMfJDnnso7oFH3L0BLiot9ldWo9wXiO9uwf6-7A?e=tkbvox",
+// a3 - creative writing
+'id82046155644381': "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ETdcqIGUSnFPkNP8Y3AVelYBr_ZpfDW5_wSCeRhTB1hy2A?e=bgZT5K",
+
+//****************COM12 SP4 */
+//com12/unitintroduction.pdf'
+'id82005156959011' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EYqSw3pi_XZAkt6TSX5H9VIBl4ZWtH-iN_OcUMuYmqzWkA?e=yx58Gu",
+//com12/topic01.pdf'
+'id82005156959151' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EYo3TzR2mltPn5B-1c5Ryz0BmEH8Q4fxtFwEayF8m2P3Fw?e=aAQGnc",
+//com12/topic02.pdf'
+'id82005156959311' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EVXY0k0cHaJFh8_5LiwekdUBRDRi547eV8-1E8TW3LK5RA?e=k6Lkdt",
+//com12/topic03.pdf'
+'id82005156959431' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EeLGZteXkqtJog_ui-zzfFIBX63IvT2KTbT8LquDqCskgA?e=yg7aDi",
+//com12/topic04.pdf'
+'id82005156959551' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EfPjMPYv1DtCix3B_1jdOGcB3qFGuQsfHp3TXKfSYlMtEw?e=sfwUiA",
+//com12/topic05.pdf'
+'id82005156959691' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EUIHPY6KDIZHnnPER5t-RukBjQMQiIxCF0CPcB7rjx-oOw?e=RiCmvn",
+//com12/topic06.pdf'
+'id82005156959801' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EZD1-9-LrxVJhgzYRsoNk2QBYH2TWrC_4Opz9RfAfce3ig?e=Q9blat",
+//com12/topic07.pdf'
+'id82005156959921' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXA1YRYZOJZLm8B2l2EwaYkBa6KL7xKBcKulmM2y7My90Q?e=enGq1U",
+//com12/topic08.pdf'
+'id82005156960151' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ETlkcxLLRXFLnt5SY7A7aG8BkBtRe0q8UGaB4JaLbhbrVQ?e=v6zMeR",
+//com12/topic09.pdf'
+'id82005156960051' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EY651SKQvkRAj1XRk21bv-8ByRI7VJWCkZQZhDvp6SYYSQ?e=EvlVOZ",
+//com12/topic10.pdf'
+'id82005156960251' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ETU3J3OWgEFAmvQH70i0Zn4Bjx3zcq5gMJ99nC5H74lmDA?e=mrSGcp",
+//com12/topic11.pdf'
+'id82005156960331' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EQfMkrydyMVJgUkk1MFDdLYBbdbOTtZ3jBp8poByBbuS3A?e=RPIyOg",
+//com12/topic12.pdf'
+'id82005156960411' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/Ea11dlZyONxIrlc43JQS8PcBZCR5Qr9Eg0fwfMrezVVmWQ?e=3a9C1Q",
+//com12/topic013.pdf'
+'id82005156960491' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EUbx8xAoWkVFpPKdp4oMB3ABQhJ2TSvSTlI7wDDFwmr4aQ?e=OnimhO",
+//com12/a1ILTs.pdf'
+'id82005156960541' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXtFrytYCjdDnRkgm9Knw_ABLtnRqI0o0f_LutqScndDsw?e=Pthwuv",
+//com12/a2short_essay.pdf'
+'id82005156960641' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ERgrdmBs9_BIj-JSytoDxTMBufe-JLBBezQcmFfTs4gJiQ?e=uGRDg5",
+//com12/a3business_report.pdf'
+'id82005156960701' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EaVSj-UdBBBCruHAYa7yuSwBn2pUT7_SfcdGEhb7kxYYnA?e=xgp94w",
+//com12/assessmentresources.pdf'
+'id82005156960761' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EfbbHGlX41dKlGvqevLCFwMBJ0Hsbg8w2iJXRGjpy_kFHA?e=4nfk2o"
 
 };
 
