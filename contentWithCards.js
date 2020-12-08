@@ -1757,19 +1757,25 @@ function extractCardsFromContent(myCards) {
         }
         description = description.replace(/&nbsp;/gi, ' ');
 
-        var re = new RegExp("card image\s*:\s*([^<]*)", "i");
+//        var re = new RegExp("card image\s*:\s*([^<]*)", "i");
+        var re = new RegExp("card image\s*:(.*)$", "im" ); //\s*(.*)#/im; //new RegExp("card image\s*:\s*(.*)", "i");
+
         //m = description.match(/[Cc]ard [Ii]mage\s*: *([^\s<]*)/ );
         m = description.match(re);
         if (m) {
-            // TODO need to parse the m[1] to see if it's a URL
-            // OR a colour to be set
-
-            // Return a three element list of rgb colours
-            // if the Card Image: value is a valid colour
-            // Otherwise undefined
-
-            cardBGcolour = identifyCardBackgroundColour(m[1]);
-            picUrl = identifyPicUrl(m[1]);
+            // m[1] contains the bit after "card image:"
+            // get rid of the </p> or similar tag at the end of the line
+            m[1] = m[1].replace(/(<([^>]+)>)/gi, "");
+            
+            // is it a data uri?
+            regex = /^data:((?:\w+\/(?:(?!;).)+)?)((?:;[\w\W]*?[^;])*),(.+)$/;
+            if ( regex.test(m[1])){
+                // set the picUrl to the data uri
+                picUrl = m[1];
+            } else {
+                cardBGcolour = identifyCardBackgroundColour(m[1]);
+                picUrl = identifyPicUrl(m[1]);
+            }
 
             //picUrl=m[1];
             description = description.replace("<p>" + m[0] + "</p>", "");
@@ -2120,7 +2126,20 @@ function identifyCardBackgroundColour(input) {
 //   Otherwise return the value
 
 function identifyPicUrl(value) {
-
+ 
+    let re = new RegExp('href="([^"]*)', "i" );
+    let m = value.match( re );
+    
+    // if it's a <a href="picUrl"></a> return the picUrl
+    if (m) {
+        return m[1];
+    }
+    // remove all html
+    let tmp = document.createElement("DIV");
+    tmp.innerHTML = value;
+    value = tmp.textContent || tmp.innerText || "";
+    // must be just a lone URL TODO check it actually does
+   
     return value;
 }
 

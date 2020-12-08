@@ -687,3 +687,26 @@ color: #FFFFFF !important; }
   }
   
 }  
+
+
+#GU_ContentInterface .poem {
+  border-radius: 3px;
+  padding: 1rem 1.2rem;
+  max-width: 80%;  
+  margin: 1rem 1em 1em 2rem;
+  background: #daf7a6;
+  overflow: hidden;
+}
+
+
+#GU_ContentInterface .poemRight {
+  text-align: right;
+  border-radius: 3px;
+  padding: 1rem 1.2rem;
+  max-width: 80%;  
+  margin: 1rem 1em 1em 2rem;
+  background: #daf7a6;
+  overflow: hidden;
+}
+
+

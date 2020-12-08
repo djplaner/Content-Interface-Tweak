@@ -359,6 +359,8 @@ function doMammoth( wordContent ) {
                     "p[style-name='Weekly Workout']:unordered-list(1) => div.weeklyWorkout > ul > li:fresh",
                     "p[style-name='Weekly Workout'] => div.weeklyWorkout > p:fresh",
                     
+                    "p[style-name='Poem'] => div.poem > p:fresh",
+                    "c[style-name='Poem Right'] => span.poemRight > p:fresh",
                     
                     "p[style-name='Canary Exercise']:ordered-list(1) => div.canaryExercise > div.instructions > ol > li:fresh",
                     "p[style-name='Canary Exercise']:unordered-list(1) => div.canaryExercise > div.instructions > ul > li:fresh",
