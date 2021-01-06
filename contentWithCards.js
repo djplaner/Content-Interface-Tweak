@@ -2156,6 +2156,10 @@ function getTermDateCards(week, startWeek = true) {
             return date;
         }
     }
+    if ( typeof TERM_DATES[TERM]==='undefined') {
+        return undefined
+    }
+
     var start;
     if (startWeek === true) {
         // setting start week
@@ -2175,6 +2179,126 @@ function getTermDateCards(week, startWeek = true) {
 
 
 var TERM_DATES = {
+      // OUA 2021 Study Period 1
+      "2211": {
+        "0": { "start": "2021-02-22", "stop": "2021-02-28" },
+        "1": { "start": "2021-03-01", "stop": "2021-03-07" },
+        "2": { "start": "2021-03-08", "stop": "2021-03-14" },
+        "3": { "start": "2021-03-15", "stCop": "2021-03-21" },
+        "4": { "start": "2021-03-22", "stop": "2021-03-28" },
+        "5": { "start": "2021-03-29", "stop": "2021-04-04" },
+        "6": { "start": "2021-04-05", "stop": "2021-04-11" },
+        "7": { "start": "2021-04-12", "stop": "2021-04-18" },
+        "8": { "start": "2021-04-19", "stop": "2021-04-25" },
+        "9": { "start": "2021-04-26", "stop": "2021-05-02" },
+        "10": { "start": "2021-05-03", "stop": "2021-05-09" },
+        "11": { "start": "2021-05-10", "stop": "2021-05-16" },
+        "12": { "start": "2021-05-17", "stop": "2021-05-23" },
+        "13": { "start": "2021-05-24", "stop": "2021-05-30" },
+        "14": { "start": "2021-05-31", "stop": "2021-06-06" },
+        /* End of study period 4 */
+        "exam": { "start": "2021-05-31", "stop": "2021-06-06" },
+        // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }
+    },
+    // OUA 2021 Study Period 2
+    "2213": {
+        "0": { "start": "2021-05-31", "stop": "2021-06-06" },
+        "1": { "start": "2021-06-07", "stop": "2021-06-13" },
+        "2": { "start": "2021-06-14", "stop": "2021-06-20" },
+        "3": { "start": "2021-06-21", "stop": "2021-06-27" },
+        "4": { "start": "2021-06-28", "stop": "2021-07-04" },
+        "5": { "start": "2021-07-05", "stop": "2021-07-11" },
+        "6": { "start": "2021-07-12", "stop": "2021-07-18" },
+        "7": { "start": "2021-07-19", "stop": "2021-07-25" },
+        "8": { "start": "2021-07-26", "stop": "2021-08-01" },
+        "9": { "start": "2021-08-02", "stop": "2021-08-08" },
+        "10": { "start": "2021-08-09", "stop": "2021-08-15" },
+        "11": { "start": "2021-08-16", "stop": "2021-08-22" },
+        "12": { "start": "2021-08-23", "stop": "2021-08-29" },
+        "13": { "start": "2021-08-30", "stop": "2021-09-05" },
+        /* End of study period 4 */
+        "exam": { "start": "2021-08-30", "stop": "2021-09-05" },
+        // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }
+    },
+    // OUA 2021 Study Period 3
+    "2215": {
+        "0": { "start": "2021-08-23", "stop": "2021-08-29" },
+        "1": { "start": "2021-08-30", "stop": "2021-09-05" },
+        "2": { "start": "2021-09-06", "stop": "2021-09-12" },
+        "3": { "start": "2021-09-13", "stop": "2021-09-19" },
+        "4": { "start": "2021-09-20", "stop": "2021-09-26" },
+        "5": { "start": "2021-09-27", "stop": "2021-10-03" },
+        "6": { "start": "2021-10-04", "stop": "2021-10-10" },
+        "7": { "start": "2021-10-11", "stop": "2021-10-17" },
+        "8": { "start": "2021-10-18", "stop": "2021-10-24" },
+        "9": { "start": "2021-10-25", "stop": "2021-10-31" },
+        "10": { "start": "2021-11-01", "stop": "2021-11-07" },
+        "11": { "start": "2021-11-08", "stop": "2021-11-14" },
+        "12": { "start": "2021-11-15", "stop": "2021-11-21" },
+        "13": { "start": "2021-11-22", "stop": "2021-11-28" },
+        "14": { "start": "2021-11-29", "stop": "2021-12-05" },
+        /* End of study period 4 */
+        "exam": { "start": "2021-11-29", "stop": "2021-12-05" },
+        // No exam ?? "exam" : { "start": "2019-10-10", "stop" : "2019-10-19" }
+    },
+    // OUA 2021 Study Period 4 
+    // TODO Yet to be added
+        // Griffith 2021 Trimester 3
+        "3218": {
+            "0": { "start": "2021-11-01", "stop": "2021-11-07" },
+            "1": { "start": "2021-11-08", "stop": "2021-11-14" },
+            "2": { "start": "2021-11-15", "stop": "2021-11-21" },
+            "3": { "start": "2021-11-22", "stop": "2021-11-28" },
+            "4": { "start": "2021-11-29", "stop": "2021-12-05" },
+            "5": { "start": "2021-12-06", "stop": "2021-12-12" },
+            "6": { "start": "2021-12-13", "stop": "2021-12-19" },
+            "7": { "start": "2021-12-20", "stop": "2021-12-26" },
+            "8": { "start": "2022-01-10", "stop": "2022-01-16" },
+            "9": { "start": "2022-01-17", "stop": "2022-01-23" },
+            "10": { "start": "2022-01-24", "stop": "2022-01-30" },
+            "11": { "start": "2022-01-31", "stop": "2022-01-06" },
+            "12": { "start": "2022-02-07", "stop": "2022-02-13" },
+            "13": { "start": "2022-02-14", "stop": "2022-02-20" },
+            "exam": { "start": "2022-02-17", "stop": "2022-02-26" }
+        },
+        // Griffith 2021 Trimester 2
+        "3215": {
+            "0": { "start": "2021-07-12", "stop": "2021-07-18" },
+            "1": { "start": "2021-07-19", "stop": "2021-07-25" },
+            "2": { "start": "2021-07-26", "stop": "2021-08-01" },
+            "3": { "start": "2021-08-02", "stop": "2021-08-08" },
+            "4": { "start": "2021-08-16", "stop": "2021-08-22" },
+            "5": { "start": "2021-08-23", "stop": "2021-08-29" },
+            "6": { "start": "2021-08-30", "stop": "2021-09-05" },
+            "7": { "start": "2021-09-06", "stop": "2021-09-12" },
+            "8": { "start": "2021-09-13", "stop": "2021-09-19" },
+            "9": { "start": "2021-09-20", "stop": "2021-09-26" },
+            "10": { "start": "2021-09-27", "stop": "2021-10-03" },
+            "11": { "start": "2021-10-04", "stop": "2021-10-10" },
+            "12": { "start": "2021-10-11", "stop": "2021-10-17" },
+            "13": { "start": "2021-10-18", "stop": "2021-10-24" },
+            "14": { "start": "2021-10-25", "stop": "2021-10-31" },
+            "exam": { "start": "2021-10-21", "stop": "2021-10-31" }
+        },
+        // Griffith 2021 Trimester 1
+        "3211": {
+            "0": { "start": "2021-03-01", "stop": "2021-03-07" },
+            "1": { "start": "2021-03-08", "stop": "2021-03-14" },
+            "2": { "start": "2021-03-15", "stop": "2021-03-21" },
+            "3": { "start": "2021-03-22", "stop": "2021-03-29" },
+            "4": { "start": "2021-03-29", "stop": "2021-04-04" },
+            "5": { "start": "2021-04-12", "stop": "2021-03-18" },
+            "6": { "start": "2021-04-19", "stop": "2021-04-25" },
+            "7": { "start": "2021-04-26", "stop": "2021-05-02" },
+            "8": { "start": "2021-05-03", "stop": "2021-05-09" },
+            "9": { "start": "2021-05-10", "stop": "2021-05-16" },
+            "10": { "start": "2021-05-17", "stop": "2021-05-23" },
+            "11": { "start": "2021-05-24", "stop": "2021-05-30" },
+            "12": { "start": "2021-05-31", "stop": "2021-06-06" },
+            "13": { "start": "2021-06-07", "stop": "2021-03-13" },
+            "exam": { "start": "2021-06-10", "stop": "2021-06-19" }
+        },
+
     // OUA 2020 Study Period 1
     "2201": {
         "0": { "start": "2020-02-24", "stop": "2020-03-01" },
@@ -2746,9 +2870,12 @@ function addCardInterface(items, place) {
         }
 
         // If need add the date visualisation
-        if (typeof idx.date.start.month !== "undefined") {
+//        if (typeof idx.date.start.month !== "undefined") {
             // Do we have dual dates - both start and stop?
-            if (typeof idx.date.stop.month !== "undefined") {
+//            if (typeof idx.date.stop.month !== "undefined") {
+        if (typeof(idx.date.start)!=='undefined' && 'month' in idx.date.start) { 
+            // Do we have dual dates - both start and stop? 
+            if (idx.date.stop.month) {
                 // start and stop dates
                 cardHtml = cardHtml.replace('{DATE}', dualDateHtmlTemplate[template]);
                 cardHtml = cardHtml.replace(/{MONTH_START}/g,
@@ -3333,6 +3460,7 @@ function getTermDate(week, dayOfWeek = 'Monday') {
     var start;
 
     // if the week is not within the term return empty string
+    console.log(typeof(TERM_DATES[TERM][week]));
     if (typeof TERM_DATES[TERM][week] === 'undefined') {
         return "";
     }
