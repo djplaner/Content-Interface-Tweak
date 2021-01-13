@@ -3464,10 +3464,11 @@ dualDateHtmlTemplate[PEOPLE] = '';
 
 // Template to allow editors to view the original Bb content item
 // Same for all templates
-var editLinkTemplate = `
-             <div class="text-xs grey-light">
+// Commented out as it's not currently linking correctly
+var editLinkTemplate = ``;
+            /* <div class="text-xs grey-light">
                 [<a href="#{ID}">View origin</a>]
-             </div>`;
+             </div> `; */
 
 // Message to display on a card if EDIT mode on and the item is hidden
 HIDDEN_FROM_STUDENTS = `<div class="inline-block bg-yellow text-black text-xs rounded-t rounded-b">This item is <strong>hidden from students</strong></div>`;
