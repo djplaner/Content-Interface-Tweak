@@ -1960,7 +1960,7 @@ function extractCardsFromContent(myCards) {
 
     let items = [];
     // reset card numbering
-    CARD_LABEL_NUMBERING={};
+    //CARD_LABEL_NUMBERING={};
         
     // Loop through each card and construct the items array with card data
     //myCards.each(function (idx) {
@@ -1973,7 +1973,7 @@ function extractCardsFromContent(myCards) {
         //------- check for any review status element
         // TODO this ain't right.  This is the wrong element, but jthis?
         // What does this actually do?
-        review = getReviewStatus(this);
+        review = getReviewStatus(jthis);
 
         // Parse the description and remove the Card Image data	  
         // vtbegenerated_div is specific to Blackboard.
@@ -3035,7 +3035,9 @@ function addCardInterface(items, place) {
 //        if (typeof idx.date.start.month !== "undefined") {
             // Do we have dual dates - both start and stop?
 //            if (typeof idx.date.stop.month !== "undefined") {
-        if (typeof(idx.date.start)!=='undefined' && 'month' in idx.date.start) { 
+        //if (typeof(idx.date.start)!=='undefined' && 'month' in idx.date.start){
+        if (typeof(idx.date)!=="undefined" && typeof(idx.date.start)!=='undefined' && 'month' in idx.date.start) {
+
             // Do we have dual dates - both start and stop? 
             if (idx.date.stop.month) {
                 // start and stop dates
