@@ -160,7 +160,6 @@ def updateHtml( inHtml ):
 
     ## work through STYLE_PREPEND and prepend the specified
     for divClass in STYLE_PREPEND:
-        print("-------------- Starting %s" % divClass)
         # loop through each div with the class
         for divElement in soup.findAll('div',{'class':divClass}):
             toAppend = BeautifulSoup( STYLE_PREPEND[divClass], 'html.parser')
