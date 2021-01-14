@@ -34,11 +34,11 @@ Students would normally see any other items on this page and the content include
 
 ## Create and edit content in a Word document
 
-<div class="ael-note"><div class="instructions"><p><strong>Never </strong>edit Content Interface content in Blackboard.</p><p>When using the Content Interface, all content creation and editing should be done in the associated Microsoft Word document.</p></div></div>
+<div class="ael-note"><div class="noteImage"></div><div class="instructions"><p><strong>Never </strong>edit Content Interface content in Blackboard.</p><p>When using the Content Interface, all content creation and editing should be done in the associated Microsoft Word document.</p></div></div>
 
 The Word document should use both normal Word styles (e.g. _Heading 1_, _Heading 2_, _Quotations_ etc.) and some content interface specific styles (e.g. _Embed_, _Activity_, _Reading_, etc.) to structure the content of a Word document. (The following paragraph has been styled with the _Activity_ style)
 
-<div class="activity"><div class="instructions"><p><strong>Find out more about Word styles</strong></p><p>If you’re unfamiliar with using styles in Word documents, please refer to the plethora of online resources (e.g. <a href="https://shaunakelly.com/word/styles/tipsonstyles.html">this one</a>). A quick search for <em>introduction word styles</em> should find most.</p></div></div>
+<div class="activity"><div class="activityImage"></div><div class="instructions"><p><strong>Find out more about Word styles</strong></p><p>If you’re unfamiliar with using styles in Word documents, please refer to the plethora of online resources (e.g. <a href="https://shaunakelly.com/word/styles/tipsonstyles.html">this one</a>). A quick search for <em>introduction word styles</em> should find most.</p></div></div>
 
 ## Convert that Word document into HTML and place it into Blackboard
 

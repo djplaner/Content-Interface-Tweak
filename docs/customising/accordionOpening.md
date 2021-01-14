@@ -7,7 +7,7 @@
 
 When displayed in Blackboard, this content will use [an accordion interface](https://en.wikipedia.org/wiki/Accordion_(GUI)). i.e. sections of the text will appear as vertically stacked. Each section having a title and some content. Clicking on the title will reveal or hide the content. The accordion interface provides _progressive disclosure_ of content. The titles provide an overview of the content and a mechanism by which focus is applied to specific parts of the content.
 
-<div class="ael-note"><div class="instructions"><p><strong>There are two levels of accordions</strong></p><p>The Content Interface supports two levels of nested accordions.</p><p>All the accordions you can see in Figure 2 are level 1 accordions. These are specified using a <em>Heading 1</em> style in the Word document.</p><p>Level 1 accordions can include further accordion sections. Each of these further accordion sections are Level 2 accordions. Specified in Word using a <em>Heading 2</em> style.</p></div></div>
+<div class="ael-note"><div class="noteImage"></div><div class="instructions"><p><strong>There are two levels of accordions</strong></p><p>The Content Interface supports two levels of nested accordions.</p><p>All the accordions you can see in Figure 2 are level 1 accordions. These are specified using a <em>Heading 1</em> style in the Word document.</p><p>Level 1 accordions can include further accordion sections. Each of these further accordion sections are Level 2 accordions. Specified in Word using a <em>Heading 2</em> style.</p></div></div>
 
 The following explains 
 

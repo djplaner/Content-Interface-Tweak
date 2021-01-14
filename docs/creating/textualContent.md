@@ -9,11 +9,11 @@ The following sections explains how to add/edit the type of content normally fou
 
 Each of the sections below explore a different content element, its style and how it is transformed online.
 
-<div class="ael-note"><div class="instructions"><p><strong>Learn more about Word styles</strong></p><p>If you’re unfamiliar with using styles in Word documents, please refer to the plethora of online resources (e.g. <a href="https://shaunakelly.com/word/styles/tipsonstyles.html">this one</a>). A quick search for <em>introduction word styles</em> should find most.</p></div></div>
+<div class="ael-note"><div class="noteImage"></div><div class="instructions"><p><strong>Learn more about Word styles</strong></p><p>If you’re unfamiliar with using styles in Word documents, please refer to the plethora of online resources (e.g. <a href="https://shaunakelly.com/word/styles/tipsonstyles.html">this one</a>). A quick search for <em>introduction word styles</em> should find most.</p></div></div>
 
 ### Compare and constrast: Word and Blackboard
 
-<div class="activity"><div class="instructions"><p>As you work through the examples in this section, it would be helpful to look at both the <a href="https://griffitheduau-my.sharepoint.com/:w:/g/personal/d_jones6_griffith_edu_au/EZzeEf4bBQhLovFRBEmRGXYBFSPQs1rIt6aM9c_qsR-YBQ?e=5OYKbc">Word document</a> and <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5578509_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5578509_1">Blackboard versions</a> of the document.</p></div></div>
+<div class="activity"><div class="activityImage"></div><div class="instructions"><p>As you work through the examples in this section, it would be helpful to look at both the <a href="https://griffitheduau-my.sharepoint.com/:w:/g/personal/d_jones6_griffith_edu_au/EZzeEf4bBQhLovFRBEmRGXYBFSPQs1rIt6aM9c_qsR-YBQ?e=5OYKbc">Word document</a> and <a href="https://bblearn.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5578509_1&amp;course_id=_82534_1&amp;mode=quick&amp;content_id=_5578509_1">Blackboard versions</a> of the document.</p></div></div>
 
 ## Normal and the default text style
 

@@ -85,50 +85,50 @@ STYLE_MAP = """
 #mammoth "${SOURCE}\Card Demo - update styles.docx" --output-format=markdown > "${DESTINATION}\whatWhy.md"o_html()
 
 PAGES = [
-#    {
-#        "SOURCE" : r"%s\\Background - What and why\\content.docx" % SOURCE,
-#        "DESTINATION" : r"%s\\background\\whatWhy.md" % DESTINATION
-#    }, 
-#    {
-#        "SOURCE" : r"%s\\Background - How it works\\content.docx" % SOURCE,
-#        "DESTINATION" : r"%s\\background\\howWorks.md" % DESTINATION
-#    }, 
-#    {
-#        "SOURCE" : r"%s\\Using - Set up\\content.docx" % SOURCE,
-#        "DESTINATION" : r"%s\\using\\setup.md" % DESTINATION
-#    }, 
-#    {
-#        "SOURCE" : r"%s\\Using - Create and modify content\\content.docx" % SOURCE,
-#        "DESTINATION" : r"%s\\using\\createAndModify.md" % DESTINATION
-#    }, 
-##    {
-#        "SOURCE" : r"%s\\Creating - Text\\content.docx" % SOURCE,
-#        "DESTINATION" : r"%s\\creating\\textualContent.md" % DESTINATION
-#    }, 
-#    {
-#        "SOURCE" : r"%s\\Creating - Web content\\content.docx" % SOURCE,
-#        "DESTINATION" : r"%s\\creating\\webContent.md" % DESTINATION
-#    }, 
+    {
+        "SOURCE" : r"%s\\Background - What and why\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\background\\whatWhy.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Background - How it works\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\background\\howWorks.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Using - Set up\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\using\\setup.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Using - Create and modify content\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\using\\createAndModify.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Creating - Text\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\creating\\textualContent.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Creating - Web content\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\creating\\webContent.md" % DESTINATION
+    }, 
     {
         "SOURCE" : r"%s\\Creating - University content\\content.docx" % SOURCE,
         "DESTINATION" : r"%s\\creating\\universityContent.md" % DESTINATION
     }, 
-#    {
-#        "SOURCE" : r"%s\\Creating - Blackboard\\content.docx" % SOURCE,
-#        "DESTINATION" : r"%s\\creating\\blackboardContent.md" % DESTINATION
-#    }, 
-#    {
-#        "SOURCE" : r"%s\\Customising - Accordion opening\\content.docx" % SOURCE,
-#        "DESTINATION" : r"%s\\customising\\accordionOpening.md" % DESTINATION
-#    }, 
-#    {
-#        "SOURCE" : r"%s\\Customising - Accordion appearance\\content.docx" % SOURCE,
-#        "DESTINATION" : r"%s\\customising\\accordionAppearance.md" % DESTINATION
-#    }, 
-#    {
-#        "SOURCE" : r"%s\\Customising - Content appearance\\content.docx" % SOURCE,
-#        "DESTINATION" : r"%s\\customising\\contentAppearance.md" % DESTINATION
-#    }
+    {
+        "SOURCE" : r"%s\\Creating - Blackboard\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\creating\\blackboardContent.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Customising - Accordion opening\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\customising\\accordionOpening.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Customising - Accordion appearance\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\customising\\accordionAppearance.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Customising - Content appearance\\content.docx" % SOURCE,
+        "DESTINATION" : r"%s\\customising\\contentAppearance.md" % DESTINATION
+    }
 ]
 
 #----------------------------------
