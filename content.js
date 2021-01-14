@@ -566,6 +566,90 @@ function handleFootNotes() {
  */
 
 var HOW_TO = "";
+
+const DOCUMENTATION_LINKS = {
+    // Getting started
+    'whatWhy': 'https://djplaner.github.io/Content-Interface-Tweak/background/whatWhy/',
+    'setUp': 'https://djplaner.github.io/Content-Interface-Tweak/using/setup/',
+    'createModify': 'https://djplaner.github.io/Content-Interface-Tweak/using/createAndModify/',
+    // create text
+    'createText': 'https://djplaner.github.io/Content-Interface-Tweak/creating/textualContent/',
+    'normalText': 'https://djplaner.github.io/Content-Interface-Tweak/creating/textualContent/#normal-and-the-default-text-style',
+    'headings': 'https://djplaner.github.io/Content-Interface-Tweak/creating/textualContent/#headings-and-the-accordion-heading-1-style',
+    'tables': 'https://djplaner.github.io/Content-Interface-Tweak/creating/textualContent/#tables',
+    'quotes': 'https://djplaner.github.io/Content-Interface-Tweak/creating/textualContent/#quotes',
+    'referenceLists': 'https://djplaner.github.io/Content-Interface-Tweak/creating/textualContent/#bibliographyreference-lists',
+    'footnotes': 'https://djplaner.github.io/Content-Interface-Tweak/creating/textualContent/#footnotes',
+
+    // create web content
+    'createWeb': 'https://djplaner.github.io/Content-Interface-Tweak/creating/webContent/',
+    'images': 'https://djplaner.github.io/Content-Interface-Tweak/creating/webContent/#images',
+    'links': 'https://djplaner.github.io/Content-Interface-Tweak/creating/webContent/#links',
+    'embeds': 'https://djplaner.github.io/Content-Interface-Tweak/creating/webContent/#embedding-youtube-videos-and-beyond',
+
+    // create university content
+    'createUniversity': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/',
+    'activities': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#activities',
+    'notes': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#notes',
+    'readings': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#readings',
+    'universityDates': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#university-dates',
+    'filmWatching': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#film-watch-options',
+
+    // create/use Blackboard content
+    'createBlackboard': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/',
+    'menuItem': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#indirect-link-to-a-menu-item-blackboard-menu-link',
+    'contentItem': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#indirect-link-to-content-item-blackboard-content-link',
+    'reviewStatus': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#integrating-the-blackboard-review-status-feature',
+    'adaptiveRelease': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#using-the-adaptive-release-function',
+
+    // customise
+    'accordionOpen': 'https://djplaner.github.io/Content-Interface-Tweak/customising/accordionOpening/',
+    'accordionAppearance': 'https://djplaner.github.io/Content-Interface-Tweak/customising/accordionAppearance/',
+    'contentAppearance': 'https://djplaner.github.io/Content-Interface-Tweak/customising/contentAppearance/'
+}
+
+/*const BLACKBOARD_DOCUMENTATION_LINKS = {
+    // Getting started
+    'whatWhy': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578504_1',
+    'setUp': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578507_1',
+    'createModify': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578508_1',
+    // create text
+    'createText': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1',
+    'normalText': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#2',
+    'headings': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#3',
+    'tables': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#4',
+    'quotes': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#5',
+    'referenceLists': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#6',
+    'footnotes': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#7',
+
+    // create web content
+    'createWeb': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1',
+    'images': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#2',
+    'links': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#3',
+    'embeds': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#4',
+
+    // create university content
+    'createUniversity': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#2',
+    'activities': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#2',
+    'notes': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#3',
+    'readings': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#4',
+    'universityDates': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#5',
+    'filmWatching': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#6',
+
+    // create/use Blackboard content
+    'createBlackboard': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1#2',
+    'menuItem': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1#2',
+    'contentItem': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#3',
+    'reviewStatus': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#4',
+    'adaptiveRelease': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#5',
+
+    // customise
+    'accordionOpen': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5578515_1&course_id=_82534_1',
+    'accordionAppearance': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578516_1',
+    'contentAppearance': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578519_1'
+}*/
+
+
 var UPDATE_HTML = () => `
 <style>
 #gu_nopadding{
@@ -671,13 +755,13 @@ var OLD_INSTRUCTIONS = `
                 </h1>
             </header>
             <div class="p-2 md:p-4">
-                <p><a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578504_1">
+                <p><a target="_blank" href="${DOCUMENTATION_LINKS.whatWhy}">
                    Content Interface: what and why</a></p>
                <p>How to...</p>
                <ul id="gu_nopadding">
-                  <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578507_1">
+                  <li> <a target="_blank" href="${DOCUMENTATION_LINKS.setUp}">
                         set it up in Blackboard</a> </li>
-                  <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578508_1">
+                  <li> <a target="_blank" href="${DOCUMENTATION_LINKS.createModify}">
                         create and modify content</a> (an overview) </li>
               </ul>
 
@@ -689,28 +773,28 @@ var OLD_INSTRUCTIONS = `
         <article class="overlow-hidden rounded-lg shadow-lg h-full">
             <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
                 <h1 class="text-lg">
-                  Create <a href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1">
+                  Create <a href="${DOCUMENTATION_LINKS.createText}">
                     text content</a>
                 </h1>
             </header>
             <div class="p-2 md:p-4">
     <ul id="gu_nopadding">
-       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#2">
+       <li> <a target="_blank" href="${DOCUMENTATION_LINKS.normalText}">
             normal text content</a> 
        </li>
-       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#3">
+       <li> <a target="_blank" href="${DOCUMENTATION_LINKS.headings}">
             headings</a> 
        </li>
-       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#4">
+       <li> <a target="_blank" href="${DOCUMENTATION_LINKS.tables}">
             tables</a> 
        </li>
-       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#5">
+       <li> <a target="_blank" href="${DOCUMENTATION_LINKS.quotes}">
             quotes</a> 
        </li>
-       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#6">
+       <li> <a target="_blank" href="${DOCUMENTATION_LINKS.referenceLists}">
             reference lists</a> 
        </li>
-       <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#7">
+       <li> <a target="_blank" href="${DOCUMENTATION_LINKS.footnotes}">
             footnotes</a> 
        </li>
     </ul>
@@ -722,20 +806,20 @@ var OLD_INSTRUCTIONS = `
         <article class="overlow-hidden rounded-lg shadow-lg h-full">
             <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
                 <h1 class="text-lg">
-                 Create <a href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1">web content</a>
+                 Create <a href="${DOCUMENTATION_LINKS.createWeb}">web content</a>
                 </h1>
             </header>
             <div class="p-2 md:p-4">
      <ul id="gu_nopadding">
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#2">
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.images}">
                  Images
             </a>
          </li>
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#3">
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.links}">
                Links
             </a>
          </li>
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#4">
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.embeds}">
                  Embedding videos and more
             </a>
          </li>
@@ -754,23 +838,23 @@ var OLD_INSTRUCTIONS = `
             </header>
             <div class="p-2 md:p-4">
      <ul id="gu_nopadding">
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#2">
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.activities}">
          Activities
             </a>
          </li>
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#3">
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.notes}">
          Notes
             </a>
          </li>
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#4">
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.readings}">
          Readings
             </a>
          </li>
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#5">
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.universityDates}">
          Trimester (university) dates
             </a>
          </li>
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#6">
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.filmWatching}">
          Film Watching Options
             </a>
          </li>
@@ -789,20 +873,20 @@ var OLD_INSTRUCTIONS = `
             <div class="p-2 md:p-4">
     How do you...   
      <ul id="gu_nopadding">
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1#2">
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.menuItem}">
            link to a Blackboard Menu item
             </a>
          </li>
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#3">
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.contentItem}">
            link to a Blackboard content item
             </a>
          </li>
          <li> 
-            use <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#4"> 
+            use <a target="_blank" href="${DOCUMENTATION_LINKS.reviewStatus}"> 
             review status</a>
          </li>
          <li> 
-            use <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#5"> 
+            use <a target="_blank" href="${DOCUMENTATION_LINKS.adaptiveRelease}"> 
             adaptive release</a>
          </li>
       </ul>
@@ -821,15 +905,15 @@ var OLD_INSTRUCTIONS = `
             <div class="p-2 md:p-4">
     How do you customise...   
      <ul id="gu_nopadding">
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?content_id=_5578515_1&course_id=_82534_1">
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.accordionOpen}">
               which accordion opens first
             </a>
          </li>
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578516_1">
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.accordionAppearance}">
              the accordion theme
             </a>
          </li>
-         <li> <a target="_blank" href="/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578519_1">
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.contentAppearance}">
               appearance of the content
             </a>
          </li>
