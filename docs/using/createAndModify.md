@@ -22,7 +22,7 @@ There are two methods you can use to complete this three-step process:
 1.   Entirely manual; or,
 2.   Semi-automated.
 
-Which you use depends on how you [set up the Content Interface](set%20up). Both are illustrated below.
+Which you use depends on how you [set up the Content Interface](/using/setup/). Both are illustrated below.
 
 ### The cost trade off
 
