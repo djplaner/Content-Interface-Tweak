@@ -2071,10 +2071,12 @@ function extractCardsFromContent(myCards) {
     //myCards.each(function (idx) {
     for (i=0; i<myCards.length; i++) {
         
-        jthis = myCards[i];
+        jthis = myCards[i]; // cards, h3 of item
+        // actually find the div.details item for the h3
+        //jthis = jQuery(jthis).parent().parent().find("div.details");
+        jthis = jQuery(jthis).parent().parent().find("div.vtbegenerated");
         
         // jQuery(this) - is the vtbgenerated div for a BbItem
-
         //------- check for any review status element
         // TODO this ain't right.  This is the wrong element, but jthis?
         // What does this actually do?
@@ -2084,8 +2086,8 @@ function extractCardsFromContent(myCards) {
         // vtbegenerated_div is specific to Blackboard.
         // But it also appears to change all <p> with a class to div with 
         // the match class, hence the not[class] selector
-        jQuery(jthis).children('div.vtbegenerated_div,div:not([class=""])').replaceWith(
-            function(){
+        jQuery(jthis).children('div.vtbegenerated_div,div:not([class=""])'
+                  ).replaceWith( function(){
                 return jQuery("<p />", {html: jQuery(this).html()});
             }
         );
@@ -2154,8 +2156,8 @@ function extractCardsFromContent(myCards) {
 
         // Grab the link that the card is pointing to
         // need to get back to the header which is up one div, a sibling, then span
-        //var header = jQuery(jthis).parent().siblings(".item").find("span")[2];
-        var header = jQuery(jthis).find("span")[2];
+        var header = jQuery(jthis).parent().siblings(".item").find("span")[2];
+        //var header = jQuery(jthis).find("span")[2];
         var title = jQuery(header).html(), link, linkTarget = '';
         
         //--------------------------------
@@ -2821,70 +2823,45 @@ var TERM_DATES = {
 var TERM = "3191", YEAR = 2019, SET_DATE = "";
 var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+
 /****
- * addCardInterface( items )
+ * addCardInterface( items, place )
  * - Given an array of items to translate into cards add the HTML etc
  *   to generate the card interface
  * - Add the card interface to any item that has a title including
  *     "Card Interface:" with an optional title
  * 
- * ----- COPIED from cards.js and then
- * - add parameter location that tells it where the cards go
- * - 
- * 
+ * Changes made from cards.js to content.js
+ * - definition of cardInterface 
  */
 
-function addCardInterface(items, place) {
+function addCardInterface(items,place) {
 
-    /*console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-    console.log("ITEMS");
-    console.log(items);
-    console.log("PLACE");
-    console.log(place);*/
-
-    if (typeof items === "undefined") {
-        console.log("MAJOR ERROR - no items");
-        return;
-    }
     // Define which template to use 
-    // REVERSE what works in card. DEFAULT is no engage
-    var template = HORIZONTAL_NOENGAGE;
-    var engageVerb = 'Engage';
+    let template = HORIZONTAL;
+    let linkTemplate = HORIZONTAL;
+    let engageVerb = 'Engage';
 
     // Define the text for Review Status
-    var MARK_REVIEWED = "Mark Reviewed";
-    var REVIEWED = "Reviewed";
+    let MARK_REVIEWED = "Mark Reviewed";
+    let REVIEWED = "Reviewed";
+    let NO_CARD_NUMBER = false;
+    let NO_COMING_SOON = false;
 
     // get the content item with h3 heading containing Card Interface
-    var cardInterface = place;//jQuery(tweak_bb.page_id +" > "+tweak_bb.row_element).find(".item h3").filter(':contains("Card Interface")').eq(0);
-    // Support the idea of having a Bb item on the page that is the normal
-    // Card Interface item. It's used to pass 
-    var paramsCardInterface = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(".item h3").filter(':contains("Card Interface")').eq(0);
-    if (location.href.indexOf("listContent.jsp") > 0) {
-        jQuery(paramsCardInterface).parents("li").hide();
-    }
-    //console.log( paramsCarddCard Interface");
-    //console.log( cardInterface);
-
-    WIDTH = "md:w-1/3";
-    HIDE_IMAGES = false;
-    template = HORIZONTAL;
-
-    //if ( cardInterface.length === 0){
-    if (paramsCardInterface.length === 0) {
-        // console.log("Card: Can't find item with heading 'Card Interface' in //which to insert card interface");
-
-        //return false;
+    let cardInterface = place; /*jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(".item h3").filter( function(x) {
+            return this.innerText.toLowerCase().includes("card interface");
+        }
+        ).eq(0);*/
+    if (cardInterface.length === 0) {
+        console.log("Card: Can't find item with heading 'Card Interface' in which to insert card interface");
+        return false;
     } else {
         // get the title - text only, stripped of whitespace before/after
-        // **** CHECK PARAMETERS
-        // - replace this with something passed in from CI
-        //var cardInterfaceTitle= jQuery.trim(cardInterface.text());
-        var cardInterfaceTitle = jQuery.trim(paramsCardInterface.text());
-
+        var cardInterfaceTitle = jQuery.trim(cardInterface.text());
         //Extract parameters
         var m = cardInterfaceTitle.match(/Card Interface *([^<]*)/i);
-
+        var WIDTH = 'md:w-1/3';
         if (m) {
             newParams = parse_parameters(m[1]);
 
@@ -2896,7 +2873,11 @@ function addCardInterface(items, place) {
                         template = VERTICAL;
                     } else if (element.match(/template=['"]horizontal['"]/i)) {
                         template = HORIZONTAL;
-                    } else if (element.match(/noimages/)) {
+                    } else if ( element.match(/nocardnumber/i)) {
+                        NO_CARD_NUMBER = true;
+                    } else if ( element.match(/nocomingsoon/i)) {
+                        NO_COMING_SOON = true;
+                    } else if (element.match(/noimages/i)) {
                         HIDE_IMAGES = true;
                     } else if (x = element.match(/template=by([2-6])/i)) {
                         WIDTH = "md:w-1/" + x[1];
@@ -2906,12 +2887,12 @@ function addCardInterface(items, place) {
                         WIDTH = "md:w-full";
                     } else if (element.match(/people/i)) {
                         template = PEOPLE;
-                        /*} else if (element.match(/engage/i )) {
-                            template = HORIZONTAL;*/
+                    } else if (element.match(/noengage/i)) {
+                        linkTemplate = HORIZONTAL_NOENGAGE;
                     } else if (element.match(/logging/i)) {
                         LOGGING = true;
-                        /*} else if ( m = element.match(/engage=([^']*)/)) {
-                            engageVerb = m[1];*/
+                    } else if (m = element.match(/engage=([^']*)/)) {
+                        engageVerb = m[1];
                     } else if (m = element.match(/template=assessment/i)) {
                         template = ASSESSMENT;
                     } else if (m = element.match(/set[Dd]ate=([^\s]*)/)) {
@@ -2925,39 +2906,57 @@ function addCardInterface(items, place) {
             }
         } // if no match, stay with default
     }
+
     //  console.log("LOGGING IS " + LOGGING);
     // make the h3 for the Card Interface item disappear
     // (Can't hide the parent as then you can't edit via Bb)
     // Need to have the span in order to be able to reorder
-
     cardInterface.html('<span class="reorder editmode"></span>');
     // Get the content area in which to insert the HTML
-    //var firstItem = jQuery(cardInterface).prev();// CHANGED.parent().siblings(".details");
+    var firstItem = cardInterface.parent().siblings(".details");
 
     // Use the card HTML template and the data in items to generate
     // HTML for each card
     var cards = "";
-
+    var moduleNum = 1;
     items.forEach(function (idx) {
-        //************* added
-        if (typeof idx === "undefined") {
+        let cardHtml = cardHtmlTemplate[template];
+        let linkHtml = linkItemHtmlTemplate[linkTemplate];
 
-            // if we're editing, show missing card
-            if (LOCATION < 0) {
-                var text = NO_CARD_DEFINED.replace('{WIDTH}', WIDTH);
+        // coming soon
+        // By default comingSoon is empty
+        let comingSoon = ''
+        // TODO need to only display this if outside the date
+        if ( typeof(idx.comingSoon)!=="undefined" && ! NO_COMING_SOON ) {
+            if ( ! inDateRange( idx.comingSoon, false)) {
+                // we have coming soon and in the date range
+                // generate the html
+                comingSoon = generateDateHtml( comingSoonHtmlTemplate[template],
+                                dualComingSoonHtmlTemplate[template], 
+                                idx.comingSoon);
+                comingSoon = comingSoon.replace('{COMING_SOON_LABEL}', idx.comingSoonLabel);
 
-                cards = cards.concat(text);
-            }
-            return;
+                // if students are viewing remove the link stuff
+                if ( window.tweak_bb.display_view) { 
+                    // don't show an engage button 
+                    linkHtml='';
+                    // remove the clickableCard link and hover shadow 
+                    cardHtml = cardHtml.replace('clickablecard','').replace(
+                "hover:outline-none hover:shadow-outline ", ''
+                    );
+                }
+            } 
         }
-        //console.log("title " + idx.title)  ;
+        cardHtml = cardHtml.replace('{COMING_SOON}', comingSoon);
 
 
-        var cardHtml = cardHtmlTemplate[template];
+        // TODO either here, or above in the link section need to remove
+        // the link
         cardHtml = cardHtml.replace('{WIDTH}', WIDTH);
+
         // replace the default background colour if a different one
         // is specific
-        if (typeof idx.cardBGcolour !== "undefined") {
+        if (idx.cardBGcolour) {
             cardHtml = cardHtml.replace(/background-color:\s*rgb\(255,255,255\)/i, 'background-color: ' + idx.cardBGcolour);
         }
 
@@ -2989,25 +2988,35 @@ function addCardInterface(items, place) {
         // Only show module number if there's a label
         if (idx.label !== '') {
             var checkForNum = idx.moduleNum;
-            if (idx.moduleNum) {
+            if ( NO_CARD_NUMBER) {
+                // global setting not to show card numbers
+                cardHtml = cardHtml.replace('{MODULE_NUM}', '');
+                checkForNum = '';
+            } else if (idx.moduleNum) {
                 // if there's a hard coded moduleNum use that
                 cardHtml = cardHtml.replace('{MODULE_NUM}', idx.moduleNum);
             } else {
                 // use the one we're calculating
                 //cardHtml = cardHtml.replace('{MODULE_NUM}',moduleNum);
-                cardHtml = cardHtml.replace(/\{MODULE_NUM\}/g, MODULE_NUM);
-                checkForNum = MODULE_NUM;
+                cardHtml = cardHtml.replace(/\{MODULE_NUM\}/g, idx.moduleNum);
+                // checkForNum probably not required
+                checkForNum = idx.moduleNum;
             }
 
             // Update the title, check to see if it starts with label and 
             // moduleNum.  If it does, remove them from the title
             // So that the card doesn't duplicate it, but the information is 
             // still there in Blackboard
-            var regex = new RegExp('^' + idx.label + '\\s*' + checkForNum +
-                '\\s*[-:]*\\s*(.*)');
+            var regex = new RegExp('^' + idx.label.trim() + '\\s*' + checkForNum +
+                '\\s*[-:]*\\s*(.*)', "s");
+            //const regex = /^Week\s*1\s*[-:]*\s*(.*)/gs;
+            
             var m = idx.title.match(regex);
+            //var m = regex.test(idx.title);
             if (m) {
                 idx.title = m[1];
+                // kludge for COM14 which has a <br> after label in title
+                idx.title = idx.title.replace( /^<br\s*\/*>/i, '');
             }
         } else {
             cardHtml = cardHtml.replace('{MODULE_NUM}', '');
@@ -3025,10 +3034,11 @@ function addCardInterface(items, place) {
         if (idx.bgSize === 'contain') {
             cardHtml = cardHtml.replace(/{BG_SIZE}/,
                 'bg-contain bg-no-repeat bg-center');
-        } else { // if ( idx.bgSize === 'contain') 
+        } else {
             cardHtml = cardHtml.replace(/{BG_SIZE}/, 'bg-cover');
         }
 
+        // figure out which image we're going to show
         var picUrl = setImage(idx);
 
         // replace the {IMAGE_URL} variable if none set
@@ -3046,24 +3056,22 @@ function addCardInterface(items, place) {
         cardHtml = cardHtml.replace(/\{LEARNING_OUTCOMES\}/g, idx.assessmentOutcomes);
 
         // Get rid of some crud Bb inserts into the HTML
-        description = idx.description.replace(/<p/, '<p class="pb-2"');
+        description = idx.description.replace(/<p/g, '<p class="pb-2"');
         description = description.replace(/<a/g, '<a class="underline"');
         cardHtml = cardHtml.replace('{DESCRIPTION}', description);
         // Does the card link to another content item?
         //	    console.log( " template is " + template + " and H_E " + HORIZONTAL_NOENGAGE);
-        // console.log("title is " + idx.title + " LINK IS " + idx.link);
-
         if (idx.link) {
             // add the link
 
-            linkHtml = linkItemHtmlTemplate[template];
             linkHtml = linkHtml.replace('{ENGAGE}', engageVerb);
             cardHtml = cardHtml.replace('{LINK_ITEM}', linkHtml);
             // if there is a label and no hard coded moduleNum, 
             //  then increment the module number
-            if (idx.label !== "" && !idx.moduleNum) {
-                MODULE_NUM++;
-            }
+            // TENTATIVE
+  /*          if (idx.label !== "" && !idx.moduleNum) {
+                moduleNum++;
+            }*/
         } else {// if (template!==HORIZONTAL_NOENGAGE) {
             // remove the link, as there isn't one
             cardHtml = cardHtml.replace('{LINK_ITEM}', '');
@@ -3073,33 +3081,9 @@ function addCardInterface(items, place) {
             cardHtml = cardHtml.replace('hover:outline-none', '');
             cardHtml = cardHtml.replace('hover:shadow-outline', '');
             // don't count it as a module
-            cardHtml = cardHtml.replace(idx.label + ' ' + MODULE_NUM, '');
+          //  cardHtml = cardHtml.replace(idx.label + ' ' + moduleNum, '');
             //moduleNum--;
         }
-        /* OLD STUFF if ( typeof idx.link !== "undefined" ) {
-            // add the link
-            //console.log("ADDING LINKE to " + title);
-            linkHtml = linkItemHtmlTemplate[template];
-            linkHtml = linkHtml.replace( '{ENGAGE}',engageVerb);
-            cardHtml = cardHtml.replace('{LINK_ITEM}',linkHtml);
-            // if there is a label and no hard coded moduleNum, 
-            //  then increment the module number
-            if ( idx.label!=="" && ! idx.moduleNum) {
-              moduleNum++;
-            } 
-        } else {
-            //console.log(" REMOVING LINK ");
-            // remove the link, as there isn't one
-            cardHtml = cardHtml.replace('{LINK_ITEM}', '');
-            cardHtml = cardHtml.replace(/<a[^>]*href="[^"]*"[^>]*>/g,'');
-            cardHtml = cardHtml.replace('</a>','');
-            // remove the shadow/border effect
-            cardHtml = cardHtml.replace('hover:outline-none','');
-            cardHtml = cardHtml.replace('hover:shadow-outline', '');
-            // don't count it as a module
-            cardHtml = cardHtml.replace(idx.label + ' ' + moduleNum, '');
-            //moduleNum--;
-        } */
 
         // If there is a linkTarget in Blackboard
         if (typeof idx.linkTarget !== 'undefined') {
@@ -3107,95 +3091,187 @@ function addCardInterface(items, place) {
             cardHtml = cardHtml.replace(/"{LINK}"/g, '"{LINK}" target="' +
                 idx.linkTarget + '"');
         }
-        cardHtml = cardHtml.replace(/{LINK}/g, idx.link);
+
+        if (typeof idx.link !== 'undefined') {
+            cardHtml = cardHtml.replace(/{LINK}/g, idx.link);
+        } else {
+            cardHtml = cardHtml.replace(/<a href="{LINK}" class="cardmainlink">/g, '');
+            cardHtml = cardHtml.replace(/class="clickablecard /, 'class="');
+        }
 
         // Should we add a link to edit/view the original content
-        // But only if we were able to find the id
-        //console.log("Location is " + location);
-
-        if (location.href.indexOf("listContentEditable.jsp") > 0 &&
-            typeof idx.id !== "undefined") {
+        if (location.href.indexOf("listContentEditable.jsp") > 0) {
             editLink = editLinkTemplate.replace('{ID}', idx.id);
             cardHtml = cardHtml.replace(/{EDIT_ITEM}/, editLink);
         } else {
             //cardHtml = cardHtml.replace(/{EDIT_ITEM}/,'');
 
             //editLink = editLinkTemplate.replace('{ID}', idx.id);
-            /*editLink = '<div><a href="#hello">&nbsp;</a></div>';
-            cardHtml = cardHtml.replace(/{EDIT_ITEM}/, editLink );*/
-            cardHtml = cardHtml.replace(/{EDIT_ITEM}/, '&nbsp;');
+            editLink = '<div><a href="#hello">&nbsp;</a></div>';
+            cardHtml = cardHtml.replace(/{EDIT_ITEM}/, editLink);
         }
 
-        // If need add the date visualisation
-//        if (typeof idx.date.start.month !== "undefined") {
-            // Do we have dual dates - both start and stop?
-//            if (typeof idx.date.stop.month !== "undefined") {
-        //if (typeof(idx.date.start)!=='undefined' && 'month' in idx.date.start){
-        if (typeof(idx.date)!=="undefined" && typeof(idx.date.start)!=='undefined' && 'month' in idx.date.start) {
+        // standard date
+        let date = '';
+        date = generateDateHtml( dateHtmlTemplate[template], 
+                                dualDateHtmlTemplate[template], idx.date);
+        date = date.replace('{DATE_LABEL}', idx.dateLabel);
+        cardHtml = cardHtml.replace('{DATE}', date);
 
-            // Do we have dual dates - both start and stop? 
-            if (idx.date.stop.month) {
-                // start and stop dates
-                cardHtml = cardHtml.replace('{DATE}', dualDateHtmlTemplate[template]);
-                cardHtml = cardHtml.replace(/{MONTH_START}/g,
-                    idx.date.start.month);
-                cardHtml = cardHtml.replace(/{DATE_START}/g,
-                    idx.date.start.date);
-                cardHtml = cardHtml.replace(/{MONTH_STOP}/g,
-                    idx.date.stop.month);
-                cardHtml = cardHtml.replace(/{DATE_STOP}/g,
-                    idx.date.stop.date);
-                cardHtml = cardHtml.replace(/{DATE_LABEL}/g, idx.dateLabel);
-                //           console.log(idx.date);
-                if (!idx.date.start.hasOwnProperty('week')) {
-                    cardHtml = cardHtml.replace('{WEEK}', '');
-                } else {
-                    // if exam, use that template
-                    // other wise construct dual week
-                    var weekHtml = examPeriodTemplate;
-                    if (idx.date.start.week !== 'exam') {
-                        weekHtml = dualWeekHtmlTemplate.replace('{WEEK_START}',
-                            idx.date.start.week);
-                        weekHtml = weekHtml.replace('{WEEK_STOP}',
-                            idx.date.stop.week);
-                    }
-                    cardHtml = cardHtml.replace('{WEEK}', weekHtml);
-                }
-            } else {
-                // just start date
-                let weekHtml;
-                cardHtml = cardHtml.replace('{DATE}', dateHtmlTemplate[template]);
-                cardHtml = cardHtml.replace(/{MONTH}/g, idx.date.start.month);
-                cardHtml = cardHtml.replace(/{DATE}/g, idx.date.start.date);
-                cardHtml = cardHtml.replace(/{DATE_LABEL}/g, idx.dateLabel);
-                if (!idx.date.start.hasOwnProperty('week')) {
-                    cardHtml = cardHtml.replace('{WEEK}', '');
-                } else {
-                    weekHtml = weekHtmlTemplate.replace('{WEEK}', idx.date.start.week);
-                }
-                cardHtml = cardHtml.replace('{WEEK}', weekHtml);
-            }
-        } else {
-            // no dates at all
-            cardHtml = cardHtml.replace('{DATE}', '');
-        }
+
+        // add the individual card html to the collection
         cards = cards.concat(cardHtml);
     });
 
-    //console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
-    //console.log(cards);
     // STick the cards into the complete card HTML
     var interfaceHtml = interfaceHtmlTemplate[template];
     interfaceHtml = interfaceHtml.replace('{CARDS}', cards);
-
     // Insert the HTML to the selected item(s)
     //return false;
+    //jQuery(firstItem).append(interfaceHtml);
     jQuery(cardInterface).before(interfaceHtml);
-    // remove the vtbegenerated stuff to clean up card css??
-    //console.log(cardInterface);
-    //console.log(firstItem);
+}
 
+/** 
+ * @function generateDateHtml
+ * @params singleTemplate {String} HTML for a single date
+ * @params dualTemplate {String} HTML for a dual date
+ * @params date {Object} the date data structure
+ * @description parse the date object and use the correct template to 
+ * construct date html to be added to the card
+ */
 
+function generateDateHtml( singleTemplate, dualTemplate, date) { 
+    // by default no html
+    let cardHtml = '';
+
+    if (typeof(date)!=="undefined" && 
+           typeof(date.start)!=='undefined' && 'month' in date.start) { 
+           // Do we have dual dates - both start and stop? 
+           if (date.stop.month) {
+               // start and stop dates
+               //cardHtml = cardHtml.replace('{DATE}', dualDateHtmlTemplate[template]);
+               cardHtml = dualTemplate;
+               cardHtml = cardHtml.replace(/{MONTH_START}/g,
+                   date.start.month);
+               cardHtml = cardHtml.replace(/{DATE_START}/g,
+                   date.start.date);
+               cardHtml = cardHtml.replace(/{MONTH_STOP}/g,
+                   date.stop.month);
+               cardHtml = cardHtml.replace(/{DATE_STOP}/g,
+                   date.stop.date);
+//               cardHtml = cardHtml.replace(/{DATE_LABEL}/g, idx.dateLabel);
+               //           console.log(idx.date);
+               if (!date.start.hasOwnProperty('week')) {
+                   cardHtml = cardHtml.replace('{WEEK}', '');
+               } else {
+                   // if exam, use that template
+                   // other wise construct dual week
+                   let weekHtml = examPeriodTemplate;
+                   if (date.start.week !== 'exam') {
+                       weekHtml = dualWeekHtmlTemplate.replace('{WEEK_START}',
+                           date.start.week);
+                       weekHtml = weekHtml.replace('{WEEK_STOP}',
+                           date.stop.week);
+                   }
+                   cardHtml = cardHtml.replace('{WEEK}', weekHtml);
+               }
+           } else {
+               // just start date
+               //cardHtml = cardHtml.replace('{DATE}', dateHtmlTemplate[template]);
+               cardHtml = singleTemplate;
+               cardHtml = cardHtml.replace(/{MONTH}/g, date.start.month);
+               cardHtml = cardHtml.replace(/{DATE}/g, date.start.date);
+//                cardHtml = cardHtml.replace(/{DATE_LABEL}/g, idx.dateLabel);
+               if (!date.start.hasOwnProperty('week')) {
+                   cardHtml = cardHtml.replace('{WEEK}', '');
+               } else { // SKETCHY TODO change added block around else
+                   let weekReplace = "Week " + date.start.week;
+                   if ( date.start.hasOwnProperty('day')) {
+                       weekReplace = date.start.day + " " + weekReplace;
+                   }
+                   let weekHtml = weekHtmlTemplate.replace('{WEEK}', weekReplace); 
+                   cardHtml = cardHtml.replace('{WEEK}', weekHtml);
+               }
+           }
+       } 
+       return cardHtml;
+   }
+
+/**
+* @function inDateRange
+* @param cardDate {Object} card.date object
+* @param assumeStop {Boolean} true if assuming a stop date if one not specified
+* @returns {Boolean} true if the current time (or SET_DATE) is within the
+*                  date range
+*/
+
+function inDateRange( cardDate, assumeStop=true ) {
+    let month, year;
+
+   if ( typeof(cardDate) !== "undefined") {
+       let start, stop, now;
+       
+       // Set now to current date OR SET_DATE if we want to do testing
+       if (SET_DATE === "") {
+           now = new Date();
+       } else {
+           now = new Date(SET_DATE);
+       }
+
+       // set the start date
+       if (cardDate.start.hasOwnProperty('month') &&
+           cardDate.start.month !== "") {
+
+           start = new Date( //parseInt(DEFAULT_YEAR), 
+                   cardDate.start.year,
+                   //MONTHS.indexOf(card.date.start.month), 
+                   MONTHS_HASH[cardDate.start.month],
+                   parseInt(cardDate.start.date));
+       }
+       
+       // set the card stop date
+       // - to card.date.stop if valid
+       // - to the end of the week if using a week
+       // - to the end of the day if no stop
+       // TODO where using DEFAULT_YEAR, need to do a check if the month is
+       //  past the current month.  If it is, then use DEFAULT_YEAR+1
+       if (cardDate.stop.hasOwnProperty('month') &&
+           cardDate.stop.month !== '') {
+           //stop = new Date(DEFAULT_YEAR, MONTHS_HASH[cardDate.stop.month], cardDate.stop.date);
+           stop = new Date(cardDate.stop.year, MONTHS_HASH[cardDate.stop.month], cardDate.stop.date);
+           stop.setHours(23, 59, 0);
+       } else if (cardDate.start.hasOwnProperty('week') &&
+               cardDate.start.week !=='') {
+           // there's no end date, but there is a start week
+           // so set stop to end of that week, but only if inWeek is true
+           if ( cardDate.start.week in TERM_DATES[TERM]) {
+               if (assumeStop) {
+                   stop = new Date(TERM_DATES[TERM][cardDate.start.week].stop);
+                   stop.setHours(23, 59, 0);
+               }
+           } else {
+             // problem with week, just set it to end of date
+             if (typeof(start)!=="undefined" && assumeStop) {
+               stop = new Date(start.getTime());
+               stop.setHours(23, 59, 0);
+             }
+           }
+/*        } else { // no week for stop, meaning it's just on the day
+           stop = new Date(start.getTime());
+           stop.setHours(23, 59, 0); */
+       }
+
+       // figure out if we're in range
+       if (typeof(stop)!=="undefined") {
+           // if stop defined, check in range
+           return (now >= start && now <= stop);
+       } else {
+           // check passed start
+           return ( now>=start );
+       }        
+   }
+   return false;
 }
 
 
