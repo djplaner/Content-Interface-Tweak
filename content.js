@@ -2093,16 +2093,6 @@ function handleCardDate(param) {
     return date;
 }                
 
-/**
- * @function handleComingSoon
- * @param {description} String
- * @description Calcualte the data for coming soon, same process as card date
- */
-
- function handleComingSoon( description ) {
-
- }
-
 // Given some HTML, remove all the HTML code, trim and return the text
 
 function cleanTrimHtml(html) {
@@ -2195,7 +2185,7 @@ function extractCardsFromContent(myCards) {
         
     // Loop through each card and construct the items array with card data
     //myCards.each(function (idx) {
-    for (i=0; i<myCards.length; i++) {
+    for (let i=0; i<myCards.length; i++) {
         
         jthis = myCards[i]; // cards, h3 of item
         // actually find the div.details item for the h3
@@ -2233,7 +2223,7 @@ function extractCardsFromContent(myCards) {
         // tmp variables used to hold results before putting into single card object
         let bgSize = "", dateLabel="Commencing", picUrl, cardBGcolour;
         let label = DEFAULT_CARD_LABEL, activePicUrl = "", number="&nbsp;", iframe="";
-        let date;
+        let date, comingSoon, comingSoonLabel="Available";
         let assessmentType = "", assessmentWeighting = "", assessmentOutcomes = "";
         
         for ( let index in cardMetaData) {
@@ -2255,6 +2245,12 @@ function extractCardsFromContent(myCards) {
                     break; 
                 case "card date label": 
                     dateLabel=cardMetaData[index]; 
+                    break;
+                case "card coming soon": 
+                    comingSoon=handleCardDate(cardMetaData[index]); 
+                    break; 
+                case "card coming soon label": 
+                    comingSoonLabel=cardMetaData[index]; 
                     break;
                 case "assessment type": 
                     assessmentType=cardMetaData[index]; 
@@ -2334,6 +2330,7 @@ function extractCardsFromContent(myCards) {
             link: link, linkTarget: linkTarget,
             review: review,
             dateLabel: dateLabel, id: itemId, activePicUrl: activePicUrl,
+            comingSoon: comingSoon, comingSoonLabel: comingSoonLabel,
             assessmentWeighting: assessmentWeighting,
             assessmentOutcomes: assessmentOutcomes,
             assessmentType: assessmentType
@@ -3492,17 +3489,20 @@ cardHtmlTemplate[HORIZONTAL] = `
        <div class="{BG_SIZE} h-48" style="background-image: url('{PIC_URL}');
        background-color: rgb(255,255,255)">{IFRAME}
        </div>
-       <div class="carddescription p-4 flex-1 flex flex-col text-black">
+       {COMING_SOON}
+       <div class="carddescription p-4 flex-1 flex flex-col">
+         <span class="cardLabel">
          {LABEL} {MODULE_NUM}
+         </span>
          <h3 class="mb-4 text-2xl">{TITLE}</h3>
-         <div class="mb-4 flex-1 text-black">
+         <div class="mb-4 flex-1">
            {DESCRIPTION}
            
          </div>
           
           {LINK_ITEM}
           {REVIEW_ITEM}
-          {EDIT_ITEM}
+        <!--  {EDIT_ITEM} -->
           {DATE} 
        </div>
      </div>
@@ -3519,12 +3519,13 @@ cardHtmlTemplate[VERTICAL] = `
      <div class="p-2 m-2 lg:flex md:w-1/5 lg:w-1/5 sm:w-full">
          <h3>{TITLE}</h3>
      </div>
+     {COMING_SOON}
      <div class="carddescription m-2 p-2 lg:flex-initial md:w-1/2 lg:w-1/2 sm:w-full">
        <p class="text-grey-darker text-base">
          {DESCRIPTION} 
        </p>
        {LINK_ITEM}
-       {EDIT_ITEM}
+    <!--   {EDIT_ITEM} -->
      </div>
  </div>
  </a>
@@ -3552,24 +3553,28 @@ cardHtmlTemplate[VERTICAL] = `
 `;*/
 
 cardHtmlTemplate[HORIZONTAL_NOENGAGE] = `
-   <div class="w-full sm:w-1/2 {WIDTH} flex flex-col p-3">
-     <div class="hover:outline-none hover:shadow-outline bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col relative"> <!-- Relative could go -->
-       <a href="{LINK}" class="no-underline" style="text-decoration:none"><div class="bg-cover bg-yellow-lightest h-48" style="background-image: url('{PIC_URL}');">{IFRAME}</div></a>
-       <div class="p-4 flex-1 flex flex-col">
-        <a href="{LINK}" class="no-underline" style="text-decoration:none; color: #000000 !important">
-         {LABEL} {MODULE_NUM}
-         <h3 class="mb-4 text-2xl text-black">{TITLE}</h3>
-         <div class="carddescription mb-4 flex-1 text-black">
-           {DESCRIPTION}
-         </div>
-         </a>
-          {DATE} 
-          {LINK_ITEM}
-          {REVIEW_ITEM}
-          {EDIT_ITEM}
-       </div>
-     </div>
-   </div>
+<div class="clickablecard w-full sm:w-1/2 {WIDTH} flex flex-col p-3">
+<div class="hover:outline-none hover:shadow-outline bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col relative"> <!-- Relative could go -->
+<a href="{LINK}" class="cardmainlink"></a>
+  <div class="{BG_SIZE} h-48" style="background-image: url('{PIC_URL}');">
+      {IFRAME}
+  </div>
+  {COMING_SOON}
+  <div class="p-4 flex-1 flex flex-col">
+    <span class="cardLabel"> 
+    {LABEL} {MODULE_NUM}
+    </span>
+    <h3 class="mb-4 text-2xl">{TITLE}</h3>
+    <div class="carddescription mb-4 flex-1">
+      {DESCRIPTION}
+    </div>
+     {DATE} 
+     {LINK_ITEM}
+     {REVIEW_ITEM}
+     <!-- {EDIT_ITEM} -->
+  </div>
+</div>
+</div>
  `;
 
 // TODO - this might not be a better fit as something not a template?
@@ -3595,7 +3600,7 @@ cardHtmlTemplate[PEOPLE] = `
          </div>
          </a>
           {LINK_ITEM}
-          {EDIT_ITEM}
+  <!--        {EDIT_ITEM} -->
           {DATE} 
        </div>
      </div>
@@ -3618,6 +3623,7 @@ cardHtmlTemplate[ASSESSMENT] = `
          
      </div>
      <div class="m-2">&nbsp;</div>
+     {COMING_SOON}
      <div class="carddescription m-2">
            <div class="mb-4">
              <h3 class="font-bold">{TITLE}</h3>
@@ -3628,7 +3634,7 @@ cardHtmlTemplate[ASSESSMENT] = `
            {DESCRIPTION}
            
            {LINK_ITEM}
-           {EDIT_ITEM}
+       <!--    {EDIT_ITEM} -->
            
      </div>
  </div>
