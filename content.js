@@ -268,6 +268,19 @@ function contentInterface($) {
         }
     });
 
+    // replace all <div class="vtbegenerated" with <p
+    // *%&^$ Bb change to editor
+//    jQuery('#GU_ContentInterface div.vtbegenerated_div,div:not([class=""])'
+/*    var counterL = 0;
+    jQuery("#GU_ContentInterface").children('div.vtbegenerated_div'
+        ).replaceWith( function(){ 
+            console.log(`${counterL} replacing ${jQuery(this).html()}`);
+            counterL+=1;
+            let fred = jQuery("<p />", {html: jQuery(this).html()}); 
+            console.log(`now it is ${fred}`);
+            console.log(fred);
+            return fred;
+        });*/
 
     // check for any spans class checkbox and replace with checkbox
     jQuery("#GU_ContentInterface span.checkbox").each(function (idx) {
@@ -602,6 +615,10 @@ const DOCUMENTATION_LINKS = {
     'contentItem': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#indirect-link-to-content-item-blackboard-content-link',
     'reviewStatus': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#integrating-the-blackboard-review-status-feature',
     'adaptiveRelease': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#using-the-adaptive-release-function',
+    // -- add cards
+    'cardsWhat': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/',
+    'cardsList': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/',
+    'cardsItems:': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/',
 
     // customise
     'accordionOpen': 'https://djplaner.github.io/Content-Interface-Tweak/customising/accordionOpening/',
@@ -653,7 +670,7 @@ const DOCUMENTATION_LINKS = {
 
 var UPDATE_HTML = () => `
 <style>
-#gu_nopadding{
+.gu_nopadding{
     padding-left: 1em;
     margin-top: 0;
 }
@@ -759,7 +776,7 @@ var OLD_INSTRUCTIONS = `
                 <p><a target="_blank" href="${DOCUMENTATION_LINKS.whatWhy}">
                    Content Interface: what and why</a></p>
                <p>How to...</p>
-               <ul id="gu_nopadding">
+               <ul class="gu_nopadding">
                   <li> <a target="_blank" href="${DOCUMENTATION_LINKS.setUp}">
                         set it up in Blackboard</a> </li>
                   <li> <a target="_blank" href="${DOCUMENTATION_LINKS.createModify}">
@@ -779,7 +796,7 @@ var OLD_INSTRUCTIONS = `
                 </h1>
             </header>
             <div class="p-2 md:p-4">
-    <ul id="gu_nopadding">
+    <ul class="gu_nopadding">
        <li> <a target="_blank" href="${DOCUMENTATION_LINKS.normalText}">
             normal text content</a> 
        </li>
@@ -811,7 +828,7 @@ var OLD_INSTRUCTIONS = `
                 </h1>
             </header>
             <div class="p-2 md:p-4">
-     <ul id="gu_nopadding">
+     <ul class="gu_nopadding">
          <li> <a target="_blank" href="${DOCUMENTATION_LINKS.images}">
                  Images
             </a>
@@ -838,7 +855,7 @@ var OLD_INSTRUCTIONS = `
                 </h1>
             </header>
             <div class="p-2 md:p-4">
-     <ul id="gu_nopadding">
+     <ul class="gu_nopadding">
          <li> <a target="_blank" href="${DOCUMENTATION_LINKS.activities}">
          Activities
             </a>
@@ -873,7 +890,7 @@ var OLD_INSTRUCTIONS = `
             </header>
             <div class="p-2 md:p-4">
     How do you...   
-     <ul id="gu_nopadding">
+     <ul class="gu_nopadding">
          <li> <a target="_blank" href="${DOCUMENTATION_LINKS.menuItem}">
            link to a Blackboard Menu item
             </a>
@@ -891,6 +908,15 @@ var OLD_INSTRUCTIONS = `
             adaptive release</a>
          </li>
       </ul>
+      <i class="fa fa-plus-square text-green"></i> Add Card Interface...
+      <ul class="gu_nopadding">
+        <li> <a target="_blank" href="${DOCUMENTATION_LINKS.cardsWhat}">What and why?</a>
+        </li>
+        <li> <a target="_blank" href="${DOCUMENTATION_LINKS.cardsList}">Add card list to Word</a>
+        </li>
+        <li> <a target="_blank" href="${DOCUMENTATION_LINKS.cardsItems}">Add card items to Blackboard</a>
+        </li>
+        </u
             </div>
         </article>
     </div>
@@ -905,7 +931,7 @@ var OLD_INSTRUCTIONS = `
             </header>
             <div class="p-2 md:p-4">
     How do you customise...   
-     <ul id="gu_nopadding">
+     <ul class="gu_nopadding">
          <li> <a target="_blank" href="${DOCUMENTATION_LINKS.accordionOpen}">
               which accordion opens first
             </a>
@@ -3960,7 +3986,7 @@ function handleUniversityDate() {
     if (m) {
         day = m[1];
         week = m[m.length - 1];
-        date = getTermDate(week, day);
+        date = getTermDateContent(week, day);
 
         if (typeof date === "undefined"){
             return false;
