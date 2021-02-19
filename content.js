@@ -270,17 +270,10 @@ function contentInterface($) {
 
     // replace all <div class="vtbegenerated" with <p
     // *%&^$ Bb change to editor
-//    jQuery('#GU_ContentInterface div.vtbegenerated_div,div:not([class=""])'
-/*    var counterL = 0;
-    jQuery("#GU_ContentInterface").children('div.vtbegenerated_div'
+    jQuery("#GU_ContentInterface").find('div.vtbegenerated_div'
         ).replaceWith( function(){ 
-            console.log(`${counterL} replacing ${jQuery(this).html()}`);
-            counterL+=1;
-            let fred = jQuery("<p />", {html: jQuery(this).html()}); 
-            console.log(`now it is ${fred}`);
-            console.log(fred);
-            return fred;
-        });*/
+            return jQuery("<p />", {html: jQuery(this).html()}); 
+        });
 
     // check for any spans class checkbox and replace with checkbox
     jQuery("#GU_ContentInterface span.checkbox").each(function (idx) {
@@ -386,7 +379,6 @@ function contentInterface($) {
         // if active is true, then we're opening an accordion
         // thus save which one it is
         let active = this.classList.contains("ui-state-active");
-        console.log(this);
 
         if (active) {
             let hrefId = getHrefId( window.location.href );
