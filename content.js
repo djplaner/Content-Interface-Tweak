@@ -858,7 +858,7 @@ var OLD_INSTRUCTIONS = `
             </a>
          </li>
          <li> <i class="fa fa-plus-square text-green" aria-hidden="true"></i>
-         <a target="_blank" href="${DOCUMENTATION_LINKS.aside}">
+         <a target="_blank" href="${DOCUMENTATION_LINKS.asides}"> 
          Asides
             </a>
          </li>
