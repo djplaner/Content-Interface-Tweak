@@ -7,9 +7,9 @@
 
 The Content Interface is designed to help with the creation and maintenance of learning materials for University courses. Consequently, the Content Interface offers functionality to help support learning in University courses. The following table provides a summary of that functionality with the following sections offering more detail.
 
-<table><tbody><tr><td><p><strong>Label</strong></p></td><td><p><strong>Description</strong></p></td></tr><tr><td><p>Readings</p></td><td><p>Visually distinguish descriptions of readings learners should undertake.</p></td></tr><tr><td><p>Activities</p></td><td><p>Visually distinguish activities learners should perform.</p></td></tr><tr><td><p>Note</p></td><td><p>Visually distinguish important information that learners should take note of. </p></td></tr><tr><td><p>University Dates</p></td><td><p>Enable the automatic insertion of a specific date into generic date descriptions -  e.g. <em>Monday, Week 5 </em>becomes <em>Monday, Week 5 (20 August, 2020)</em> – based on the trimester or study period for the specific course site.</p></td></tr><tr><td><p>Film Watching Options</p></td><td><p>Automatically translate the name of a film into specific instructions for how learners may watch the film.</p></td></tr></tbody></table>
+<table><tbody><tr><td><p><strong>Label</strong></p></td><td><p><strong>Description</strong></p></td></tr><tr><td><p>Readings</p></td><td><p>Visually distinguish descriptions of readings learners should undertake.</p></td></tr><tr><td><p>Activities</p></td><td><p>Visually distinguish activities learners should perform.</p></td></tr><tr><td><p>Note</p></td><td><p>Visually distinguish important information that learners should take note of. </p></td></tr><tr><td><p>Aside</p></td><td><p>Represent information that is indirectly related to the main content. A slightly toned down version of <em>Note</em>.</p></td></tr><tr><td><p>University Dates</p></td><td><p>Enable the automatic insertion of a specific date into generic date descriptions -  e.g. <em>Monday, Week 5 </em>becomes <em>Monday, Week 5 (20 August, 2020)</em> – based on the trimester or study period for the specific course site.</p></td></tr><tr><td><p>Film Watching Options</p></td><td><p>Automatically translate the name of a film into specific instructions for how learners may watch the film.</p></td></tr></tbody></table>
 
-## Activities
+## Activity
 
 An activity will be displayed on the web in a way different to a reading. However, you specify an activity much the same way. Create the text and then apply the _Activity_ style to it. As seen below, the _Activity_ style has a different background colour (blue) to highlight the different style.
 
@@ -17,13 +17,19 @@ An activity will be displayed on the web in a way different to a reading. Howeve
 
 <div class="activity"><div class="activityImage"></div><div class="instructions"><p>This is an example of an activity. If you bring up the “styles” or “Apply Styles” window in Word, when you click on this paragraph you should see that it’s an <em>Activity</em> style.</p></div></div>
 
-## Notes
+## Note
 
 Any text that has the _Note_ style applied will appear currently in a quite obvious warning box when displayed online (and yellow background when displayed in Word). This approach has already been used in this guide to highlight important points
 
 <div class="ael-note"><div class="noteImage"></div><div class="instructions"><p><strong>Don’t over use notes</strong></p><p>There is probably a danger of overuse of the note style.</p></div></div>
 
-## Readings
+## Aside
+
+The _Note_ style can be a little extreme for some purposes. Sometimes you just want to add something that is indirectly related to the content. Useful to highlight but not a warning. A purpose that fits the _Aside_ style.
+
+<aside>The aside style serves the same purpose as (and uses) the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/aside">HTML &lt;aside&gt;<em> </em>element</a>.</aside>
+
+## Reading
 
 If you want to have something appear as a reading that is clearly separate from the rest of the text then apply the _Reading_ style. As I’ve done with the following content. Not the different background colour that is part of the _Reading_ style. This change in colour is used to more clearly indicate what is or is not a reading.
 

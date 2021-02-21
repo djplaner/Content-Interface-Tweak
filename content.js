@@ -595,9 +595,10 @@ const DOCUMENTATION_LINKS = {
 
     // create university content
     'createUniversity': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/',
-    'activities': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#activities',
-    'notes': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#notes',
-    'readings': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#readings',
+    'activities': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#activity',
+    'notes': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#note',
+    'asides': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#aside',
+    'readings': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#reading',
     'universityDates': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#university-dates',
     'filmWatching': 'https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#film-watch-options',
 
@@ -854,6 +855,11 @@ var OLD_INSTRUCTIONS = `
          </li>
          <li> <a target="_blank" href="${DOCUMENTATION_LINKS.notes}">
          Notes
+            </a>
+         </li>
+         <li> <i class="fa fa-plus-square text-green" aria-hidden="true"></i>
+         <a target="_blank" href="${DOCUMENTATION_LINKS.aside}">
+         Asides
             </a>
          </li>
          <li> <a target="_blank" href="${DOCUMENTATION_LINKS.readings}">

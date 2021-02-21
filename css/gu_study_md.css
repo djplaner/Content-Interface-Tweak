@@ -658,3 +658,11 @@ color: #FFFFFF !important; }
   }
   
 }  
+
+
+aside {
+  margin: 2em;
+  background-color: lightgray;
+  padding: .5em;
+  font-style: italic;
+}

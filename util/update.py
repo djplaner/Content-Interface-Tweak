@@ -31,6 +31,7 @@ STYLE_MAP = """
      p[style-name='Quotations'] => blockquote:fresh
      p[style-name='Quotation'] => blockquote:fresh
      p[style-name='Body Text'] => p:fresh
+     p[style-name='Aside'] => aside
      p[style-name='Text'] => p:fresh
      p[style-name='Default'] => p:fresh
      p[style-name='Normal (Web)'] => p:fresh

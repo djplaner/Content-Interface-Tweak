@@ -667,6 +667,12 @@ color: #FFFFFF !important; }
   overflow: hidden;
 }
 
+#GU_ContentInterface aside {
+  margin: 2em;
+  background-color: lightgray;
+  padding: .5em;
+  font-style: italic;
+}
 
 #GU_ContentInterface .exampleCentered {
   text-align: center;
