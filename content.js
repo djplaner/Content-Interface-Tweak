@@ -906,7 +906,7 @@ var OLD_INSTRUCTIONS = `
             adaptive release</a>
          </li>
       </ul>
-      <i class="fa fa-plus-square text-green"></i> Add Card Interface...
+<!--      <i class="fa fa-plus-square text-green"></i> Add Card Interface...
       <ul class="gu_nopadding">
         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.cardsWhat}">What and why?</a>
         </li>
@@ -914,7 +914,7 @@ var OLD_INSTRUCTIONS = `
         </li>
         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.cardsItems}">Add card items to Blackboard</a>
         </li>
-        </u
+        </ul> -->
             </div>
         </article>
     </div>
