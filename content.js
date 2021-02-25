@@ -7,7 +7,7 @@
  */
 
 // Default dates
-var TERM = "3211", YEAR = 2021;
+//var TERM = "3211", YEAR = 2021;
 var DEFAULT_YEAR=2021;
 
 const DEFAULT_CARD_LABEL="Module";
@@ -2624,41 +2624,15 @@ function identifyPicUrl(value) {
 //   start of that week
 // ** this is a version for cards, works slightly differently
 
-/*function getTermDate(week, startWeek = true) {
-    //console.log("TERM is " + TERM + " week is " + week);
-    var date = { date: "", month: "", week: week };
-    if ((week < 0) || (week > 15)) {
-        if (week !== 'exam') {
-            return date;
-        }
-    }
-    var start;
-    if (startWeek === true) {
-        // setting start week
-        if (typeof TERM_DATES[TERM][week] !== 'undefined') {
-            start = TERM_DATES[TERM][week].start;//[week].start;
-        }
-    } else {
-        start = TERM_DATES[TERM][week].stop;
-    }
-    //console.log(" Starting date " + start);
-    var d = new Date(start);
-    date.month = MONTHS[d.getMonth()];
-    date.date = d.getDate();
-
-    return date;
-}*/
-
-
 function getTermDate(week, startWeek = true, dayOfWeek = 'Monday') {
 
     if ( typeof TERM_DATES[TERM]==='undefined') {
-        return undefined;
+        return { date: undefined, date: undefined, year: undefined};
     }
 
     dayOfWeek = dayOfWeek.toLowerCase();
     //console.log("TERM is " + TERM + " week is " + week);
-    var date = { date: "", month: "", week: week, year: 0 };
+    let date = { date: "", month: "", week: week, year: 0 };
     if ((week < 0) || (week > 15)) {
         if (week !== 'exam') {
             return date;
@@ -3106,7 +3080,7 @@ var TERM_DATES = {
 
 };
 
-var TERM = "3191", YEAR = 2019, SET_DATE = "";
+var TERM = "3211", YEAR = 2021, SET_DATE = "";
 var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const MONTHS_HASH = {
@@ -3517,7 +3491,97 @@ function generateDateHtml( singleTemplate, dualTemplate, date) {
 *                  date range
 */
 
+
 function inDateRange( cardDate, assumeStop=true ) {
+
+    if ( typeof(cardDate) !== "undefined") {
+        let start, stop, now;
+        
+        // Set now to current date OR SET_DATE if we want to do testing
+        if (SET_DATE === "") {
+            now = new Date();
+        } else {
+            now = new Date(SET_DATE);
+        }
+
+        // set the start date
+        if (cardDate.start.hasOwnProperty('month') &&
+            cardDate.start.month !== "") {
+
+            start = convertToDate( cardDate.start );
+        }
+        
+        // set the card stop date
+        // - to card.date.stop if valid
+        // - to the end of the week if using a week
+        // - to the end of the day if no stop
+        if (cardDate.stop.hasOwnProperty('month') &&
+            cardDate.stop.month !== '') {
+            if ( cardDate.stop.time==="") {
+                cardDate.stop.time="23:59";
+            }
+            stop = convertToDate( cardDate.stop );
+        } else if (cardDate.start.hasOwnProperty('week') &&
+                cardDate.start.week !=='') {
+            // there's no end date, but there is a start week
+            // so set stop to end of that week, but only if inWeek is true
+            if ( cardDate.start.week in TERM_DATES[TERM]) {
+                if (assumeStop) {
+                    stop = new Date(TERM_DATES[TERM][cardDate.start.week].stop);
+                    stop.setHours(23, 59, 0);
+                }
+            } else {
+              // problem with week, just set it to end of date
+              if (typeof(start)!=="undefined" && assumeStop) {
+                stop = new Date(start.getTime());
+                stop.setHours(23, 59, 0);
+              }
+            }
+/*        } else { // no week for stop, meaning it's just on the day
+            stop = new Date(start.getTime());
+            stop.setHours(23, 59, 0); */
+        }
+
+        // figure out if we're in range
+        if (typeof(stop)!=="undefined") {
+            // if stop defined, check in range
+            return (now >= start && now <= stop);
+        } else {
+            // check passed start
+            return ( now>=start );
+        }        
+    }
+    return false;
+ }
+
+  /**
+  * @function convertToDate
+  * @param {Object} dateObj
+  * @returns {Date} Javascript date object
+  * Converts the simple date object into a Javascript date object
+  */
+
+ function convertToDate( dateObj) { 
+
+    // check for valid month??
+    let date = new Date( dateObj.year, MONTHS_HASH[dateObj.month],
+                        parseInt(dateObj.date));
+
+    // if time set time
+    if ( dateObj.hasOwnProperty('time') && dateObj.time !=="") { 
+        // split into hours minutes
+        let m = dateObj.time.match(/^\s*([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])\s+/ );
+
+        if (m) {
+            date.setHours(m[1], m[2], 0);
+        }
+    }
+    return date;
+        
+  }
+
+
+/*function inDateRange( cardDate, assumeStop=true ) {
     let month, year;
 
    if ( typeof(cardDate) !== "undefined") {
@@ -3571,9 +3635,9 @@ function inDateRange( cardDate, assumeStop=true ) {
                stop.setHours(23, 59, 0);
              }
            }
-/*        } else { // no week for stop, meaning it's just on the day
-           stop = new Date(start.getTime());
-           stop.setHours(23, 59, 0); */
+//        } else { // no week for stop, meaning it's just on the day
+  //         stop = new Date(start.getTime());
+ //          stop.setHours(23, 59, 0); 
        }
 
        // figure out if we're in range
@@ -3586,7 +3650,7 @@ function inDateRange( cardDate, assumeStop=true ) {
        }        
    }
    return false;
-}
+} */
 
 
 // Interface design from https://codepen.io/njs/pen/BVdwZB
@@ -4210,7 +4274,7 @@ function calculateTerm() {
             if (mm) {
                 YEAR = 20 + mm[1];
             } else {
-                YEAR = 2019;
+                YEAR = DEFAULT_YEAR;
             }
         } else {
             // check for a normal GU course
@@ -4227,7 +4291,7 @@ function calculateTerm() {
                 if (mm) {
                     YEAR = 20 + mm[1];
                 } else {
-                    YEAR = 2019;
+                    YEAR = DEFAULT_YEAR;
                 }
             } else {
                 breakIdRe = new RegExp('^([0-9]+[A-Z]+)_([0-9][0-9][0-9][0-9])$');
@@ -4242,7 +4306,7 @@ function calculateTerm() {
                     if (mm) {
                         YEAR = 20 + mm[1];
                     } else {
-                        YEAR = 2019;
+                        YEAR = DEFAULT_YEAR;
                     }
                 }
             }
