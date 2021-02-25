@@ -2020,7 +2020,7 @@ function handleCardImageSize(param) {
 //          Card Date: Mon Week 5
 // TODO it needs to set year
 
-function handleCardDate(param) {
+/*function handleCardDate(param) {
     let month, endMonth, endDate, week = "", endWeek = "";
     let empty1 = { date: "", week: "" };
     let empty2 = { date: "", week: "" };
@@ -2045,7 +2045,7 @@ function handleCardDate(param) {
         // Handle the day of a semester week 
         // start date becomes start of week + number of days in
         m = param.match(
-            /^\s*\b(((mon|tues|wed(nes)?|thur(s)?|fri|sat(ur)?|sun)(day)?))\b\s*week *([0-9]*)\s*$/i);
+            /^\s*\b(((mon|tues|wed(nes)?|thu|thur(s)?|fri|sat(ur)?|sun)(day)?))\b\s*week *([0-9]*)\s*$/i);
         if (m) {
             day = m[1];
             week = m[m.length - 1];
@@ -2065,7 +2065,7 @@ function handleCardDate(param) {
                 }
             } else {
                 // Fall back to check for exam period
-                m = param.match(/ *exam *(period)*/i);
+                m = param.match(/ *exam *(period)* /i);
                 if (m) {
                     date.start = getTermDate('exam');
                     date.stop = getTermDate('exam', false);
@@ -2074,7 +2074,112 @@ function handleCardDate(param) {
         }
     }
     return date;
-}                
+}                */
+
+
+function handleCardDate(param) {
+    let empty1 = { date: "", week: "" };
+    let empty2 = { date: "", week: "" };
+    let date = { start: empty1, stop: empty2 }; // object to return 
+
+    param = param.replace( /<[^>]+>/, '');
+
+    // is it a range (i.e. contain a -)
+    let m = param.match(/^(.*)-(.*)$/);
+
+    if (m) {
+        // get first date and break it down
+        date.start = parseDate( m[1]);
+        // get second date and break it down
+        // TODO Week 3-5 results in m[2] being just 5 (need to add week)
+        // m[2]==int then add week
+
+        date.stop = parseDate(m[2].trim());
+//        if ( /^\+?(0|[1-9]\d*)$/.test(m[2].trim()) ) {
+ //           m[2] = "Week ".concat(m[2].trim());
+  //      }
+   //     date.stop = parseDate(m[2]);
+        if ( date.stop.time===""){
+            date.stop.time="23:59";
+        }
+    } else { // not a range
+        // get the date and break it down
+        date.start = parseDate(param);
+    }
+    // if no time defined, set the default (midnight)
+    if ( date.start.time==="") {
+        date.start.time="0:01";
+    }
+    return date;
+}
+
+/**
+ * @function parseDate
+ * @param {String} param 
+ * @returns {Object} date
+ * @description Convert string date - (HH:MM) (Week 1) (Mar 25) into date
+ */
+
+function parseDate(param) {
+    let date = {}; // object to return 
+    let time = "";
+
+    // check for a time at the start of the date and save it away
+    //  then add it at the end
+    // HH:MM 24-hour format, optional leading 0, but with whitespace at end
+    const regex = /\s*([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]\s*$/;
+    let m = param.match(regex);
+
+    if (m) {
+        // save the time
+        time = m[0];
+        // remove time from param
+        param = param.replace(regex, '');
+    }
+    // a number by itself is the scond part of a week period
+    // add week
+    if ( /^\+?(0|[1-9]\d*)$/.test(param) ) { 
+        param = "Week ".concat(param);
+    }
+
+    // is it a week of trimester
+    m = param.match(/^\s*week\s*([0-9]*)/i);
+    if (m) { 
+        week = m[1];
+        date = getTermDate(week);
+    } else {
+        // does it have a day of week
+        // start date becomes start of week + number of days in
+        m = param.match(
+            /^\s*\b(((mon|tues|wed(nes)?|thu|thur(s)?|fri|sat(ur)?|sun)(day)?))\b\s*week *([0-9]*)\s*$/i);
+        if (m) {
+            day = m[1];
+            week = m[m.length - 1];
+            date = getTermDate(week, true, day);
+        } else {
+            // is it the an actual date
+            m = param.match(/ *([a-z]+) ([0-9]+)/i);
+            if (m) { 
+                date = { month: m[1], date: m[2], year: DEFAULT_YEAR };
+            } 
+            //else {
+                // Fall back to check for exam period
+            //   m = param.match(/ *exam *(period)*/i);
+            //   if (m) {
+            //       date.start = getTermDate('exam');
+            //       date.stop = getTermDate('exam', false);
+            //    }
+           // }
+        }
+    }
+    if ( time!=='') {
+        date.time = time;
+    } else {
+        date.time = "";
+    }
+
+    return date;
+}
 
 // Given some HTML, remove all the HTML code, trim and return the text
 
@@ -2175,14 +2280,14 @@ function extractCardsFromContent(myCards) {
             // add the missing card thing
             let missingItem = {
                 title: "Unable to find card", 
-                picUrl: "https://media.giphy.com/media/13ywPzPJdfhmBG/giphy.gif", 
+                picUrl: "https://assets.prestashop2.com/sites/default/files/styles/blog_750x320/public/blog/2019/10/banner_error_404.jpg?itok=eAS4swln", 
                 bgSize: "",
                 cardBGcolour: "",
                 description: "<p>The card name does not match any item.</p>", 
                 date: { "start": {}, "stop": {} }, 
                 label: "", //"Missing Card",
-                link: undefined, linkTarget: "",
-                review: "",
+                link: undefined, linkTarget: undefined,
+                review: undefined,
                 dateLabel: "", id: "", activePicUrl: "",
                 comingSoon: "", comingSoonLabel: "",
                 assessmentWeighting: "",
@@ -2519,7 +2624,7 @@ function identifyPicUrl(value) {
 //   start of that week
 // ** this is a version for cards, works slightly differently
 
-function getTermDate(week, startWeek = true) {
+/*function getTermDate(week, startWeek = true) {
     //console.log("TERM is " + TERM + " week is " + week);
     var date = { date: "", month: "", week: week };
     if ((week < 0) || (week > 15)) {
@@ -2542,7 +2647,54 @@ function getTermDate(week, startWeek = true) {
     date.date = d.getDate();
 
     return date;
+}*/
+
+
+function getTermDate(week, startWeek = true, dayOfWeek = 'Monday') {
+
+    if ( typeof TERM_DATES[TERM]==='undefined') {
+        return undefined;
+    }
+
+    dayOfWeek = dayOfWeek.toLowerCase();
+    //console.log("TERM is " + TERM + " week is " + week);
+    var date = { date: "", month: "", week: week, year: 0 };
+    if ((week < 0) || (week > 15)) {
+        if (week !== 'exam') {
+            return date;
+        }
+    }
+    var start;
+    if (startWeek === true) {
+        // setting start week
+        if (typeof TERM_DATES[TERM][week] !== 'undefined') {
+            start = TERM_DATES[TERM][week].start;//[week].start;
+        }
+    } else {
+        start = TERM_DATES[TERM][week].stop;
+    }
+    var d = new Date(start);
+
+    // if dayOfWeek is not Monday, add some days
+    if ( dayOfWeek !== 'monday') {
+        var dayToNum = { 'tuesday' : 1, 'tue': 1,
+            'wednesday': 2, 'wed': 2, 'thursday':3, 'thu': 3,
+            'friday':4, 'fri': 4, 'saturday': 5, 'sat': 5,
+            'sunday': 6, 'sun': 6};
+        // add in the day abbreviation so it can appear
+        date.day = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.substr(1,2);
+        if ( dayOfWeek in dayToNum ) { 
+            d.setDate( d.getDate() + dayToNum[dayOfWeek.toLowerCase()]);
+        }
+    }
+
+    date.month = MONTHS[d.getMonth()];
+    date.date = d.getDate();
+    date.year = d.getFullYear();
+
+    return date;
 }
+
 
 
 var TERM_DATES = {
@@ -3250,7 +3402,7 @@ function addCardInterface(items,place) {
                 idx.linkTarget + '"');
         }
 
-        if (typeof idx.link !== 'undefined') {
+        if (typeof( idx.link) !== 'undefined') {
             cardHtml = cardHtml.replace(/{LINK}/g, idx.link);
         } else {
             cardHtml = cardHtml.replace(/<a href="{LINK}" class="cardmainlink">/g, '');
@@ -3347,6 +3499,7 @@ function generateDateHtml( singleTemplate, dualTemplate, date) {
                         let weekReplace = "Week " + date.start.week;
                         if ( date.start.hasOwnProperty('day')) {
                             weekReplace = date.start.day + " " + weekReplace;
+                            weekReplace = `<small>${weekReplace}</small>`;
                         }
                         let weekHtml = weekHtmlTemplate.replace('{WEEK}', weekReplace); 
                         cardHtml = cardHtml.replace('{WEEK}', weekHtml);
