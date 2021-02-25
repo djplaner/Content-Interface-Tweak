@@ -7,7 +7,8 @@
  */
 
 // Default dates
-var TERM = "3191", YEAR = 2019;
+var TERM = "3211", YEAR = 2021;
+var DEFAULT_YEAR=2021;
 
 const DEFAULT_CARD_LABEL="Module";
 
@@ -619,48 +620,6 @@ const DOCUMENTATION_LINKS = {
     'contentAppearance': 'https://djplaner.github.io/Content-Interface-Tweak/customising/contentAppearance/'
 };
 
-/*const BLACKBOARD_DOCUMENTATION_LINKS = {
-    // Getting started
-    'whatWhy': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578504_1',
-    'setUp': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578507_1',
-    'createModify': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578508_1',
-    // create text
-    'createText': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1',
-    'normalText': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#2',
-    'headings': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#3',
-    'tables': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#4',
-    'quotes': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#5',
-    'referenceLists': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#6',
-    'footnotes': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578509_1#7',
-
-    // create web content
-    'createWeb': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1',
-    'images': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#2',
-    'links': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#3',
-    'embeds': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578512_1#4',
-
-    // create university content
-    'createUniversity': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#2',
-    'activities': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#2',
-    'notes': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#3',
-    'readings': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#4',
-    'universityDates': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#5',
-    'filmWatching': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578513_1#6',
-
-    // create/use Blackboard content
-    'createBlackboard': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1#2',
-    'menuItem': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1#2',
-    'contentItem': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#3',
-    'reviewStatus': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#4',
-    'adaptiveRelease': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578514_1&mode=reset#5',
-
-    // customise
-    'accordionOpen': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?content_id=_5578515_1&course_id=_82534_1',
-    'accordionAppearance': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578516_1',
-    'contentAppearance': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_82534_1&content_id=_5578519_1'
-}*/
-
-
 var UPDATE_HTML = () => `
 <style>
 .gu_nopadding{
@@ -674,9 +633,9 @@ var UPDATE_HTML = () => `
         <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
             <article class="overlow-hidden rounded-lg shadow-lg h-full">
                 <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
-                    <h1 class="text-lg">
+                    <h4>
                       How to update the content
-                    </h1>
+                    </h4>
                 </header>
                 <div class="p-2 md:p-4">
                 ${HOW_TO}
@@ -687,10 +646,10 @@ var UPDATE_HTML = () => `
         <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
             <article class="overlow-hidden rounded-lg shadow-lg h-full">
                 <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
-                    <h1 class="text-lg">
+                    <h4>
                             <i class="fa fa-exclamation-triangle text-red"></i>
                             No changes to this item
-                    </h1>
+                    </h4>
                 </header>
                 <div class="p-2 md:p-4">
                     <p>Any changes to this item will stop the Content Interface from working.</p>
@@ -701,10 +660,10 @@ var UPDATE_HTML = () => `
         <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
             <article class="overlow-hidden rounded-lg shadow-lg h-full">
                 <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
-                    <h1 class="text-lg">
+                    <h4>
                             <i class="fa fa-exclamation-triangle text-red"></i>
                             Do not hide this item
-                    </h1>
+                    </h4>
                 </header>
                 <div class="p-2 md:p-4">
                    <p>If you make this item unavailable to students, the Content Interface will not work for them.</p>
@@ -720,13 +679,13 @@ var UPDATE_HTML = () => `
 
 
 var WORD_DOC_PRESENT = `
- <ol>
+ <ol style="padding-left:1em; margin-left:0">
    <li> Make any changes to the Content document, either <a id="gu_doc" target="_blank" href="http://griffith.edu.au">online</a> or directly.</li>
    <li>  Click the green button to <button style="background-color: #4CAF50; border: none; color: white; padding: 5px 5px; text-align: center; text-decoration: none; display: inline-block; border-radius: 12px" type="button" id="guUpdate">Update Content Interface</button>  </li>
    </ol>
  `;
 
-var WORD_DOC_NOT_PRESENT = `<ol>
+var WORD_DOC_NOT_PRESENT = `<ol style="padding-left:1em; margin-left:0">
  <li>Make any change in the matching Word document.</li>
  <li><a href="https://djon.es/gu/mammoth.js/browser-demo/" target="_blank" rel="noreferrer noopener">Convert the Word document into HTML</a>.</li>
  <li>Copy and paste the HTML into {EDIT_CONTENT_ITEM}. <br />
@@ -734,7 +693,7 @@ var WORD_DOC_NOT_PRESENT = `<ol>
  </li>
  </ol>
  <p>To semi-automate this process, you can:</p>
- <ol>
+ <ol style="padding-left:1em; margin-left:0">
    <li> Share the Word document via OneDrive or Sharepoint and copy the share URL.<br />(<a href="https://support.office.com/en-us/article/share-a-document-using-sharepoint-or-onedrive-807de6cf-1ece-41b9-a2b3-250d9a48f1e8">How to share a document using SharePoint or OneDrive</a>) </li>
    <li> Create a <em>Web Link</em> item on this page using the name <em>Content Document</em> and the URL as the shared URL created in the first step.<br />(<a href="https://help.blackboard.com/Learn/Instructor/Course_Content/Create_Content/Create_Course_Materials/Link_to_Websites">How to create a Web Link item in Blackboard</a>) </li>
  </ol>
@@ -761,15 +720,15 @@ var OLD_INSTRUCTIONS = `
     <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
         <article class="overlow-hidden rounded-lg shadow-lg h-full">
             <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
-                <h1 class="text-lg">
+                <h4>
                         Get started
-                </h1>
+                </h4>
             </header>
             <div class="p-2 md:p-4">
                 <p><a target="_blank" href="${DOCUMENTATION_LINKS.whatWhy}">
                    Content Interface: what and why</a></p>
                <p>How to...</p>
-               <ul class="gu_nopadding">
+               <ul style="padding-left: 1em; margin-left:0">
                   <li> <a target="_blank" href="${DOCUMENTATION_LINKS.setUp}">
                         set it up in Blackboard</a> </li>
                   <li> <a target="_blank" href="${DOCUMENTATION_LINKS.createModify}">
@@ -783,13 +742,13 @@ var OLD_INSTRUCTIONS = `
     <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
         <article class="overlow-hidden rounded-lg shadow-lg h-full">
             <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
-                <h1 class="text-lg">
+                <h4>
                   Create <a href="${DOCUMENTATION_LINKS.createText}">
                     text content</a>
-                </h1>
+                </h4>
             </header>
             <div class="p-2 md:p-4">
-    <ul class="gu_nopadding">
+    <ul style="padding-left: 1em; margin-left:0">
        <li> <a target="_blank" href="${DOCUMENTATION_LINKS.normalText}">
             normal text content</a> 
        </li>
@@ -816,12 +775,12 @@ var OLD_INSTRUCTIONS = `
     <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
         <article class="overlow-hidden rounded-lg shadow-lg h-full">
             <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
-                <h1 class="text-lg">
+                <h4>
                  Create <a href="${DOCUMENTATION_LINKS.createWeb}">web content</a>
-                </h1>
+                </h4>
             </header>
             <div class="p-2 md:p-4">
-     <ul class="gu_nopadding">
+     <ul style="padding-left: 1em; margin-left:0">
          <li> <a target="_blank" href="${DOCUMENTATION_LINKS.images}">
                  Images
             </a>
@@ -843,12 +802,12 @@ var OLD_INSTRUCTIONS = `
     <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
         <article class="overlow-hidden rounded-lg shadow-lg h-full">
             <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
-                <h1 class="text-lg">
+                <h4>
                  Create University content
-                </h1>
+                </h4>
             </header>
             <div class="p-2 md:p-4">
-     <ul class="gu_nopadding">
+     <ul style="padding-left: 1em; margin-left:0">
          <li> <a target="_blank" href="${DOCUMENTATION_LINKS.activities}">
          Activities
             </a>
@@ -882,13 +841,13 @@ var OLD_INSTRUCTIONS = `
     <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
         <article class="overlow-hidden rounded-lg shadow-lg h-full">
             <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
-                <h1 class="text-lg">
+                <h4>
                   Use Blackboard items and features
-                </h1>
+                </h4>
             </header>
             <div class="p-2 md:p-4">
     How do you...   
-     <ul class="gu_nopadding">
+     <ul style="padding-left: 1em; margin-left:0">
          <li> <a target="_blank" href="${DOCUMENTATION_LINKS.menuItem}">
            link to a Blackboard Menu item
             </a>
@@ -906,15 +865,15 @@ var OLD_INSTRUCTIONS = `
             adaptive release</a>
          </li>
       </ul>
-<!--      <i class="fa fa-plus-square text-green"></i> Add Card Interface...
-      <ul class="gu_nopadding">
+      <i class="fa fa-plus-square text-green"></i> How to link to Blackboard content items with cards...
+      <ul style="padding-left: 1em; margin-left:0">
         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.cardsWhat}">What and why?</a>
         </li>
         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.cardsList}">Add card list to Word</a>
         </li>
         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.cardsItems}">Add card items to Blackboard</a>
         </li>
-        </ul> -->
+        </ul>
             </div>
         </article>
     </div>
@@ -923,13 +882,13 @@ var OLD_INSTRUCTIONS = `
     <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
         <article class="overlow-hidden rounded-lg shadow-lg h-full">
             <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
-                <h1 class="text-lg">
+                <h4>
                  Customise the interface
-                </h1>
+                </h4>
             </header>
             <div class="p-2 md:p-4">
     How do you customise...   
-     <ul class="gu_nopadding">
+     <ul style="padding-left: 1em; margin-left:0">
          <li> <a target="_blank" href="${DOCUMENTATION_LINKS.accordionOpen}">
               which accordion opens first
             </a>
@@ -2211,10 +2170,35 @@ function extractCardsFromContent(myCards) {
     //myCards.each(function (idx) {
     for (let i=0; i<myCards.length; i++) {
         
+        // oops didn't find that card
+        if ( typeof(myCards[i])==="undefined"){
+            // add the missing card thing
+            let missingItem = {
+                title: "Unable to find card", 
+                picUrl: "https://media.giphy.com/media/13ywPzPJdfhmBG/giphy.gif", 
+                bgSize: "",
+                cardBGcolour: "",
+                description: "<p>The card name does not match any item.</p>", 
+                date: { "start": {}, "stop": {} }, 
+                label: "", //"Missing Card",
+                link: undefined, linkTarget: "",
+                review: "",
+                dateLabel: "", id: "", activePicUrl: "",
+                comingSoon: "", comingSoonLabel: "",
+                assessmentWeighting: "",
+                assessmentOutcomes: "",
+                assessmentType: ""
+            }; 
+            items.push(missingItem);
+            continue;
+
+            
+        }
         jthis = myCards[i]; // cards, h3 of item
         // actually find the div.details item for the h3
         //jthis = jQuery(jthis).parent().parent().find("div.details");
         jthis = jQuery(jthis).parent().parent().find("div.vtbegenerated");
+
         
         // jQuery(this) - is the vtbgenerated div for a BbItem
         //------- check for any review status element
@@ -2231,11 +2215,13 @@ function extractCardsFromContent(myCards) {
                 return jQuery("<p />", {html: jQuery(this).html()});
             }
         );
-        var description = jQuery(jthis).html();
+        let description = jQuery(jthis).html();
 
-        // - get rid of any &nbsp; inserted by Bb
-        description = description.replace(/&nbsp;/gi, ' ');
-        description = description.replace(/\n/gi, '');
+        if ( typeof(description)!=="undefined")  { 
+            // - get rid of any &nbsp; inserted by Bb 
+            description = description.replace(/&nbsp;/gi, ' '); 
+            description = description.replace(/\n/gi, '');
+        }
 
         // extract all the possible meta data
         let cardMetaData = extractCardMetaData(jthis);
@@ -3233,7 +3219,7 @@ function addCardInterface(items,place) {
         cardHtml = cardHtml.replace('{DESCRIPTION}', description);
         // Does the card link to another content item?
         //	    console.log( " template is " + template + " and H_E " + HORIZONTAL_NOENGAGE);
-        if (idx.link) {
+        if (typeof(idx.link)!=="undefined") {
             // add the link
 
             linkHtml = linkHtml.replace('{ENGAGE}', engageVerb);
@@ -3392,7 +3378,8 @@ function inDateRange( cardDate, assumeStop=true ) {
        }
 
        // set the start date
-       if (cardDate.start.hasOwnProperty('month') &&
+       if ( typeof(cardDate.start)!== "undefined" &&
+           cardDate.start.hasOwnProperty('month') &&
            cardDate.start.month !== "") {
 
            start = new Date( //parseInt(DEFAULT_YEAR), 
@@ -3408,12 +3395,14 @@ function inDateRange( cardDate, assumeStop=true ) {
        // - to the end of the day if no stop
        // TODO where using DEFAULT_YEAR, need to do a check if the month is
        //  past the current month.  If it is, then use DEFAULT_YEAR+1
-       if (cardDate.stop.hasOwnProperty('month') &&
+       if (typeof(cardDate.stop)!=="undefined" &&
+           cardDate.stop.hasOwnProperty('month') &&
            cardDate.stop.month !== '') {
            //stop = new Date(DEFAULT_YEAR, MONTHS_HASH[cardDate.stop.month], cardDate.stop.date);
            stop = new Date(cardDate.stop.year, MONTHS_HASH[cardDate.stop.month], cardDate.stop.date);
            stop.setHours(23, 59, 0);
-       } else if (cardDate.start.hasOwnProperty('week') &&
+       } else if ( typeof(cardDate.start)!=="undefined" &&
+           cardDate.start.hasOwnProperty('week') &&
                cardDate.start.week !=='') {
            // there's no end date, but there is a start week
            // so set stop to end of that week, but only if inWeek is true
@@ -4507,7 +4496,10 @@ const PRINT_URLS = {
 //com12/a3business_report.pdf'
 'id82005156960701' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EaVSj-UdBBBCruHAYa7yuSwBn2pUT7_SfcdGEhb7kxYYnA?e=xgp94w",
 //com12/assessmentresources.pdf'
-'id82005156960761' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EfbbHGlX41dKlGvqevLCFwMBJ0Hsbg8w2iJXRGjpy_kFHA?e=4nfk2o"
+'id82005156960761' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EfbbHGlX41dKlGvqevLCFwMBJ0Hsbg8w2iJXRGjpy_kFHA?e=4nfk2o",
+//****************CWR110 SP1 */
+//TODO need to update destination
+'id90727159775441' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EYqSw3pi_XZAkt6TSX5H9VIBl4ZWtH-iN_OcUMuYmqzWkA?e=yx58Gu"
 
 };
 

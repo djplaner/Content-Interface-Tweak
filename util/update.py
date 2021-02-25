@@ -119,6 +119,10 @@ PAGES = [
         "DESTINATION" : r"%s\\creating\\blackboardContent.md" % DESTINATION
     }, 
     {
+        "SOURCE" : r"%s\\Creating - Blackboard\\add card interface.docx" % SOURCE,
+        "DESTINATION" : r"%s\\creating\\addCards.md" % DESTINATION
+    }, 
+    {
         "SOURCE" : r"%s\\Customising - Accordion opening\\content.docx" % SOURCE,
         "DESTINATION" : r"%s\\customising\\accordionOpening.md" % DESTINATION
     }, 
