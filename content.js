@@ -3416,6 +3416,47 @@ function addCardInterface(items,place) {
     jQuery(cardInterface).before(interfaceHtml);
 }
 
+
+/**
+ * @function to12
+ * @param {String} t 24 hour 
+ * @returns {String} time converted to 12 hour with am/pm
+ */
+
+function to12( t) {
+
+    if (typeof(t)==="undefined") {
+        return "";
+    }
+     // break home and set hh, m
+    const regex = /^\s*([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])\s*/;
+    let m = t.match(regex);
+
+    // we have a 24 hour time, convert it
+    if (m) { 
+        let h, hh, mins, dd="AM";            
+        hh=parseInt(m[1]);
+        mins=parseInt(m[2]);
+
+        h=hh; 
+        // set PM 
+        if (h>=12) { 
+            h = hh-12;
+            dd="PM"; 
+        } 
+        if (h==0) { 
+            h=12; 
+        }
+        if (mins<10) {
+            mins = `0${mins}`;
+        }
+        return `${h}:${mins} ${dd}`;
+    }
+    // not a 24 hour time show nothing
+    return "";
+ }
+
+
 /** 
  * @function generateDateHtml
  * @params singleTemplate {String} HTML for a single date
@@ -3426,61 +3467,63 @@ function addCardInterface(items,place) {
  */
 
 function generateDateHtml( singleTemplate, dualTemplate, date) { 
-         // by default no html
-         let cardHtml = '';
+    // by default no html
+    let cardHtml = '';
 
-         if (typeof(date)!=="undefined" && 
-                typeof(date.start)!=='undefined' && 'month' in date.start) { 
-                // Do we have dual dates - both start and stop? 
-                if (date.stop.month) {
-                    // start and stop dates
-                    //cardHtml = cardHtml.replace('{DATE}', dualDateHtmlTemplate[template]);
-                    cardHtml = dualTemplate;
-                    cardHtml = cardHtml.replace(/{MONTH_START}/g,
-                        date.start.month);
-                    cardHtml = cardHtml.replace(/{DATE_START}/g,
-                        date.start.date);
-                    cardHtml = cardHtml.replace(/{MONTH_STOP}/g,
-                        date.stop.month);
-                    cardHtml = cardHtml.replace(/{DATE_STOP}/g,
-                        date.stop.date);
-     //               cardHtml = cardHtml.replace(/{DATE_LABEL}/g, idx.dateLabel);
-                    //           console.log(idx.date);
-                    if (!date.start.hasOwnProperty('week')) {
-                        cardHtml = cardHtml.replace('{WEEK}', '');
-                    } else {
-                        // if exam, use that template
-                        // other wise construct dual week
-                        let weekHtml = examPeriodTemplate;
-                        if (date.start.week !== 'exam') {
-                            weekHtml = dualWeekHtmlTemplate.replace('{WEEK_START}',
-                                date.start.week);
-                            weekHtml = weekHtml.replace('{WEEK_STOP}',
-                                date.stop.week);
-                        }
-                        cardHtml = cardHtml.replace('{WEEK}', weekHtml);
-                    }
-                } else {
-                    // just start date
-                    //cardHtml = cardHtml.replace('{DATE}', dateHtmlTemplate[template]);
-                    cardHtml = singleTemplate;
-                    cardHtml = cardHtml.replace(/{MONTH}/g, date.start.month);
-                    cardHtml = cardHtml.replace(/{DATE}/g, date.start.date);
-    //                cardHtml = cardHtml.replace(/{DATE_LABEL}/g, idx.dateLabel);
-                    if (!date.start.hasOwnProperty('week')) {
-                        cardHtml = cardHtml.replace('{WEEK}', '');
-                    } else { // SKETCHY TODO change added block around else
-                        let weekReplace = "Week " + date.start.week;
-                        if ( date.start.hasOwnProperty('day')) {
-                            weekReplace = date.start.day + " " + weekReplace;
-                            weekReplace = `<small>${weekReplace}</small>`;
-                        }
-                        let weekHtml = weekHtmlTemplate.replace('{WEEK}', weekReplace); 
-                        cardHtml = cardHtml.replace('{WEEK}', weekHtml);
-                    }
-                }
-            } 
-            return cardHtml;
+    if (typeof(date)!=="undefined" && 
+           typeof(date.start)!=='undefined' && 'month' in date.start) { 
+           // Do we have dual dates - both start and stop? 
+           if (date.stop.month) {
+               // start and stop dates
+               //cardHtml = cardHtml.replace('{DATE}', dualDateHtmlTemplate[template]);
+               cardHtml = dualTemplate;
+               cardHtml = cardHtml.replace(/{MONTH_START}/g,
+                   date.start.month);
+               cardHtml = cardHtml.replace(/{DATE_START}/g,
+                   date.start.date);
+               cardHtml = cardHtml.replace(/{MONTH_STOP}/g,
+                   date.stop.month);
+               cardHtml = cardHtml.replace(/{DATE_STOP}/g,
+                   date.stop.date);
+               cardHtml = cardHtml.replace(/{TIME_STOP}/g,
+                   to12(date.stop.time));
+               cardHtml = cardHtml.replace(/{TIME_START}/g,
+                   to12(date.start.time));
+               if (!date.start.hasOwnProperty('week')) {
+                   cardHtml = cardHtml.replace('{WEEK}', '');
+               } else {
+                   // if exam, use that template
+                   // other wise construct dual week
+                   let weekHtml = examPeriodTemplate;
+                   if (date.start.week !== 'exam') {
+                       weekHtml = dualWeekHtmlTemplate.replace('{WEEK_START}',
+                           date.start.week);
+                       weekHtml = weekHtml.replace('{WEEK_STOP}',
+                           date.stop.week);
+                   }
+                   cardHtml = cardHtml.replace('{WEEK}', weekHtml);
+               }
+           } else {
+               // just start date
+               //cardHtml = cardHtml.replace('{DATE}', dateHtmlTemplate[template]);
+               cardHtml = singleTemplate;
+               cardHtml = cardHtml.replace(/{MONTH}/g, date.start.month);
+               cardHtml = cardHtml.replace(/{DATE}/g, date.start.date);
+               cardHtml = cardHtml.replace(/{TIME}/g, to12(date.start.time));
+//                cardHtml = cardHtml.replace(/{DATE_LABEL}/g, idx.dateLabel);
+               if (!date.start.hasOwnProperty('week')) {
+                   cardHtml = cardHtml.replace('{WEEK}', '');
+               } else { // SKETCHY TODO change added block around else
+                   let weekReplace = "Week " + date.start.week;
+                   if ( date.start.hasOwnProperty('day')) {
+                       weekReplace = date.start.day + " " + weekReplace;
+                   }
+                   let weekHtml = weekHtmlTemplate.replace('{WEEK}', weekReplace); 
+                   cardHtml = cardHtml.replace('{WEEK}', weekHtml);
+               }
+           }
+       } 
+       return cardHtml;
    }
 
 /**
@@ -4026,7 +4069,7 @@ var comingSoonHtmlTemplate = Array(NUM_TEMPLATES);
 comingSoonHtmlTemplate[HORIZONTAL]=`
 <div class="cardComingSoon p-4 flex bg-yellow-light"> 
     <span>🚧</span>&nbsp;
-    <span>{COMING_SOON_LABEL} {MONTH} {DATE}</span>
+    <span>{COMING_SOON_LABEL} {MONTH} {DATE} ({TIME})</span>
 </div>
 `;
 comingSoonHtmlTemplate[HORIZONTAL_NOENGAGE] = comingSoonHtmlTemplate[HORIZONTAL];
@@ -4038,7 +4081,7 @@ var dualComingSoonHtmlTemplate = Array(NUM_TEMPLATES);
 dualComingSoonHtmlTemplate[HORIZONTAL]=`
 <div class="cardComingSoon p-4 flex bg-yellow-light"> 
     <span>🚧</span>&nbsp;
-    <span>{COMING_SOON_LABEL} {MONTH_START} {DATE_START}-{MONTH_STOP} {DATE_STOP}</span>
+    <span>{COMING_SOON_LABEL} {MONTH_START} {DATE_START} ({TIME_START})-{MONTH_STOP} {DATE_STOP} ({TIME_STOP})</span>
 </div>
 `;
 dualComingSoonHtmlTemplate[HORIZONTAL_NOENGAGE] = dualComingSoonHtmlTemplate[HORIZONTAL];
