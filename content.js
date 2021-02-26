@@ -616,7 +616,8 @@ const DOCUMENTATION_LINKS = {
     // customise
     'accordionOpen': 'https://djplaner.github.io/Content-Interface-Tweak/customising/accordionOpening/',
     'accordionAppearance': 'https://djplaner.github.io/Content-Interface-Tweak/customising/accordionAppearance/',
-    'contentAppearance': 'https://djplaner.github.io/Content-Interface-Tweak/customising/contentAppearance/'
+    'contentAppearance': 'https://djplaner.github.io/Content-Interface-Tweak/customising/contentAppearance/',
+    'providePDF': 'https://djplaner.github.io/Content-Interface-Tweak/customising/contentAppearance/'
 };
 
 var UPDATE_HTML = () => `
@@ -900,6 +901,9 @@ var OLD_INSTRUCTIONS = `
          </li>
 
       </ul>
+      <p><i class="fa fa-plus-square text-green"></i> 
+          Provide <a target="_blank" href="${DOCUMENTATION_LINKS.providePDF}">content as a PDF file</a>
+      </p>
             </div>
         </article>
     </div>
