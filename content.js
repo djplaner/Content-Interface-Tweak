@@ -2020,63 +2020,6 @@ function handleCardImageSize(param) {
 //          Card Date: Mon Week 5
 // TODO it needs to set year
 
-/*function handleCardDate(param) {
-    let month, endMonth, endDate, week = "", endWeek = "";
-    let empty1 = { date: "", week: "" };
-    let empty2 = { date: "", week: "" };
-    let date = { start: empty1, stop: empty2 }; // object to return 
-    // date by griffith week    
-
-    // try to extract week number first
-    //m = param.match(/^\s*week\s*([0-9]*)\s*$/i);
-    m = param.match(/^\s*week\s*([0-9]*)/i);
-    if (m) {
-        // check to see if a range was specified
-        x = param.match(/\s*week\s*([0-9]*)-([0-9]*)\s*$/i);
-        if (x) {
-            week = x[1];
-            endWeek = x[2];
-            date.stop = getTermDate(endWeek, false);
-        } else {
-            week = m[1];
-        }
-        date.start = getTermDate(week);
-    } else {
-        // Handle the day of a semester week 
-        // start date becomes start of week + number of days in
-        m = param.match(
-            /^\s*\b(((mon|tues|wed(nes)?|thu|thur(s)?|fri|sat(ur)?|sun)(day)?))\b\s*week *([0-9]*)\s*$/i);
-        if (m) {
-            day = m[1];
-            week = m[m.length - 1];
-            date.start = getTermDate(week, true, day);
-        } else {
-            // TODO need to handle range here 
-            m = param.match(/ *([a-z]+) ([0-9]+)/i);
-            if (m) {
-                x = param.match(/ *([a-z]+) ([0-9]+)-+([a-z]+) ([0-9]+)/i);
-                // TODO is this where DEFAULT_YEAR might need to be incremented??
-                // Or do that originally 
-                if (x) {
-                    date.start = { month: x[1], date: x[2], year: DEFAULT_YEAR };
-                    date.stop = { month: x[3], date: x[4], year: DEFAULT_YEAR };
-                } else {
-                    date.start = { month: m[1], date: m[2], year: DEFAULT_YEAR };
-                }
-            } else {
-                // Fall back to check for exam period
-                m = param.match(/ *exam *(period)* /i);
-                if (m) {
-                    date.start = getTermDate('exam');
-                    date.stop = getTermDate('exam', false);
-                }
-            }
-        }
-    }
-    return date;
-}                */
-
-
 function handleCardDate(param) {
     let empty1 = { date: "", week: "" };
     let empty2 = { date: "", week: "" };
@@ -2289,7 +2232,7 @@ function extractCardsFromContent(myCards) {
                 link: undefined, linkTarget: undefined,
                 review: undefined,
                 dateLabel: "", id: "", activePicUrl: "",
-                comingSoon: "", comingSoonLabel: "",
+                comingSoon: undefined, comingSoonLabel: "",
                 assessmentWeighting: "",
                 assessmentOutcomes: "",
                 assessmentType: ""
@@ -3141,7 +3084,7 @@ function addCardInterface(items,place) {
 
     let cardInterface = place; 
 
-    if (cardConfigInterface.length === 0) {
+    if (cardInterface.length === 0) {
         console.log("Card: Can't find item with heading 'Card Interface' in which to insert card interface");
         return false;
     } else {
@@ -4218,13 +4161,16 @@ NO_CARD_DEFINED = `
 function handleUniversityDate() {
     dateText = jQuery(this).text();
 
+    // returns a date object (start/stop)
+    let dateObj = handleCardDate( dateText.replace(",",""));
+    let otherDate = `(${dateObj.start.date} ${dateObj.start.month} ${dateObj.start.year})`;
     // extract the day and week
     // Wednesday Week 5 becomes
     // - day = Wednesday
     // - week = 5
     // and convert it to a date string
     //  date = March 12, 2019
-    var day = '', week = '', date = '';
+/*    var day = '', week = '', date = '';
     m = dateText.match(
           /.*\b((mon|tue|wed(nes)?|thur|thurs|fri|sat(ur)?|sun)(day)?)[, ]*(of|:|;|\-|\u2013|\u2014| )*week *([0-9]+)/i );
  //       /.*\b((mon|tue|wed(nes)?|thur|thurs|fri|sat(ur)?|sun)(day)?)([,]*) *(,|of|:|;|\-|\u2013|\u2014) *week *([0-9]+)/i );
@@ -4241,10 +4187,11 @@ function handleUniversityDate() {
     } else {
         // couldn't match the date, finish up
         return false;
-    }
+    } */
 
     // update the HTML item
-    dateText = dateText + " (" + date + ")";
+    //dateText = dateText + " (" + date + ")";
+    dateText = `${dateText} ${otherDate}`;
     jQuery(this).html(dateText);
 }
 

@@ -25,6 +25,7 @@ nav:
     - Web: 'creating/webContent.md'
     - University: 'creating/universityContent.md'
     - Blackboard: 'creating/blackboardContent.md' 
+    - Adding Cards: 'creating/addCards.md' 
   - Customising:
     - Accordion opening: 'customising/accordionOpening.md'
     - Accordion appearance: 'customising/accordionAppearance.md'
