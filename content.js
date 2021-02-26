@@ -3129,18 +3129,24 @@ function addCardInterface(items,place) {
     let NO_COMING_SOON = false;
 
     // get the content item with h3 heading containing Card Interface
-/*    var cardInterface = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(".item h3").filter( function(x) {
+    // Here this is only used for configuration information
+    let cardConfigInterface = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(".item h3").filter( function(x) {
             return this.innerText.toLowerCase().includes("card interface");
         }
-        ).eq(0);*/
+        ).eq(0);
+        // hide the configuration item if edit mode off
+    if ( window.tweak_bb.display_view) { 
+        jQuery(cardConfigInterface).parent().parent().hide();
+    }
+
     let cardInterface = place; 
 
-    if (cardInterface.length === 0) {
+    if (cardConfigInterface.length === 0) {
         console.log("Card: Can't find item with heading 'Card Interface' in which to insert card interface");
         return false;
     } else {
         // get the title - text only, stripped of whitespace before/after
-        var cardInterfaceTitle = jQuery.trim(cardInterface.text());
+        var cardInterfaceTitle = jQuery.trim(cardConfigInterface.text());
 
         //Extract parameters
         var m = cardInterfaceTitle.match(/Card Interface *([^<]*)/i);
@@ -3916,7 +3922,7 @@ var linkItemHtmlTemplate = Array(NUM_TEMPLATES);
 linkItemHtmlTemplate[HORIZONTAL] = `
          <p>&nbsp;<br /> &nbsp;</p>
          <div class="p-4 absolute pin-r pin-b">
-            <a class="XXX" href="{LINK}"><div class="XXX hover:bg-blue text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded no-underline">
+         <a href="{LINK}" class="gu-engage"><div class="hover:bg-blue text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded">
              {ENGAGE}
          </div></a>
          </div>
@@ -3927,12 +3933,6 @@ linkItemHtmlTemplate[HORIZONTAL_NOENGAGE] = '';
 linkItemHtmlTemplate[PEOPLE] = '';
 linkItemHtmlTemplate[ASSESSMENT] = '';
 
-// TODO: need to decide how and what this will look like
-//linkItemHtmlTemplate[1] = '<p><strong>Engage</strong></p>';
-linkItemHtmlTemplate[VERTICAL] = '';
-/*`
-<div class="relative pin-r pin-b m-18"> <button class="bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"> Engage </button> 
-        </div>`;*/
 
 //*****************************************************************
 // Templates for the "Mark Review" and "Reviewed" features
