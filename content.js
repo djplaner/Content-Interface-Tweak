@@ -610,9 +610,8 @@ const DOCUMENTATION_LINKS = {
     'reviewStatus': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#integrating-the-blackboard-review-status-feature',
     'adaptiveRelease': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#using-the-adaptive-release-function',
     // -- add cards
-    'cardsWhat': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/',
-    'cardsList': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/',
-    'cardsItems:': 'https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/',
+    'cardsWhat': 'https://djplaner.github.io/Content-Interface-Tweak/creating/addCards/',
+    'cardsHow': 'https://djplaner.github.io/Content-Interface-Tweak/creating/addCards/#how-to-add-cards-to-the-content-interface',
 
     // customise
     'accordionOpen': 'https://djplaner.github.io/Content-Interface-Tweak/customising/accordionOpening/',
@@ -869,9 +868,7 @@ var OLD_INSTRUCTIONS = `
       <ul style="padding-left: 1em; margin-left:0">
         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.cardsWhat}">What and why?</a>
         </li>
-        <li> <a target="_blank" href="${DOCUMENTATION_LINKS.cardsList}">Add card list to Word</a>
-        </li>
-        <li> <a target="_blank" href="${DOCUMENTATION_LINKS.cardsItems}">Add card items to Blackboard</a>
+        <li> <a target="_blank" href="${DOCUMENTATION_LINKS.cardsHow}">How to add cards</a>
         </li>
         </ul>
             </div>
