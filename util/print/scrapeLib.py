@@ -47,7 +47,7 @@ def login(BROWSER):
     #opts.set_headless() 
     #assert opts.headless 
     
-    BROWSER.get('https://bblearn-blaed.griffith.edu.au') 
+    BROWSER.get(BLACKBOARD_BASE_URL) 
 
     #-- login
     element = WebDriverWait(BROWSER,30).until(
