@@ -9,17 +9,21 @@
 #    - link.json - list of ids to add shared links to the PDFs
 
 from bs4 import BeautifulSoup
+import re
+import pprint
 
 #from scrapeLib import setup,login,getHtml
 import scrapeLib
 import tmp
 
+global DEFAULT_CSS
+DEFAULT_CSS="./gu_study.css"
 global COURSES
 
 COURSES = {
-    "CWR111_2210" :
+    "CWR111_2211" :
     {
-#        'PDF_FOLDER' : "fred", #"C:\\Users\s2986288\Griffith University\HLSSacademic - OUA\Study Guides & L@G\SP1\CWR110\Study Guide PDFs",
+        'PDF_FOLDER' : "C:\\Users\\s2986288\\Griffith University\\HLSSacademic - OUA\\Study Guides & L@G\\SP1\\CWR110\\Study Guide PDFs\\",
         'PAGES' : 
         [
             'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_90727_1&content_id=_5977537_1&mode=reset',
@@ -29,27 +33,57 @@ COURSES = {
 }
 
 #-------------------------
-# generateCourseData
+# courseData = displayCourseData( courseId, links )
+# - given courseId and a list of links
+# - generate python array of hashes as a string
 
-def generateCourseData():
-    print("generate course data")
-    browser = scrapeLib.setup()
-    browser = scrapeLib.login( browser )
+def displayCourseData( courseId, links):
+    array = []
 
+    count=1
 
-    for course in COURSES: 
-        #-- get the HTML for the card interface
-        (title, content) = scrapeLib.getHtml(browser,
-               'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_90727_1&content_id=_5977537_1&mode=reset',
-               False)
+    for link in links:
+        name="{:02d}".format(count)
+        entry = {
+            "URL": "%s/%s"%(scrapeLib.BLAED_BASE_URL,link),
+            "css": DEFAULT_CSS,
+            "name": "%s%s\\%s.pdf"%(COURSES[courseId]["PDF_FOLDER"],courseId,name)
+        }
+        count+=1
 
-        print("title is %s" %title)
+        array.append(entry)
 
-        #-- get all the links in the card interface
-        links = extractCardUrls(content)
+    return array
 
-        displayCourseData(links)
-        displayJson(links)
+#-----------------------
+# string = displayJavascript( courseId, links )
+# - given collection of links return string with Javascript definitions
+#   for PRINT_URLS 
+# - hash 
+#   - keyed on a string formed by "id" + course_id + content_id with _ replaced
+
+def displayJavascript( courseId, links ):
+    string = "// %s\n" % courseId
+
+    coursePattern = re.compile("course_id=([0-9_]+)")
+    contentPattern = re.compile("content_id=([0-9_]+)")
+
+    for link in links:
+        courseId=''
+        contentId=''
+        m = re.search(coursePattern, link)
+        if m:
+            courseId=m.group(1)
+        m = re.search(contentPattern, link )
+        if m:
+            contentId=m.group(1)
+
+        if courseId!="" and contentId!="":
+            courseId=courseId.replace("_","")
+            contentId=contentId.replace("_","")
+            string = string + "'id%s%s': '%s/%s,'\n" % (courseId,contentId,scrapeLib.BLACKBOARD_BASE_URL,link)
+
+    return string
 
 #------------------------------
 # urls = extractCardUrls(html)
@@ -61,12 +95,47 @@ def extractCardUrls( html):
 
     links = [a.get('href') for a in soup.find_all(class_="cardmainlink")]
 
+    print("found %s links" % len(links))
+
     return links
 
 
+#-------------------------
+# generateCourseData
+
+def generateCourseData():
+    print("generate course data")
+    browser = scrapeLib.setup()
+    browser = scrapeLib.login( browser )
+
+    pp = pprint.PrettyPrinter()
+
+    for courseId in COURSES: 
+        #-- get the HTML for the card interface
+        print( "COURSE %s" %courseId)
+        pdf = COURSES[courseId]["PDF_FOLDER"]
+        print( "-- PDF folder %s" %pdf)
+
+        courseLinks=[]
+
+        pages = COURSES[courseId]["PAGES"]
+        pp.pprint(pages)
+
+        for page in COURSES[courseId]["PAGES"]:
+            print("-- PAGE %s"%page)
+            (title, content) = scrapeLib.getHtml(browser,page,False)
+            links = extractCardUrls(content)
+            pp.pprint(links)
+            courseLinks.extend(links)
+            print("-------------------")
+            pp.pprint(courseLinks)
+
+#        print(courseLinks)
+        data = displayCourseData(courseId, courseLinks)
+        pp.pprint(data)
+        javascript = displayJavascript( courseId, courseLinks )
+        print(javascript)
+
 if __name__ =="__main__":
     print("Checking main")
-#    generateCourseData()
-
-    links = extractCardUrls(tmp.html)
-    displayCourseData(links)
+    generateCourseData()

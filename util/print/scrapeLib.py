@@ -21,6 +21,8 @@ from bs4 import BeautifulSoup
 
 global BLACKBOARD_BASE_URL
 BLACKBOARD_BASE_URL="https://bblearn.griffith.edu.au"
+global BLAED_BASE_URL
+BLAED_BASE_URL="https://bblearn-blaed.griffith.edu.au"
 global OPTS
 OPTS=Options() 
 #global BROWSER
@@ -76,12 +78,14 @@ def login(BROWSER):
 # - given a bblearn URL, open the page, extract the title
 
 def getHtml(BROWSER, url,isContentInterface=True ): 
-    print("------------------ getHTML")
+    print("------------------ getHTML for %s "%url)
 
     BROWSER.get(url) 
     time.sleep(5)
 
     if isContentInterface: 
+        WebDriverWait(BROWSER, 20).until(EC.presence_of_element_located( 
+            (By.XPATH, "//*[@class='gu_content_open' or @class='open']")))
         # click expandAll 
         expand = BROWSER.find_elements_by_xpath("//*[@class='gu_content_open' or @class='open']") 
 
@@ -93,7 +97,10 @@ def getHtml(BROWSER, url,isContentInterface=True ):
             print("ERROR - no expand all button found")
             return ("","")
         #-- get the page title
-    else:
+    else: # currently hard coded to look for card interface before proceeding
+        WebDriverWait(BROWSER, 20).until(EC.presence_of_element_located( 
+            (By.CLASS_NAME, "cardmainlink")))
+            #(By.ID, "content_listContainer")))
         # get the list of items in the Blackboard page if not ContentInterface
         content = BROWSER.find_element_by_id("content_listContainer").get_attribute('outerHTML')
 

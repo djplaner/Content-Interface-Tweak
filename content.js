@@ -4546,6 +4546,26 @@ function convertMedia(html, filmName) {
 // - if so add a print button to 
 
 const PRINT_URLS = {
+// CWR111_2210
+'id90727159775401': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/01.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159775441': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/02.pdf?csf=1&web=1&e=FnVoyC', 
+'id90727159775481': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/03.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159775531': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/04.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159775581': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/05.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159775631': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/06.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159775681': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/07.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159775731': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/08.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159775781': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/09.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159775831': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/10.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159775881': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/11.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159775931': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/12.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159775981': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/13.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159776051': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/14.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159776091': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/15.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159776141': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/16.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159776191': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/17.pdf?csf=1&web=1&e=FnVoyC',
+'id90727159776241': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/18.pdf?csf=1&web=1&e=FnVoyC',
+
     'http://127.0.0.1:8080/test/': 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1',
     // --- COM10 **id82017155859681id82017155859681id82017155859681TODO** Need to move the IDs to something based on the title and the course id (to make it study period independent?)
     // Intro
@@ -4705,10 +4725,6 @@ const PRINT_URLS = {
 'id82005156960701' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EaVSj-UdBBBCruHAYa7yuSwBn2pUT7_SfcdGEhb7kxYYnA?e=xgp94w",
 //com12/assessmentresources.pdf'
 'id82005156960761' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EfbbHGlX41dKlGvqevLCFwMBJ0Hsbg8w2iJXRGjpy_kFHA?e=4nfk2o",
-//****************CWR110 SP1 */
-//TODO need to update destination
-'id90727159775441' : "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EYqSw3pi_XZAkt6TSX5H9VIBl4ZWtH-iN_OcUMuYmqzWkA?e=yx58Gu"
-
 };
 
 function addExpandPrintButtons() {
