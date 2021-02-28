@@ -21,15 +21,27 @@ DEFAULT_CSS="./gu_study.css"
 global COURSES
 
 COURSES = {
+#    "CWR110_2211" :
+#    {
+#        'PDF_FOLDER' : "C:\\Users\\s2986288\\Griffith University\\HLSSacademic - OUA\\Study Guides & L@G\\SP1\\CWR110\\Study Guide PDFs\\",
+#        'BASE_SHARED_URL': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/{NAME}?csf=1&web=1&e=FnVoyC', 
+#        'PAGES' : 
+#        [
+#            'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_90727_1&content_id=_5977537_1&mode=reset',
+#            'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_90727_1&content_id=_5841326_1&mode=reset'
+#        ]
+#    },
     "CWR111_2211" :
     {
-        'PDF_FOLDER' : "C:\\Users\\s2986288\\Griffith University\\HLSSacademic - OUA\\Study Guides & L@G\\SP1\\CWR110\\Study Guide PDFs\\",
+        'PDF_FOLDER' : "C:\\Users\\s2986288\\Griffith University\\HLSSacademic - OUA\\Study Guides & L@G\\SP4\\CWR111\\Study Guide PDFs\\",
+        'BASE_SHARED_URL': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/{NAME}?csf=1&web=1&e=FnVoyC', 
         'PAGES' : 
         [
-            'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_90727_1&content_id=_5977537_1&mode=reset',
-            'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_90727_1&content_id=_5841326_1&mode=reset'
+            'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContentEditable.jsp?content_id=_5977906_1&course_id=_90774_1',
+            'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContentEditable.jsp?content_id=_5841467_1&course_id=_90774_1&mode=reset'
         ]
     }
+
 }
 
 #-------------------------
@@ -65,23 +77,31 @@ def displayCourseData( courseId, links):
 def displayJavascript( courseId, links ):
     string = "// %s\n" % courseId
 
+    print("display string %s"%string)
     coursePattern = re.compile("course_id=([0-9_]+)")
     contentPattern = re.compile("content_id=([0-9_]+)")
 
+    count=1
     for link in links:
-        courseId=''
+        # Extract the id from course_id and content_id in URL
+        cId=''
         contentId=''
         m = re.search(coursePattern, link)
         if m:
-            courseId=m.group(1)
+            cId=m.group(1)
         m = re.search(contentPattern, link )
         if m:
             contentId=m.group(1)
 
-        if courseId!="" and contentId!="":
-            courseId=courseId.replace("_","")
+        if cId!="" and contentId!="":
+            cId=cId.replace("_","")
             contentId=contentId.replace("_","")
-            string = string + "'id%s%s': '%s/%s,'\n" % (courseId,contentId,scrapeLib.BLACKBOARD_BASE_URL,link)
+
+            name="{:02d}.pdf".format(count)
+            count+=1
+            print("Course id is %s name is %s"%(courseId,name))
+            sharedUrl = COURSES[courseId]['BASE_SHARED_URL'].replace("{NAME}", name)
+            string = string + "'id%s%s': '%s',\n" % (cId,contentId,sharedUrl)
 
     return string
 

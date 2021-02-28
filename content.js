@@ -4546,7 +4546,7 @@ function convertMedia(html, filmName) {
 // - if so add a print button to 
 
 const PRINT_URLS = {
-// CWR111_2210
+// CWR110_2211
 'id90727159775401': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/01.pdf?csf=1&web=1&e=FnVoyC',
 'id90727159775441': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/02.pdf?csf=1&web=1&e=FnVoyC', 
 'id90727159775481': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/03.pdf?csf=1&web=1&e=FnVoyC',
@@ -4565,6 +4565,28 @@ const PRINT_URLS = {
 'id90727159776141': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/16.pdf?csf=1&web=1&e=FnVoyC',
 'id90727159776191': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/17.pdf?csf=1&web=1&e=FnVoyC',
 'id90727159776241': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/18.pdf?csf=1&web=1&e=FnVoyC',
+// CWR111_2211
+'id90774159779551': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/01.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159779631': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/02.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159779681': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/03.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159779731': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/04.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159779781': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/05.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159779831': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/06.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159779881': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/07.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159779941': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/08.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159779991': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/09.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159780041': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/10.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159780091': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/11.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159780141': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/12.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159780191': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/13.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159780241': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/14.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159780281': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/15.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159779181': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/16.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159779261': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/17.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159779341': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/18.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159779401': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/19.pdf?csf=1&web=1&e=FnVoyC',
+'id90774159779481': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/20.pdf?csf=1&web=1&e=FnVoyC',
+
 
     'http://127.0.0.1:8080/test/': 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1',
     // --- COM10 **id82017155859681id82017155859681id82017155859681TODO** Need to move the IDs to something based on the title and the course id (to make it study period independent?)
