@@ -4586,6 +4586,26 @@ const PRINT_URLS = {
 'id90774159779341': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/18.pdf?csf=1&web=1&e=FnVoyC',
 'id90774159779401': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/19.pdf?csf=1&web=1&e=FnVoyC',
 'id90774159779481': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/CWR111/Study%20Guide%20PDFs/CWR111_2211/20.pdf?csf=1&web=1&e=FnVoyC',
+// COM12_2211
+'id90697160027351': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/01.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160027491': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/02.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160027651': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/03.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160027771': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/04.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160027891': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/05.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160028031': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/06.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160028141': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/07.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160028261': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/08.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160028361': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/09.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160028461': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/10.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160028541': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/11.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160028661': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/12.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160028741': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/13.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160028821': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/14.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160028881': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/15.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160028981': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/16.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160029041': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/17.pdf?csf=1&web=1&e=FnVoyC',
+'id90697160029101': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/18.pdf?csf=1&web=1&e=FnVoyC',
+
 
 
     'http://127.0.0.1:8080/test/': 'https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXCSARjB2FJAlxX581K1QPIBRwJF6Jc-7nquPc2IFXfRMw?download=1',

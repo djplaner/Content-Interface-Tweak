@@ -90,7 +90,7 @@ def getHtml(BROWSER, url,isContentInterface=True ):
         expand = BROWSER.find_elements_by_xpath("//*[@class='gu_content_open' or @class='open']") 
 
         if len(expand)>0: 
-            expand[0].click() 
+            expand[0].click()
             #-- get the Content Interface content 
             content = BROWSER.find_element_by_id("GU_ContentInterface").get_attribute('outerHTML')
         else:
@@ -106,6 +106,7 @@ def getHtml(BROWSER, url,isContentInterface=True ):
 
     title = BROWSER.find_element_by_id("pageTitleText").get_attribute('innerText')
 
-    soup = BeautifulSoup(content,'lxml')
+    #soup = BeautifulSoup(content,'lxml')
+    soup = BeautifulSoup(content,'html.parser')
     content = soup.prettify().encode('cp1251',errors='ignore')
     return (title, content ) 

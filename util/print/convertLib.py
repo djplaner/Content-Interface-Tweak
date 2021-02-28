@@ -83,7 +83,8 @@ def processHtml(title, html):
     externalUrls = []
 
     blackboardPattern = "^/webapps/blackboard"
-    soup = BeautifulSoup(html,features="lxml")
+    #soup = BeautifulSoup(html,features="lxml")
+    soup = BeautifulSoup(html,features="html.parser")
 
     # -- remove the div.accordion-expand-holder element
     element = soup.select_one(".accordion-expand-holder")
