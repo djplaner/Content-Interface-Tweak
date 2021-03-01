@@ -13,7 +13,8 @@ import os
 from bs4 import BeautifulSoup
 import html
 
-DESTINATION=r"\\staff.ad.griffith.edu.au\ud\fr\s2986288\Documents\GitHub\Content-Interface-Tweak\docs"
+#DESTINATION=r"\\staff.ad.griffith.edu.au\ud\fr\s2986288\Documents\GitHub\Content-Interface-Tweak\docs"
+DESTINATION= r"c:\\Users\\s2986288\\code\\Content-Interface-Tweak\\docs"
 #DESTINATION="\\staff.ad.griffith.edu.au\ud\fr\s2986288\Documents\GitHub\Content-Interface-Tweak\docs"
 
 #SOURCE=r"C:\\Users\\s2986288\\OneDrive - Griffith University\\Software Development\\Documentation\\Content Interface docs - v2"
