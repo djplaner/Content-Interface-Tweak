@@ -714,7 +714,7 @@ const DOCUMENTATION_LINKS = {
   contentAppearance:
     "https://djplaner.github.io/Content-Interface-Tweak/customising/contentAppearance/",
   providePDF:
-    "https://djplaner.github.io/Content-Interface-Tweak/customising/contentAppearance/",
+    "https://djplaner.github.io/Content-Interface-Tweak/customising/providePDF/",
 };
 
 var UPDATE_HTML = () => `
@@ -4889,6 +4889,8 @@ function convertMedia(html, filmName) {
 // - if so add a print button to
 
 const PRINT_URLS = {
+    // documentation test
+    id73051159979391: "https://griffitheduau-my.sharepoint.com/:b:/g/personal/d_jones6_griffith_edu_au/EVMNSeQAeJtMkbOkgRxusq8B-JyQ2x-_dfC8T_KwDVmXHA?e=cb1WzM",
   // CWR110_2211
   id90727159775401:
     "https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/01.pdf?csf=1&web=1&e=FnVoyC",

@@ -4,6 +4,17 @@
 global COURSES
 
 COURSES = {
+        'TEST_3211':
+        [
+            {'URL': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContentEditable.jsp?content_id=_5997939_1&course_id=_73051_1&content_id=_5997943_1',
+             'css': './gu_study.css',
+             'name': 'C:\\Users\\s2986288\\OneDrive - Griffith University\\Software Development\\Documentation\\Content Interface docs - v2\\Customising - Provide PDF\\links.pdf'
+            },
+            {'URL': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContentEditable.jsp?content_id=_5998002_1&course_id=_73051_1',
+             'css': './gu_study.css',
+             'name': 'C:\\Users\\s2986288\\OneDrive - Griffith University\\Software Development\\Documentation\\Content Interface docs - v2\\Customising - Provide PDF\\cards.pdf'
+            }
+        ],
         'CWR110_2211':
         [
             {'URL': 'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_90727_1&content_id=_5977540_1',
