@@ -483,7 +483,29 @@ function contentInterface($) {
     .children(".vtbegenerated");
   var child = jQuery(journey).children("#html");
   jQuery(child).unwrap();
+
+  // check if the item icons exists, before trying to remove them
+  let checkIcon = setInterval(function () {
+    if (jQuery("img.item_icon").length) {
+      removeBlackboardIcon(contentInterface);
+      clearInterval(checkIcon);
+    }
+  }, 100);
 }
+
+/**
+ * @function removeBlackboardIcon
+ * @param {Object} contentInterface jQuery object for where the card interface will go 
+ * @description If exists, update cardInterface to remove Blackboard icon
+ */
+
+function removeBlackboardIcon( contentInterface) {
+    let container = jQuery(contentInterface).parent().parent();
+    // hide the icon
+    let icon = jQuery(container ).find( "img.item_icon").css("display", "none");
+    // update the padding on the div
+    let div = jQuery(container).find("div.details").css("padding-left", "10px");
+ }
 
 /************************************************************************
  * getHrefId( href )
@@ -2224,7 +2246,7 @@ function handleCardDate(param) {
  *    if endRange and date is a trimester week, then set the date to Friday of that week
  */
 
-function parseDate(param,endRange=false) {
+function parseDate(param, endRange = false) {
   let date = {}; // object to return
   let time = "";
 
@@ -2250,12 +2272,12 @@ function parseDate(param,endRange=false) {
   m = param.match(/^\s*week\s*([0-9]*)/i);
   if (m) {
     week = m[1];
-    if ( !endRange) {
-        // just get Monday
-        date = getTermDate(week);
+    if (!endRange) {
+      // just get Monday
+      date = getTermDate(week);
     } else {
-        // end of range should return friday
-        date = getTermDate(week,true,"Fri");
+      // end of range should return friday
+      date = getTermDate(week, true, "Fri");
     }
   } else {
     // does it have a day of week
@@ -4606,7 +4628,7 @@ function calculateTerm() {
     }
     // if this is a QCM course (either offering of joined), then update term
     qcmRe = new RegExp("^([0-9]+QCM)_([0-9][0-9][0-9][0-9])");
-    let qcmRe2 = new RegExp('^([0-9]+QCM)_(Y[0-9])_([0-9][0-9][0-9][0-9])');
+    let qcmRe2 = new RegExp("^([0-9]+QCM)_(Y[0-9])_([0-9][0-9][0-9][0-9])");
     m = qcmRe.match(id);
     let m2 = qcmRe2.match(id);
     if (m || m2) {
