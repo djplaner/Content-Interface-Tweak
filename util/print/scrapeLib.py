@@ -110,3 +110,79 @@ def getHtml(BROWSER, url,isContentInterface=True ):
     soup = BeautifulSoup(content,'html.parser')
     content = soup.prettify().encode('cp1251',errors='ignore')
     return (title, content ) 
+
+
+# -------------------------------------------------
+# boolean = filterLink( linkElement, attr)
+# - given a BS linkElement where the URL is in attr
+# - return true if we should filter this link
+
+def filterLink( linkElement, attr):
+    print("-- testing filterLink %s" % attr)
+    print(linkElement)
+    print(type(linkElement))
+    #-- if the attr isn't in the link
+    if not linkElement.has_attr(attr):
+        return True
+
+    link = linkElement[attr]
+    #-- base64 image
+    if "data:image" in link:
+        return True
+
+    #-- blackboard url
+    if re.match( "^/webapps/blackboard/", link):
+        return True 
+    if re.match( "^/webapps/assignment/", link):
+        return True 
+
+    #-- TODO check if we need to search for BlackboardContentLinks 
+    #  shouldn't be necessary, they shoudl have been translated
+
+    return False
+
+# -------------------------------------------------
+# extractLinks(html,courseUrl,course)
+# - html - is html of page (GU_ContentInterface) specified by url for the course
+# - return an array of hashes containing all of the links found in the HTML
+#   including URL and course
+
+
+def extractLinks(html,courseUrl,course):
+    # the array of hashes that will be returned
+    # { 'link': "the actual link"}
+    # { 'link': "the actual link"}
+    externalUrls = []
+
+    soup = BeautifulSoup(html,features="lxml")
+    # get the title for the page
+    invisible = soup.find_all("div", class_="invisible")#.contents()
+    title = invisible[0].text
+
+    tags =  {'a':'href', 'img':'src', 
+        'script':'src', 'link':'href' }
+
+    for key,attr in iter(tags.items()): 
+        #-- get all the links for the given tag
+        links = soup.findAll(key)
+
+        #-- add it to externalUrls
+        for linkElement in links: 
+
+            #-- filter the links that are considered
+            if filterLink(linkElement,attr):
+                continue
+#            print(linkElement)
+#            print("name %s" %linkElement.name) 
+#            print("href %s" %linkElement[attr])
+#            print(linkElement)
+
+            newLink = {
+                'course': course,
+                'courseUrl': courseUrl,
+                'link': linkElement[attr],
+                'title': title
+            }
+            externalUrls.append(newLink)
+
+    return externalUrls
