@@ -1,6 +1,17 @@
 #
 # Define data for course pages to be converted to PDF
 
+# define where to write reports for courses
+
+global COURSE_REPORT_FOLDER
+
+COURSE_REPORT_FOLDER = {
+  'CWR110_2211': 'C:\\Users\\s2986288\\Griffith University\\HLSSacademic - OUA\\Study Guides & L@G\\SP1\\CWR110\\Administration\\',
+  'CWR111_2211': 'C:\\Users\\s2986288\\Griffith University\\HLSSacademic - OUA\\Study Guides & L@G\\SP4\\CWR111\\Administration\\',
+  'COM12_2211' : 'C:\\Users\\s2986288\\Griffith University\\HLSSacademic - OUA\\Study Guides & L@G\\SP1\\COM12\\Administration\\',
+}
+
+# define what files to check/convert for each course
 global COURSES
 
 COURSES = {

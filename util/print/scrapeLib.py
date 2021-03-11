@@ -11,6 +11,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
+from simple_settings import settings
+from colorama import Fore
+import urllib.request
+
+import pandas as pd
 
 from simple_settings import settings
 
@@ -27,6 +32,10 @@ global OPTS
 OPTS=Options() 
 #global BROWSER
 global BINARY
+
+global BROKEN_RESPONSE
+BROKEN_RESPONSE = [400,404,403,408,409,501,502,503]
+
 
 def setup(): 
     print("---------------- set up")
@@ -186,3 +195,94 @@ def extractLinks(html,courseUrl,course):
             externalUrls.append(newLink)
 
     return externalUrls
+
+
+#------------------------------------------------
+# boolean = badlySharedSharePointLink( link )
+# - given a link, return true if it is a sharepoint link 
+#   and hasn't be shared properly
+
+#def badlySharedSharePointLink( link ): 
+#    if "griffitheduau.sharepoint" not in url: 
+#        return True
+
+## base url
+#https://griffitheduau.sharepoint.com/
+## people with existing access (folder)
+# :f:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/COM14/Week%20011?csf=1&web=1&e=MHMAfo
+## people with existing access (file)
+# /:w:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP4/COM14/Code%20of%20Conduct%20OUA-1.docx?d=wfc12a575123d4673a9549fda49189940&csf=1&web=1&e=ghec3L 
+## direct link to file (open in word)
+# /:w:/r/sites/HLSSacademic/_layouts/15/Doc.aspx?sourcedoc=%7BFC12A575-123D-4673-A954-9FDA49189940%7D&file=Code%20of%20Conduct%20OUA-1.docx&action=default&mobileredirect=true
+
+## shared
+## peole at Grifith with link
+# /:w:/s/HLSSacademic/EXWlEvw9EnNGqVSf2kkYmUABq8gje80AwX5kztG6Mud8nA?e=IaPzam
+    
+#            print("%s"%url)
+#            if "COM14" in url: 
+#                print("DANGER %s"%url)
+
+#------------------------------------------------
+# checked = checkLinks( course, links)
+# - given the course id and a data frame of all links
+# - given a dict keyed on links and value is result
+
+def checkLinks( links, course="all"):
+    checked = {}
+    courseDF = pd.DataFrame()
+
+    #-- extract data frame for just this course
+    if course =="all":
+        courseDF = links
+    else: 
+        courseDF = links[ links['course'].str.match(course)]
+
+    # return empty array if no links
+#    if courseDF.shape[0]==0:
+#        return checked
+
+    print("Check frame with %s rows"%links.shape[0])
+    count=0
+    #-- check the links
+    for idx,row in courseDF.iterrows(): 
+        print("row %s link %s"%(count,row['link']))
+        count+=1
+
+        if row['link'] in checked:
+            continue
+
+        try: 
+            req=urllib.request.Request(url=row['link'],
+                    headers ={ 
+                       "User-Agent" : "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17" 
+                    }) 
+            #print("created request")
+            resp=urllib.request.urlopen(req) 
+            #print("made request")
+            #-- check if it's a sharepoint link and if it's shared properly
+
+#            if badlySharedSharePointLink( row['link']):
+#                checked[row['link']] = "BadSharePoint" 
+#                print (Fore.RED+"Badly shared SharePoint link "+row['link'])          
+#            else: 
+            checked[row['link']] = resp.status 
+            #print("response is %s"%resp.status) 
+            print (Fore.GREEN+"no problem in-->"+row['link']) 
+
+            
+        except Exception as e: 
+            print("FRED " + str(e))
+
+            if hasattr( e, 'code'): 
+                print("code is %s" %e.code) 
+                checked[row['link']] = e.code
+                if e.code in BROKEN_RESPONSE: 
+                    print (Fore.RED+str(e.code)+" --> "+row['link'])          
+                else:
+                    print( "What the fuck %s" %e.code )
+            else: 
+                print (Fore.YELLOW+"{} - {}".format(e,row['link'])) 
+                checked[row['link']] = "exception"
+
+    return checked
