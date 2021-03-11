@@ -64,11 +64,17 @@ Hence, resizing your images to be small can be useful.
 
 ## Links
 
-Microsoft Word supports the insertion of web links into documents.
+Microsoft Word supports the insertion of web links into documents, which then act exactly like links on web pages. i.e. if you click on the link, Word will attempt to open a web browser with that link.
 
-Rather than include URLs in the text – such as – see https://www.flickr.com/photos/topsteph53/4192354425/ for the original version of the photo on the previous page.
+#### Avoid
 
-Instead [create or edit a hyperlink](https://support.office.com/en-us/article/create-or-edit-a-hyperlink-5d8c0804-f998-4143-86b1-1199735e07bf) (that link takes you to Microsoft’s explanation of how to create or edit a hyperlink) such as [view the original big photo](https://www.flickr.com/photos/topsteph53/4192354425/).
+This means, that you can avoid including web links (aka URLs) in the text of your document. For example, use this link - https://www.flickr.com/photos/topsteph53/4192354425/ - to view a photo. Such an approach is a bit ugly to read, but also means that once the content is on the web, readers will not be able to click on a link.
+
+#### Instead
+
+[Create or edit a hyperlink](https://support.office.com/en-us/article/create-or-edit-a-hyperlink-5d8c0804-f998-4143-86b1-1199735e07bf): that link takes you to Microsoft’s explanation of how to create or edit a hyperlink in Word. For example, please [view the original big photo](https://www.flickr.com/photos/topsteph53/4192354425/). On the web, the link will be clickable. In Blackboard, that link will also open in a new browser tab. Avoding an issue with Blackboard.
+
+<div class="ael-note"><div class="noteImage"></div><div class="instructions"><p><strong>Be careful editing links in the browser version of Word</strong></p><p>Microsoft provides both a Desktop and browser-based version of Word. Typically both work the same, but <a href="https://support.microsoft.com/en-us/office/differences-between-using-a-document-in-the-browser-and-in-word-3e863ce3-e82c-4211-8f97-5b33c36c55f8">there are differences</a>.</p><p>The process for editing links in the browser-based version of Word can behave different in certain niche/edge cases. e.g. adding links that don’t include <strong>http://</strong> such as when using the <a href="https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#indirect-link-to-content-item-blackboard-content-link"><em>Blackboard Content Link</em></a> or <a href="https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#indirect-link-to-a-menu-item-blackboard-menu-link"><em>Blackboard Menu Link</em></a> styles in the Content Interface.</p></div></div>
 
 ## Embedding YouTube videos and beyond
 
