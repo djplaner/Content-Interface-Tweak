@@ -26,7 +26,7 @@ def generatePDF():
         print( "COURSE %s" %courseId)
 
         for page in COURSES[courseId]:
-            if page['URL']=='':
+            if page['URL']=='' or page['name']=='':
                 continue
             print("-- Going to get %s"%page)
             (title, content) = scrapeLib.getHtml(browser,page['URL'])

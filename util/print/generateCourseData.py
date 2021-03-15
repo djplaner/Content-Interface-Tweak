@@ -41,14 +41,24 @@ COURSES = {
 #            'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContentEditable.jsp?content_id=_5841467_1&course_id=_90774_1&mode=reset'
 #        ]
 #    },
-    "COM12_2211" :
+#    "COM12_2211" :
+#    {
+#        'PDF_FOLDER' : "C:\\Users\\s2986288\\Griffith University\\HLSSacademic - OUA\\Study Guides & L@G\\SP1\\COM12\\Study Guide PDFs\\",
+#        'BASE_SHARED_URL': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/{NAME}?csf=1&web=1&e=FnVoyC', 
+#        'PAGES' : 
+#        [
+#          'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContentEditable.jsp?content_id=_6002720_1&course_id=_90697_1',
+#          'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContentEditable.jsp?content_id=_5841236_1&course_id=_90697_1&mode=reset'  
+#        ]
+#    },
+    "1611QCM_3211" :
     {
-        'PDF_FOLDER' : "C:\\Users\\s2986288\\Griffith University\\HLSSacademic - OUA\\Study Guides & L@G\\SP1\\COM12\\Study Guide PDFs\\",
-        'BASE_SHARED_URL': 'https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/COM12/Study%20Guide%20PDFs/COM12_2211/{NAME}?csf=1&web=1&e=FnVoyC', 
-        'PAGES' : 
+        'PDF_FOLDER' :"",
+        'BASE_SHARED_URL' : '',
+        'PAGES' :
         [
-          'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContentEditable.jsp?content_id=_6002720_1&course_id=_90697_1',
-          'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContentEditable.jsp?content_id=_5841236_1&course_id=_90697_1&mode=reset'  
+            'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContentEditable.jsp?content_id=_5963366_1&course_id=_89822_1&mode=reset',
+            'https://bblearn-blaed.griffith.edu.au/webapps/blackboard/content/listContentEditable.jsp?content_id=_5982676_1&course_id=_89822_1&mode=reset'        
         ]
     }
 
