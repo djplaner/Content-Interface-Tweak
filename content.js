@@ -1341,6 +1341,7 @@ function handleBlackboardCards() {
   // consistent numbering across all bunches
   MODULE_NUM = 1;
   listOfCardBunches.forEach(createBunchesCards);
+  addCardClickHandler();
 }
 
 /*-----------------------------------------------------
@@ -1404,6 +1405,14 @@ function createBunchesCards(bunch, index, arr) {
       false
     );
   }
+}
+
+/**
+ * @function addCardClickHandler()
+ * - add the clickable card handlers, once, not per accordion
+ */
+
+function addCardClickHandler() {
 
   /* Make all of the cards clickable by adding an event handler  */
   // Does this unwrap actually do anything???
@@ -1422,7 +1431,7 @@ function createBunchesCards(bunch, index, arr) {
           if (link.match(/blackboard\/content\/undefined$/)) {
             console.log("Undefined");
           } else {
-          //  link.click();
+            link.click();
           }
         }
       },
