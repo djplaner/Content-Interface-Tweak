@@ -1414,7 +1414,7 @@ function createBunchesCards(bunch, index, arr) {
   for (i = 0; i < cards.length; i++) {
     cards[i].addEventListener(
       "click",
-      function () {
+      function (e) {
         var link = this.querySelector(".cardmainlink");
 
         if (link !== null) {
@@ -1422,7 +1422,7 @@ function createBunchesCards(bunch, index, arr) {
           if (link.match(/blackboard\/content\/undefined$/)) {
             console.log("Undefined");
           } else {
-            link.click();
+          //  link.click();
           }
         }
       },
