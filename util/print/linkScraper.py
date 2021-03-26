@@ -39,7 +39,8 @@ def scrapeLinks():
     browser = scrapeLib.setup()
     browser = scrapeLib.login( browser )
 
-    courses = [ "CWR110_2211", "CWR111_2211", "COM12_2211", "1611QCM_3211"]
+    #courses = [ "CWR110_2211", "CWR111_2211", "COM12_2211", "1611QCM_3211"]
+    courses = [ "1611QCM_3211"]
 
     gatheredLinks = []
 

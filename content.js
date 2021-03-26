@@ -1174,6 +1174,7 @@ function checkParams(contentInterface, wordDoc) {
 
   paramsObj.scrollTo = true;
   paramsObj.cssURL = DEFAULT_CSS;
+  paramsObj.downloadPDF = false;
 
   // Check parameters in the Content Interface item title
   if (contentInterface.length > 0) {
@@ -1198,6 +1199,9 @@ function checkParams(contentInterface, wordDoc) {
           }
           if (element.match(/noaccordion/i)) {
             paramsObj.noAccordion = true;
+          }
+          if (element.match(/downloadpdf/i)) {
+            paramsObj.downloadPDF = true;
           }
           /*if ( x = element.match(/wordDoc=([^ ]*)/i) ) {
                         paramsObj.wordDoc = x[1];
@@ -5255,10 +5259,49 @@ const PRINT_URLS = {
     "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EfbbHGlX41dKlGvqevLCFwMBJ0Hsbg8w2iJXRGjpy_kFHA?e=4nfk2o",
 };
 
+function printPDF(e) {
+  console.log("Printing PDF");
+  e.stopPropagation();
+
+  // get the content and title of the Content Interface
+  // TODO - do we need to expand all?
+  let expand = jQuery(".gu_content_open, .open");
+
+  if (expand.length>0)  {
+      expand[0].click();
+  }
+
+  let divContents = jQuery("#GU_ContentInterface").html();
+  let title = jQuery("#pageTitleText").text();
+
+  // print it
+  let printWindow = window.open('', '', 'height=400,width=800');
+  printWindow.document.write('<html><head><title>DIV Contents</title>');
+  printWindow.document.write('<link rel="stylesheet" href="https://djon.es/gu/com14_study.css" />');
+  printWindow.document.write('</head><body >');
+  printWindow.document.write('<div id="GU_ContentInterface">');
+  printWindow.document.write(divContents);
+  printWindow.document.write('</div>');
+  printWindow.document.write('</body></html>');
+  printWindow.document.close();
+  printWindow.print();
+  printWindow.close();
+}
+
 function addExpandPrintButtons() {
   // add the expand buttons
   jQuery("#GU_ContentInterface").prepend(EXPAND_COLLAPSE_BUTTON_HTML);
 
+  if (PARAMS.downloadPDF){
+    const print_button = `
+    <button href="type="button" id="gu_downloadPDF"
+      >Download JS PDF</button>
+    `;
+    jQuery(".accordion-expand-holder").append(print_button);
+    jQuery("#gu_downloadPDF").on("click", printPDF);
+
+    return true;
+  }
   // should we add a print button?
   pdfUrl = getPrintButtons();
   if (pdfUrl) {

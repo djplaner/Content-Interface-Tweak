@@ -166,7 +166,9 @@ def extractLinks(html,courseUrl,course):
     soup = BeautifulSoup(html,features="lxml")
     # get the title for the page
     invisible = soup.find_all("div", class_="invisible")#.contents()
-    title = invisible[0].text
+    title = "No title found - %s" % courseUrl
+    if len(invisible)>0:
+        title = invisible[0].text
 
     tags =  {'a':'href', 'img':'src', 
         'script':'src', 'link':'href' }
