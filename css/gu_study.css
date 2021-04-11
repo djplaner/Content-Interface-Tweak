@@ -126,10 +126,13 @@ border-top: 2px solid;
 width: 98%; }
 
 #GU_ContentInterface ol {
-padding-left: 2em !important; }
+padding-left: 2em !important;
+padding-bottom: 1em 
+}
 
 #GU_ContentInterface ul {
 padding-left: 2em !important;
+padding-bottom: 1em;
 list-style: disc;}
 
 #GU_ContentInterface ol {

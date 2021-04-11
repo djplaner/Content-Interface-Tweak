@@ -5285,7 +5285,7 @@ function printPDF(e) {
   printWindow.document.write('</body></html>');
   printWindow.document.close();
   printWindow.print();
-  printWindow.close();
+//  printWindow.close();
 }
 
 function addExpandPrintButtons() {
