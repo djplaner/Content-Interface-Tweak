@@ -17,6 +17,7 @@ var REVIEWED = "Reviewed";
 
 var DEFAULT_CSS =
   "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
+const DEFAULT_PRINT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css"
 
 var tweak_bb_active_url_pattern = "listContent.jsp";
 
@@ -1175,13 +1176,14 @@ function checkParams(contentInterface, wordDoc) {
   paramsObj.scrollTo = true;
   paramsObj.cssURL = DEFAULT_CSS;
   paramsObj.downloadPDF = false;
+  paramsObj.downloadPDFURL = DEFAULT_PRINT_CSS;
 
   // Check parameters in the Content Interface item title
   if (contentInterface.length > 0) {
     var contentInterfaceTitle = jQuery.trim(contentInterface.text());
 
     var m = contentInterfaceTitle.match(/content interface\s*([^<]+)/i);
-
+    let x;
     if (m) {
       //params = m[1].match(/\S+/g);
       params = parse_parameters(m[1]);
@@ -1202,6 +1204,11 @@ function checkParams(contentInterface, wordDoc) {
           }
           if (element.match(/downloadpdf/i)) {
             paramsObj.downloadPDF = true;
+
+            x = element.match(/downloadpdf=(.*)/i); 
+            if (x && isValidHttpUrl(x[1])) {
+              paramsObj.downloadPDFURL = x[1];
+            }
           }
           /*if ( x = element.match(/wordDoc=([^ ]*)/i) ) {
                         paramsObj.wordDoc = x[1];
@@ -2797,6 +2804,26 @@ function identifyCardBackgroundColour(input) {
 function identifyPicUrl(value) {
   return value;
 }
+
+/**
+ * @function isValidHttpUrl
+ * @param {String} string
+ * @returns true if string is a valid HTTP url, false otherwise
+ * HT: https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
+ */
+
+function  isValidHttpUrl(string){
+  let url;
+  
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;  
+  }
+
+  return url.protocol === "http:" || url.protocol === "https:";
+}
+
 
 //*********************
 // getTermDate( week )
@@ -5259,6 +5286,26 @@ const PRINT_URLS = {
     "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EfbbHGlX41dKlGvqevLCFwMBJ0Hsbg8w2iJXRGjpy_kFHA?e=4nfk2o",
 };
 
+/**
+ * @function processHtmltoPrint
+ * @param {HTML String} contents 
+ * @returns converted HTML string
+ * Modify the contents HTML to make it ready to work for a PDF document
+ */
+
+function processHtmlToPrint( contents ) {
+
+  let obj = jQuery.parseHTML(contents);
+  jQuery(obj).find('.accordion-expand-holder').remove();
+  return jQuery(obj).prop('outerHTML');
+}
+
+/**
+ * @function printPDF
+ * @param {Event} e 
+ * Given an event (on click) open up a window with converted content rady
+ * to download a PDF
+ */
 function printPDF(e) {
   console.log("Printing PDF");
   e.stopPropagation();
@@ -5274,18 +5321,28 @@ function printPDF(e) {
   let divContents = jQuery("#GU_ContentInterface").html();
   let title = jQuery("#pageTitleText").text();
 
+
+  let string=`
+  <html>
+    <head>
+      <title>${title}</title>
+      <link rel="stylesheet" href="${PARAMS.downloadPDFURL}" />
+    </head>
+    <body>
+      <div id="GU_ContentInterface">
+        ${divContents}
+      </div>
+    </body>
+  </html>`;
+
+  let newString = processHtmlToPrint( string);
   // print it
   let printWindow = window.open('', '', 'height=400,width=800');
-  printWindow.document.write('<html><head><title>DIV Contents</title>');
-  printWindow.document.write('<link rel="stylesheet" href="https://djon.es/gu/com14_study.css" />');
-  printWindow.document.write('</head><body >');
-  printWindow.document.write('<div id="GU_ContentInterface">');
-  printWindow.document.write(divContents);
-  printWindow.document.write('</div>');
-  printWindow.document.write('</body></html>');
+  printWindow.document.write( string );
   printWindow.document.close();
+
   printWindow.print();
-//  printWindow.close();
+  printWindow.close();
 }
 
 function addExpandPrintButtons() {
