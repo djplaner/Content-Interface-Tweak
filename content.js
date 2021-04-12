@@ -1622,12 +1622,12 @@ function addReviewLink(item, reviewLink) {
   var reviewHeadingTemplate = "";
   if (reviewLink.match(/markUnreviewed/)) {
     reviewHeadingTemplate = `
-      <span style="float:right" class="ui-state-disabled ui-corner-all">{TEXT}</span>
+      <span style="float:right" class="gu-ci-review ui-state-disabled ui-corner-all">{TEXT}</span>
       `;
     reviewHeadingTemplate = reviewHeadingTemplate.replace("{TEXT}", REVIEWED);
   } else {
     reviewHeadingTemplate = `
-          <span style="float:right" class="ui-state-active ui-corner-all">{TEXT}</span>
+          <span style="float:right" class="gu-ci-review ui-state-active ui-corner-all">{TEXT}</span>
           `;
     reviewHeadingTemplate = reviewHeadingTemplate.replace(
       "{TEXT}",
@@ -1644,7 +1644,7 @@ function addReviewLink(item, reviewLink) {
   if (reviewLink.match(/markUnreviewed/)) {
     reviewBodyTemplate = `
           <!--<div class="p-4 absolute pin-l" style="float:right">-->
- <div class="p-4" style="margin:auto; width:100%; text-align:right">
+ <div class="p-4 gu-ci-review" style="margin:auto; width:100%; text-align:right">
      <a class="gu-bb-review" href="{LINK}"><button class="bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded">
                      <span class="font-bold rounded-full px-2 py-1 bg-green text-white">&#10003; {TEXT}</span>&nbsp;</button></a>
  </div>
@@ -1652,7 +1652,7 @@ function addReviewLink(item, reviewLink) {
     reviewBodyTemplate = reviewBodyTemplate.replace("{TEXT}", REVIEWED);
   } else {
     reviewBodyTemplate = `
- <div class="p-4" style="margin:auto; width:100%; text-align:right"> 
+ <div class="p-4 gu-ci-review" style="margin:auto; width:100%; text-align:right"> 
       <a class="gu-bb-review" href="{LINK}"><button class="bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded">
       <span class="font-bold rounded-full px-2 py-1 bg-yellow text-black">&#x26a0;</span>&nbsp; {TEXT}</button></a>
  </div>
@@ -5287,17 +5287,27 @@ const PRINT_URLS = {
 };
 
 /**
- * @function processHtmltoPrint
- * @param {HTML String} contents 
- * @returns converted HTML string
- * Modify the contents HTML to make it ready to work for a PDF document
+ * @function prepareForPrint
+ * @param {Element} document 
+ * Modify the given document to prepare it for printing
+ * - remove accordions
  */
 
-function processHtmlToPrint( contents ) {
+function prepareForPrint( document ) {
 
-  let obj = jQuery.parseHTML(contents);
-  jQuery(obj).find('.accordion-expand-holder').remove();
-  return jQuery(obj).prop('outerHTML');
+  // remove expand buttons
+  document.querySelector(".accordion-expand-holder").style.display="none";
+
+  // remove mark reviewed buttons
+  document.querySelectorAll("div.gu-ci-review").forEach(
+    button => { button.style.display = "none"}
+  );
+
+  // remove the mark reviewed label in the accordions
+  document.querySelectorAll("span.gu-ci-review").forEach(
+    button => { button.style.display = "none"}
+  );
+
 }
 
 /**
@@ -5335,11 +5345,12 @@ function printPDF(e) {
     </body>
   </html>`;
 
-  let newString = processHtmlToPrint( string);
   // print it
   let printWindow = window.open('', '', 'height=400,width=800');
   printWindow.document.write( string );
   printWindow.document.close();
+
+  prepareForPrint(printWindow.document);
 
   printWindow.print();
   printWindow.close();
