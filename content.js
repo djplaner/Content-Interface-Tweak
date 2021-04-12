@@ -5296,6 +5296,7 @@ const PRINT_URLS = {
 function extractAndCategoriseLinks( document ){
 
   let urls = {};
+  const blackboardPattern=new RegExp('^/webapps/blackboard')
 
   // generate a unique list of links
   // key is the href, value is the anchor text
@@ -5304,8 +5305,28 @@ function extractAndCategoriseLinks( document ){
   let nodeList = document.querySelectorAll("a");
 
   for (let i=0; i<nodeList.length; i++){
-    urls[nodeList[i].href] = nodeList[i].innerText;
+    // skip the review links
+    if ( nodeList[i].className.includes("gu-bb-review")){
+      continue;
+    }
+    // skip links without href
+    if ( ! nodeList[i].hasAttribute("href")){
+      continue;
+    }
+
+    // distinguish between external and Blackboard links
+    let type = "ExternalLink";
+    if ( blackboardPattern.test(nodeList[i].href)){
+      type = "BlackboardLink";
+    }
+
+    urls[nodeList[i].href] = {
+      'text': nodeList[i].innerText,
+      'type': type
+    }
   } 
+
+  //
 
   return urls;
 }
@@ -5320,14 +5341,25 @@ function extractAndCategoriseLinks( document ){
 function addLinksForPrint( document, urls) {
   let list = '';
   for ( let href in urls ) {
-    list = list.concat( ` <li> ${urls[href]} - ${href} </li> `);
+    list = list.concat( ` <li> ${urls[href].text} - ${href} </li> `);
   }
 
+  let videoHTML='';
+
   let html = `
-  <h1>Links in the document</h1>
+  <h1>Online Exclusive Materials</h1>
+
+  <p>This document makes reference to the following online resources.</p>
+
+  ${videoHTML}
+
+  <h2>External Links</h2>
   <ul>
     ${list}
   </ul>
+
+  <h2>Blackboad Links</h2>
+
   `;
 
   let linkDiv = document.createElement('div');
