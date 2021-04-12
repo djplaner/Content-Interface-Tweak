@@ -5286,6 +5286,57 @@ const PRINT_URLS = {
     "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EfbbHGlX41dKlGvqevLCFwMBJ0Hsbg8w2iJXRGjpy_kFHA?e=4nfk2o",
 };
 
+
+/**
+ * @function extractAndCategoriseLinks
+ * @param {Element} document 
+ * @returns dictionary of URLs with categories
+ */
+
+function extractAndCategoriseLinks( document ){
+
+  let urls = {};
+
+  // generate a unique list of links
+  // key is the href, value is the anchor text
+  // - ignore mark review links
+  // - transform Blackboard links
+  let nodeList = document.querySelectorAll("a");
+
+  for (let i=0; i<nodeList.length; i++){
+    urls[nodeList[i].href] = nodeList[i].innerText;
+  } 
+
+  return urls;
+}
+
+/**
+ * @function addLinksForPrint
+ * @param {Element} document 
+ * @param {Object} urls (dictionary)
+ * Add some HTML to the end of the document containing details of the links
+ */
+
+function addLinksForPrint( document, urls) {
+  let list = '';
+  for ( let href in urls ) {
+    list = list.concat( ` <li> ${urls[href]} - ${href} </li> `);
+  }
+
+  let html = `
+  <h1>Links in the document</h1>
+  <ul>
+    ${list}
+  </ul>
+  `;
+
+  let linkDiv = document.createElement('div');
+  linkDiv.id = 'gu-ci-links';
+  linkDiv.innerHTML = html;
+  document.body.appendChild(linkDiv);
+
+}
+
 /**
  * @function prepareForPrint
  * @param {Element} document 
@@ -5307,6 +5358,10 @@ function prepareForPrint( document ) {
   document.querySelectorAll("span.gu-ci-review").forEach(
     button => { button.style.display = "none"}
   );
+
+  // extract and categorise links
+  let urls = extractAndCategoriseLinks( document );
+  addLinksForPrint( document, urls);
 
 }
 
