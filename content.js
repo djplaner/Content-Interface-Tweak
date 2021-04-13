@@ -5332,30 +5332,67 @@ function extractAndCategoriseLinks( document ){
 }
 
 /**
+ * @function extractAndCategoriseEmbeds
+ * @param {Element} document 
+ * @returns dictionary of embed information
+ */
+
+ function extractAndCategoriseEmbeds( document ){
+
+  let embeds = {};
+
+  // generate a unique list of embeds
+  let nodeList = document.querySelectorAll("iframe");
+
+  for (let i=0; i<nodeList.length; i++){
+    // skip embeds without src
+    if ( ! nodeList[i].hasAttribute("src")){
+      continue;
+    }
+
+    embeds[nodeList[i].src] = {
+      'text': `some iframe ${nodeList[i].innerText}`
+    }
+  } 
+
+  return embeds;
+}
+
+
+/**
  * @function addLinksForPrint
  * @param {Element} document 
- * @param {Object} urls (dictionary)
+ * @param {Object} urls (dictionary) - details for all links
+ * @param {Object} embeds (dictionary) - details for all embeds
  * Add some HTML to the end of the document containing details of the links
  */
 
-function addLinksForPrint( document, urls) {
-  let list = '';
+function addLinksForPrint( document, urls, embeds) {
+  let linkList = '';
+  let embedList = '';
   for ( let href in urls ) {
-    list = list.concat( ` <li> ${urls[href].text} - ${href} </li> `);
+    linkList = linkList.concat( ` <li> ${urls[href].text} - ${href} </li> `);
   }
 
-  let videoHTML='';
+  for ( let src in embeds) {
+    embedList = embedList.concat( 
+      ` <li> <a href="${src}">${embeds[src].text}</a> </li>`);
+  }
+
+  let videoHTML=`<ul> ${embedList} </ul>`;
 
   let html = `
   <h1>Online Exclusive Materials</h1>
 
   <p>This document makes reference to the following online resources.</p>
 
+  <h2>Videos and other embedded materials</h2>
+
   ${videoHTML}
 
   <h2>External Links</h2>
   <ul>
-    ${list}
+    ${linkList}
   </ul>
 
   <h2>Blackboad Links</h2>
@@ -5393,7 +5430,8 @@ function prepareForPrint( document ) {
 
   // extract and categorise links
   let urls = extractAndCategoriseLinks( document );
-  addLinksForPrint( document, urls);
+  let embeds = extractAndCategoriseEmbeds( document)
+  addLinksForPrint( document, urls, embeds);
 
 }
 
