@@ -5372,15 +5372,33 @@ function categoriseEmbeds(src) {
         videoUrl: videoUrl,
         activity: "filmWatchingOptions",
       };
+    } else {
+      return {
+        videoHtml: `<p>Unable to recognise format of video URL: ${src}</p>`,
+        videoUrl: src,
+        activity: "error"
+      }
     }
   }
 
   if (service.includes("youtube.com")) {
-    return {
-      videoHtml: `<p>This is a youtube video`,
-      videoUrl: src,
-      activity: "filmWatchingOptions",
-    };
+    let pattern = new RegExp("^https://[^/]*/embed/([^/]*)");
+    match = src.match(pattern);
+    if (match) {
+      let videoId = match[1];
+      let videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+      return {
+        videoHtml: `<p>Video can be watched at <a href="${videoUrl}">${videoUrl}</a></p>`,
+        videoUrl: src,
+        activity: "filmWatchingOptions",
+      };
+    } else {
+      return {
+        videoHtml: `<p>Unable to recognise format of video URL: ${src}</p>`,
+        videoUrl: src,
+        activity: "error"
+      }
+    }
   }
 
   if (service.includes("h5p.com")) {
@@ -5428,6 +5446,54 @@ function extractAndCategoriseEmbeds(document) {
   }
 
   return embeds;
+}
+
+/**
+ * @function replaceEmbeds
+ * @param {Element} document - node containing content interface
+ * @param {dictionary} embeds - collection of information about all embeds
+ * For each embed, replace the iframe/span.embed in the document with
+ * appropriate HTML for print
+ */
+
+function replaceEmbeds(document, embeds) {
+  // generate a unique list of embeds
+  let nodeList = document.querySelectorAll("iframe");
+
+  // loop through the embeds
+  for (let i = 0; i < nodeList.length; i++) {
+    // skip embeds without src
+    if (!nodeList[i].hasAttribute("src")) {
+      continue;
+    }
+    // does it match any of the embeds
+    let src = nodeList[i].src;
+    let html = "";
+
+    if (src in embeds) {
+      if (embeds[src].activity === "Activity") {
+        html = `
+          <div class="activityImage"></div>
+          ${embeds[src].videoHtml}
+        `;
+      } else if (embeds[src].activity === "filmWatchingOptions") {
+        html = `
+          <div class="filmWatchingOptionsImage"></div>
+          <div class="instructions">
+            ${embeds[src].videoHtml}
+          </div>
+        `;
+      }
+
+      // replace the node if html is something
+      if (html !== "") {
+        let newNode = document.createElement("div");
+        newNode.className = embeds[src].activity;
+        newNode.innerHTML = html;
+        nodeList[i].parentNode.replaceChild(newNode, nodeList[i]);
+      }
+    }
+  }
 }
 
 /**
@@ -5501,6 +5567,9 @@ function prepareForPrint(document) {
   // extract and categorise links
   let urls = extractAndCategoriseLinks(document);
   let embeds = extractAndCategoriseEmbeds(document);
+  // Replace all the embeds
+  replaceEmbeds(document, embeds);
+  // add the "Online exclusive" section to the end of the document
   addLinksForPrint(document, urls, embeds);
 }
 
