@@ -17,7 +17,8 @@ var REVIEWED = "Reviewed";
 
 var DEFAULT_CSS =
   "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
-const DEFAULT_PRINT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css"
+const DEFAULT_PRINT_CSS =
+  "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css";
 
 var tweak_bb_active_url_pattern = "listContent.jsp";
 
@@ -496,17 +497,17 @@ function contentInterface($) {
 
 /**
  * @function removeBlackboardIcon
- * @param {Object} contentInterface jQuery object for where the card interface will go 
+ * @param {Object} contentInterface jQuery object for where the card interface will go
  * @description If exists, update cardInterface to remove Blackboard icon
  */
 
-function removeBlackboardIcon( contentInterface) {
-    let container = jQuery(contentInterface).parent().parent();
-    // hide the icon
-    let icon = jQuery(container ).find( "img.item_icon").css("display", "none");
-    // update the padding on the div
-    let div = jQuery(container).find("div.details").css("padding-left", "10px");
- }
+function removeBlackboardIcon(contentInterface) {
+  let container = jQuery(contentInterface).parent().parent();
+  // hide the icon
+  let icon = jQuery(container).find("img.item_icon").css("display", "none");
+  // update the padding on the div
+  let div = jQuery(container).find("div.details").css("padding-left", "10px");
+}
 
 /************************************************************************
  * getHrefId( href )
@@ -1205,7 +1206,7 @@ function checkParams(contentInterface, wordDoc) {
           if (element.match(/downloadpdf/i)) {
             paramsObj.downloadPDF = true;
 
-            x = element.match(/downloadpdf=(.*)/i); 
+            x = element.match(/downloadpdf=(.*)/i);
             if (x && isValidHttpUrl(x[1])) {
               paramsObj.downloadPDFURL = x[1];
             }
@@ -1424,7 +1425,6 @@ function createBunchesCards(bunch, index, arr) {
  */
 
 function addCardClickHandler() {
-
   /* Make all of the cards clickable by adding an event handler  */
   // Does this unwrap actually do anything???
   //jQuery( ".cardmainlink[href='undefined'" ).contents().unwrap();
@@ -2812,18 +2812,17 @@ function identifyPicUrl(value) {
  * HT: https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
  */
 
-function  isValidHttpUrl(string){
+function isValidHttpUrl(string) {
   let url;
-  
+
   try {
     url = new URL(string);
   } catch (_) {
-    return false;  
+    return false;
   }
 
   return url.protocol === "http:" || url.protocol === "https:";
 }
-
 
 //*********************
 // getTermDate( week )
@@ -4929,8 +4928,9 @@ function convertMedia(html, filmName) {
 // - if so add a print button to
 
 const PRINT_URLS = {
-    // documentation test
-    id73051159979391: "https://griffitheduau-my.sharepoint.com/:b:/g/personal/d_jones6_griffith_edu_au/EVMNSeQAeJtMkbOkgRxusq8B-JyQ2x-_dfC8T_KwDVmXHA?e=cb1WzM",
+  // documentation test
+  id73051159979391:
+    "https://griffitheduau-my.sharepoint.com/:b:/g/personal/d_jones6_griffith_edu_au/EVMNSeQAeJtMkbOkgRxusq8B-JyQ2x-_dfC8T_KwDVmXHA?e=cb1WzM",
   // CWR110_2211
   id90727159775401:
     "https://griffitheduau.sharepoint.com/:b:/r/sites/HLSSacademic/OUA/Study%20Guides%20%26%20L@G/SP1/CWR110/Study%20Guide%20PDFs/CWR110_2211/01.pdf?csf=1&web=1&e=FnVoyC",
@@ -5286,17 +5286,15 @@ const PRINT_URLS = {
     "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EfbbHGlX41dKlGvqevLCFwMBJ0Hsbg8w2iJXRGjpy_kFHA?e=4nfk2o",
 };
 
-
 /**
  * @function extractAndCategoriseLinks
- * @param {Element} document 
+ * @param {Element} document
  * @returns dictionary of URLs with categories
  */
 
-function extractAndCategoriseLinks( document ){
-
+function extractAndCategoriseLinks(document) {
   let urls = {};
-  const blackboardPattern=new RegExp('^/webapps/blackboard')
+  const blackboardPattern = new RegExp("^/webapps/blackboard");
 
   // generate a unique list of links
   // key is the href, value is the anchor text
@@ -5304,27 +5302,27 @@ function extractAndCategoriseLinks( document ){
   // - transform Blackboard links
   let nodeList = document.querySelectorAll("a");
 
-  for (let i=0; i<nodeList.length; i++){
+  for (let i = 0; i < nodeList.length; i++) {
     // skip the review links
-    if ( nodeList[i].className.includes("gu-bb-review")){
+    if (nodeList[i].className.includes("gu-bb-review")) {
       continue;
     }
     // skip links without href
-    if ( ! nodeList[i].hasAttribute("href")){
+    if (!nodeList[i].hasAttribute("href")) {
       continue;
     }
 
     // distinguish between external and Blackboard links
     let type = "ExternalLink";
-    if ( blackboardPattern.test(nodeList[i].href)){
+    if (blackboardPattern.test(nodeList[i].href)) {
       type = "BlackboardLink";
     }
 
     urls[nodeList[i].href] = {
-      'text': nodeList[i].innerText,
-      'type': type
-    }
-  } 
+      text: nodeList[i].innerText,
+      type: type,
+    };
+  }
 
   //
 
@@ -5332,54 +5330,128 @@ function extractAndCategoriseLinks( document ){
 }
 
 /**
- * @function extractAndCategoriseEmbeds
- * @param {Element} document 
- * @returns dictionary of embed information
+ * categoriseEmbeds
+ * @param {String} src iframe.src for an iframe
+ * @returns {Object} with attributes videoHtml, videoURL, activity
  */
 
- function extractAndCategoriseEmbeds( document ){
+function categoriseEmbeds(src) {
+  // is src a URL
+  // start analysing src to find the type of service
+  let servicePattern = new RegExp("^https://([^/]*)");
+  let match = src.match(servicePattern);
 
+  if (!match) {
+    return {
+      videoHtml: `<p>Could not identify a valid source URL from : ${src}`,
+      videoUrl: "",
+      activity: "error",
+    };
+  }
+
+  let service = match[1];
+
+  // a Microsoft form?
+  if (service.includes("forms.office.com")) {
+    return {
+      videoHtml: `<p>Please complete <a href="${src}">this form/survey</a></p>`,
+      videoUrl: src,
+      activity: "Activity",
+    };
+  }
+
+  // Microsoft stream
+  if (service.includes("microsoftstream.com")) {
+    let pattern = new RegExp("^https://[^/]*/embed/video/([^/?]*");
+    match = src.match(pattern);
+    if (match) {
+      let videoId = match[1];
+      let videoUrl = `https://web.microsoftstream.com/video/${videoId}`;
+      return {
+        videoHtml: `<p>Video can be watched at <a href="${videoUrl}">${videoUrl}</a></p>`,
+        videoUrl: videoUrl,
+        activity: "filmWatchingOptions",
+      };
+    }
+  }
+
+  if (service.includes("youtube.com")) {
+    return {
+      videoHtml: `<p>This is a youtube video`,
+      videoUrl: src,
+      activity: "filmWatchingOptions",
+    };
+  }
+
+  if (service.includes("h5p.com")) {
+    return {
+      videoHtml: `<p>This is a h5p element</p>`,
+      videoUrl: src,
+      activity: "",
+    };
+  }
+
+  // Didn't match any of the above
+  return {
+    videoHtml: `<p>Type of embedded resource unknown for: ${src}`,
+    videoUrl: "",
+    activity: "error",
+  };
+}
+
+/**
+ * @function extractAndCategoriseEmbeds
+ * @param {Element} document
+ * @returns dictionary of embed information
+ * Each entry is keyed on URL of iframe and will contain
+ * - videoHtml - HTML to show instead of video (inside the div of type activity)
+ * - videoUrl - the URL of the video (slightly modified from the iframe.src)
+ * - activity - type of activity (class name)?
+ */
+
+function extractAndCategoriseEmbeds(document) {
   let embeds = {};
 
   // generate a unique list of embeds
   let nodeList = document.querySelectorAll("iframe");
 
-  for (let i=0; i<nodeList.length; i++){
+  for (let i = 0; i < nodeList.length; i++) {
     // skip embeds without src
-    if ( ! nodeList[i].hasAttribute("src")){
+    if (!nodeList[i].hasAttribute("src")) {
       continue;
     }
 
-    embeds[nodeList[i].src] = {
+    embeds[nodeList[i].src] = categoriseEmbeds(nodeList[i].src);
+    /*  {
       'text': `some iframe ${nodeList[i].innerText}`
-    }
-  } 
+    }*/
+  }
 
   return embeds;
 }
 
-
 /**
  * @function addLinksForPrint
- * @param {Element} document 
+ * @param {Element} document
  * @param {Object} urls (dictionary) - details for all links
  * @param {Object} embeds (dictionary) - details for all embeds
  * Add some HTML to the end of the document containing details of the links
  */
 
-function addLinksForPrint( document, urls, embeds) {
-  let linkList = '';
-  let embedList = '';
-  for ( let href in urls ) {
-    linkList = linkList.concat( ` <li> ${urls[href].text} - ${href} </li> `);
+function addLinksForPrint(document, urls, embeds) {
+  let linkList = "";
+  let embedList = "";
+  for (let href in urls) {
+    linkList = linkList.concat(` <li> ${urls[href].text} - ${href} </li> `);
   }
 
-  for ( let src in embeds) {
-    embedList = embedList.concat( 
-      ` <li> <a href="${src}">${embeds[src].text}</a> </li>`);
+  for (let src in embeds) {
+    embedList = embedList.concat(
+      ` <li> <a href="${embeds[src].videoUrl}">${embeds[src].videoHtml}</a> </li>`
+    );
   }
 
-  let videoHTML=`<ul> ${embedList} </ul>`;
+  let videoHTML = `<ul> ${embedList} </ul>`;
 
   let html = `
   <h1>Online Exclusive Materials</h1>
@@ -5399,45 +5471,42 @@ function addLinksForPrint( document, urls, embeds) {
 
   `;
 
-  let linkDiv = document.createElement('div');
-  linkDiv.id = 'gu-ci-links';
+  let linkDiv = document.createElement("div");
+  linkDiv.id = "gu-ci-links";
   linkDiv.innerHTML = html;
   document.body.appendChild(linkDiv);
-
 }
 
 /**
  * @function prepareForPrint
- * @param {Element} document 
+ * @param {Element} document
  * Modify the given document to prepare it for printing
  * - remove accordions
  */
 
-function prepareForPrint( document ) {
-
+function prepareForPrint(document) {
   // remove expand buttons
-  document.querySelector(".accordion-expand-holder").style.display="none";
+  document.querySelector(".accordion-expand-holder").style.display = "none";
 
   // remove mark reviewed buttons
-  document.querySelectorAll("div.gu-ci-review").forEach(
-    button => { button.style.display = "none"}
-  );
+  document.querySelectorAll("div.gu-ci-review").forEach((button) => {
+    button.style.display = "none";
+  });
 
   // remove the mark reviewed label in the accordions
-  document.querySelectorAll("span.gu-ci-review").forEach(
-    button => { button.style.display = "none"}
-  );
+  document.querySelectorAll("span.gu-ci-review").forEach((button) => {
+    button.style.display = "none";
+  });
 
   // extract and categorise links
-  let urls = extractAndCategoriseLinks( document );
-  let embeds = extractAndCategoriseEmbeds( document)
-  addLinksForPrint( document, urls, embeds);
-
+  let urls = extractAndCategoriseLinks(document);
+  let embeds = extractAndCategoriseEmbeds(document);
+  addLinksForPrint(document, urls, embeds);
 }
 
 /**
  * @function printPDF
- * @param {Event} e 
+ * @param {Event} e
  * Given an event (on click) open up a window with converted content rady
  * to download a PDF
  */
@@ -5449,15 +5518,14 @@ function printPDF(e) {
   // TODO - do we need to expand all?
   let expand = jQuery(".gu_content_open, .open");
 
-  if (expand.length>0)  {
-      expand[0].click();
+  if (expand.length > 0) {
+    expand[0].click();
   }
 
   let divContents = jQuery("#GU_ContentInterface").html();
   let title = jQuery("#pageTitleText").text();
 
-
-  let string=`
+  let string = `
   <html>
     <head>
       <title>${title}</title>
@@ -5471,8 +5539,8 @@ function printPDF(e) {
   </html>`;
 
   // print it
-  let printWindow = window.open('', '', 'height=400,width=800');
-  printWindow.document.write( string );
+  let printWindow = window.open("", "", "height=400,width=800");
+  printWindow.document.write(string);
   printWindow.document.close();
 
   prepareForPrint(printWindow.document);
@@ -5485,7 +5553,7 @@ function addExpandPrintButtons() {
   // add the expand buttons
   jQuery("#GU_ContentInterface").prepend(EXPAND_COLLAPSE_BUTTON_HTML);
 
-  if (PARAMS.downloadPDF){
+  if (PARAMS.downloadPDF) {
     const print_button = `
     <button href="type="button" id="gu_downloadPDF"
       >Download JS PDF</button>
