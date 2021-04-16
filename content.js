@@ -26,8 +26,12 @@ var tweak_bb_active_url_pattern = "listContent.jsp";
 // - key indicates <div style to be preprended
 // - value is what will be prepended
 var STYLE_PREPEND = {
-  reading: `<div class="readingImage"></div>`,
-  activity: `<div class="activityImage"></div>`,
+  reading: `<div class="readingImage">
+    <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png" alt="Reading icon" />
+  </div>`,
+  activity: `<div class="activityImage">
+    <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-dancing-48.png" alt="Activity icon" />
+  </div>`,
   //"flashback" : `<img src="https://djon.es/images/flashback.png" width="25%" height="25%" style="float:right;padding:1em" alt="Flashback logo" />`,
   flashback: `<div class="flashbackImage"><img src="https://s3.amazonaws.com/filebucketdave/banner.js/images/com14/flashback.png" alt="Flashback logo" /></div>`,
   //"canaryExercise" : `<div class="canaryImage"></div>`,
@@ -37,6 +41,9 @@ var STYLE_PREPEND = {
   "ael-note": `<div class="noteImage"></div>`,
   weeklyWorkout: `<div class="weeklyWorkoutImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/weeklyWorkout.png" alt="Female weight lifter" /></div>`,
   comingSoon: `<div class="comingSoonImage"></div>`,
+  filmWatchingOptions: `<div class="filmWatchingOptionsImage">
+    <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon" \>
+  </div>`
 };
 
 //
@@ -5331,11 +5338,15 @@ function extractAndCategoriseLinks(document) {
 
 /**
  * categoriseEmbeds
- * @param {String} src iframe.src for an iframe
+ * @param {Element} iframe HTML node for iframe
  * @returns {Object} with attributes videoHtml, videoURL, activity
  */
 
-function categoriseEmbeds(src) {
+function categoriseEmbeds(span) {
+  let iframe = span.firstChild;
+  let src = iframe.src;
+  let nextNode = iframe.nextSibling;
+
   // is src a URL
   // start analysing src to find the type of service
   let servicePattern = new RegExp("^https://([^/]*)");
@@ -5362,7 +5373,7 @@ function categoriseEmbeds(src) {
 
   // Microsoft stream
   if (service.includes("microsoftstream.com")) {
-    let pattern = new RegExp("^https://[^/]*/embed/video/([^/?]*");
+    let pattern = /^https:\/\/[^\/]*\/embed\/video\/([^\/?]*)/;
     match = src.match(pattern);
     if (match) {
       let videoId = match[1];
@@ -5382,7 +5393,7 @@ function categoriseEmbeds(src) {
   }
 
   if (service.includes("youtube.com")) {
-    let pattern = new RegExp("^https://[^/]*/embed/([^/]*)");
+    let pattern = /^https:\/\/[^\/]*\/embed\/([^\/]*)/;
     match = src.match(pattern);
     if (match) {
       let videoId = match[1];
@@ -5401,13 +5412,89 @@ function categoriseEmbeds(src) {
     }
   }
 
+  // vimeo
+  if (service.includes("vimeo.com")){
+    // https://player.vimeo.com/video/185808340
+    // https://vimeo.com/185808340
+    let pattern = /^https:\/\/[^\/]*\/video\/([^\/]*)/;
+    match = src.match(pattern);
+    if (match) {
+      let videoId = match[1];
+      let videoUrl = `https://vimeo.com/${videoId}`;
+      return {
+        videoHtml: `<p>Video can be watched at <a href="${videoUrl}">${videoUrl}</a></p>`,
+        videoUrl: src,
+        activity: "filmWatchingOptions",
+      };
+    } else {
+      return {
+        videoHtml: `<p>Unable to recognise format of video URL: ${src}</p>`,
+        videoUrl: src,
+        activity: "error"
+      }
+    }
+  }
+
+  // SoundCloud
+  // - iframe can't give URL, but the next div should contain two links,
+  //   the second should be the link we want
+  if (service.includes("soundcloud.com")){
+    let link = nextNode.childNodes[2];
+    if ( typeof(link)!=="undefined" && link.nodeName==='A' &&
+           link.hasAttribute('href')) {
+      return {
+        videoHtml: `<p>Play SoundCloud audio at this URL: 
+            <a href="${link.href}">${link.href}</a></p>`,
+        videoUrl: link.href,
+        activity: "Activity"
+      }
+    } else {
+      return {
+        videoHtml: '<p>Unable to identify proper link for SoundCloud audio.</p>',
+        videoUrl: '',
+        activity: "error"
+      }
+    }
+    let url
+  }
+
+
   if (service.includes("h5p.com")) {
+    src = src.replace("/embed", "");
     return {
-      videoHtml: `<p>This is a h5p element</p>`,
+      videoHtml: `<p>A H5P resource is available from <a href="${src}">${src}</a>`,
       videoUrl: src,
-      activity: "",
+      activity: "Activity",
     };
   }
+  // griffitheduau-my.sharepoint.com/personal/d_jones6_
+  // Embed and view dependent upon parameter
+  // - https://griffitheduau-my.sharepoint.com/personal/d_jones6_griffith_edu_au/_layouts/15/Doc.aspx?
+  //  sourcedoc={10e05189-c015-406a-8c62-0cb57811affc}
+
+  if (src.includes("-my.sharepoint.com").includes("embedview")) {
+    let embedUrl = newURL( src);
+    let sourceDoc = embedUrl.searchParams('sourcedoc');
+    if ( sourceDoc!=='') {
+      let linkUrl = `${embedUrl.hostname}/${embedUrl.pathname}?${embedUrl.searchParams.get('sourcedoc')}`;
+
+      return {
+        videoHtml: `<p>A SharePoint resource can be downloaded from 
+           <a href="${linkUrl}">${linkUrl}</a></p>`,
+        videoUrl: linkUrl,
+        activity: "Reading"
+      }
+    } else {
+      return {
+        videoHtml: `<p>Unable to understand sharepoint embed - 
+          <a href="${src}">${src}</a></p>`,
+        videoUrl: '',
+        activity: 'error'
+      }
+    }
+
+  }
+
 
   // Didn't match any of the above
   return {
@@ -5431,15 +5518,20 @@ function extractAndCategoriseEmbeds(document) {
   let embeds = {};
 
   // generate a unique list of embeds
-  let nodeList = document.querySelectorAll("iframe");
+  let nodeList = document.querySelectorAll("span.embed");
 
   for (let i = 0; i < nodeList.length; i++) {
+    let iframe = nodeList[i].firstChild;
     // skip embeds without src
-    if (!nodeList[i].hasAttribute("src")) {
+ //   if (!nodeList[i].hasAttribute("src")) {
+    if ( iframe.nodeName!=='IFRAME' || ! iframe.hasAttribute("src")){
       continue;
     }
 
-    embeds[nodeList[i].src] = categoriseEmbeds(nodeList[i].src);
+    // SoundCloud can't calculate player URL from iframe.src,
+    // However typically the next div will include two soundcloud links
+    // The second is the page, can we get next element from nodeList[i]
+    embeds[iframe.src] = categoriseEmbeds(nodeList[i]);
     /*  {
       'text': `some iframe ${nodeList[i].innerText}`
     }*/
@@ -5458,16 +5550,18 @@ function extractAndCategoriseEmbeds(document) {
 
 function replaceEmbeds(document, embeds) {
   // generate a unique list of embeds
-  let nodeList = document.querySelectorAll("iframe");
+  let nodeList = document.querySelectorAll("span.embed");
 
   // loop through the embeds
   for (let i = 0; i < nodeList.length; i++) {
+    let iframe = nodeList[i].firstChild;
     // skip embeds without src
-    if (!nodeList[i].hasAttribute("src")) {
+    //if (!nodeList[i].hasAttribute("src")) {
+    if ( iframe.nodeName!=='IFRAME' || ! iframe.hasAttribute("src")){
       continue;
     }
     // does it match any of the embeds
-    let src = nodeList[i].src;
+    let src = iframe.src;
     let html = "";
 
     if (src in embeds) {
