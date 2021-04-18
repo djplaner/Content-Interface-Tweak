@@ -1,8 +1,23 @@
 {
+  "name": "content-interface-tweak",
+  "version": "1.0.0",
+  "description": "Modify HTML content in Blackboard Learn to improve interface etc.",
+  "private": true,
+  "author": "David Jones",
+  "homepage": "https://github.com/djplaner/Content-Interface-Tweak/#readme",
   "devDependencies": {
     "eslint": "^7.24.0",
-    "webpack": "5.33",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "web-cli": "*",
+    "webpack": "^5.33.2",
+    "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   }
 }

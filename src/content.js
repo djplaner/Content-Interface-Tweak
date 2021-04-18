@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable no-prototype-builtins */
 /* content
  * - Given a Blackboard page containing a content item with  
      HTML generated from Mammoth
@@ -14,6 +16,7 @@ const DEFAULT_CARD_LABEL = "Module";
 // Default reviewed/mark reviewed labels
 var MARK_REVIEWED = "Mark Reviewed";
 var REVIEWED = "Reviewed";
+var HIDE_IMAGES = false; // currently not really used
 
 var DEFAULT_CSS =
   "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
@@ -42,7 +45,7 @@ var STYLE_PREPEND = {
   weeklyWorkout: `<div class="weeklyWorkoutImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/weeklyWorkout.png" alt="Female weight lifter" /></div>`,
   comingSoon: `<div class="comingSoonImage"></div>`,
   filmWatchingOptions: `<div class="filmWatchingOptionsImage">
-    <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon" \>
+    <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon" />
   </div>`
 };
 
@@ -67,7 +70,7 @@ var PARAMS = {};
 
 // new global kludges for Cards
 var LOCATION = location.href.indexOf("listContent.jsp");
-var MODULE_NUM;
+//var MODULE_NUM;
 
 var ITEM_LINK_PARAMETERS = {
   "Content Document": {
@@ -84,19 +87,20 @@ var ITEM_LINK_PARAMETERS = {
   },
 };
 
-/****************************************************************************/
+document.addEventListener('DOMContentLoaded', contentInterface);
 
+/****************************************************************************/
 /* Main function
  * - called from the tweak
  */
 
-function contentInterface($) {
+function contentInterface() {
   // redefine contains so that it is case insensitive
   // Used to match the Blackboard headings
-  $.expr[":"].contains = $.expr.createPseudo(function (arg) {
+  jQuery.expr[":"].contains = jQuery.expr.createPseudo(function (arg) {
     return function (elem) {
       arg = arg.replace(/\u2013|\u2014/g, "-");
-      return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+      return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
     };
   });
 
@@ -117,7 +121,7 @@ function contentInterface($) {
       return function (elem) {
         arg = arg.replace(/\u2013|\u2014/g, "-");
         // Convert emdash type chars to ASCII equivalents
-        elemText = elem.textContent.trim();
+        let elemText = elem.textContent.trim();
         elemText = elemText.replace(/\u2013|\u2014/g, "-");
         arg = arg.replace(/[\u201c\u201d]/g, '"');
         elemText = elemText.replace(/[\u201c\u201d]/g, '"');
@@ -131,21 +135,21 @@ function contentInterface($) {
     });
 
   // Find the item in which the content is contained
-  var contentInterface = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element)
+  var contentInterface = jQuery(window.tweak_bb.page_id + " > " + window.tweak_bb.row_element)
     .find(".item h3")
-    .filter(function (x) {
+    .filter(function () {
       return this.innerText.toLowerCase().includes("content interface");
     })
     .eq(0);
   // Find any Word Document link that's been added
-  var wordDoc = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element)
+  var wordDoc = jQuery(window.tweak_bb.page_id + " > " + window.tweak_bb.row_element)
     .find(".item h3")
     .filter(':contains("Content Document")')
     .eq(0);
 
   calculateTerm();
 
-  params = checkParams(contentInterface, wordDoc);
+  let params = checkParams(contentInterface, wordDoc);
   // kludge for jQuery each functions
   PARAMS = params;
   setUpEdit(contentInterface, params);
@@ -153,7 +157,7 @@ function contentInterface($) {
   // check parameters passed in
   // Hide the tweak if we're not editing
   if (location.href.indexOf("listContent.jsp") > 0) {
-    $(".gutweak").parents("li").hide();
+    jQuery(".gutweak").parents("li").hide();
     contentInterface.parents("div.item").hide();
     jQuery(wordDoc).hide();
 
@@ -213,7 +217,7 @@ function contentInterface($) {
   // Add a <div> </div> around all the content following H1s
   jQuery("#GU_ContentInterface h1").each(function () {
     // Kludge test for changing colour
-    title = jQuery(this).text();
+    //let title = jQuery(this).text();
 
     jQuery(this)
       .nextUntil("h1")
@@ -255,7 +259,7 @@ function contentInterface($) {
 
   // convert the embed code
   var embeds = jQuery(".embed");
-  embeds.each(function (idx) {
+  embeds.each(function () {
     var embed = jQuery(this).html();
     var decoded = jQuery("<div/>").html(embed).text();
     jQuery(this).html(decoded);
@@ -263,12 +267,12 @@ function contentInterface($) {
 
   // Find all the div.picture and add a <p> </p> around
   // text after the image
-  jQuery("#GU_ContentInterface div.picture").each(function (idx) {
+  jQuery("#GU_ContentInterface div.picture").each(function () {
     jQuery(this).children("img").after("<br />");
     //console.log("Picture found " + jQuery(this).text()) ;
     //console.log("Picture found after text " + jQuery(afterImage));
   });
-  jQuery("#GU_ContentInterface div.pictureRight").each(function (idx) {
+  jQuery("#GU_ContentInterface div.pictureRight").each(function () {
     jQuery(this).children("img").after("<br />");
     //console.log("Picture found " + jQuery(this).text()) ;
     //console.log("Picture found after text " + jQuery(afterImage));
@@ -280,13 +284,13 @@ function contentInterface($) {
   jQuery("#GU_ContentInterface table").addClass(TABLE_CLASS);
 
   // center contents of table cells that contain span class strongCentered
-  jQuery("#GU_ContentInterface span.strongCentered").each(function (idx) {
+  jQuery("#GU_ContentInterface span.strongCentered").each(function () {
     if (jQuery(this).parent().parent().is("td")) {
       jQuery(this).parent().parent().css("text-align", "center");
     }
   });
 
-  jQuery("#GU_ContentInterface span.centered").each(function (idx) {
+  jQuery("#GU_ContentInterface span.centered").each(function () {
     if (jQuery(this).parent().parent().is("td")) {
       jQuery(this).parent().parent().css("text-align", "center");
     }
@@ -296,24 +300,24 @@ function contentInterface($) {
   // *%&^$ Bb change to editor
   jQuery("#GU_ContentInterface")
     .find("div.vtbegenerated_div")
-    .replaceWith(function () {
+    .replaceWith(function (x) {
       return jQuery("<p />", { html: jQuery(this).html() });
     });
 
   // check for any spans class checkbox and replace with checkbox
-  jQuery("#GU_ContentInterface span.checkbox").each(function (idx) {
+  jQuery("#GU_ContentInterface span.checkbox").each(function () {
     //console.log(idx + " found checkbox " + jQuery(this).html());
     jQuery(this).html(CHECKBOX);
   });
 
   // convert all external links to open in another window
   // Also convert blaed links to normal bblean links
-  jQuery("#GU_ContentInterface a").each(function (idx) {
+  jQuery("#GU_ContentInterface a").each(function () {
     // check if it's a blackboard link
     // but ignore any with class gu-bb-review, these are added for
     // review status
 
-    linkClass = jQuery(this).attr("class");
+    let linkClass = jQuery(this).attr("class");
     if (linkClass === "gu-bb-review") {
       return;
     }
@@ -343,7 +347,7 @@ function contentInterface($) {
   addExpandPrintButtons();
 
   // Apply the jQuery accordion
-  accordionDisabled = false;
+  let accordionDisabled = false;
 
   if (params.noAccordion === true) {
     // This actually greys out the accordion, rather than not
@@ -361,8 +365,8 @@ function contentInterface($) {
     //autoHeight:true
     heightStyle: "content",
     activate: function (event, ui) {
-      if (!$.isEmptyObject(ui.newHeader.offset())) {
-        $("html:not(:animated), body:not(:animated)").animate(
+      if (!jQuery.isEmptyObject(ui.newHeader.offset())) {
+        jQuery("html:not(:animated), body:not(:animated)").animate(
           { scrollTop: ui.newHeader.offset().top },
           "slow"
         );
@@ -445,7 +449,7 @@ function contentInterface($) {
 
   var start = window.location.hash.substring(1);
   var end;
-  numAccordions = jQuery(".accordion_top").length;
+  let numAccordions = jQuery(".accordion_top").length;
   start = parseInt(start, 10) - 1;
   if (!Number.isInteger(start) || start > numAccordions - 1) {
     start = 0;
@@ -511,9 +515,9 @@ function contentInterface($) {
 function removeBlackboardIcon(contentInterface) {
   let container = jQuery(contentInterface).parent().parent();
   // hide the icon
-  let icon = jQuery(container).find("img.item_icon").css("display", "none");
+  jQuery(container).find("img.item_icon").css("display", "none");
   // update the padding on the div
-  let div = jQuery(container).find("div.details").css("padding-left", "10px");
+  jQuery(container).find("div.details").css("padding-left", "10px");
 }
 
 /************************************************************************
@@ -527,7 +531,7 @@ function removeBlackboardIcon(contentInterface) {
 function getHrefId(href) {
   let courseId, contentId;
   // get the courseId
-  m = href.match(/^.*course_id=(_[0-9_]+).*$/);
+  let m = href.match(/^.*course_id=(_[0-9_]+).*$/);
   if (!m) {
     return href;
   }
@@ -635,7 +639,7 @@ function handleFootNotes() {
       //"https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.js",
       "https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.min.js",
       function () {
-        docWidth = Math.floor(jQuery(document).width() / 2);
+        const docWidth = Math.floor(jQuery(document).width() / 2);
         jQuery(".ci-tooltip").tooltipster({ maxWidth: docWidth });
       }
     );
@@ -812,10 +816,10 @@ var CONTENT_INTERFACE_NOT_PRESENT = `
  <p>Such a content item is required before the Content Interface tweak can function.</p>
  `;
 
-var OLD_INSTRUCTIONS = `
+/*var OLD_INSTRUCTIONS = `
  <h3>Detailed documentation</h3>
  <p>See <a href="https://griffitheduau-my.sharepoint.com/:w:/g/personal/d_jones6_griffith_edu_au/EUbAQvhxLW1MicRKf9Hof3sBIoS2EyJP_SfkYbqZ7c3qhw?e=2S9k3Y" target="_blank" rel="noreferrer noopener">this Word document</a> for more detailed documentation on creating and changing content.</p>
- `;
+ `; */
 
 var INSTRUCTIONS = `
 <h3>How do I...</h3>
@@ -1078,11 +1082,11 @@ function setUpEdit(ci, params) {
   //    will contain a simple path (probably only works for me)
   // -- eventually should be a link that works for all with access
 
-  current = window.location.href;
+  const current = window.location.href;
   var courseId;
   var contentId;
 
-  m = current.match(/^.*course_id=(_[^&#]*).*$/);
+  let m = current.match(/^.*course_id=(_[^&#]*).*$/);
   if (m) {
     courseId = m[1];
   }
@@ -1144,7 +1148,7 @@ function setUpEdit(ci, params) {
   // Set up the click event for the submit button
   // get the courseId
 
-  jQuery("#guUpdate").click(function (event) {
+  jQuery("#guUpdate").click(function () {
     // if href currently includes blaed then add parameter
     var blaed = "";
     var link = window.location.href;
@@ -1194,7 +1198,7 @@ function checkParams(contentInterface, wordDoc) {
     let x;
     if (m) {
       //params = m[1].match(/\S+/g);
-      params = parse_parameters(m[1]);
+      let params = parse_parameters(m[1]);
       if (params) {
         params.forEach(function (element) {
           if (element.match(/nofirstscroll/i)) {
@@ -1265,7 +1269,7 @@ function checkParams(contentInterface, wordDoc) {
         }*/
 
     // element is the h3 wrapped around the link
-    element = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element)
+    let element = jQuery(window.tweak_bb.page_id + " > " + window.tweak_bb.row_element)
       .find(".item h3")
       .filter(':contains("' + paramKey + '")')
       .eq(0);
@@ -1358,7 +1362,7 @@ function handleBlackboardCards() {
 
   // initial  module_num for all cards at the start to have
   // consistent numbering across all bunches
-  MODULE_NUM = 1;
+  //MODULE_NUM = 1;
   listOfCardBunches.forEach(createBunchesCards);
   addCardClickHandler();
 }
@@ -1406,7 +1410,7 @@ function createBunchesCards(bunch, index, arr) {
 
   // location to insert the cards, just before the first element in
   // this bunch (all the elements should be hidden)
-  place = jQuery(bunch[0].originalHTMLElement).before();
+  let place = jQuery(bunch[0].originalHTMLElement).before();
   addCardInterface(cards, place);
 
   /** ------ cards should be created by now -- */
@@ -1436,12 +1440,12 @@ function addCardClickHandler() {
   // Does this unwrap actually do anything???
   //jQuery( ".cardmainlink[href='undefined'" ).contents().unwrap();
   //return true;
-  cards = document.querySelectorAll(".clickablecard");
+  let cards = document.querySelectorAll(".clickablecard");
   //var cards = document.querySelectorAll(".cardmainlink");
-  for (i = 0; i < cards.length; i++) {
+  for (let i = 0; i < cards.length; i++) {
     cards[i].addEventListener(
       "click",
-      function (e) {
+      function () {
         var link = this.querySelector(".cardmainlink");
 
         if (link !== null) {
@@ -1469,7 +1473,7 @@ function getCardBbItem(element) {
   //console.log( "--- element text is " + title );
 
   /* Find the matching Blackboard element heading (h3) */
-  var bbItem = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(
+  var bbItem = jQuery(window.tweak_bb.page_id + " > " + window.tweak_bb.row_element).find(
     "h3:textEquals(" + title + ")"
   );
 
@@ -1504,7 +1508,7 @@ function handleBlackboardItem() {
   var hidden_string = " (not currently available)";
 
   // get the title from the Blackboard Item Heading (2)
-  title = jQuery(this).text();
+  let title = jQuery(this).text();
 
   // define pseudo function to do comparison to get exact match, but
   // case insensitive
@@ -1512,7 +1516,7 @@ function handleBlackboardItem() {
   /* Find the matching Blackboard element heading (h3) */
   // Ignore any within the Content Interface
   var bbItem = jQuery("h3:textEquals(" + title + ")").filter(function () {
-    parent = jQuery(this).parents("#GU_ContentInterface");
+    let parent = jQuery(this).parents("#GU_ContentInterface");
     return parent.length === 0;
   });
 
@@ -1521,7 +1525,7 @@ function handleBlackboardItem() {
 
   if (bbItem.length === 0) {
     // add the hidden_string to the heading
-    linkText = jQuery(this).text();
+    let linkText = jQuery(this).text();
     jQuery(this).text(linkText + hidden_string);
 
     // add the hidden_string to the link
@@ -1543,7 +1547,7 @@ function handleBlackboardItem() {
     //**** Handle review status
     /*console.log("Handle review status");
         console.log(bbItem);*/
-    reviewLink = getReviewStatusContent(bbItem);
+    let reviewLink = getReviewStatusContent(bbItem);
     //console.log("title " + title + " review link is " + reviewLink);
     if (typeof reviewLink !== "undefined") {
       //-- update the title
@@ -1575,15 +1579,15 @@ function handleBlackboardItem() {
     }
 
     // check to see if the item is actually hidden
-    hidden = jQuery(bbItem)
+    let hidden = jQuery(bbItem)
       .parent()
       .next()
       .find(".contextItemDetailsHeaders")
       .filter(":contains('Item is hidden from students.')");
-    loc = location.href.indexOf("listContent.jsp");
+    //let loc = location.href.indexOf("listContent.jsp");
     if (hidden.length === 1) {
       // add the hidden_string to the heading
-      linkText = jQuery(this).text();
+      let linkText = jQuery(this).text();
       jQuery(this).text(linkText + hidden_string);
       // add the hidden_string to the end of each .blackboardlink
       jQuery(this)
@@ -1620,7 +1624,7 @@ function handleBlackboardItem() {
 // - Modify the content
 
 function addReviewLink(item, reviewLink) {
-  linkText = jQuery(item).text();
+  let linkText = jQuery(item).text();
 
   // Add text to the heading
   //var MARK_REVIEWED = "Mark Reviewed"
@@ -1644,9 +1648,9 @@ function addReviewLink(item, reviewLink) {
   jQuery(item).html(linkText + reviewHeadingTemplate);
 
   // change the body"
-  content = jQuery(item).next();
+  let content = jQuery(item).next();
 
-  reviewBodyTemplate = "";
+  let reviewBodyTemplate = "";
 
   if (reviewLink.match(/markUnreviewed/)) {
     reviewBodyTemplate = `
@@ -1686,7 +1690,7 @@ function getReviewStatusContent(header) {
   //console.log(details);
 
   // check to see if it has the anchor with class button-5
-  review = jQuery(details).find("a.button-5");
+  let review = jQuery(details).find("a.button-5");
 
   if (review.length === 0) {
     return undefined;
@@ -1711,7 +1715,7 @@ function handleBlackboardContentLink() {
   // get the title from the Blackboard Item Heading (2)
   // This should be getting the parent of the spane, which is a link
   // Not heading 2.
-  title = jQuery(this).parent().attr("href");
+  let title = jQuery(this).parent().attr("href");
 
   if (typeof title === "undefined") {
     title = jQuery(this).find("a").first().attr("href");
@@ -1737,7 +1741,7 @@ function handleBlackboardContentLink() {
     });
 
   /* Find the matching Blackboard element heading (h3) */
-  var bbItem = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(
+  var bbItem = jQuery(window.tweak_bb.page_id + " > " + window.tweak_bb.row_element).find(
     "h3:textEquals(" + title + ")"
   );
 
@@ -1747,7 +1751,7 @@ function handleBlackboardContentLink() {
 
   if (bbItem.length === 0) {
     // not found, so add hidden_string
-    spanText = jQuery(this).text();
+    let spanText = jQuery(this).text();
     jQuery(this).text(spanText + hidden_string);
   } else if (bbItem.length > 1) {
     console.log(
@@ -1778,15 +1782,15 @@ function handleBlackboardContentLink() {
     }
 
     // check to see if the item is actually hidden
-    hidden = jQuery(bbItem)
+    let hidden = jQuery(bbItem)
       .parent()
       .next()
       .find(".contextItemDetailsHeaders")
       .filter(":contains('Item is hidden from students.')");
-    loc = location.href.indexOf("listContent.jsp");
+    //let loc = location.href.indexOf("listContent.jsp");
     if (hidden.length === 1) {
       // add the hidden_string to the heading
-      linkText = jQuery(this).text();
+      let linkText = jQuery(this).text();
       jQuery(this).text(linkText + hidden_string);
       // add the hidden_string to the end of each .blackboardlink
       return true;
@@ -1824,7 +1828,7 @@ function handleBlackboardMenuLink() {
   // the title is the value of the link associated with the item
   // Either parent or child
   var linkParent = true;
-  title = jQuery(this).parent().attr("href");
+  let title = jQuery(this).parent().attr("href");
   if (typeof title === "undefined") {
     linkParent = false;
     title = jQuery(this).children("a").first().attr("href");
@@ -1841,7 +1845,7 @@ function handleBlackboardMenuLink() {
   // how many did we find?
   if (bbItem.length === 0) {
     // not found, so add hidden_string
-    spanText = jQuery(this).text();
+    let spanText = jQuery(this).text();
     jQuery(this).text(spanText + hidden_string);
   } else if (bbItem.length > 1) {
     console.log(
@@ -1850,16 +1854,16 @@ function handleBlackboardMenuLink() {
         ") entries matching " +
         title
     );
-    spanText = jQuery(this).text();
+    let spanText = jQuery(this).text();
     jQuery(this).text(spanText + duplicate_menu_string);
   } else if (bbItem.length === 1) {
     // get the link from the menu item
     var link = jQuery(bbItem).parent().attr("href");
     // check to see if the course menu item is actually hidden
-    hidden = jQuery(bbItem).next().attr("class");
+    let hidden = jQuery(bbItem).next().attr("class");
     if (hidden === "cmLink-hidden") {
       // add the hidden_string to the heading
-      linkText = jQuery(this).text();
+      let linkText = jQuery(this).text();
       jQuery(this).text(linkText + hidden_string);
       // add the hidden_string to the end of each .blackboardlink
       return true;
@@ -1879,7 +1883,7 @@ function handleBlackboardMenuLink() {
  * https://www.andornot.com/blog/post/Replace-MS-Word-special-characters-in-javascript-and-C.aspx
  */
 
-function replaceWordChars(text) {
+/*function replaceWordChars(text) {
   var s = text;
   // smart single quotes and apostrophe
   s = s.replace(/[\u2018\u2019\u201A]/g, "'");
@@ -1899,14 +1903,14 @@ function replaceWordChars(text) {
   s = s.replace(/[\u02DC\u00A0]/g, " ");
 
   return s;
-}
+}*/
 
 /**
  * Final all the embedded video styles and embed them
  * NOT WORKING
  */
 
-function doVideo() {
+/*function doVideo() {
   //console.log(" Started videos");
 
   var videos = jQuery("div.video");
@@ -1939,11 +1943,11 @@ function doVideo() {
     //console.log( "Ending with " + text);
     jQuery(this).html(text);
   });
-}
+} */
 
 //*** Experiements to see if I can open all by function call **
 
-function openAll() {
+/*function openAll() {
   //console.log("Open ALL ");
   jQuery(".ui-accordion-header")
     .removeClass("ui-corner-all")
@@ -1964,7 +1968,7 @@ function openAll() {
     .show();
   jQuery(this).attr("disabled", "disabled");
   jQuery(".gu_content_close").removeAttr("disabled");
-}
+}*/
 
 //---******************************************************--
 
@@ -2014,7 +2018,7 @@ function extractCardMetaData(descriptionObject) {
   //console.log("----------------------- extractCardMetaData");
   // check and break up the ps into individual bits of meta data
   let maxLength = elementContent.length;
-  for (i = 0; i < maxLength; i++) {
+  for (let i = 0; i < maxLength; i++) {
     //       console.log(`    _____________ working on para ${i} == ${elementContent[i]}`);
     // work on a temp copy of description
     //let partialDescription = elementContent[i].innerHTML;
@@ -2088,7 +2092,7 @@ function extractCardMetaData(descriptionObject) {
   // format should be "card label: value"
   // Loop thru each tmpMetaData element and extract value appropriately
   //  place in an object label -> value
-  for (i = 0; i < tmpMetaData.length; i++) {
+  for (let i = 0; i < tmpMetaData.length; i++) {
     // extract the metaData label m[1] and value m[2]
     let re = new RegExp("\\s*(card\\s*[^:]*)\\s*:\\s*(.*)", "im");
     let m = tmpMetaData[i].match(re, "im");
@@ -2110,8 +2114,7 @@ function extractCardMetaData(descriptionObject) {
       let newValue = div.innerHTML;
 
       metaDataValues[label] = newValue;
-    } else {
-    }
+    } 
   }
 
   // used to edit the description element and ensure that it is correct HTML
@@ -2130,7 +2133,7 @@ function extractCardMetaData(descriptionObject) {
     // replace the card image value with the inline image
     metaDataValues["card image"] = inlineImage[0].src;
     // remove the inline image content from the description
-    let img = jQuery(div).find(`img[src="${inlineImage[0].src}"]`).remove();
+    jQuery(div).find(`img[src="${inlineImage[0].src}"]`).remove();
   }
 
   // there may also be other .contextMenuContainer elements that will need to be removed
@@ -2140,7 +2143,7 @@ function extractCardMetaData(descriptionObject) {
   // - TODO spans with attr data-ally-scoreindicator
 
   // remove the .contextMenuContainers from description
-  let menuContainers = jQuery(div).find(".contextMenuContainer").remove();
+  jQuery(div).find(".contextMenuContainer").remove();
 
   // Make sure that the description is valid HTML (mostly closing tags)
   // jQuery handles this by default
@@ -2148,7 +2151,7 @@ function extractCardMetaData(descriptionObject) {
   // remove any empty <p> tags from desciption
   description = description.replace(/<p>\s*<\/p>/g, "");
   // add the description minus metadata to metaDataValues, for later use
-  metaDataValues["description"] = description;
+  metaDataValues.description = description;
 
   return metaDataValues;
 }
@@ -2164,7 +2167,7 @@ function handleCardImage(param) {
     cardBGcolour = "black";
 
   // is it a data URI, just return it
-  regex = /^data:((?:\w+\/(?:(?!;).)+)?)((?:;[\w\W]*?[^;])*),(.+)$/;
+  const regex = /^data:((?:\w+\/(?:(?!;).)+)?)((?:;[\w\W]*?[^;])*),(.+)$/;
   if (regex.test(param)) {
     return [param, cardBGcolour];
   }
@@ -2187,7 +2190,7 @@ function handleCardImage(param) {
 
 function handleCardImageIframe(param) {
   // replace the width and height
-  x = param.match(/width="[^"]+"/i);
+  let x = param.match(/width="[^"]+"/i);
   if (x) {
     param = param.replace(x[0], 'width="100%"');
   }
@@ -2298,7 +2301,7 @@ function parseDate(param, endRange = false) {
   // is it a week of trimester
   m = param.match(/^\s*week\s*([0-9]*)/i);
   if (m) {
-    week = m[1];
+    let week = m[1];
     if (!endRange) {
       // just get Monday
       date = getTermDate(week);
@@ -2313,8 +2316,8 @@ function parseDate(param, endRange = false) {
       /^\s*\b(((mon|tues|wed(nes)?|thu|thur(s)?|fri|sat(ur)?|sun)(day)?))\b\s*week *([0-9]*)\s*$/i
     );
     if (m) {
-      day = m[1];
-      week = m[m.length - 1];
+      let day = m[1];
+      let week = m[m.length - 1];
       date = getTermDate(week, true, day);
     } else {
       // is it the an actual date
@@ -2367,7 +2370,7 @@ function handleCardLabelNumber(label, number) {
   // - undefined - we want the default label
 
   // ensure label is empty HTML (incl &nbsp; as empty)
-  trimLabel = cleanTrimHtml(label);
+  let trimLabel = cleanTrimHtml(label);
 
   if (trimLabel === "") {
     // return no label or number if the label is empty (but defined)
@@ -2458,7 +2461,7 @@ function extractCardsFromContent(myCards) {
       items.push(missingItem);
       continue;
     }
-    jthis = myCards[i]; // cards, h3 of item
+    let jthis = myCards[i]; // cards, h3 of item
     // actually find the div.details item for the h3
     //jthis = jQuery(jthis).parent().parent().find("div.details");
     jthis = jQuery(jthis).parent().parent().find("div.vtbegenerated");
@@ -2467,7 +2470,7 @@ function extractCardsFromContent(myCards) {
     //------- check for any review status element
     // TODO this ain't right.  This is the wrong element, but jthis?
     // What does this actually do?
-    review = getReviewStatus(jthis);
+    let review = getReviewStatus(jthis);
 
     // Parse the description and remove the Card Image data
     // vtbegenerated_div is specific to Blackboard.
@@ -2475,7 +2478,7 @@ function extractCardsFromContent(myCards) {
     // the match class, hence the not[class] selector
     jQuery(jthis)
       .children('div.vtbegenerated_div,div:not([class=""])')
-      .replaceWith(function () {
+      .replaceWith(function (x) {
         return jQuery("<p />", { html: jQuery(this).html() });
       });
     let description = jQuery(jthis).html();
@@ -2558,7 +2561,7 @@ function extractCardsFromContent(myCards) {
     // TODO is this still used?
     // Find any ItemDetailsHeaders that indicate the item is hidden
     // TODO would it even work??
-    hidden = jQuery(jthis)
+    let hidden = jQuery(jthis)
       .parent()
       .find(".contextItemDetailsHeaders")
       .filter(":contains('Item is hidden from students.')");
@@ -2586,14 +2589,14 @@ function extractCardsFromContent(myCards) {
     // if link is empty, must be content item
     if (link === undefined) {
       // check to see if there are attached fileds
-      filesThere = jQuery(jthis)
+      let filesThere = jQuery(jthis)
         .parent()
         .find(".contextItemDetailsHeaders")
         .filter(":contains('Attached Files:')");
 
       if (filesThere !== undefined) {
         // get a list of all attached files
-        lis = jQuery(jthis)
+        let lis = jQuery(jthis)
           .parent()
           .find(".contextItemDetailsHeaders")
           .children(".detailsValue")
@@ -2677,7 +2680,7 @@ function getReviewStatus(vtbgen) {
   var parent = jQuery(vtbgen).parent();
 
   // check to see if it has the anchor with class button-5
-  review = jQuery(parent).find("a.button-5");
+  const review = jQuery(parent).find("a.button-5");
 
   if (review.length === 0) {
     return undefined;
@@ -2701,7 +2704,7 @@ function getReviewStatus(vtbgen) {
 //          Card Date: Mar 5-Mar 10
 //          Card Date: Week 3-5
 
-function handleDate(description) {
+/*function handleDate(description) {
   var month,
     endMonth,
     endDate,
@@ -2762,7 +2765,7 @@ function handleDate(description) {
         }
       } else {
         // Fall back to check for exam period
-        m = description.match(/card date *: *exam *(period)*/i);
+        m = description.match(/card date *: *exam *(period)* /i);
         if (m) {
           date.start = getTermDate("exam");
           date.stop = getTermDate("exam", false);
@@ -2774,7 +2777,7 @@ function handleDate(description) {
   }
   date.descrip = description;
   return date;
-}
+} */
 
 //**************************************************************
 // cardBGcolour = identifyCardBackgroundColour( value );
@@ -2783,7 +2786,7 @@ function handleDate(description) {
 
 function identifyCardBackgroundColour(input) {
   // don't both if it's an empty string or a URL
-  url = input.match(/^\s*http/i);
+  const url = input.match(/^\s*http/i);
   if (input === "" || url) {
     return undefined;
   }
@@ -2839,7 +2842,7 @@ function isValidHttpUrl(string) {
 
 function getTermDate(week, startWeek = true, dayOfWeek = "Monday") {
   if (typeof TERM_DATES[TERM] === "undefined") {
-    return { date: undefined, date: undefined, year: undefined };
+    return { date: undefined, month: undefined, year: undefined };
   }
 
   dayOfWeek = dayOfWeek.toLowerCase();
@@ -3373,10 +3376,10 @@ function addCardInterface(items, place) {
   // get the content item with h3 heading containing Card Interface
   // Here this is only used for configuration information
   let cardConfigInterface = jQuery(
-    tweak_bb.page_id + " > " + tweak_bb.row_element
+    window.tweak_bb.page_id + " > " + window.tweak_bb.row_element
   )
     .find(".item h3")
-    .filter(function (x) {
+    .filter(function () {
       return this.innerText.toLowerCase().includes("card interface");
     })
     .eq(0);
@@ -3401,12 +3404,13 @@ function addCardInterface(items, place) {
     var WIDTH = "md:w-1/3";
 
     if (m) {
-      newParams = parse_parameters(m[1]);
+      let newParams = parse_parameters(m[1]);
+      let x;
 
       if (newParams) {
         newParams.forEach(function (element) {
           m = element.match(/template=["']vertical['"]/i);
-          m1 = element.match(/template=vertical/i);
+          let m1 = element.match(/template=vertical/i);
           if (m || m1) {
             template = VERTICAL;
           } else if (element.match(/template=['"]horizontal['"]/i)) {
@@ -3451,12 +3455,12 @@ function addCardInterface(items, place) {
   // Need to have the span in order to be able to reorder
   cardInterface.html('<span class="reorder editmode"></span>');
   // Get the content area in which to insert the HTML
-  var firstItem = cardInterface.parent().siblings(".details");
+  //let firstItem = cardInterface.parent().siblings(".details");
 
   // Use the card HTML template and the data in items to generate
   // HTML for each card
-  var cards = "";
-  var moduleNum = 1;
+  let cards = "";
+  //let moduleNum = 1;
   items.forEach(function (idx) {
     let cardHtml = cardHtmlTemplate[template];
     let linkHtml = linkItemHtmlTemplate[linkTemplate];
@@ -3611,7 +3615,7 @@ function addCardInterface(items, place) {
     );
 
     // Get rid of some crud Bb inserts into the HTML
-    description = idx.description.replace(/<p/g, '<p class="pb-2"');
+    let description = idx.description.replace(/<p/g, '<p class="pb-2"');
     description = description.replace(/<a/g, '<a class="underline"');
     cardHtml = cardHtml.replace("{DESCRIPTION}", description);
     // Does the card link to another content item?
@@ -3662,13 +3666,13 @@ function addCardInterface(items, place) {
 
     // Should we add a link to edit/view the original content
     if (location.href.indexOf("listContentEditable.jsp") > 0) {
-      editLink = editLinkTemplate.replace("{ID}", idx.id);
+      const editLink = editLinkTemplate.replace("{ID}", idx.id);
       cardHtml = cardHtml.replace(/{EDIT_ITEM}/, editLink);
     } else {
       //cardHtml = cardHtml.replace(/{EDIT_ITEM}/,'');
 
       //editLink = editLinkTemplate.replace('{ID}', idx.id);
-      editLink = '<div><a href="#hello">&nbsp;</a></div>';
+      const editLink = '<div><a href="#hello">&nbsp;</a></div>';
       cardHtml = cardHtml.replace(/{EDIT_ITEM}/, editLink);
     }
 
@@ -4367,6 +4371,27 @@ dualComingSoonHtmlTemplate[PEOPLE] =
 dualComingSoonHtmlTemplate[VERTICAL] =
   dualComingSoonHtmlTemplate[HORIZONTAL_NOENGAGE];
 
+// week templates
+
+var weekHtmlTemplate = `
+    <div class="bg-yellow-lighter text-black py-1">
+      {WEEK}
+    </div>
+    `;
+
+var dualWeekHtmlTemplate = `
+    <div class="bg-yellow-lighter text-black py-1 border-l border-r border-black">
+      Week {WEEK_START} to {WEEK_STOP}
+    </div>
+    `;
+
+var examPeriodTemplate = `
+<div class="bg-yellow-lighter text-black py-1 border-l border-r border-black">
+      Exam Period
+    </div>
+`;
+
+
 // Template to allow editors to view the original Bb content item
 // Same for all templates
 var editLinkTemplate = `
@@ -4375,7 +4400,7 @@ var editLinkTemplate = `
              </div>`;
 
 // Message to display on a card if EDIT mode on and the item is hidden
-HIDDEN_FROM_STUDENTS = `<div class="inline-block bg-yellow text-black text-xs rounded-t rounded-b">This item is <strong>hidden from students</strong></div>`;
+const HIDDEN_FROM_STUDENTS = `<div class="inline-block bg-yellow text-black text-xs rounded-t rounded-b">This item is <strong>hidden from students</strong></div>`;
 
 //*************************************************************
 // picUrl = setImage( card )
@@ -4469,7 +4494,7 @@ function parse_parameters(cmdline) {
   return args;
 }
 
-NO_CARD_DEFINED = `
+var NO_CARD_DEFINED = `
    <div class="clickablecard w-full sm:w-1/2 {WIDTH} flex flex-col p-3">
      <div class="hover:outline-none hover:shadow-outline bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col relative"> <!-- Relative could go -->
        
@@ -4498,7 +4523,7 @@ NO_CARD_DEFINED = `
  */
 
 function handleUniversityDate() {
-  dateText = jQuery(this).text();
+  let dateText = jQuery(this).text();
 
   // returns a date object (start/stop)
   let dateObj = handleCardDate(dateText.replace(",", ""));
@@ -4541,7 +4566,7 @@ function handleUniversityDate() {
 // - weeks start on Monday
 // Special version for the Content Interface
 
-function getTermDateContent(week, dayOfWeek = "Monday") {
+/*function getTermDateContent(week, dayOfWeek = "Monday") {
   if (typeof TERM_DATES[TERM] === "undefined") {
     return undefined;
   }
@@ -4582,7 +4607,7 @@ function getTermDateContent(week, dayOfWeek = "Monday") {
   dateString = d.toLocaleDateString(undefined, options);
 
   return dateString;
-}
+} */
 
 /*********************************************************************
  * calculateTerm()
@@ -4592,22 +4617,23 @@ function getTermDateContent(week, dayOfWeek = "Monday") {
 
 function calculateTerm() {
   // get the right bit of the Blackboard breadcrumbs
-  courseTitle =
+  let courseTitle =
     jQuery("#courseMenu_link").attr("title") ||
     "Collapse COM14 Creative and Professional Writing (COM14_3205_OT)";
 
   // get the course id which will be in brackets
-  m = courseTitle.match(/^.*\((.+)\)/);
+  let m = courseTitle.match(/^.*\((.+)\)/);
 
   // we found a course Id, get the STRM value
   if (m) {
-    id = m[1];
+    let id = m[1];
     // break the course Id up into its components
     // This is the RE for COMM10 - OUA course?
-    breakIdRe = new RegExp(
+    let breakIdRe = new RegExp(
       "^([A-Z]+[0-9]+)_([0-9][0-9][0-9][0-9])_([A-Z][A-Z])$"
     );
     m = id.match(breakIdRe);
+    let mm;
 
     // found an actual course site (rather than org site)
     if (m) {
@@ -4661,22 +4687,22 @@ function calculateTerm() {
           );
           m = id.match(breakIdRe);
           if (m) {
-            term = m[3];
+            let term = m[3];
             mm = term.match(/^[0-9]([0-9][0-9])[0-9]$/);
             if (mm) {
-              year = 20 + mm[1];
+              let year = 20 + mm[1];
             } else {
-              year = DEFAULT_YEAR;
+              let year = DEFAULT_YEAR;
             }
           }
         }
       }
     }
     // if this is a QCM course (either offering of joined), then update term
-    qcmRe = new RegExp("^([0-9]+QCM)_([0-9][0-9][0-9][0-9])");
+    let qcmRe = new RegExp("^([0-9]+QCM)_([0-9][0-9][0-9][0-9])");
     let qcmRe2 = new RegExp("^([0-9]+QCM)_(Y[0-9])_([0-9][0-9][0-9][0-9])");
-    m = qcmRe.match(id);
-    let m2 = qcmRe2.match(id);
+    m = id.match(qcmRe);
+    let m2 = id.match(qcmRe2);
     if (m || m2) {
       TERM = TERM + "QCM";
     }
@@ -4816,7 +4842,6 @@ function handleFilmWatchingOptions() {
   let filmName = jQuery(this).text().trim();
   let filmNameEsc = encodeURIComponent(filmName);
 
-  let filmUrl;
   let flowUrl = PARAMS.filmWatchingOptionsFlowURL;
 
   // stop if flowUrl isn't defined
@@ -4832,7 +4857,7 @@ function handleFilmWatchingOptions() {
     // Flow returned a URL
     if ("url" in data && data.url !== "") {
       // Found a URL for the film
-      filmUrl = data.url;
+      //let filmUrl = data.url;
 
       // convert it into an embeddable player (if possible)
       html = convertMedia(data.url, filmName);
@@ -4921,7 +4946,7 @@ function convertMedia(html, filmName) {
 
   let returning = "";
   converts.forEach(function (elem) {
-    m = elem.rx.match(html.trim());
+    let m = elem.rx.match(html.trim());
     if (m) {
       returning = html.trim().replace(elem.rx, elem.tmpl);
     }
@@ -5186,8 +5211,8 @@ const PRINT_URLS = {
   id82046153058251:
     "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXctyASVrPBKlpUFGeAOZ3cBSL3kSTfWM_iOXDLtleogpQ?e=Fac9nI",
   // Week 1
-  id82046152719131:
-    "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EX7kjt6DSZlMkRfnMW3lc5UB2RZDJFDqvU5QZSMxSL3wTw?e=D8yTZf",
+  //id82046152719131:
+   // "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EX7kjt6DSZlMkRfnMW3lc5UB2RZDJFDqvU5QZSMxSL3wTw?e=D8yTZf",
   id73051157691491:
     "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EX7kjt6DSZlMkRfnMW3lc5UB2RZDJFDqvU5QZSMxSL3wTw?e=D8yTZf",
   // Week 2
@@ -5388,7 +5413,7 @@ function categoriseEmbeds(span) {
         videoHtml: `<p>Unable to recognise format of video URL: ${src}</p>`,
         videoUrl: src,
         activity: "error"
-      }
+      };
     }
   }
 
@@ -5455,7 +5480,6 @@ function categoriseEmbeds(span) {
         activity: "error"
       }
     }
-    let url
   }
 
 
@@ -5473,7 +5497,7 @@ function categoriseEmbeds(span) {
   //  sourcedoc={10e05189-c015-406a-8c62-0cb57811affc}
 
   if (src.includes("-my.sharepoint.com").includes("embedview")) {
-    let embedUrl = newURL( src);
+    let embedUrl = new URL( src);
     let sourceDoc = embedUrl.searchParams('sourcedoc');
     if ( sourceDoc!=='') {
       let linkUrl = `${embedUrl.hostname}/${embedUrl.pathname}?${embedUrl.searchParams.get('sourcedoc')}`;
@@ -5727,7 +5751,7 @@ function addExpandPrintButtons() {
     return true;
   }
   // should we add a print button?
-  pdfUrl = getPrintButtons();
+  let pdfUrl = getPrintButtons();
   if (pdfUrl) {
     const print_button = `
     <button href="type="button" onclick="window.open('${pdfUrl}')"
