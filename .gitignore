@@ -1,3 +1,4 @@
 test/
 node_modules/
 geckodriver.log
+/dist/
