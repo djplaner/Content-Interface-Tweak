@@ -5710,6 +5710,8 @@ function printPDF(e) {
 
   printWindow.print();
   printWindow.close();
+
+  return false;
 }
 
 function addExpandPrintButtons() {
