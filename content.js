@@ -1,3 +1,7 @@
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-useless-escape */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 /* content
  * - Given a Blackboard page containing a content item with  
      HTML generated from Mammoth
@@ -43,7 +47,7 @@ var STYLE_PREPEND = {
   comingSoon: `<div class="comingSoonImage"></div>`,
   filmWatchingOptions: `<div class="filmWatchingOptionsImage">
     <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon" \>
-  </div>`
+  </div>`,
 };
 
 //
@@ -133,6 +137,7 @@ function contentInterface($) {
   // Find the item in which the content is contained
   var contentInterface = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element)
     .find(".item h3")
+    // eslint-disable-next-line no-unused-vars
     .filter(function (x) {
       return this.innerText.toLowerCase().includes("content interface");
     })
@@ -242,10 +247,10 @@ function contentInterface($) {
   //jQuery("div.bbCard").each( handleBlackboardCards );
 
   // Update the HTML for various defined styles
-  for (var divstyle in STYLE_PREPEND) {
+/*  for (var divstyle in STYLE_PREPEND) {
     let query = `div.${divstyle}`;
     jQuery(query).prepend(STYLE_PREPEND[divstyle]);
-  }
+  } */
 
   //updateReadings(contentInterface);
   // Handle the blackboard items
@@ -339,6 +344,13 @@ function contentInterface($) {
       }
     }
   });
+
+    // Update the HTML for various defined styles
+    for (var divstyle in STYLE_PREPEND) {
+      let query = `div.${divstyle}`;
+      jQuery(query).prepend(STYLE_PREPEND[divstyle]);
+    }
+
 
   addExpandPrintButtons();
 
@@ -1512,7 +1524,7 @@ function handleBlackboardItem() {
   /* Find the matching Blackboard element heading (h3) */
   // Ignore any within the Content Interface
   var bbItem = jQuery("h3:textEquals(" + title + ")").filter(function () {
-    parent = jQuery(this).parents("#GU_ContentInterface");
+    const parent = jQuery(this).parents("#GU_ContentInterface");
     return parent.length === 0;
   });
 
@@ -2110,8 +2122,7 @@ function extractCardMetaData(descriptionObject) {
       let newValue = div.innerHTML;
 
       metaDataValues[label] = newValue;
-    } else {
-    }
+    } 
   }
 
   // used to edit the description element and ensure that it is correct HTML
@@ -2839,7 +2850,7 @@ function isValidHttpUrl(string) {
 
 function getTermDate(week, startWeek = true, dayOfWeek = "Monday") {
   if (typeof TERM_DATES[TERM] === "undefined") {
-    return { date: undefined, date: undefined, year: undefined };
+    return { date: undefined, month: undefined, year: undefined };
   }
 
   dayOfWeek = dayOfWeek.toLowerCase();
@@ -4841,7 +4852,9 @@ function handleFilmWatchingOptions() {
       if (html === "") {
         html = `
                 <div class="filmWatchingOptions">
-      <div class="filmWatchingOptionsImage"></div>
+      <div class="filmWatchingOptionsImage">
+      <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon" \>
+      </div>
       <div class="instructions">
          <p>Access a copy of <a href="${data.url}"><em>${filmName}</em> here</a></p>
        </div>
@@ -5186,8 +5199,8 @@ const PRINT_URLS = {
   id82046153058251:
     "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EXctyASVrPBKlpUFGeAOZ3cBSL3kSTfWM_iOXDLtleogpQ?e=Fac9nI",
   // Week 1
-  id82046152719131:
-    "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EX7kjt6DSZlMkRfnMW3lc5UB2RZDJFDqvU5QZSMxSL3wTw?e=D8yTZf",
+  //  id82046152719131:
+  //   "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EX7kjt6DSZlMkRfnMW3lc5UB2RZDJFDqvU5QZSMxSL3wTw?e=D8yTZf",
   id73051157691491:
     "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EX7kjt6DSZlMkRfnMW3lc5UB2RZDJFDqvU5QZSMxSL3wTw?e=D8yTZf",
   // Week 2
@@ -5379,7 +5392,7 @@ function categoriseEmbeds(span) {
       let videoId = match[1];
       let videoUrl = `https://web.microsoftstream.com/video/${videoId}`;
       return {
-        videoHtml: `<p>Video can be watched at <a href="${videoUrl}">${videoUrl}</a></p>`,
+        videoHtml: `<p>A Microsoft Stream video can be watched at <a href="${videoUrl}">${videoUrl}</a></p>`,
         videoUrl: videoUrl,
         activity: "filmWatchingOptions",
       };
@@ -5387,8 +5400,8 @@ function categoriseEmbeds(span) {
       return {
         videoHtml: `<p>Unable to recognise format of video URL: ${src}</p>`,
         videoUrl: src,
-        activity: "error"
-      }
+        activity: "error",
+      };
     }
   }
 
@@ -5399,7 +5412,7 @@ function categoriseEmbeds(span) {
       let videoId = match[1];
       let videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
       return {
-        videoHtml: `<p>Video can be watched at <a href="${videoUrl}">${videoUrl}</a></p>`,
+        videoHtml: `<p>A YouTube video can be watched at <a href="${videoUrl}">${videoUrl}</a></p>`,
         videoUrl: src,
         activity: "filmWatchingOptions",
       };
@@ -5407,13 +5420,13 @@ function categoriseEmbeds(span) {
       return {
         videoHtml: `<p>Unable to recognise format of video URL: ${src}</p>`,
         videoUrl: src,
-        activity: "error"
-      }
+        activity: "error",
+      };
     }
   }
 
   // vimeo
-  if (service.includes("vimeo.com")){
+  if (service.includes("vimeo.com")) {
     // https://player.vimeo.com/video/185808340
     // https://vimeo.com/185808340
     let pattern = /^https:\/\/[^\/]*\/video\/([^\/]*)/;
@@ -5422,7 +5435,7 @@ function categoriseEmbeds(span) {
       let videoId = match[1];
       let videoUrl = `https://vimeo.com/${videoId}`;
       return {
-        videoHtml: `<p>Video can be watched at <a href="${videoUrl}">${videoUrl}</a></p>`,
+        videoHtml: `<p>A Vimeo video can be watched at <a href="${videoUrl}">${videoUrl}</a></p>`,
         videoUrl: src,
         activity: "filmWatchingOptions",
       };
@@ -5430,34 +5443,36 @@ function categoriseEmbeds(span) {
       return {
         videoHtml: `<p>Unable to recognise format of video URL: ${src}</p>`,
         videoUrl: src,
-        activity: "error"
-      }
+        activity: "error",
+      };
     }
   }
 
   // SoundCloud
   // - iframe can't give URL, but the next div should contain two links,
   //   the second should be the link we want
-  if (service.includes("soundcloud.com")){
+  if (service.includes("soundcloud.com")) {
     let link = nextNode.childNodes[2];
-    if ( typeof(link)!=="undefined" && link.nodeName==='A' &&
-           link.hasAttribute('href')) {
+    if (
+      typeof link !== "undefined" &&
+      link.nodeName === "A" &&
+      link.hasAttribute("href")
+    ) {
       return {
         videoHtml: `<p>Play SoundCloud audio at this URL: 
             <a href="${link.href}">${link.href}</a></p>`,
         videoUrl: link.href,
-        activity: "Activity"
-      }
+        activity: "Activity",
+      };
     } else {
       return {
-        videoHtml: '<p>Unable to identify proper link for SoundCloud audio.</p>',
-        videoUrl: '',
-        activity: "error"
-      }
+        videoHtml:
+          "<p>Unable to identify proper link for SoundCloud audio.</p>",
+        videoUrl: "",
+        activity: "error",
+      };
     }
-    let url
   }
-
 
   if (service.includes("h5p.com")) {
     src = src.replace("/embed", "");
@@ -5472,29 +5487,32 @@ function categoriseEmbeds(span) {
   // - https://griffitheduau-my.sharepoint.com/personal/d_jones6_griffith_edu_au/_layouts/15/Doc.aspx?
   //  sourcedoc={10e05189-c015-406a-8c62-0cb57811affc}
 
-  if (src.includes("-my.sharepoint.com").includes("embedview")) {
-    let embedUrl = newURL( src);
-    let sourceDoc = embedUrl.searchParams('sourcedoc');
-    if ( sourceDoc!=='') {
-      let linkUrl = `${embedUrl.hostname}/${embedUrl.pathname}?${embedUrl.searchParams.get('sourcedoc')}`;
+  if (src.includes("-my.sharepoint.com")) {
+    if (src.includes("embedview")) {
+      let embedUrl = new URL(src);
+      let params = embedUrl.searchParams;
+      let sourceDoc = params.get("sourcedoc");
+      if (sourceDoc !== "") {
+        let linkUrl = `${embedUrl.hostname}/${
+          embedUrl.pathname
+        }?${embedUrl.searchParams.get("sourcedoc")}`;
 
-      return {
-        videoHtml: `<p>A SharePoint resource can be downloaded from 
+        return {
+          videoHtml: `<p>A SharePoint resource can be downloaded from 
            <a href="${linkUrl}">${linkUrl}</a></p>`,
-        videoUrl: linkUrl,
-        activity: "Reading"
+          videoUrl: linkUrl,
+          activity: "Reading",
+        };
       }
     } else {
       return {
         videoHtml: `<p>Unable to understand sharepoint embed - 
           <a href="${src}">${src}</a></p>`,
-        videoUrl: '',
-        activity: 'error'
-      }
+        videoUrl: "",
+        activity: "error",
+      };
     }
-
   }
-
 
   // Didn't match any of the above
   return {
@@ -5523,8 +5541,8 @@ function extractAndCategoriseEmbeds(document) {
   for (let i = 0; i < nodeList.length; i++) {
     let iframe = nodeList[i].firstChild;
     // skip embeds without src
- //   if (!nodeList[i].hasAttribute("src")) {
-    if ( iframe.nodeName!=='IFRAME' || ! iframe.hasAttribute("src")){
+    //   if (!nodeList[i].hasAttribute("src")) {
+    if (iframe.nodeName !== "IFRAME" || !iframe.hasAttribute("src")) {
       continue;
     }
 
@@ -5557,7 +5575,7 @@ function replaceEmbeds(document, embeds) {
     let iframe = nodeList[i].firstChild;
     // skip embeds without src
     //if (!nodeList[i].hasAttribute("src")) {
-    if ( iframe.nodeName!=='IFRAME' || ! iframe.hasAttribute("src")){
+    if (iframe.nodeName !== "IFRAME" || !iframe.hasAttribute("src")) {
       continue;
     }
     // does it match any of the embeds
@@ -5567,12 +5585,16 @@ function replaceEmbeds(document, embeds) {
     if (src in embeds) {
       if (embeds[src].activity === "Activity") {
         html = `
-          <div class="activityImage"></div>
+          <div class="activityImage">
+            <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-dancing-48.png" alt="Activity icon" />
+          </div>
           ${embeds[src].videoHtml}
         `;
       } else if (embeds[src].activity === "filmWatchingOptions") {
         html = `
-          <div class="filmWatchingOptionsImage"></div>
+          <div class="filmWatchingOptionsImage">
+            <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon" \>
+          </div>
           <div class="instructions">
             ${embeds[src].videoHtml}
           </div>
@@ -5602,12 +5624,12 @@ function addLinksForPrint(document, urls, embeds) {
   let linkList = "";
   let embedList = "";
   for (let href in urls) {
-    linkList = linkList.concat(` <li> ${urls[href].text} - ${href} </li> `);
+    linkList = linkList.concat(` <li> ${urls[href].text} - <a href="${href}">${href}</a> </li> `);
   }
 
   for (let src in embeds) {
     embedList = embedList.concat(
-      ` <li> <a href="${embeds[src].videoUrl}">${embeds[src].videoHtml}</a> </li>`
+      ` <li> ${embeds[src].videoHtml} </li>`
     );
   }
 
@@ -5665,6 +5687,19 @@ function prepareForPrint(document) {
   replaceEmbeds(document, embeds);
   // add the "Online exclusive" section to the end of the document
   addLinksForPrint(document, urls, embeds);
+  for (var divstyle in STYLE_PREPEND) {
+    let query = `div.${divstyle}`;
+    // replace the first child div with what's  in STYLE_PREPEND value
+    document.querySelectorAll(query).forEach((div) => {
+      console.log(div.innerHTML)
+      //jQuery(query).prepend(STYLE_PREPEND[divstyle]);
+    });
+  } 
+/*  STYLE_PREPEND = {
+    reading: `<div class="readingImage">
+      <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png" alt="Reading icon" />
+    </div>`,
+*/
 }
 
 /**
@@ -5711,6 +5746,7 @@ function printPDF(e) {
   printWindow.print();
   printWindow.close();
 
+  // prevent the parent window reloading
   return false;
 }
 
