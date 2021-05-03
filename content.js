@@ -4516,17 +4516,14 @@ NO_CARD_DEFINED = `
 function handleUniversityDate() {
   dateText = jQuery(this).text();
 
-  // returns a date object (start/stop)
-  let dateObj = handleCardDate(dateText.replace(",", ""));
-  let otherDate = `(${dateObj.start.date} ${dateObj.start.month} ${dateObj.start.year})`;
   // extract the day and week
   // Wednesday Week 5 becomes
   // - day = Wednesday
   // - week = 5
   // and convert it to a date string
   //  date = March 12, 2019
-  /*    var day = '', week = '', date = '';
-    m = dateText.match(
+  var day = '', week = '', date = '';
+  m = dateText.match(
           /.*\b((mon|tue|wed(nes)?|thur|thurs|fri|sat(ur)?|sun)(day)?)[, ]*(of|:|;|\-|\u2013|\u2014| )*week *([0-9]+)/i );
  //       /.*\b((mon|tue|wed(nes)?|thur|thurs|fri|sat(ur)?|sun)(day)?)([,]*) *(,|of|:|;|\-|\u2013|\u2014) *week *([0-9]+)/i );
 // old RE didn't handle week of
@@ -4542,11 +4539,11 @@ function handleUniversityDate() {
     } else {
         // couldn't match the date, finish up
         return false;
-    } */
+    } 
 
   // update the HTML item
-  //dateText = dateText + " (" + date + ")";
-  dateText = `${dateText} ${otherDate}`;
+  dateText = dateText + " (" + date + ")";
+  //dateText = `${dateText} ${otherDate}`;
   jQuery(this).html(dateText);
 }
 
