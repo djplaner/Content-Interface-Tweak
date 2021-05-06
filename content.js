@@ -247,7 +247,7 @@ function contentInterface($) {
   //jQuery("div.bbCard").each( handleBlackboardCards );
 
   // Update the HTML for various defined styles
-/*  for (var divstyle in STYLE_PREPEND) {
+  /*  for (var divstyle in STYLE_PREPEND) {
     let query = `div.${divstyle}`;
     jQuery(query).prepend(STYLE_PREPEND[divstyle]);
   } */
@@ -345,12 +345,11 @@ function contentInterface($) {
     }
   });
 
-    // Update the HTML for various defined styles
-    for (var divstyle in STYLE_PREPEND) {
-      let query = `div.${divstyle}`;
-      jQuery(query).prepend(STYLE_PREPEND[divstyle]);
-    }
-
+  // Update the HTML for various defined styles
+  for (var divstyle in STYLE_PREPEND) {
+    let query = `div.${divstyle}`;
+    jQuery(query).prepend(STYLE_PREPEND[divstyle]);
+  }
 
   addExpandPrintButtons();
 
@@ -2122,7 +2121,7 @@ function extractCardMetaData(descriptionObject) {
       let newValue = div.innerHTML;
 
       metaDataValues[label] = newValue;
-    } 
+    }
   }
 
   // used to edit the description element and ensure that it is correct HTML
@@ -2902,7 +2901,6 @@ function getTermDate(week, startWeek = true, dayOfWeek = "Monday") {
   return date;
 }
 
-
 /* Griffith Calendar Term dates
  * 2021
  * - OUA Study Periods 1-4
@@ -2943,20 +2941,19 @@ var TERM_DATES = {
     exam: { start: "2021-05-31", stop: "2021-06-06" },
   },
   2213: {
-    0: { start: "2021-05-31", stop: "2021-06-06" },
-    1: { start: "2021-06-07", stop: "2021-06-13" },
-    2: { start: "2021-06-14", stop: "2021-06-20" },
-    3: { start: "2021-06-21", stop: "2021-06-27" },
-    4: { start: "2021-06-28", stop: "2021-07-04" },
-    5: { start: "2021-07-05", stop: "2021-07-11" },
-    6: { start: "2021-07-12", stop: "2021-07-18" },
-    7: { start: "2021-07-19", stop: "2021-07-25" },
-    8: { start: "2021-07-26", stop: "2021-08-01" },
-    9: { start: "2021-08-02", stop: "2021-08-08" },
-    10: { start: "2021-08-09", stop: "2021-08-15" },
-    11: { start: "2021-08-16", stop: "2021-08-22" },
-    12: { start: "2021-08-23", stop: "2021-08-29" },
-    13: { start: "2021-08-30", stop: "2021-09-05" },
+    1: { start: "2021-05-31", stop: "2021-06-06" },
+    2: { start: "2021-06-07", stop: "2021-06-13" },
+    3: { start: "2021-06-14", stop: "2021-06-20" },
+    4: { start: "2021-06-21", stop: "2021-06-27" },
+    5: { start: "2021-06-28", stop: "2021-07-04" },
+    6: { start: "2021-07-05", stop: "2021-07-11" },
+    7: { start: "2021-07-12", stop: "2021-07-18" },
+    8: { start: "2021-07-19", stop: "2021-07-25" },
+    9: { start: "2021-07-26", stop: "2021-08-01" },
+    10: { start: "2021-08-02", stop: "2021-08-08" },
+    11: { start: "2021-08-09", stop: "2021-08-15" },
+    12: { start: "2021-08-16", stop: "2021-08-22" },
+    13: { start: "2021-08-23", stop: "2021-08-29" },
     exam: { start: "2021-08-30", stop: "2021-09-05" },
   },
   2215: {
@@ -2974,26 +2971,7 @@ var TERM_DATES = {
     11: { start: "2021-11-08", stop: "2021-11-14" },
     12: { start: "2021-11-15", stop: "2021-11-21" },
     13: { start: "2021-11-22", stop: "2021-11-28" },
-    14: { start: "2021-11-29", stop: "2021-12-05" },
     exam: { start: "2021-11-29", stop: "2021-12-05" },
-  },
-  2217: {
-    0: { start: "2021-11-29", stop: "2021-12-05" },
-    1: { start: "2021-12-06", stop: "2021-12-12" },
-    2: { start: "2021-12-13", stop: "2021-12-19" },
-    3: { start: "2021-12-20", stop: "2021-12-26" },
-    4: { start: "2021-12-27", stop: "2022-01-02" },
-    5: { start: "2022-01-03", stop: "2022-01-09" },
-    6: { start: "2022-01-10", stop: "2022-01-16" },
-    7: { start: "2022-01-17", stop: "2022-01-23" },
-    8: { start: "2022-01-24", stop: "2022-01-30" },
-    9: { start: "2022-01-31", stop: "2022-02-06" },
-    10: { start: "2022-02-07", stop: "2022-02-13" },
-    11: { start: "2022-02-14", stop: "2022-02-20" },
-    12: { start: "2022-02-21", stop: "2022-02-27" },
-    13: { start: "2022-02-28", stop: "2022-03-06" },
-    14: { start: "2022-03-07", stop: "2022-03-13" },
-    exam: { start: "2022-03-14", stop: "2022-03-20" },
   },
   3218: {
     0: { start: "2021-11-01", stop: "2021-11-07" },
@@ -3078,7 +3056,7 @@ var TERM_DATES = {
     3: { start: "2021-03-15", stop: "2021-03-21" },
     4: { start: "2021-03-22", stop: "2021-03-29" },
     5: { start: "2021-03-29", stop: "2021-04-04" },
-    6: { start: "2021-04-12", stop: "2021-03-18" },
+    6: { start: "2021-04-12", stop: "2021-04-18" },
     7: { start: "2021-04-19", stop: "2021-04-25" },
     8: { start: "2021-04-26", stop: "2021-05-02" },
     9: { start: "2021-05-10", stop: "2021-05-16" },
@@ -3310,7 +3288,6 @@ var TERM_DATES = {
     exam: { start: "2019-05-30", stop: "2019-06-08" },
   },
 };
-
 
 var TERM = "3211",
   YEAR = 2021,
@@ -4522,24 +4499,27 @@ function handleUniversityDate() {
   // - week = 5
   // and convert it to a date string
   //  date = March 12, 2019
-  var day = '', week = '', date = '';
+  var day = "",
+    week = "",
+    date = "";
   m = dateText.match(
-          /.*\b((mon|tue|wed(nes)?|thur|thurs|fri|sat(ur)?|sun)(day)?)[, ]*(of|:|;|\-|\u2013|\u2014| )*week *([0-9]+)/i );
- //       /.*\b((mon|tue|wed(nes)?|thur|thurs|fri|sat(ur)?|sun)(day)?)([,]*) *(,|of|:|;|\-|\u2013|\u2014) *week *([0-9]+)/i );
-// old RE didn't handle week of
-//        /.*\b(((mon|tues|wed(nes)?|thur(s)?|fri|sat(ur)?|sun)(day)?))\b[,]*[ ]*week *\b([0-9]*)/i);
-    if (m) {
-        day = m[1];
-        week = m[m.length - 1];
-        date = getTermDateContent(week, day);
+    /.*\b((mon|tue|wed(nes)?|thur|thurs|fri|sat(ur)?|sun)(day)?)[, ]*(of|:|;|\-|\u2013|\u2014| )*week *([0-9]+)/i
+  );
+  //       /.*\b((mon|tue|wed(nes)?|thur|thurs|fri|sat(ur)?|sun)(day)?)([,]*) *(,|of|:|;|\-|\u2013|\u2014) *week *([0-9]+)/i );
+  // old RE didn't handle week of
+  //        /.*\b(((mon|tues|wed(nes)?|thur(s)?|fri|sat(ur)?|sun)(day)?))\b[,]*[ ]*week *\b([0-9]*)/i);
+  if (m) {
+    day = m[1];
+    week = m[m.length - 1];
+    date = getTermDateContent(week, day);
 
-        if (typeof date === "undefined"){
-            return false;
-        }
-    } else {
-        // couldn't match the date, finish up
-        return false;
-    } 
+    if (typeof date === "undefined") {
+      return false;
+    }
+  } else {
+    // couldn't match the date, finish up
+    return false;
+  }
 
   // update the HTML item
   dateText = dateText + " (" + date + ")";
@@ -5626,13 +5606,13 @@ function addLinksForPrint(document, urls, embeds) {
   let linkList = "";
   let embedList = "";
   for (let href in urls) {
-    linkList = linkList.concat(` <li> ${urls[href].text} - <a href="${href}">${href}</a> </li> `);
+    linkList = linkList.concat(
+      ` <li> ${urls[href].text} - <a href="${href}">${href}</a> </li> `
+    );
   }
 
   for (let src in embeds) {
-    embedList = embedList.concat(
-      ` <li> ${embeds[src].videoHtml} </li>`
-    );
+    embedList = embedList.concat(` <li> ${embeds[src].videoHtml} </li>`);
   }
 
   let videoHTML = `<ul> ${embedList} </ul>`;
@@ -5693,11 +5673,11 @@ function prepareForPrint(document) {
     let query = `div.${divstyle}`;
     // replace the first child div with what's  in STYLE_PREPEND value
     document.querySelectorAll(query).forEach((div) => {
-      console.log(div.innerHTML)
+      console.log(div.innerHTML);
       //jQuery(query).prepend(STYLE_PREPEND[divstyle]);
     });
-  } 
-/*  STYLE_PREPEND = {
+  }
+  /*  STYLE_PREPEND = {
     reading: `<div class="readingImage">
       <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png" alt="Reading icon" />
     </div>`,
