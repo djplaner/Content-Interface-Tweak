@@ -24,4 +24,4 @@ See [this blog post](https://djon.es/blog/2019/02/24/exploring-knowledge-reuse-i
 
 See [the documentation site](https://djplaner.github.io/Content-Interface-Tweak/) for more detail on how and what can be done.
 
-> **Note:** The tool is currently configured so only staff at a specific unviersity can make full use of the tool
+> **Note:** The tool is currently configured so only staff at a specific university can make full use of the tool
