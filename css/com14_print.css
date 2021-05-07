@@ -212,6 +212,7 @@
       border-radius: 1em;
       padding: 1em;
       background-color: #edf5e1; 
+    overflow:hidden;
   }
   
   #GU_ContentInterface .filmWatchingOptions  {
@@ -226,6 +227,7 @@
     width: 90%; 
       border-radius: 1em;
       padding: 1em;
+    overflow:hidden;
     }
   
   #GU_ContentInterface .comingSoon  {
@@ -239,6 +241,7 @@
     width: 95%; 
       border-radius: 1em;
       padding: 1em;
+    overflow:hidden;
   /*    background-color: #efd25c;*/
   }
   
@@ -312,6 +315,7 @@
     width: 95%;
     padding: 1em;
     border-radius: 1em;
+    overflow:hidden;
       
   }
   
@@ -722,6 +726,7 @@
     background-color: #FFDC0B !important;
     color: #000000 !important;
     padding: 1em;
+    overflow:hidden;
     }
   
     .noteImage {
@@ -767,6 +772,7 @@
     border-radius: 1em;
     padding: 1em;
     background: #ffd266;
+    overflow:hidden;
   }
   
   #GU_ContentInterface .flashbackImage {
@@ -788,6 +794,7 @@
       border-radius: 1em;
       padding: 1em;
     background-color: #efd25c;
+    overflow:hidden;
   }
   
   #GU_ContentInterface .canaryImage {
@@ -818,6 +825,7 @@
       border-radius: 1em;
       padding: 1em;
     background-color: #cafafe;
+    overflow:hidden;
   }
   
   @media print {

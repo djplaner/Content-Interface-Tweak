@@ -21,8 +21,8 @@ var REVIEWED = "Reviewed";
 
 var DEFAULT_CSS =
   "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
-const DEFAULT_PRINT_CSS =
-  "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css";
+const DEFAULT_PRINT_CSS = "https://djon.es/gu/com14_print.css";
+//  "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css";
 
 var tweak_bb_active_url_pattern = "listContent.jsp";
 
@@ -5296,7 +5296,7 @@ const PRINT_URLS = {
 
 function extractAndCategoriseLinks(document) {
   let urls = {};
-  const blackboardPattern = new RegExp("^/webapps/blackboard");
+  const blackboardPattern = new RegExp("\.griffith\.edu\.au/webapps/blackboard");
 
   // generate a unique list of links
   // key is the href, value is the anchor text
@@ -5605,35 +5605,81 @@ function replaceEmbeds(document, embeds) {
 function addLinksForPrint(document, urls, embeds) {
   let linkList = "";
   let embedList = "";
-  for (let href in urls) {
-    linkList = linkList.concat(
-      ` <li> ${urls[href].text} - <a href="${href}">${href}</a> </li> `
-    );
-  }
 
-  for (let src in embeds) {
-    embedList = embedList.concat(` <li> ${embeds[src].videoHtml} </li>`);
-  }
+  // split the urls into Blackboard and External links
+  //  Each link has a type, either "ExternalLink" or "BlackboardLink"
+  let blackboardLinks = Object.fromEntries(
+    Object.entries(urls).filter(
+      ([key, value]) => value.type === "BlackboardLink"
+    )
+  );
 
-  let videoHTML = `<ul> ${embedList} </ul>`;
+  let externalLinks = Object.fromEntries(
+    Object.entries(urls).filter(([key, value]) => value.type === "ExternalLink")
+  );
+
+  // Figure out if there are any online materials
+  const haveExternalLinks = Object.keys(externalLinks).length > 0;
+  const haveBlackboardLinks = Object.keys(blackboardLinks).length > 0;
+  const haveEmbeds = Object.keys(embeds).length > 0;
 
   let html = `
-  <h1>Online Exclusive Materials</h1>
+  <h1>Online Exclusive Materials</h1>`;
 
+  if (!haveExternalLinks && !haveBlackboardLinks && !haveEmbeds) {
+    html = html.concat(`
+    <p>This document includes no references to other online material.</p>
+    `);
+  } else {
+    html = html.concat(`
   <p>This document makes reference to the following online resources.</p>
+    `);
 
+    if (haveEmbeds) {
+      for (let src in embeds) {
+        embedHTML = embedList.concat(` <li> ${embeds[src].videoHtml} </li>`);
+      }
+
+      html = html.concat(`
   <h2>Videos and other embedded materials</h2>
 
-  ${videoHTML}
-
-  <h2>External Links</h2>
   <ul>
-    ${linkList}
+  ${embedHTML}
   </ul>
+    `);
+    }
 
-  <h2>Blackboad Links</h2>
+    if (haveExternalLinks) {
+      for (let href in externalLinks) {
+        linkList = linkList.concat(
+          ` <li> ${urls[href].text} - <a href="${href}">${href}</a> </li> `
+        );
+      }
 
-  `;
+      html = html.concat(`
+    <h2>External Links</h2>
+    <ul>
+      ${linkList}
+    </ul>
+    `);
+    }
+
+    if (haveBlackboardLinks) {
+      linkList = "";
+      for (let href in blackboardLinks) {
+        linkList = linkList.concat(
+          ` <li> ${urls[href].text} - <a href="${href}">${href}</a> </li> `
+        );
+      }
+
+      html = html.concat(`
+    <h2>Blackboard Links</h2>
+    <ul>
+      ${linkList}
+    </ul>
+    `);
+    }
+  }
 
   let linkDiv = document.createElement("div");
   linkDiv.id = "gu-ci-links";
@@ -5672,6 +5718,7 @@ function prepareForPrint(document) {
   for (var divstyle in STYLE_PREPEND) {
     let query = `div.${divstyle}`;
     // replace the first child div with what's  in STYLE_PREPEND value
+    // TODO this isn't doing anything
     document.querySelectorAll(query).forEach((div) => {
       console.log(div.innerHTML);
       //jQuery(query).prepend(STYLE_PREPEND[divstyle]);
@@ -5691,7 +5738,6 @@ function prepareForPrint(document) {
  * to download a PDF
  */
 function printPDF(e) {
-  console.log("Printing PDF");
   e.stopPropagation();
 
   // get the content and title of the Content Interface
