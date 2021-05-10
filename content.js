@@ -173,7 +173,7 @@ function contentInterface($) {
     }
   } else {
     // add the cards for documentation
-    addCSS(CARDS_CSS);
+    addCSS(CARDS_CSS,params.downloadPDFURL);
     addJS(FONT_AWESOME_JS);
   }
 
@@ -184,7 +184,7 @@ function contentInterface($) {
 
   // the if isn't required
   if ("cssURL" in params) {
-    addCSS(params.cssURL);
+    addCSS(params.cssURL,params.downloadPDFURL);
   }
 
   if ("theme" in params) {
@@ -4676,21 +4676,32 @@ function calculateTerm() {
   }
 }
 
-/*************************************************************
- * addCSS( url )
+/**
+ * function addCSS
+ * @param {String} onlineUrl - for the online CSS file
+ * @param {String} printUrl - for the print CSS file
  * - given the URL for a CSS file add it to the document
- * https://makitweb.com/dynamically-include-script-and-css-file-with-javascript/
- * (and other places)
+ *   https://makitweb.com/dynamically-include-script-and-css-file-with-javascript/
  */
 
-function addCSS(urlString) {
-  var head = document.getElementsByTagName("head")[0];
+function addCSS(onlineUrl, printUrl) {
+  let head = document.getElementsByTagName("head")[0];
 
-  var style = document.createElement("link");
-  style.href = urlString;
+  // add the online URL CSS file
+  let style = document.createElement("link");
+  style.href = onlineUrl;
   style.type = "text/css";
   style.rel = "stylesheet";
   head.append(style);
+
+  // add the print URL CSS file
+/*  style = document.createElement("link");
+  style.href = printUrl;
+  style.type = "text/css";
+  style.rel = "stylesheet";
+  style.media = "print";
+  head.append(style); */
+
 }
 
 /*************************************************************
@@ -5333,12 +5344,13 @@ function extractAndCategoriseLinks(document) {
 
 /**
  * categoriseEmbeds
- * @param {Element} iframe HTML node for iframe
+ * @param {Element} span HTML node for span.embed surrounding the iframe
  * @returns {Object} with attributes videoHtml, videoURL, activity
  */
 
 function categoriseEmbeds(span) {
-  let iframe = span.firstChild;
+//  let iframe = span.firstChild;
+  let iframe = span.getElementsByTagName("iframe")[0];
   let src = iframe.src;
   let nextNode = iframe.nextSibling;
 
@@ -5521,7 +5533,8 @@ function extractAndCategoriseEmbeds(document) {
   let nodeList = document.querySelectorAll("span.embed");
 
   for (let i = 0; i < nodeList.length; i++) {
-    let iframe = nodeList[i].firstChild;
+    //let iframe = nodeList[i].firstChild;
+    let iframe = nodeList[i].getElementsByTagName("iframe")[0];
     // skip embeds without src
     //   if (!nodeList[i].hasAttribute("src")) {
     if (iframe.nodeName !== "IFRAME" || !iframe.hasAttribute("src")) {
@@ -5554,7 +5567,8 @@ function replaceEmbeds(document, embeds) {
 
   // loop through the embeds
   for (let i = 0; i < nodeList.length; i++) {
-    let iframe = nodeList[i].firstChild;
+    //let iframe = nodeList[i].firstChild;
+    let iframe = nodeList[i].getElementsByTagName("iframe")[0];
     // skip embeds without src
     //if (!nodeList[i].hasAttribute("src")) {
     if (iframe.nodeName !== "IFRAME" || !iframe.hasAttribute("src")) {
@@ -5755,7 +5769,8 @@ function printPDF(e) {
   <html>
     <head>
       <title>${title}</title>
-      <link rel="stylesheet" href="${PARAMS.downloadPDFURL}" />
+      <link rel="stylesheet" href="${PARAMS.downloadPDFURL}" /> 
+<!--      <link rel="stylesheet" media="print" href="${PARAMS.downloadPDFURL}" />  -->
     </head>
     <body>
       <div id="GU_ContentInterface">
