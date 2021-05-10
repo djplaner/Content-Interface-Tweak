@@ -5328,6 +5328,8 @@ function extractAndCategoriseLinks(document) {
     // distinguish between external and Blackboard links
     let type = "ExternalLink";
     if (blackboardPattern.test(nodeList[i].href)) {
+      // remove any mention of -blaed in the hostname
+      nodeList[i].href = nodeList[i].href.replace( '//bblearn-blaed', '//bblearn');
       type = "BlackboardLink";
     }
 
@@ -5495,7 +5497,7 @@ function categoriseEmbeds(span) {
           videoHtml: `<p>A SharePoint resource can be downloaded from 
            <a href="${linkUrl}">${linkUrl}</a></p>`,
           videoUrl: linkUrl,
-          activity: "Reading",
+          activity: "Activity",
         };
       }
     } else {
