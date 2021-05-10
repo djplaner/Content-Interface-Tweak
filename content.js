@@ -41,8 +41,8 @@ var STYLE_PREPEND = {
   //"canaryExercise" : `<div class="canaryImage"></div>`,
   // COM14
   canaryExercise: `<div class="canaryImage"><img src="https://s3.amazonaws.com/filebucketdave/banner.js/images/com14/Tweety.svg.png"  alt="Tweety bird"  /></div>`,
-  //"ael-note" : `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
-  "ael-note": `<div class="noteImage"></div>`,
+  //ael-note : `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
+  'ael-note': `<div class="noteImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
   weeklyWorkout: `<div class="weeklyWorkoutImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/weeklyWorkout.png" alt="Female weight lifter" /></div>`,
   comingSoon: `<div class="comingSoonImage"></div>`,
   filmWatchingOptions: `<div class="filmWatchingOptionsImage">
@@ -4695,12 +4695,12 @@ function addCSS(onlineUrl, printUrl) {
   head.append(style);
 
   // add the print URL CSS file
-/*  style = document.createElement("link");
+  style = document.createElement("link");
   style.href = printUrl;
   style.type = "text/css";
   style.rel = "stylesheet";
   style.media = "print";
-  head.append(style); */
+  head.append(style); 
 
 }
 
@@ -5771,8 +5771,8 @@ function printPDF(e) {
   <html>
     <head>
       <title>${title}</title>
-      <link rel="stylesheet" href="${PARAMS.downloadPDFURL}" /> 
-<!--      <link rel="stylesheet" media="print" href="${PARAMS.downloadPDFURL}" />  -->
+     <link rel="stylesheet" href="${PARAMS.downloadPDFURL}" /> 
+<!--     <link rel="stylesheet" media="print" href="${PARAMS.downloadPDFURL}" />    -->
     </head>
     <body>
       <div id="GU_ContentInterface">
