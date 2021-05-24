@@ -264,30 +264,30 @@
   
   #GU_ContentInterface .activityImage {
     width: 5%;
-    background-image: url('https://djon.es/images/task.png');
+ /*   background-image: url('https://djon.es/images/task.png');
    background-repeat: no-repeat;
-    background-size: contain;
+    background-size: contain; */
   }
   
   #GU_ContentInterface .readingImage {
     width: 5%;
-    background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png');
+/*    background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: contain; */
   }
   
   #GU_ContentInterface .filmWatchingOptionsImage {
     width: 5%;
-    background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png');
+/*    background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: contain; */
   }
   
   #GU_ContentInterface .comingSoonImage {
     width: 15%;
-    background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/comingSoon.jpg');
+/*    background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/comingSoon.jpg');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: contain; */
   }
   
   #GU_ContentInterface .activityNarrow  {
@@ -732,9 +732,9 @@
     .noteImage {
       margin-top: 1em;
    width: 5%;
-   background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png');
+/*   background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png');
    background-repeat: no-repeat;
-   background-size: contain;
+   background-size: contain;*/
    }
   
   

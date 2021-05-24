@@ -212,30 +212,30 @@ width: 95%;
 
  .activityImage {
 width: 5%;
-background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-dancing-48.png');
+/*background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-dancing-48.png');
 background-repeat: no-repeat;
-background-size: contain;
+background-size: contain; */
 }
 
  .readingImage {
 width: 5%;
-background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png');
+/*background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png');
 background-repeat: no-repeat;
-background-size: contain;
+background-size: contain; */
 }
 
 .noteImage {
   width: 5%;
-  background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png');
+/*  background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png');
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: contain; */
   }
 
  .filmWatchingOptionsImage {
 width: 5%;
-background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png');
+/*background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png');
 background-repeat: no-repeat;
-background-size: contain;
+background-size: contain; */
 }
 
 

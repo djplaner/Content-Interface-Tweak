@@ -20,7 +20,8 @@ var MARK_REVIEWED = "Mark Reviewed";
 var REVIEWED = "Reviewed";
 
 var DEFAULT_CSS =
-  "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
+  "https://djon.es/gu/gu_study.css";
+  //"https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
 const DEFAULT_PRINT_CSS = "https://djon.es/gu/com14_print.css";
 //  "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css";
 
@@ -45,7 +46,7 @@ var STYLE_PREPEND = {
   //ael-note : `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
   'ael-note': `<div class="noteImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
   weeklyWorkout: `<div class="weeklyWorkoutImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/weeklyWorkout.png" alt="Female weight lifter" /></div>`,
-  comingSoon: `<div class="comingSoonImage"></div>`,
+  comingSoon: `<div class="comingSoonImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/comingSoon.jpg"></div>`,
   filmWatchingOptions: `<div class="filmWatchingOptionsImage">
     <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon" \>
   </div>`,
