@@ -26,7 +26,8 @@ const DEFAULT_PRINT_CSS = "https://djon.es/gu/com14_print.css";
 
 var tweak_bb_active_url_pattern = "listContent.jsp";
 
-// Wrap arounds for various types of activity
+// Wrap arounds for various types of activity always required because
+// Mammoth isn't able (as I've configured it) to do it all
 // - key indicates <div style to be preprended
 // - value is what will be prepended
 var STYLE_PREPEND = {
@@ -5124,7 +5125,7 @@ const PRINT_URLS = {
     "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ER3stuIbjQFEi2TFu22qMvgBB_TQPKr3YQqp25RatuxqQA?download=1",
   // --- COM14 SP4, 2020
   id82046152719131:
-    "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ESqR--AbSgdFt7qK_Nl8OTEB07buAy3WIuZznYcYQPgCcw?download=1",
+  "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EX7kjt6DSZlMkRfnMW3lc5UB2RZDJFDqvU5QZSMxSL3wTw?download=1",
   // --- CWR111 SP4, 2020
   // welcome and orientation
   id82172154304321:
@@ -5731,7 +5732,8 @@ function prepareForPrint(document) {
   replaceEmbeds(document, embeds);
   // add the "Online exclusive" section to the end of the document
   addLinksForPrint(document, urls, embeds);
-  for (var divstyle in STYLE_PREPEND) {
+  // TODO the following should be ble to be removed
+/*  for (var divstyle in STYLE_PREPEND) {
     let query = `div.${divstyle}`;
     // replace the first child div with what's  in STYLE_PREPEND value
     // TODO this isn't doing anything
@@ -5739,7 +5741,7 @@ function prepareForPrint(document) {
       console.log(div.innerHTML);
       //jQuery(query).prepend(STYLE_PREPEND[divstyle]);
     });
-  }
+  } */
   /*  STYLE_PREPEND = {
     reading: `<div class="readingImage">
       <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png" alt="Reading icon" />
@@ -5802,7 +5804,7 @@ function addExpandPrintButtons() {
   if (PARAMS.downloadPDF) {
     const print_button = `
     <button href="type="button" id="gu_downloadPDF"
-      >Download JS PDF</button>
+      >Download PDF</button>
     `;
     jQuery(".accordion-expand-holder").append(print_button);
     jQuery("#gu_downloadPDF").on("click", printPDF);
