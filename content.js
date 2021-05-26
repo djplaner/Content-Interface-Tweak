@@ -38,7 +38,6 @@ var STYLE_PREPEND = {
   activity: `<div class="activityImage">
     <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-dancing-48.png" alt="Activity icon" />
   </div>`,
-  //"flashback" : `<img src="https://djon.es/images/flashback.png" width="25%" height="25%" style="float:right;padding:1em" alt="Flashback logo" />`,
   flashback: `<div class="flashbackImage"><img src="https://s3.amazonaws.com/filebucketdave/banner.js/images/com14/flashback.png" alt="Flashback logo" /></div>`,
   //"canaryExercise" : `<div class="canaryImage"></div>`,
   // COM14
@@ -47,9 +46,7 @@ var STYLE_PREPEND = {
   'ael-note': `<div class="noteImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
   weeklyWorkout: `<div class="weeklyWorkoutImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/weeklyWorkout.png" alt="Female weight lifter" /></div>`,
   comingSoon: `<div class="comingSoonImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/comingSoon.jpg"></div>`,
-  filmWatchingOptions: `<div class="filmWatchingOptionsImage">
-    <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon" \>
-  </div>`,
+  filmWatchingOptions: `<div class="filmWatchingOptionsImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon"> </div>`
 };
 
 //
@@ -249,10 +246,10 @@ function contentInterface($) {
   //jQuery("div.bbCard").each( handleBlackboardCards );
 
   // Update the HTML for various defined styles
-  /*  for (var divstyle in STYLE_PREPEND) {
+  for (var divstyle in STYLE_PREPEND) {
     let query = `div.${divstyle}`;
     jQuery(query).prepend(STYLE_PREPEND[divstyle]);
-  } */
+  }
 
   //updateReadings(contentInterface);
   // Handle the blackboard items
@@ -348,10 +345,10 @@ function contentInterface($) {
   });
 
   // Update the HTML for various defined styles
-  for (var divstyle in STYLE_PREPEND) {
+/*  for (var divstyle in STYLE_PREPEND) {
     let query = `div.${divstyle}`;
     jQuery(query).prepend(STYLE_PREPEND[divstyle]);
-  }
+  } */
 
   addExpandPrintButtons();
 
@@ -2160,7 +2157,7 @@ function extractCardMetaData(descriptionObject) {
   // remove any empty <p> tags from desciption
   description = description.replace(/<p>\s*<\/p>/g, "");
   // add the description minus metadata to metaDataValues, for later use
-  metaDataValues["description"] = description;
+  metaDataValues.description = description;
 
   return metaDataValues;
 }
@@ -2565,7 +2562,7 @@ function extractCardsFromContent(myCards) {
     );
 
     // description changed to remove all the meta data
-    description = cardMetaData["description"];
+    description = cardMetaData.description;
 
     // TODO is this still used?
     // Find any ItemDetailsHeaders that indicate the item is hidden
@@ -5597,14 +5594,17 @@ function replaceEmbeds(document, embeds) {
           </div>
           <div class="instructions">
             ${embeds[src].videoHtml}
+            <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon" \>
           </div>
         `;
       }
 
-      // replace the node if html is something
+      // replace the node (containing the embed) if html is something
       if (html !== "") {
+        // create the new node, which is the div class="activity|filmWatchOptions"
         let newNode = document.createElement("div");
         newNode.className = embeds[src].activity;
+        // add in the HTML
         newNode.innerHTML = html;
         nodeList[i].parentNode.replaceChild(newNode, nodeList[i]);
       }
@@ -5733,16 +5733,6 @@ function prepareForPrint(document) {
   replaceEmbeds(document, embeds);
   // add the "Online exclusive" section to the end of the document
   addLinksForPrint(document, urls, embeds);
-  // TODO the following should be ble to be removed
-/*  for (var divstyle in STYLE_PREPEND) {
-    let query = `div.${divstyle}`;
-    // replace the first child div with what's  in STYLE_PREPEND value
-    // TODO this isn't doing anything
-    document.querySelectorAll(query).forEach((div) => {
-      console.log(div.innerHTML);
-      //jQuery(query).prepend(STYLE_PREPEND[divstyle]);
-    });
-  } */
   /*  STYLE_PREPEND = {
     reading: `<div class="readingImage">
       <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png" alt="Reading icon" />
@@ -5790,6 +5780,7 @@ function printPDF(e) {
   printWindow.document.close();
 
   prepareForPrint(printWindow.document);
+
 
   printWindow.print();
   printWindow.close();
