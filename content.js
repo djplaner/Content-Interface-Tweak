@@ -19,11 +19,10 @@ const DEFAULT_CARD_LABEL = "Module";
 var MARK_REVIEWED = "Mark Reviewed";
 var REVIEWED = "Reviewed";
 
-var DEFAULT_CSS =
-  "https://djon.es/gu/gu_study.css";
-  //"https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
-const DEFAULT_PRINT_CSS = "https://djon.es/gu/com14_print.css";
-//  "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css";
+var DEFAULT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
+  //"https://djon.es/gu/gu_study.css";
+//const DEFAULT_PRINT_CSS = "https://djon.es/gu/com14_print.css";
+const DEFAULT_PRINT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css";
 
 var tweak_bb_active_url_pattern = "listContent.jsp";
 
@@ -207,8 +206,6 @@ function contentInterface($) {
 
   // handle the integration of any blackboard headings/items into the
   // content interface
-  jQuery("h1.blackboard").each(handleBlackboardItem);
-  jQuery("h2.blackboard").each(handleBlackboardItem);
   jQuery("span.blackboardContentLink").each(handleBlackboardContentLink);
   jQuery("span.blackboardMenuLink").each(handleBlackboardMenuLink);
 
@@ -238,6 +235,10 @@ function contentInterface($) {
       .nextUntil("h1,h2")
       .wrapAll('<div class="gu-accordion-h2-body"></div>');
   });
+
+  // move these until after the divs have been added
+  jQuery("h1.blackboard").each(handleBlackboardItem);
+  jQuery("h2.blackboard").each(handleBlackboardItem);
 
   // handle footnotes
   // - find each footnote reference and replace with a tooltipster element
@@ -1534,9 +1535,10 @@ function handleBlackboardItem() {
   } else if (bbItem.length === 0) {
     if ( editModeOff && ! ('noHiddenSections' in PARAMS)) {
       // hide from this heading until the next heading of the same level 
-      jQuery(this).nextUntil(this.tagName).hide();
+      jQuery(this).parent().hide();
+      //jQuery(this).nextUntil(this.tagName).hide();
       // hide the heading
-      jQuery(this).hide();
+      ////jQuery(this).hide();
       // hide the bb content item
       jQuery(bbItem).parent().parent().hide();
     } else {
