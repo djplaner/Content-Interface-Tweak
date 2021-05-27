@@ -1213,6 +1213,9 @@ function checkParams(contentInterface, wordDoc) {
           if (element.match(/expandall/i)) {
             paramsObj.expandAll = true;
           }
+          if (element.match(/noHiddenSections/i)) {
+            paramsObj.noHiddenSections = true;
+          }
           if (element.match(/collapseall/i)) {
             //console.log("Collapse all");
             paramsObj.collapseAll = true;
@@ -1246,7 +1249,7 @@ function checkParams(contentInterface, wordDoc) {
             x = element.match(/^([^=]*)=(.*)/);
             if (x) {
               paramsObj[x[1]] = x[2];
-            }
+            } 
           }
           /*                     if ( x = element.match(/css=([^ ]*)/ )) {
                                             cssURL=x[1];
@@ -1494,131 +1497,83 @@ function getCardBbItem(element) {
   return bbItem;
 }
 
-/***************************************************
- * handleBlackboardItem( heading )
- * Given a single heading element as this
- * - find the matching Blackboard element
- * - find the content up until the next heading
- * - find any span.blackboardLink in the HTML and update the link
- * - if the item is hidden don't show the link and attempt to update
- *   the text to show (not currently available)
- *
- * Review status
- * - check to see if review status has been turned on for the item
- * - if it has, then
- *   - update accordion header with review status
- *   - update accordion content with button to change review status
+/**
+ * @function handleBlackboardItem
+ * @param (this) jQuery object
+ * Passed a jQuery object to a h1/h2 styles as Blackboard Item Heading
+ * - Check if a matching content item can be found on the page (matches name)
+ * - if it's not present and edit mode off, hide the heading and its section
+ * - if it is present, show the heading/section and if the item has Bb's review status
+ *   turned on, add that to the heading and section appropriately
  */
 
 function handleBlackboardItem() {
-  var hidden_string = " (not currently available)";
+  let hidden_string = " (section hidden from some students)";
+  // editMode is off if listContent.js is in the doc href
+  let editModeOff = location.href.indexOf("listContent.jsp") > 0;
 
   // get the title from the Blackboard Item Heading (2)
-  title = jQuery(this).text();
-
-  // define pseudo function to do comparison to get exact match, but
-  // case insensitive
+  let title = jQuery(this).text();
+  const linkText = jQuery(this).text();
 
   /* Find the matching Blackboard element heading (h3) */
   // Ignore any within the Content Interface
-  var bbItem = jQuery("h3:textEquals(" + title + ")").filter(function () {
+  let bbItem = jQuery("h3:textEquals(" + title + ")").filter(function () {
     const parent = jQuery(this).parents("#GU_ContentInterface");
     return parent.length === 0;
   });
 
-  /*console.log(" -- Looked for **" + title + "** and found " + bbItem.length);
-    console.log(bbItem);*/
-
-  if (bbItem.length === 0) {
-    // add the hidden_string to the heading
-    linkText = jQuery(this).text();
-    jQuery(this).text(linkText + hidden_string);
-
-    // add the hidden_string to the link
-    jQuery(this)
-      .nextUntil(this.tagName)
-      .find(".blackboardLink")
-      .each(function () {
-        linkText = jQuery(this).text();
-        jQuery(this).text(linkText + hidden_string);
-      });
-  } else if (bbItem.length > 1) {
-    console.log(
-      "Error found more than 1 (" +
-        bbItem.length +
-        ") entries matching " +
-        title
-    );
-  } else if (bbItem.length === 1) {
-    //**** Handle review status
-    /*console.log("Handle review status");
-        console.log(bbItem);*/
-    reviewLink = getReviewStatusContent(bbItem);
-    //console.log("title " + title + " review link is " + reviewLink);
-    if (typeof reviewLink !== "undefined") {
-      //-- update the title
-      addReviewLink(this, reviewLink);
-
-      //-- add the button to the content
-      // - need to find content body
+  // more than one matching item found, add error warning if editModeOn
+  if (bbItem.length > 1) { 
+    console.log( `Error found more than 1 (${bbItem.length} content items matching title`);
+    if ( ! editModeOff) {
+      const warningString = ` <span class="gu-red">(found ${bbItem.length} matching content items)</span>`;
+      jQuery(this).html(linkText + warningString);
     }
 
-    //**** Handle the insertion of the item link where appropriate
-    // get the link
-    var link = jQuery(bbItem).children("a").attr("href");
-
-    // if there's no link, then check to see if it's TurnitIn
-    // (which puts the link in the body)
-    if (link == null) {
-      // Assume it's a TurnitIn and look for "View Assignment" link
-      // Have to go up to the parent and onto the next div
-      link = jQuery(bbItem)
-        .parent()
-        .next()
-        .children(".vtbegenerated")
-        .children("a");
-      var text = link.text();
-      if (text === "View Assignment") {
-        // we've found a Safe Assignment link
-        link = link.attr("href");
+  } else if (bbItem.length === 0) {
+    if ( editModeOff && ! ('noHiddenSections' in PARAMS)) {
+      // hide from this heading until the next heading of the same level 
+      jQuery(this).nextUntil(this.tagName).hide();
+      // hide the heading
+      jQuery(this).hide();
+      // hide the bb content item
+      jQuery(bbItem).parent().parent().hide();
+    } else {
+      // teacher viewing gets an error message when no item found
+      if ( ! editModeOff) { 
+        const warningString = ` (no matching content item found)`; 
+        jQuery(this).text(linkText + warningString);
       }
     }
+  } else if (bbItem.length === 1) {
+    // found 1 matching item, 
 
     // check to see if the item is actually hidden
-    hidden = jQuery(bbItem)
-      .parent()
-      .next()
-      .find(".contextItemDetailsHeaders")
-      .filter(":contains('Item is hidden from students.')");
-    loc = location.href.indexOf("listContent.jsp");
-    if (hidden.length === 1) {
-      // add the hidden_string to the heading
-      linkText = jQuery(this).text();
-      jQuery(this).text(linkText + hidden_string);
-      // add the hidden_string to the end of each .blackboardlink
-      jQuery(this)
-        .nextUntil(this.tagName)
-        .find(".blackboardLink")
-        .each(function () {
-          linkText = jQuery(this).text();
-          jQuery(this).text(linkText + hidden_string);
-        });
-      return true;
-    }
+    // i.e it's item contains a certain text
+    const hidden = jQuery(bbItem).parent().next().find(".contextItemDetailsHeaders")
+        .filter(":contains('Item is hidden from students.')").length === 1;
+    const staffReview = jQuery(bbItem).parent().next().find(".contextItemDetailsHeaders")
+        .filter(":contains('Review')").length === 1;
 
-    // Hide the bbitem li
-    if (location.href.indexOf("listContent.jsp") > 0) {
-      jQuery(bbItem).parent().parent().hide();
+    // add review status if set and content item isn't hidden
+    if ( ! hidden) {
+      const reviewLink = getReviewStatusContent(bbItem); 
+      if (typeof reviewLink !== "undefined") { 
+        //-- update the title
+        addReviewLink(this, reviewLink);
+        // hide the content item
+        jQuery(bbItem).parent().parent().hide();
+      }
+      // EditModeOn doesn't give a review button i.e. staffReview, show message 
+      if ( staffReview ){
+        jQuery(this).text(linkText + ' (Review status on)');
+      }
+    } else {
+        // can only get here if editModeOff
+        const warningString = ` (section hidden from some/all students)`;
+        jQuery(this).text(linkText + warningString);
     }
-    // wrap any span class="blackboardLink" with a link
-    var string = '<a href="' + link + '"></a>';
-    // Try to replace just the Blackboard links for the current heading
-    jQuery(this)
-      .nextUntil(this.tagName)
-      .find(".blackboardLink")
-      .each(function () {
-        jQuery(this).wrapAll(string);
-      });
   }
 }
 
