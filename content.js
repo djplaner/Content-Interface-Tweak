@@ -19,10 +19,10 @@ const DEFAULT_CARD_LABEL = "Module";
 var MARK_REVIEWED = "Mark Reviewed";
 var REVIEWED = "Reviewed";
 
-var DEFAULT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
-  //"https://djon.es/gu/gu_study.css";
-//const DEFAULT_PRINT_CSS = "https://djon.es/gu/com14_print.css";
-const DEFAULT_PRINT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css";
+var DEFAULT_CSS = "https://djon.es/gu/gu_study.css";
+//"https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
+const DEFAULT_PRINT_CSS = "https://djon.es/gu/com14_print.css";
+//const DEFAULT_PRINT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css";
 
 var tweak_bb_active_url_pattern = "listContent.jsp";
 
@@ -4817,7 +4817,9 @@ function handleFilmWatchingOptions() {
       // didn't find film do the default justWatch search
       html = `
     <div class="filmWatchingOptions">
-      <div class="filmWatchingOptionsImage"></div>
+      <div class="filmWatchingOptionsImage">
+          <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon" \>
+      </div>
       <div class="instructions">
          <p>We've been unable to provide a copy <em>${filmName}</em>.</p>
          <p><a href="https://www.justwatch.com/au/search?q=${filmNameEsc}" target="_blank">This search on JustWatch</a> may provide pointers to where you can find it online.</p>
@@ -5542,7 +5544,9 @@ function replaceEmbeds(document, embeds) {
           <div class="activityImage">
             <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-dancing-48.png" alt="Activity icon" />
           </div>
+          <div class="instructions">
           ${embeds[src].videoHtml}
+          </div>
         `;
       } else if (embeds[src].activity === "filmWatchingOptions") {
         html = `
@@ -5551,7 +5555,6 @@ function replaceEmbeds(document, embeds) {
           </div>
           <div class="instructions">
             ${embeds[src].videoHtml}
-            <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon" \>
           </div>
         `;
       }

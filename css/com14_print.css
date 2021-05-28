@@ -245,23 +245,6 @@
   /*    background-color: #efd25c;*/
   }
   
-  
-  
-  /*.filmWatchingOptions  {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
-    border-style:solid;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 1em 0;
-    margin-left: auto;
-    margin-right: auto;
-    width: 95%; 
-      border-radius: 1em;
-      padding: 1em;
-  }*/
-  
-  
   #GU_ContentInterface .activityImage {
     width: 5%;
  /*   background-image: url('https://djon.es/images/task.png');
@@ -282,6 +265,12 @@
     background-repeat: no-repeat;
     background-size: contain; */
   }
+
+  .filmWatchingOptionsImage img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
   
   #GU_ContentInterface .comingSoonImage {
     width: 15%;
@@ -736,8 +725,11 @@
    background-repeat: no-repeat;
    background-size: contain;*/
    }
-  
-  
+
+   .noteImage{
+     max-width:100%;
+     max-height:100%
+   }
   
   @media print {
       .ui-accordion .ui-accordion-content {
@@ -781,7 +773,8 @@
   }
   
   .flashbackImage img {
-    width: 95%; 
+    max-width: 100%;
+    max-height: 100%;
   }
   
   
@@ -803,7 +796,8 @@
   }
   
   .canaryImage img {
-    width: 95%;
+    max-width:100%;
+    max-height:100%;
   }
   
   #GU_ContentInterface .weeklyWorkoutImage {
@@ -812,7 +806,8 @@
   }
   
   .weeklyWorkout img {
-    width: 95%;
+    max-width: 100%;
+    max-height: 100%;
   }
   #GU_ContentInterface .weeklyWorkout  {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;

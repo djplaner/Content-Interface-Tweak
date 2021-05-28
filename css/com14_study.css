@@ -250,11 +250,21 @@
   margin-left: 1em;
   }
 
+  .noteImage img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
 #GU_ContentInterface .filmWatchingOptionsImage {
   width: 5%;
   /*background-image: url('https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png');
   background-repeat: no-repeat;
   background-size: contain; */
+}
+
+.filmWatchingOptionsImage img {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 #GU_ContentInterface .activityNarrow  {
