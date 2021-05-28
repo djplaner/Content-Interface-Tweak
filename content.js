@@ -5668,11 +5668,13 @@ function addLinksForPrint(document, urls, embeds) {
 /**
  * @function prepareForPrint
  * @param {Element} document
+ * @param {title} String title of the HTML page being printed
+ * @param {courseName} String description of course name
  * Modify the given document to prepare it for printing
  * - remove accordions
  */
 
-function prepareForPrint(document) {
+function prepareForPrint(document,title,courseName) {
   // remove expand buttons
   document.querySelector(".accordion-expand-holder").style.display = "none";
 
@@ -5693,11 +5695,15 @@ function prepareForPrint(document) {
   replaceEmbeds(document, embeds);
   // add the "Online exclusive" section to the end of the document
   addLinksForPrint(document, urls, embeds);
-  /*  STYLE_PREPEND = {
-    reading: `<div class="readingImage">
-      <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-reading-48.png" alt="Reading icon" />
-    </div>`,
-*/
+
+  // update the title using the first <div class="invisible" which currently has
+  // the title of the chapter (from the Word document)
+  let printTitle = document.querySelector('div.invisible');
+  courseName = courseName.replace( /\(.*\)$/, '');
+  printTitle.innerHTML = `<div class="printHeader">
+  <div class="printCourseName">${courseName}</div> 
+  <div class="printPageTitle">${title}</div></div>`;
+
 }
 
 /**
@@ -5718,32 +5724,44 @@ function printPDF(e) {
   }
 
   let divContents = jQuery("#GU_ContentInterface").html();
-  let title = jQuery("#pageTitleText").text();
+  let title = document.querySelector("#pageTitleText").innerText;
+  let courseName = document.querySelector('#courseMenu_link').innerText;
 
   let string = `
   <html>
     <head>
       <title>${title}</title>
-     <link rel="stylesheet" href="${PARAMS.downloadPDFURL}" /> 
+     <!-- <link rel="stylesheet" href="${PARAMS.downloadPDFURL}" /> -->
 <!--     <link rel="stylesheet" media="print" href="${PARAMS.downloadPDFURL}" />    -->
     </head>
     <body>
+     <link type="text/css" rel="stylesheet" href="${PARAMS.downloadPDFURL}"> 
       <div id="GU_ContentInterface">
         ${divContents}
       </div>
     </body>
   </html>`;
 
+  let bodyString = `
+  <link type="text/css" rel="stylesheet" href="${PARAMS.downloadPDFURL}"> 
+  <div id="GU_ContentInterface">
+    ${divContents}
+  </div>
+  `;
+
   // print it
   let printWindow = window.open("", "", "height=400,width=800");
-  printWindow.document.write(string);
+  printWindow.document.title = title;
+  printWindow.document.body.innerHTML = bodyString;
   printWindow.document.close();
 
-  prepareForPrint(printWindow.document);
+  prepareForPrint(printWindow.document,title,courseName);
 
-
-  printWindow.print();
-  printWindow.close();
+  // kludge to get CSS loaded?
+  setTimeout(() => {
+    printWindow.print();
+    printWindow.close();
+  }, 1000);
 
   // prevent the parent window reloading
   return false;

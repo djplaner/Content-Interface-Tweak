@@ -822,9 +822,18 @@
     background-color: #cafafe;
     overflow:hidden;
   }
+
+  .printCourseName {
+    font-size: 80%;
+  }
+  .printPageTitle {
+    font-size: 160%;
+    font-weight:bolder;
+  }
   
   @media print {
     .example, .ael-note, .flashback, .weeklyWorkout, .canaryExercise, .reading, .activity, .picture, .pictureRight  { page-break-inside: avoid;} 
+  
   }
   
   @page {

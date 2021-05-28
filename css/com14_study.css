@@ -804,3 +804,11 @@ figure._60 {
   background-repeat: no-repeat;
   background-size: contain; */
 }
+
+.printCourseName {
+  font-size: 80%;
+}
+.printPageTitle {
+  font-size: 160%;
+  font-weight:bolder;
+}
