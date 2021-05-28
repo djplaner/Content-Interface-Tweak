@@ -19,10 +19,10 @@ const DEFAULT_CARD_LABEL = "Module";
 var MARK_REVIEWED = "Mark Reviewed";
 var REVIEWED = "Reviewed";
 
-var DEFAULT_CSS = "https://djon.es/gu/gu_study.css";
-//"https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
-const DEFAULT_PRINT_CSS = "https://djon.es/gu/com14_print.css";
-//const DEFAULT_PRINT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css";
+//var DEFAULT_CSS = "https://djon.es/gu/gu_study.css";
+var DEFAULT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
+//const DEFAULT_PRINT_CSS = "https://djon.es/gu/com14_print.css";
+const DEFAULT_PRINT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css";
 
 var tweak_bb_active_url_pattern = "listContent.jsp";
 
