@@ -932,8 +932,7 @@ var INSTRUCTIONS = `
          Notes
             </a>
          </li>
-         <li> <i class="fa fa-plus-square text-green" aria-hidden="true"></i>
-         <a target="_blank" href="${DOCUMENTATION_LINKS.asides}"> 
+         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.asides}"> 
          Asides
             </a>
          </li>
@@ -981,7 +980,7 @@ var INSTRUCTIONS = `
             adaptive release</a>
          </li>
       </ul>
-      <i class="fa fa-plus-square text-green"></i> How to link to Blackboard content items with cards...
+      How to link to Blackboard content items with cards...
       <ul style="padding-left: 1em; margin-left:0">
         <li> <a target="_blank" href="${DOCUMENTATION_LINKS.cardsWhat}">What and why?</a>
         </li>
@@ -1018,7 +1017,8 @@ var INSTRUCTIONS = `
 
       </ul>
       <p><i class="fa fa-plus-square text-green"></i> 
-          Provide <a target="_blank" href="${DOCUMENTATION_LINKS.providePDF}">content as a PDF file</a>
+          Enable <a target="_blank" href="${DOCUMENTATION_LINKS.providePDF}">download PDF</a><br />
+    <mark><strong>Updated</strong>: now dynamic PDF generation you can add yourself</mark>
       </p>
             </div>
         </article>
