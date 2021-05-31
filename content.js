@@ -1214,8 +1214,8 @@ function checkParams(contentInterface, wordDoc) {
           if (element.match(/expandall/i)) {
             paramsObj.expandAll = true;
           }
-          if (element.match(/noHiddenSections/i)) {
-            paramsObj.noHiddenSections = true;
+          if (element.match(/hideMissingSections/i)) {
+            paramsObj.hideMissingSections = true;
           }
           if (element.match(/collapseall/i)) {
             //console.log("Collapse all");
@@ -1533,7 +1533,8 @@ function handleBlackboardItem() {
     }
 
   } else if (bbItem.length === 0) {
-    if ( editModeOff && ! ('noHiddenSections' in PARAMS)) {
+    // hide missing sections lfor students, if no matching item and we want to hide 
+    if ( editModeOff && ('hideMissingSections' in PARAMS)) {
       // hide from this heading until the next heading of the same level 
       jQuery(this).parent().hide();
       //jQuery(this).nextUntil(this.tagName).hide();
