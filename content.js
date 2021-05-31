@@ -1610,7 +1610,7 @@ function addReviewLink(item, reviewLink) {
   }
   jQuery(item).html(linkText + reviewHeadingTemplate);
 
-  // change the body"
+  // content is now the div with the accordion wrapper
   content = jQuery(item).next();
 
   reviewBodyTemplate = "";
@@ -1635,7 +1635,8 @@ function addReviewLink(item, reviewLink) {
   }
   reviewBodyTemplate = reviewBodyTemplate.replace("{LINK}", reviewLink);
   // insert the reviewed button before the first item after the heading
-  jQuery(content).before(reviewBodyTemplate);
+  // insert it as the first child of the accordion div
+  jQuery(content).prepend(reviewBodyTemplate);
 }
 //-----------------------------------------------------------------
 // getReviewStatusContent
