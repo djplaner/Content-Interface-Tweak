@@ -719,7 +719,7 @@ const DOCUMENTATION_LINKS = {
   reviewStatus:
     "https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#integrating-the-blackboard-review-status-feature",
   adaptiveRelease:
-    "https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#using-the-adaptive-release-function",
+    "https://djplaner.github.io/Content-Interface-Tweak/creating/blackboardContent/#hide-sections-using-blackboards-availability-control-mechanisms",
   // -- add cards
   cardsWhat:
     "https://djplaner.github.io/Content-Interface-Tweak/creating/addCards/",
@@ -975,9 +975,10 @@ var INSTRUCTIONS = `
             use <a target="_blank" href="${DOCUMENTATION_LINKS.reviewStatus}"> 
             review status</a>
          </li>
-         <li> 
+         <li> <i class="fa fa-plus-square text-green"></i> 
             use <a target="_blank" href="${DOCUMENTATION_LINKS.adaptiveRelease}"> 
-            adaptive release</a>
+            Blackboard availability features</a> to hide sections<br />
+            <mark><strong>Updated</strong>: new method</mark>
          </li>
       </ul>
       How to link to Blackboard content items with cards...
