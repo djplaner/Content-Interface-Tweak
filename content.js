@@ -20,9 +20,11 @@ var MARK_REVIEWED = "Mark Reviewed";
 var REVIEWED = "Reviewed";
 
 //var DEFAULT_CSS = "https://djon.es/gu/gu_study.css";
-var DEFAULT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
+var DEFAULT_CSS =
+  "https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css";
 //const DEFAULT_PRINT_CSS = "https://djon.es/gu/com14_print.css";
-const DEFAULT_PRINT_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css";
+const DEFAULT_PRINT_CSS =
+  "https://s3.amazonaws.com/filebucketdave/banner.js/com14_print.css";
 
 var tweak_bb_active_url_pattern = "listContent.jsp";
 
@@ -42,10 +44,10 @@ var STYLE_PREPEND = {
   // COM14
   canaryExercise: `<div class="canaryImage"><img src="https://s3.amazonaws.com/filebucketdave/banner.js/images/com14/Tweety.svg.png"  alt="Tweety bird"  /></div>`,
   //ael-note : `<div class="icon"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
-  'ael-note': `<div class="noteImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
+  "ael-note": `<div class="noteImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/Blk-Warning.png"></div>`,
   weeklyWorkout: `<div class="weeklyWorkoutImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/weeklyWorkout.png" alt="Female weight lifter" /></div>`,
   comingSoon: `<div class="comingSoonImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/comingSoon.jpg"></div>`,
-  filmWatchingOptions: `<div class="filmWatchingOptionsImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon"> </div>`
+  filmWatchingOptions: `<div class="filmWatchingOptionsImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon"> </div>`,
 };
 
 //
@@ -171,7 +173,7 @@ function contentInterface($) {
     }
   } else {
     // add the cards for documentation
-    addCSS(CARDS_CSS,params.downloadPDFURL);
+    addCSS(CARDS_CSS, params.downloadPDFURL);
     addJS(FONT_AWESOME_JS);
   }
 
@@ -182,7 +184,7 @@ function contentInterface($) {
 
   // the if isn't required
   if ("cssURL" in params) {
-    addCSS(params.cssURL,params.downloadPDFURL);
+    addCSS(params.cssURL, params.downloadPDFURL);
   }
 
   if ("theme" in params) {
@@ -346,7 +348,7 @@ function contentInterface($) {
   });
 
   // Update the HTML for various defined styles
-/*  for (var divstyle in STYLE_PREPEND) {
+  /*  for (var divstyle in STYLE_PREPEND) {
     let query = `div.${divstyle}`;
     jQuery(query).prepend(STYLE_PREPEND[divstyle]);
   } */
@@ -1251,7 +1253,7 @@ function checkParams(contentInterface, wordDoc) {
             x = element.match(/^([^=]*)=(.*)/);
             if (x) {
               paramsObj[x[1]] = x[2];
-            } 
+            }
           }
           /*                     if ( x = element.match(/css=([^ ]*)/ )) {
                                             cssURL=x[1];
@@ -1526,17 +1528,18 @@ function handleBlackboardItem() {
   });
 
   // more than one matching item found, add error warning if editModeOn
-  if (bbItem.length > 1) { 
-    console.log( `Error found more than 1 (${bbItem.length} content items matching title`);
-    if ( ! editModeOff) {
+  if (bbItem.length > 1) {
+    console.log(
+      `Error found more than 1 (${bbItem.length} content items matching title`
+    );
+    if (!editModeOff) {
       const warningString = ` <span class="gu-red">(found ${bbItem.length} matching content items)</span>`;
       jQuery(this).html(linkText + warningString);
     }
-
   } else if (bbItem.length === 0) {
-    // hide missing sections lfor students, if no matching item and we want to hide 
-    if ( editModeOff && ('hideMissingSections' in PARAMS)) {
-      // hide from this heading until the next heading of the same level 
+    // hide missing sections lfor students, if no matching item and we want to hide
+    if (editModeOff && "hideMissingSections" in PARAMS) {
+      // hide from this heading until the next heading of the same level
       jQuery(this).parent().hide();
       //jQuery(this).nextUntil(this.tagName).hide();
       // hide the heading
@@ -1545,38 +1548,46 @@ function handleBlackboardItem() {
       jQuery(bbItem).parent().parent().hide();
     } else {
       // teacher viewing gets an error message when no item found
-      if ( ! editModeOff) { 
-        const warningString = ` (no matching content item found)`; 
+      if (!editModeOff) {
+        const warningString = ` (no matching content item found)`;
         jQuery(this).text(linkText + warningString);
       }
     }
   } else if (bbItem.length === 1) {
-    // found 1 matching item, 
+    // found 1 matching item,
 
     // check to see if the item is actually hidden
     // i.e it's item contains a certain text
-    const hidden = jQuery(bbItem).parent().next().find(".contextItemDetailsHeaders")
+    const hidden =
+      jQuery(bbItem)
+        .parent()
+        .next()
+        .find(".contextItemDetailsHeaders")
         .filter(":contains('Item is hidden from students.')").length === 1;
-    const staffReview = jQuery(bbItem).parent().next().find(".contextItemDetailsHeaders")
+    const staffReview =
+      jQuery(bbItem)
+        .parent()
+        .next()
+        .find(".contextItemDetailsHeaders")
         .filter(":contains('Review')").length === 1;
 
     // add review status if set and content item isn't hidden
-    if ( ! hidden) {
-      const reviewLink = getReviewStatusContent(bbItem); 
-      if (typeof reviewLink !== "undefined") { 
+    if (!hidden) {
+      const reviewLink = getReviewStatusContent(bbItem);
+      if (typeof reviewLink !== "undefined") {
         //-- update the title
         addReviewLink(this, reviewLink);
         // hide the content item
         jQuery(bbItem).parent().parent().hide();
       }
-      // EditModeOn doesn't give a review button i.e. staffReview, show message 
-      if ( staffReview ){
-        jQuery(this).text(linkText + ' (Review status on)');
+      // EditModeOn doesn't give a review button i.e. staffReview, show message
+      if (staffReview) {
+        jQuery(this).text(linkText + " (Review status on)");
       }
     } else {
-        // can only get here if editModeOff
-        const warningString = ` (section hidden from some/all students)`;
-        jQuery(this).text(linkText + warningString);
+      // can only get here if editModeOff
+      const warningString = ` (section hidden from some/all students)`;
+      jQuery(this).text(linkText + warningString);
     }
   }
 }
@@ -4676,8 +4687,7 @@ function addCSS(onlineUrl, printUrl) {
   style.type = "text/css";
   style.rel = "stylesheet";
   style.media = "print";
-  head.append(style); 
-
+  head.append(style);
 }
 
 /*************************************************************
@@ -5102,7 +5112,7 @@ const PRINT_URLS = {
     "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/ER3stuIbjQFEi2TFu22qMvgBB_TQPKr3YQqp25RatuxqQA?download=1",
   // --- COM14 SP4, 2020
   id82046152719131:
-  "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EX7kjt6DSZlMkRfnMW3lc5UB2RZDJFDqvU5QZSMxSL3wTw?download=1",
+    "https://griffitheduau.sharepoint.com/:b:/s/HLSSacademic/EX7kjt6DSZlMkRfnMW3lc5UB2RZDJFDqvU5QZSMxSL3wTw?download=1",
   // --- CWR111 SP4, 2020
   // welcome and orientation
   id82172154304321:
@@ -5285,7 +5295,7 @@ const PRINT_URLS = {
 
 function extractAndCategoriseLinks(document) {
   let urls = {};
-  const blackboardPattern = new RegExp("\.griffith\.edu\.au/webapps/blackboard");
+  const blackboardPattern = new RegExp(".griffith.edu.au/webapps/blackboard");
 
   // generate a unique list of links
   // key is the href, value is the anchor text
@@ -5307,7 +5317,10 @@ function extractAndCategoriseLinks(document) {
     let type = "ExternalLink";
     if (blackboardPattern.test(nodeList[i].href)) {
       // remove any mention of -blaed in the hostname
-      nodeList[i].href = nodeList[i].href.replace( '//bblearn-blaed', '//bblearn');
+      nodeList[i].href = nodeList[i].href.replace(
+        "//bblearn-blaed",
+        "//bblearn"
+      );
       type = "BlackboardLink";
     }
 
@@ -5329,7 +5342,7 @@ function extractAndCategoriseLinks(document) {
  */
 
 function categoriseEmbeds(span) {
-//  let iframe = span.firstChild;
+  //  let iframe = span.firstChild;
   let iframe = span.getElementsByTagName("iframe")[0];
   let src = iframe.src;
   let nextNode = iframe.nextSibling;
@@ -5694,7 +5707,7 @@ function addLinksForPrint(document, urls, embeds) {
  * - remove accordions
  */
 
-function prepareForPrint(document,title,courseName) {
+function prepareForPrint(document, title, courseName) {
   // remove expand buttons
   document.querySelector(".accordion-expand-holder").style.display = "none";
 
@@ -5718,12 +5731,13 @@ function prepareForPrint(document,title,courseName) {
 
   // update the title using the first <div class="invisible" which currently has
   // the title of the chapter (from the Word document)
-  let printTitle = document.querySelector('div.invisible');
-  courseName = courseName.replace( /\(.*\)$/, '');
-  printTitle.innerHTML = `<div class="printHeader">
+  let printTitle = document.querySelector("div.invisible");
+  if (printTitle !== null) {
+    courseName = courseName.replace(/\(.*\)$/, "");
+    printTitle.innerHTML = `<div class="printHeader">
   <div class="printCourseName">${courseName}</div> 
   <div class="printPageTitle">${title}</div></div>`;
-
+  }
 }
 
 /**
@@ -5745,7 +5759,7 @@ function printPDF(e) {
 
   let divContents = jQuery("#GU_ContentInterface").html();
   let title = document.querySelector("#pageTitleText").innerText;
-  let courseName = document.querySelector('#courseMenu_link').innerText;
+  let courseName = document.querySelector("#courseMenu_link").innerText;
 
   let string = `
   <html>
@@ -5775,7 +5789,7 @@ function printPDF(e) {
   printWindow.document.body.innerHTML = bodyString;
   printWindow.document.close();
 
-  prepareForPrint(printWindow.document,title,courseName);
+  prepareForPrint(printWindow.document, title, courseName);
 
   // kludge to get CSS loaded?
   setTimeout(() => {
