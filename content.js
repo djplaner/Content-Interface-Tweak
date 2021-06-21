@@ -5530,7 +5530,10 @@ function extractAndCategoriseEmbeds(document) {
     let iframe = nodeList[i].getElementsByTagName("iframe")[0];
     // skip embeds without src
     //   if (!nodeList[i].hasAttribute("src")) {
-    if (iframe.nodeName !== "IFRAME" || !iframe.hasAttribute("src")) {
+    if ( typeof(iframe)==="undefined"){
+      continue;
+    }
+    if ( iframe.nodeName !== "IFRAME" || !iframe.hasAttribute("src")) {
       continue;
     }
 
@@ -5564,6 +5567,9 @@ function replaceEmbeds(document, embeds) {
     let iframe = nodeList[i].getElementsByTagName("iframe")[0];
     // skip embeds without src
     //if (!nodeList[i].hasAttribute("src")) {
+    if (typeof(iframe)==="undefined"){
+      continue;
+    }
     if (iframe.nodeName !== "IFRAME" || !iframe.hasAttribute("src")) {
       continue;
     }
