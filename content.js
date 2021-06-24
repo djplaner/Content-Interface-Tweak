@@ -5786,7 +5786,9 @@ function prepareForPrint(document, title, courseName) {
   document.querySelector(".accordion-expand-holder").style.display = "none";
 
   // remove the gu_addedAdvice class
-  document.querySelector(".gu_addedAdvice").style.display = "none";
+  document.querySelectorAll(".gu_addedAdvice").forEach((advice) => {
+    advice.style.display = "none";
+  });
 
   // remove mark reviewed buttons
   document.querySelectorAll("div.gu-ci-review").forEach((button) => {
