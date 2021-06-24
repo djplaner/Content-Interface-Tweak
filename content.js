@@ -551,7 +551,7 @@ function updateStream(html) {
       let videoUrl = `https://web.microsoftstream.com/video/${videoId}`;
       return `${html}
       <p style="font-size:80%">
-      Alternate source: <a href="${videoUrl}" target="_new">visit video's page</a>.<br />
+      Alternative source: <a href="${videoUrl}" target="_new">visit video's page</a>.<br />
       Help: <a href="https://docs.microsoft.com/en-us/stream/portal-watch">Watch videos on Microsoft Stream</a>
       </p>
       `;
