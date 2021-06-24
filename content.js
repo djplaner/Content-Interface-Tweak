@@ -261,10 +261,12 @@ function contentInterface($) {
   //doVideo();
 
   // convert the embed code
-  var embeds = jQuery(".embed");
+  let embeds = jQuery(".embed");
   embeds.each(function (idx) {
-    var embed = jQuery(this).html();
-    var decoded = jQuery("<div/>").html(embed).text();
+    let embed = jQuery(this).html();
+    let decoded = jQuery("<div/>").html(embed).text();
+    // do some special handling for Stream videos
+    decoded = updateStream(decoded);
     jQuery(this).html(decoded);
   });
 
@@ -513,6 +515,49 @@ function contentInterface($) {
       clearInterval(checkIcon);
     }
   }, 100);
+}
+
+/**
+ *
+ * @param {String} html  - html embe
+ * - if the html contains a stream embed, add a message above
+ *   that provides a direct link to the Stream video
+ */
+
+function updateStream(html) {
+  let t = document.createElement("tt_template");
+  t.innerHTML = html;
+
+  let iframe = t.getElementsByTagName("iframe")[0];
+  let src = iframe.src;
+
+  // is src a URL
+  // start analysing src to find the type of service
+  let servicePattern = new RegExp("^https://([^/]*)");
+  let match = src.match(servicePattern);
+
+  if (!match) {
+    return html;
+  }
+
+  let service = match[1];
+
+  // Microsoft stream
+  if (service.includes("microsoftstream.com")) {
+    let pattern = /^https:\/\/[^\/]*\/embed\/video\/([^\/?]*)/;
+    match = src.match(pattern);
+    if (match) {
+      let videoId = match[1];
+      let videoUrl = `https://web.microsoftstream.com/video/${videoId}`;
+      return `${html}
+      <p style="font-size:80%">
+      Alternate source: <a href="${videoUrl}" target="_new">visit video's page</a>.<br />
+      Help: <a href="https://docs.microsoft.com/en-us/stream/portal-watch">Watch videos on Microsoft Stream</a>
+      </p>
+      `;
+    }
+  }
+  return html;
 }
 
 /**
@@ -1482,23 +1527,35 @@ function addCardClickHandler() {
  */
 
 function getCardBbItem(element) {
-  var title = jQuery(element).text().trim();
-  //console.log( "--- element text is " + title );
+  // get the title from the content document
+  let title = jQuery(element).text().trim();
+  // replace the smart quotes
+  title = title.replace(/\u2013|\u2014/g, "-");
+  title = title.replace(/[\u201c\u201d]/g, '"');
+  title = title.replace(/[\u201c\u201d]/g, '"');
 
-  /* Find the matching Blackboard element heading (h3) */
-  var bbItem = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(
-    "h3:textEquals(" + title + ")"
-  );
+  // get all the Bb content items
+  let selector = `${tweak_bb.page_id} > ${tweak_bb.row_element}`;
+  let bbItems = document.querySelectorAll(selector);
+  // find those matching the title
+  let match;
+  bbItems.forEach(function (elem, index, list) {
+    // get the first h3
+    let heading = elem.querySelector("h3");
 
-  if (bbItem.length === 0) {
-    //console.log("  -- Didn't find match");
+    const re = new RegExp(`[^:]*:*\\s*${title}`, "i");
+    // does it match the title
+    if (heading.innerText.match(re) || heading.innerText===title) {
+      match = heading;
+    }
+  });
+
+  // jQuery(undefined) screws up everything, so special check
+  if ( typeof(match)==="undefined"){
     return undefined;
   }
 
-  /*console.log("Get Card Bb Item found");
-    console.log(bbItem);*/
-
-  return bbItem;
+  return jQuery(match);
 }
 
 /**
@@ -1978,6 +2035,9 @@ function extractCardMetaData(descriptionObject) {
   let metaDataValues = {};
   let description = jQuery(descriptionObject).html();
   // remove new lines from description
+  if (typeof description === "undefined") {
+    return false;
+  }
   description = description.replace(/(?:\r\n|\r|\n)/g, " ");
 
   // break up description into collection of ps and focus
@@ -3541,12 +3601,14 @@ function addCardInterface(items, place) {
       );
       //const regex = /^Week\s*1\s*[-:]*\s*(.*)/gs;
 
-      var m = idx.title.match(regex);
-      //var m = regex.test(idx.title);
-      if (m) {
-        idx.title = m[1];
-        // kludge for COM14 which has a <br> after label in title
-        idx.title = idx.title.replace(/^<br\s*\/*>/i, "");
+      if ("title" in idx && typeof idx.title !== "undefined") {
+        let m = idx.title.match(regex);
+        //var m = regex.test(idx.title);
+        if (m) {
+          idx.title = m[1];
+          // kludge for COM14 which has a <br> after label in title
+          idx.title = idx.title.replace(/^<br\s*\/*>/i, "");
+        }
       }
     } else {
       cardHtml = cardHtml.replace("{MODULE_NUM}", "");
@@ -3591,8 +3653,11 @@ function addCardInterface(items, place) {
     );
 
     // Get rid of some crud Bb inserts into the HTML
-    description = idx.description.replace(/<p/g, '<p class="pb-2"');
-    description = description.replace(/<a/g, '<a class="underline"');
+    description = "";
+    if (typeof idx.description !== "undefined") {
+      description = idx.description.replace(/<p/g, '<p class="pb-2"');
+      description = description.replace(/<a/g, '<a class="underline"');
+    }
     cardHtml = cardHtml.replace("{DESCRIPTION}", description);
     // Does the card link to another content item?
     //	    console.log( " template is " + template + " and H_E " + HORIZONTAL_NOENGAGE);
@@ -5530,10 +5595,10 @@ function extractAndCategoriseEmbeds(document) {
     let iframe = nodeList[i].getElementsByTagName("iframe")[0];
     // skip embeds without src
     //   if (!nodeList[i].hasAttribute("src")) {
-    if ( typeof(iframe)==="undefined"){
+    if (typeof iframe === "undefined") {
       continue;
     }
-    if ( iframe.nodeName !== "IFRAME" || !iframe.hasAttribute("src")) {
+    if (iframe.nodeName !== "IFRAME" || !iframe.hasAttribute("src")) {
       continue;
     }
 
@@ -5567,7 +5632,7 @@ function replaceEmbeds(document, embeds) {
     let iframe = nodeList[i].getElementsByTagName("iframe")[0];
     // skip embeds without src
     //if (!nodeList[i].hasAttribute("src")) {
-    if (typeof(iframe)==="undefined"){
+    if (typeof iframe === "undefined") {
       continue;
     }
     if (iframe.nodeName !== "IFRAME" || !iframe.hasAttribute("src")) {
