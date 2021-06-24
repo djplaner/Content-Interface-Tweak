@@ -529,6 +529,9 @@ function updateStream(html) {
   t.innerHTML = html;
 
   let iframe = t.getElementsByTagName("iframe")[0];
+  if ( typeof(iframe)==="undefined") {
+    return html;
+  }
   let src = iframe.src;
 
   // is src a URL
@@ -550,9 +553,9 @@ function updateStream(html) {
       let videoId = match[1];
       let videoUrl = `https://web.microsoftstream.com/video/${videoId}`;
       return `${html}
-      <p style="font-size:80%">
-      Alternative source: <a href="${videoUrl}" target="_new">visit video's page</a>.<br />
-      Help: <a href="https://docs.microsoft.com/en-us/stream/portal-watch">Watch videos on Microsoft Stream</a>
+      <p class="gu_addedAdvice" style="font-size:80%">
+      <span class="gu_adviceLabel">Alternative source:</span> <span class="gu_adviceValue"><a href="${videoUrl}" target="_new">visit video's page</a></span><br />
+      <span class="gu_adviceLabel">Help:</span> <span class="gu_adviceValue"><a href="https://docs.microsoft.com/en-us/stream/portal-watch">Watch videos on Microsoft Stream</a></span>
       </p>
       `;
     }
@@ -5781,6 +5784,9 @@ function addLinksForPrint(document, urls, embeds) {
 function prepareForPrint(document, title, courseName) {
   // remove expand buttons
   document.querySelector(".accordion-expand-holder").style.display = "none";
+
+  // remove the gu_addedAdvice class
+  document.querySelector(".gu_addedAdvice").style.display = "none";
 
   // remove mark reviewed buttons
   document.querySelectorAll("div.gu-ci-review").forEach((button) => {
