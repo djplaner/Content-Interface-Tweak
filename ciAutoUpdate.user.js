@@ -1,11 +1,9 @@
 // ==UserScript==
-// @name         ciGUAutoUpdate
+// @name         ciAutoUpdate
 // @namespace    http://tampermonkey.net/
-// @version      0.2
-// @description  Automate updating Blackboard item using the Content Interface
+// @version      0.3
+// @description  Automate updating Blackboard content from a Word document using the Content Interface https://djplaner.github.io/Content-Interface-Tweak/
 // @author       David Jones
-// @match        https://bblearn-blaed.griffith.edu.au/webapps/blackboard/execute/manageCourseItem
-// @match        https://bblearn.griffith.edu.au/webapps/blackboard/execute/manageCourseItem
 // @match        https://*.griffith.edu.au/webapps/blackboard/execute/manageCourseItem*
 // @match        https://djon.es/gu/mammoth.js/browser-demo/*
 // @grant        GM_setValue
@@ -17,6 +15,11 @@
 
 var url_string = window.location.href;
 var url = new URL(url_string);
+
+/*  @match        https://bblearn-blaed.griffith.edu.au/webapps/blackboard/execute/manageCourseItem
+   @match        https://bblearn.griffith.edu.au/webapps/blackboard/execute/manageCourseItem
+*/
+
 
 /**
  * Waits for an element satisfying selector to exist, then resolves promise with the element.
