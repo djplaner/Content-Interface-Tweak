@@ -902,7 +902,9 @@ var INSTRUCTIONS = `
                   <li> <a target="_blank" href="${DOCUMENTATION_LINKS.createModify}">
                         create and modify content</a> (an overview) </li>
                   <li> <a target="_blank" href="${DOCUMENTATION_LINKS.automateUpdate}">
-                        automate content updates</a> </li>
+                        automate content updates</a> <br />
+                        <mark><strong>New:</strong> experimental feature</mark>
+                        </li>
               </ul>
 
             </div>
