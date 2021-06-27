@@ -96,6 +96,10 @@ PAGES = [
         "DESTINATION" : r"%s\\background\\howWorks.md" % DESTINATION
     }, 
     {
+        "SOURCE" : r"%s\\Using - Automating updates\\Automating updates.docx" % SOURCE,
+        "DESTINATION" : r"%s\\using\\automatingUpdates.md" % DESTINATION
+    }, 
+    {
         "SOURCE" : r"%s\\Using - Set up\\content.docx" % SOURCE,
         "DESTINATION" : r"%s\\using\\setup.md" % DESTINATION
     }, 

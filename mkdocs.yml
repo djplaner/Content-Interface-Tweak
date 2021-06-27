@@ -20,6 +20,7 @@ nav:
   - Using:
     - Set up: 'using/setup.md'
     - Create and modify: 'using/createAndModify.md'
+    - Automating updates: 'using/automatingUpdates.md'
   - Creating:
     - Textual: 'creating/textualContent.md'
     - Web: 'creating/webContent.md'

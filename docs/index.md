@@ -76,6 +76,22 @@ Learn more about:
             </article>
         </div>
     </div>
+     <div class="flex flex-wrap -mx-1 lg:-mx-4 p-0">
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
+            <article class="overlow-hidden rounded-lg shadow-lg h-full">
+                <header class="flex items-center justify-between leading-tight p-2 md:p-4 border-b">
+                    <h4 id="anonymous_element_27">
+                      <a href="using/automatingUpdates">Automating updates</a>
+                    </h4>
+                </header>
+                <div class="p-2 md:p-4">
+                How do you configure your browser and Blackboard page to automate the update process?
+                </div>
+            </article>
+        </div>
+        <div>
+        </div>
+    </div>
 </div>
 
 
