@@ -529,7 +529,7 @@ function updateStream(html) {
   t.innerHTML = html;
 
   let iframe = t.getElementsByTagName("iframe")[0];
-  if ( typeof(iframe)==="undefined") {
+  if (typeof iframe === "undefined") {
     return html;
   }
   let src = iframe.src;
@@ -717,6 +717,8 @@ const DOCUMENTATION_LINKS = {
   setUp: "https://djplaner.github.io/Content-Interface-Tweak/using/setup/",
   createModify:
     "https://djplaner.github.io/Content-Interface-Tweak/using/createAndModify/",
+  automateUpdate:
+    "https://djplaner.github.io/Content-Interface-Tweak/using/automatingUpdates/",
   // create text
   createText:
     "https://djplaner.github.io/Content-Interface-Tweak/creating/textualContent/",
@@ -899,6 +901,8 @@ var INSTRUCTIONS = `
                         set it up in Blackboard</a> </li>
                   <li> <a target="_blank" href="${DOCUMENTATION_LINKS.createModify}">
                         create and modify content</a> (an overview) </li>
+                  <li> <a target="_blank" href="${DOCUMENTATION_LINKS.automateUpdate}">
+                        automate content updates</a> </li>
               </ul>
 
             </div>
@@ -1548,13 +1552,13 @@ function getCardBbItem(element) {
 
     const re = new RegExp(`[^:]*:*\\s*${title}`, "i");
     // does it match the title
-    if (heading.innerText.match(re) || heading.innerText===title) {
+    if (heading.innerText.match(re) || heading.innerText === title) {
       match = heading;
     }
   });
 
   // jQuery(undefined) screws up everything, so special check
-  if ( typeof(match)==="undefined"){
+  if (typeof match === "undefined") {
     return undefined;
   }
 
