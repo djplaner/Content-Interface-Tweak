@@ -5466,9 +5466,28 @@ function categoriseEmbeds(span) {
     }
   }
 
+  // echo360 embeds
+  if (service.includes("echo360.net.au")) { 
+    let videoUrl = src; 
+    return {
+        videoHtml: `<p>An Echo360 video can be watched at <a href="${videoUrl}">${videoUrl}</a></p>`,
+        videoUrl: src,
+        activity: "filmWatchingOptions",
+      };
+  }
+
+
   // Padlet
   // the iframe src does point to the padlet live
-
+  if (service.includes("padlet.org")) { 
+    let videoUrl = src; 
+    return {
+        videoHtml: `<p>A padlet for your contribution is available at <a href="${videoUrl}">${videoUrl}</a></p>`,
+        videoUrl: src,
+        activity: "Activity",
+      };
+  }
+  
   // Youtube
   if (service.includes("youtube.com")) {
     let pattern = /^https:\/\/[^\/]*\/embed\/([^\/]*)/;
