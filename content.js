@@ -5466,6 +5466,10 @@ function categoriseEmbeds(span) {
     }
   }
 
+  // Padlet
+  // the iframe src does point to the padlet live
+
+  // Youtube
   if (service.includes("youtube.com")) {
     let pattern = /^https:\/\/[^\/]*\/embed\/([^\/]*)/;
     match = src.match(pattern);
@@ -5479,9 +5483,9 @@ function categoriseEmbeds(span) {
       };
     } else {
       return {
-        videoHtml: `<p>Unable to recognise format of video URL: ${src}</p>`,
+        videoHtml: `<p>An unidentified YouTube video URL wsa found. It points to this resource: ${src}</p>`,
         videoUrl: src,
-        activity: "error",
+        activity: "filmWatchingOptions",
       };
     }
   }
@@ -5576,10 +5580,11 @@ function categoriseEmbeds(span) {
   }
 
   // Didn't match any of the above
+  // TODO should probably check for valid src URL
   return {
-    videoHtml: `<p>Type of embedded resource unknown for: ${src}`,
-    videoUrl: "",
-    activity: "error",
+    videoHtml: `<p>An embedded resource of unrecognised type pointing to <a href="${src}">this resource</a> (${src}).`,
+    videoUrl: src,
+    activity: "Activity",
   };
 }
 
@@ -5680,6 +5685,7 @@ function replaceEmbeds(document, embeds) {
         // add in the HTML
         newNode.innerHTML = html;
         nodeList[i].parentNode.replaceChild(newNode, nodeList[i]);
+        // is this actually atargetting the right element
       }
     }
   }
@@ -5728,14 +5734,14 @@ function addLinksForPrint(document, urls, embeds) {
 
     if (haveEmbeds) {
       for (let src in embeds) {
-        embedHTML = embedList.concat(` <li> ${embeds[src].videoHtml} </li>`);
+        embedList = embedList.concat(` <li> ${embeds[src].videoHtml} </li>`);
       }
 
       html = html.concat(`
   <h2>Videos and other embedded materials</h2>
 
   <ul>
-  ${embedHTML}
+  ${embedList}
   </ul>
     `);
     }
