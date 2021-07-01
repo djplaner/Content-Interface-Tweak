@@ -1556,7 +1556,7 @@ function getCardBbItem(element) {
     let heading = elem.querySelector("h3");
 
     // a match trying to handle card labels and is case insensitive
-    const re = new RegExp(`[^:]*:*\\s*${title}`, "i");
+    const re = new RegExp(`^\s*[^:]*:*\\s*${title}\s*$`, "i");
     // does it match the title, than save them all
     if (heading.innerText.match(re) || heading.innerText === title) {
       matches.push(heading);
