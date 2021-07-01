@@ -1531,7 +1531,8 @@ function addCardClickHandler() {
 
 /*--------------------------------------------------------
  * getCardBbItem( element )
- * - given a HTML element that contains card Details return a pointer to the BbItem that should be on this web page with a title matching
+ * - given a HTML element (from the Content Interface) that contains card Details 
+ * - return a pointer to the BbItem that should be on this web page with a title matching
  * - return undefined if no matching BbItem
  */
 
@@ -1547,24 +1548,32 @@ function getCardBbItem(element) {
   let selector = `${tweak_bb.page_id} > ${tweak_bb.row_element}`;
   let bbItems = document.querySelectorAll(selector);
   // find those matching the title
-  let match;
+  // Because foreach can't be broken out of, need to include 
+  // all of the matches and then pick the first
+  let matches = [];
   bbItems.forEach(function (elem, index, list) {
     // get the first h3
     let heading = elem.querySelector("h3");
 
+    // a match trying to handle card labels and is case insensitive
     const re = new RegExp(`[^:]*:*\\s*${title}`, "i");
-    // does it match the title
+    // does it match the title, than save them all
     if (heading.innerText.match(re) || heading.innerText === title) {
-      match = heading;
+      matches.push(heading);
     }
   });
 
-  // jQuery(undefined) screws up everything, so special check
-  if (typeof match === "undefined") {
+  // no matches, undefined
+  if (matches.length===0) {
     return undefined;
   }
+  // log that we found a few more
+  if (matches.length>1) {
+    console.log(`Found ${matches.length} matches for title "${title}"`);
+  }
 
-  return jQuery(match);
+  // always return the first match
+  return jQuery(matches[0]);
 }
 
 /**
