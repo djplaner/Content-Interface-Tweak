@@ -48,6 +48,16 @@ var STYLE_PREPEND = {
   weeklyWorkout: `<div class="weeklyWorkoutImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/weeklyWorkout.png" alt="Female weight lifter" /></div>`,
   comingSoon: `<div class="comingSoonImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/com14/comingSoon.jpg"></div>`,
   filmWatchingOptions: `<div class="filmWatchingOptionsImage"><img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon"> </div>`,
+  goReading: `<div class="goReadingImage"> <img src="https://app.secure.griffith.edu.au/gois/ultra/icons-regular/reading.svg" /> </div>`,
+};
+
+var EMPTY_STYLE_PREPEND = {
+  goStartHere: `<div class="goStartHereImage"> <img src="https://app.secure.griffith.edu.au/gois/ultra/icons-regular/start-here.svg" /> </div>`,
+  goActivity: `<div class="goActivityImage"> <img src="https://app.secure.griffith.edu.au/gois/ultra/icons-regular/activity.svg" /> </div>`,
+  goReflect: `<div class="goReflectImage"> <img src="https://app.secure.griffith.edu.au/gois/ultra/icons-regular/reflection.svg" /> </div>`,
+  goWatch: `<div class="goWatchImage"> <img src="https://app.secure.griffith.edu.au/gois/ultra/icons-regular/video.svg" /> </div>`,
+  goDownload: `<div class="goDownloadImage"> <img src="https://app.secure.griffith.edu.au/gois/ultra/icons-regular/download.svg" /> </div>`,
+  goNumberedList: `<div class="goNumberedListImage"> <img src="https://app.secure.griffith.edu.au/gois/ultra/icons-regular/number-1.svg" /> </div>`,
 };
 
 //
@@ -249,10 +259,16 @@ function contentInterface($) {
   //jQuery("div.bbCard").each( handleBlackboardCards );
 
   // Update the HTML for various defined styles
-  for (var divstyle in STYLE_PREPEND) {
+  for (const divstyle in STYLE_PREPEND) {
     let query = `div.${divstyle}`;
     jQuery(query).prepend(STYLE_PREPEND[divstyle]);
   }
+  // and styles we wish to empty and prepend
+  for (const divstyle in EMPTY_STYLE_PREPEND) {
+    let query = `div.${divstyle}`;
+    jQuery(query).empty().prepend(EMPTY_STYLE_PREPEND[divstyle]);
+  }
+
 
   //updateReadings(contentInterface);
   // Handle the blackboard items

@@ -410,13 +410,13 @@ function doMammoth(wordContent) {
 
       // GO style
       "p[style-name='GO Start Here'] => div.goStartHere",
-      "p[style-name='GOStartHere'] => div.goStartHere",
-      "p[style-name='GO Reflect'] => div.goStartHere",
-      "p[style-name='GO Watch'] => div.goStartHere",
-      "p[style-name='GO Download'] => div.goStartHere",
+      "p[style-name='GO Reflect'] => div.goReflect",
+      "p[style-name='GO Watch'] => div.goWatch",
+      "p[style-name='GO Download'] => div.goDownload",
       // TODO numbered list, need to detect the original image or order???
-      "p[style-name='GO Numbered List'] => div.goStartHere",
-      "p[style-name='GO Activity'] => div.goStartHere",
+      "p[style-name='GO Numbered List'] => div.goNumberedList",
+      "p[style-name='GO Activity'] => div.goActivity",
+      "p[style-name='GO Reading'] => div.goReading > div.instructions > p:fresh",
     ],
   };
 
