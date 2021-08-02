@@ -8,7 +8,7 @@ global COURSE_REPORT_FOLDER
 COURSE_REPORT_FOLDER = {
   'CWR110_2211': 'C:\\Users\\s2986288\\Griffith University\\HLSSacademic - OUA\\Study Guides & L@G\\SP1\\CWR110\\Administration\\',
   'CWR111_2211': 'C:\\Users\\s2986288\\Griffith University\\HLSSacademic - OUA\\Study Guides & L@G\\SP4\\CWR111\\Administration\\',
-  'COM12_2211' : 'C:\\Users\\s2986288\\Griffith University\\HLSSacademic - OUA\\Study Guides & L@G\\SP1\\COM12\\Administration\\',
+  'COM12_2211': 'C:\\Users\\s2986288\\Griffith University\\HLSSacademic - OUA\\Study Guides & L@G\\SP1\\COM12\\Administration\\',
 }
 
 # define what files to check/convert for each course
@@ -25,6 +25,31 @@ COURSES = {
              'css': './gu_study.css',
              'name': 'C:\\Users\\s2986288\\OneDrive - Griffith University\\Software Development\\Documentation\\Content Interface docs - v2\\Customising - Provide PDF\\cards.pdf'
             }
+        ],
+        'COM22_2215_OT':
+        [
+            {
+              "title": "Week 1: What is 'New Media'",
+            "URL": "/webapps/blackboard/content/listContentEditable.jsp?content_id=_6240977_1&course_id=_90761_1"
+            },
+            {
+              "title": "Week 2: History of 'New Media'", 
+              "URL": "/webapps/blackboard/content/listContentEditable.jsp?content_id=_6240978_1&course_id=_90761_1"
+            },
+            {
+              "title": "Week 3: Digital Divide", 
+              "URL": "/webapps/blackboard/content/listContentEditable.jsp?content_id=_6240979_1&course_id=_90761_1"
+              }, 
+              {
+                "title": "Week 4: Fragmentation and Convergence", "URL": "/webapps/blackboard/content/listContentEditable.jsp?content_id=_6240980_1&course_id=_90761_1"}, 
+                {"title": "Week 5: Study Skills", "URL": "/webapps/blackboard/content/listContentEditable.jsp?content_id=_6240981_1&course_id=_90761_1"}, 
+                {"title": "Week 6: The political economy of social media", "URL": "/webapps/blackboard/content/listContentEditable.jsp?content_id=_6240982_1&course_id=_90761_1"}, 
+                {"title": "Week 7: The formation of identity through cyberculture and new media", "URL": "/webapps/blackboard/content/listContentEditable.jsp?content_id=_6240983_1&course_id=_90761_1"}, 
+                {"title": "Week 8: Ethical and moral issues facing online communities", "URL": "/webapps/blackboard/content/listContentEditable.jsp?content_id=_6240984_1&course_id=_90761_1"}, 
+                {"title": "Week 9: Governance of the Internet", "URL": "/webapps/blackboard/content/listContentEditable.jsp?content_id=_6240985_1&course_id=_90761_1"}, 
+                {"title": "Week 10: Surveillance", "URL": "/webapps/blackboard/content/listContentEditable.jsp?content_id=_6240986_1&course_id=_90761_1"}, 
+                {"title": "Week 11: Transforming textuality", "URL": "/webapps/blackboard/content/listContentEditable.jsp?content_id=_6240987_1&course_id=_90761_1"}, 
+                {"title": "Week 12: Social movements and new media", "URL": "/webapps/blackboard/content/listContentEditable.jsp?content_id=_6240988_1&course_id=_90761_1"}
         ],
         'CWR110_2211':
         [

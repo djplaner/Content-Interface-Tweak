@@ -21,16 +21,6 @@ global COURSES
 COURSES=courseData.COURSES
 
 
-
-
-
-
-
-
-
-
-
-
 #----------------------------------------------
 # scrapeLinks
 
@@ -38,9 +28,10 @@ def scrapeLinks():
 
     browser = scrapeLib.setup()
     browser = scrapeLib.login( browser )
+    BASE_URL='https://bblearn-blaed.griffith.edu.au'
 
     #courses = [ "CWR110_2211", "CWR111_2211", "COM12_2211", "1611QCM_3211"]
-    courses = [ "1611QCM_3211"]
+    courses = [ "COM22_2215_OT"]
 
     gatheredLinks = []
 
@@ -48,6 +39,7 @@ def scrapeLinks():
         for page in COURSES[course]: 
             if page['URL'] == '': 
                 continue
+            page['URL']="%s%s"%(BASE_URL,page['URL'])
             # -- get the HTML
             (title, html) = scrapeLib.getHtml(browser, page['URL'])
 
