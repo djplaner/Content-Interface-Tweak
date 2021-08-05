@@ -1560,6 +1560,10 @@ function getCardBbItem(element) {
   title = title.replace(/[\u201c\u201d]/g, '"');
   title = title.replace(/[\u201c\u201d]/g, '"');
 
+  // need to escape title to behave for use in regex match
+  // https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+  let reTitle = title.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+
   // get all the Bb content items
   let selector = `${tweak_bb.page_id} > ${tweak_bb.row_element}`;
   let bbItems = document.querySelectorAll(selector);
@@ -1572,7 +1576,7 @@ function getCardBbItem(element) {
     let heading = elem.querySelector("h3");
 
     // a match trying to handle card labels and is case insensitive
-    const re = new RegExp(`^\s*[^:]*:*\\s*${title}\s*$`, "i");
+    const re = new RegExp(`^\s*[^:]*:*\\s*${reTitle}\s*$`, "i");
     // does it match the title, than save them all
     if (heading.innerText.match(re) || heading.innerText === title) {
       matches.push(heading);
