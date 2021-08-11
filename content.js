@@ -5948,6 +5948,7 @@ function addExpandPrintButtons() {
   if (PARAMS.downloadPDF) {
     const print_button = `
     <button href="type="button" id="gu_downloadPDF"
+       style="padding:0.3em 1.2em;margin:0 0.3em 0.3em 0;border-radius:2em;border:2px solid;box-sizing: border-box;text-decoration:none;text-align:center"
       >Download PDF</button>
     `;
     jQuery(".accordion-expand-holder").append(print_button);
