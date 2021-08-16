@@ -223,7 +223,9 @@ function contentInterface($) {
   // add the jsonurl attribute to all film-watch-options components
 
   // if there's a filmWatchOptionsDataURL then add the jsonurl attribute
+  // and insert the JS file for the film-watch-options component
   if ("filmWatchOptionsDataURL" in PARAMS && PARAMS.filmWatchOptionsDataURL!=="") { 
+    addJS(FILM_WATCH_OPTIONS_JS,true);
     let filmWatchComponents = document.querySelectorAll('film-watch-options');
     filmWatchComponents.forEach( component => {
       component.setAttribute('jsonurl', PARAMS.filmWatchOptionsDataURL);
@@ -4095,6 +4097,7 @@ var interfaceHtmlTemplate = Array(NUM_TEMPLATES);
 //var CARDS_CSS="https://djon.es/gu/cards.css";
 var CARDS_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/cards.css";
 var FONT_AWESOME_JS = "https://kit.fontawesome.com/3bd759c8f5.js";
+var FILM_WATCH_OPTIONS_JS = "https://unpkg.com/@djplaner/film-watch-options/film-watch-options.js";
 
 //
 
@@ -4815,12 +4818,15 @@ function addCSS(onlineUrl, printUrl) {
  * (and other places)
  */
 
-function addJS(urlString) {
+function addJS(urlString,module=false) {
   let head = document.getElementsByTagName("head")[0];
 
   let js = document.createElement("script");
   js.src = urlString;
   js.crossorgin = "anonymous";
+  if ( module ){
+    js.type = "module";
+  }
   head.append(js);
 }
 
