@@ -92,6 +92,10 @@ var ITEM_LINK_PARAMETERS = {
     element: "filmWatchingOptionsElement",
     item: "filmWatchingOptionsFlowURL",
   },
+  "Film Watch Options Data": {
+    element: "filmWatchOptionsElement",
+    item: "filmWatchOptionsDataURL",
+  },
   cssURL: {
     element: "cssURLElement",
     item: "cssURL",
@@ -214,7 +218,17 @@ function contentInterface($) {
 
   //   that incldues content from the actual footnote (minus some extra HTML)
   handleFootNotes();
-  jQuery("div.filmWatchingOptions").each(handleFilmWatchingOptions);
+  // FILM WATCH
+//  jQuery("div.filmWatchingOptions").each(handleFilmWatchingOptions);
+  // add the jsonurl attribute to all film-watch-options components
+
+  // if there's a filmWatchOptionsDataURL then add the jsonurl attribute
+  if ("filmWatchOptionsDataURL" in PARAMS && PARAMS.filmWatchOptionsDataURL!=="") { 
+    let filmWatchComponents = document.querySelectorAll('film-watch-options');
+    filmWatchComponents.forEach( component => {
+      component.setAttribute('jsonurl', PARAMS.filmWatchOptionsDataURL);
+    });
+  }
 
   // handle the integration of any blackboard headings/items into the
   // content interface
@@ -4875,156 +4889,6 @@ function changeJqueryTheme(themeName) {
   style.type = "text/css";
   style.rel = "stylesheet";
   head.append(style);
-}
-
-/*****************************************************************
- * handleFilmWatchingOptions
- * - given a span with the name of a film convert it into text
- *    We've been unable to provide a copy of this fil..
- */
-
-/****
- * fetchFilmUrl
- * Given name of a film and a flow URL generate an async JSON request
- * to get the available URL for the film
- */
-
-async function fetchFilmURL(filmName, flowUrl) {
-  let data = {};
-  data.filmTitle = filmName;
-
-  //        'item': 'filmWatchingOptionsFlowURL',
-  //    console.log("body is " + JSON.stringify(data));
-  //    console.log(" sending off to " + FILM_WATCHING_FLOW);
-  const response = await fetch(flowUrl, {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  return response.json();
-}
-
-function handleFilmWatchingOptions() {
-  let filmName = jQuery(this).text().trim();
-  let filmNameEsc = encodeURIComponent(filmName);
-
-  let filmUrl;
-  let flowUrl = PARAMS.filmWatchingOptionsFlowURL;
-
-  // stop if flowUrl isn't defined
-  if (typeof flowUrl === "undefined") {
-    console.log("Error: no flow URL defined");
-    return false;
-  }
-
-  // Get the film's URL
-  fetchFilmURL(filmName, flowUrl).then((data) => {
-    var html = "";
-
-    // Flow returned a URL
-    if ("url" in data && data.url !== "") {
-      // Found a URL for the film
-      filmUrl = data.url;
-
-      // convert it into an embeddable player (if possible)
-      html = convertMedia(data.url, filmName);
-
-      // if it wasn't converted, just do the URL
-      if (html === "") {
-        html = `
-                <div class="filmWatchingOptions">
-      <div class="filmWatchingOptionsImage">
-      <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon" \>
-      </div>
-      <div class="instructions">
-         <p>Access a copy of <a href="${data.url}"><em>${filmName}</em> here</a></p>
-       </div>
-    </div>
-                `;
-      }
-    }
-
-    // if still no HTML, then point to JustWatch
-    if (html === "") {
-      // didn't find film do the default justWatch search
-      html = `
-    <div class="filmWatchingOptions">
-      <div class="filmWatchingOptionsImage">
-          <img src="https://filebucketdave.s3.amazonaws.com/banner.js/images/icons8-movie-beginning-64.png" alt="Film Watching icon" \>
-      </div>
-      <div class="instructions">
-         <p>We've been unable to provide a copy <em>${filmName}</em>.</p>
-         <p><a href="https://www.justwatch.com/au/search?q=${filmNameEsc}" target="_blank">This search on JustWatch</a> may provide pointers to where you can find it online.</p>
-       </div>
-    </div>`;
-    }
-
-    jQuery(this).replaceWith(html);
-  });
-}
-
-/************************************
- * html = convertMedia(link)
- * - given a link to a video return the iframe embed player
- * - support: Stream, YouTube, Vimeo, Kanopy
- */
-
-function convertMedia(html, filmName) {
-  // based on: http://jsfiddle.net/oriadam/v7b5edo8/   http://jsfiddle.net/88Ms2/378/   https://stackoverflow.com/a/22667308/3356679
-  var cls = 'class="embedded-media"';
-  var frm =
-    '<iframe width="640" height="480" ' +
-    cls +
-    ' src="//_URL_" frameborder="0" allowfullscreen></iframe>';
-
-  // Haven't figured out how to generate an embeddable player for Kanopy yet
-  if (html.match(/griffith.kanopy.com/)) {
-    return `
-    <div class="filmWatchingOptions">
-      <div class="filmWatchingOptionsImage"></div>
-      <div class="instructions">
-         <p>You can watch <em>${filmName}</em> on <a href="${html}">Kanopy</a></p>
-       </div>
-    </div>`;
-  }
-
-  var converts = [
-    {
-      rx: /^.*archive.org\/details\/([^\/]+)$/g,
-      tmpl: frm.replace("_URL_", "archive.org/embed/$1"),
-    },
-    {
-      rx: /^.*microsoftstream.com\/video\/([^\/]+)$/g,
-      tmpl: frm.replace("_URL_", "web.microsoftstream.com/embed/video/$1"),
-    },
-    {
-      rx: /^(?:https?:)?\/\/(?:www\.)?vimeo\.com\/([^\?&"]+).*$/g,
-      tmpl: frm.replace("_URL_", "player.vimeo.com/video/$1"),
-    },
-    {
-      rx: /^.*(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|user\/.+\/)?([^\?&"]+).*$/g,
-      tmpl: frm.replace("_URL_", "www.youtube.com/embed/$1"),
-    },
-    {
-      rx: /^.*(?:https?:\/\/)?(?:www\.)?(?:youtube-nocookie\.com)\/(?:watch\?v=|embed\/|v\/|user\/.+\/)?([^\?&"]+).*$/g,
-      tmpl: frm.replace("_URL_", "www.youtube-nocookie.com/embed/$1"),
-    },
-    {
-      rx: /(^[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?\.(?:jpe?g|gif|png|svg)\b.*$)/gi,
-      tmpl: "<a " + cls + ' href="$1" target="_blank"><img src="$1" /></a>',
-    },
-  ];
-
-  let returning = "";
-  converts.forEach(function (elem) {
-    m = elem.rx.match(html.trim());
-    if (m) {
-      returning = html.trim().replace(elem.rx, elem.tmpl);
-    }
-  });
-  return returning;
 }
 
 // ****************************************************
