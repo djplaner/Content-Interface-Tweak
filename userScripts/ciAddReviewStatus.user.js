@@ -116,7 +116,9 @@ function setReview(){
     enableReviewElement.checked=true;
 
     // set the GM value so ready to et review TODO
-    GM_setValue(`ci-addReviewStatus-${COURSE_ID}-setReview`,'');
+    GM_setValue(`ci-addReviewStatus-${COURSE_ID}-setReview`, '');
+    GM_setValue(`ci-addReviewStatus-${COURSE_ID}-numMissingItems`,'');
+    GM_setValue(`ci-addReviewStatus-${COURSE_ID}-newItem`,'');
     // hit the submit button
     const button = document.querySelector("input#bottom_Submit");
     button.click();
@@ -192,14 +194,14 @@ function startSetReview(){
 (function() {
     'use strict';
 
-    console.log("----------------------------------------------------");
+    /*console.log("----------------------------------------------------");
     console.log("----------------------------------------------------");
     // courseId and contetnId of the current page
     console.log(`window location is ${LOCATION}`);
 
     // set if we're managing the seting of review status
     
-    console.log(`-------------------- NUM_ITEMS ${NUM_MISSING_ITEMS}`);
+    console.log(`-------------------- NUM_ITEMS ${NUM_MISSING_ITEMS}`);*/
 
     // 1. listContentEditable - nothing else
     //    - if missing review status - add the button
@@ -229,12 +231,15 @@ function startSetReview(){
         // if we're not in the process of adding a new item
         console.log(`--- listContentEditable.jsp NEW_ITEM=${NEW_ITEM} SET_REVIEW=${SET_REVIEW} NUM_MISSING_ITEMS=${NUM_MISSING_ITEMS}`);
         if ( NEW_ITEM==="") {
+            //console.log("--- new_item==='' ");
             // if we're not in the process of setting review
             if ( SET_REVIEW==="") {
+              //  console.log("--- set_review==='' ");
                 // first time here, check to see if any CI headings are
                 // missing review status (add the button) to start
                 // if the button is clicked, it will start addItem
                 if ( NUM_MISSING_ITEMS===0 ) {
+                //    console.log("--- num_missing_items===0 ");
                     detectMissingReviewStatus();
                 } else {
                     startAddPage();
@@ -253,7 +258,7 @@ function startSetReview(){
         }*/
     }
     if ( LOCATION.includes("manageCourseItem")) {
-        console.log(`--- manageCourseItem.jsp NEW_ITEM=${NEW_ITEM} SET_REVIEW=${SET_REVIEW}`);
+        //console.log(`--- manageCourseItem.jsp NEW_ITEM=${NEW_ITEM} SET_REVIEW=${SET_REVIEW}`);
         if ( NEW_ITEM!=="" ) {
           addPage();
         }
