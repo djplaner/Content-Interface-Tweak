@@ -189,6 +189,7 @@ p.apa {
 .table th {
   padding: 6px;
   text-align: left;
+  vertical-align: top;
 }
 
 #GU_ContentInterface .table tbody tr:nth-child(odd) {
