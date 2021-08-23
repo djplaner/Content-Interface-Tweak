@@ -219,16 +219,19 @@ function contentInterface($) {
   //   that incldues content from the actual footnote (minus some extra HTML)
   handleFootNotes();
   // FILM WATCH
-//  jQuery("div.filmWatchingOptions").each(handleFilmWatchingOptions);
+  //  jQuery("div.filmWatchingOptions").each(handleFilmWatchingOptions);
   // add the jsonurl attribute to all film-watch-options components
 
   // if there's a filmWatchOptionsDataURL then add the jsonurl attribute
   // and insert the JS file for the film-watch-options component
-  if ("filmWatchOptionsDataURL" in PARAMS && PARAMS.filmWatchOptionsDataURL!=="") { 
-    addJS(FILM_WATCH_OPTIONS_JS,true);
-    let filmWatchComponents = document.querySelectorAll('film-watch-options');
-    filmWatchComponents.forEach( component => {
-      component.setAttribute('jsonurl', PARAMS.filmWatchOptionsDataURL);
+  if (
+    "filmWatchOptionsDataURL" in PARAMS &&
+    PARAMS.filmWatchOptionsDataURL !== ""
+  ) {
+    addJS(FILM_WATCH_OPTIONS_JS, true);
+    let filmWatchComponents = document.querySelectorAll("film-watch-options");
+    filmWatchComponents.forEach((component) => {
+      component.setAttribute("jsonurl", PARAMS.filmWatchOptionsDataURL);
     });
   }
 
@@ -284,7 +287,6 @@ function contentInterface($) {
     let query = `div.${divstyle}`;
     jQuery(query).empty().prepend(EMPTY_STYLE_PREPEND[divstyle]);
   }
-
 
   //updateReadings(contentInterface);
   // Handle the blackboard items
@@ -1563,7 +1565,7 @@ function addCardClickHandler() {
 
 /*--------------------------------------------------------
  * getCardBbItem( element )
- * - given a HTML element (from the Content Interface) that contains card Details 
+ * - given a HTML element (from the Content Interface) that contains card Details
  * - return a pointer to the BbItem that should be on this web page with a title matching
  * - return undefined if no matching BbItem
  */
@@ -1578,13 +1580,13 @@ function getCardBbItem(element) {
 
   // need to escape title to behave for use in regex match
   // https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
-  let reTitle = title.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+  let reTitle = title.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
 
   // get all the Bb content items
   let selector = `${tweak_bb.page_id} > ${tweak_bb.row_element}`;
   let bbItems = document.querySelectorAll(selector);
   // find those matching the title
-  // Because foreach can't be broken out of, need to include 
+  // Because foreach can't be broken out of, need to include
   // all of the matches and then pick the first
   let matches = [];
   bbItems.forEach(function (elem, index, list) {
@@ -1600,11 +1602,11 @@ function getCardBbItem(element) {
   });
 
   // no matches, undefined
-  if (matches.length===0) {
+  if (matches.length === 0) {
     return undefined;
   }
   // log that we found a few more
-  if (matches.length>1) {
+  if (matches.length > 1) {
     console.log(`Found ${matches.length} matches for title "${title}"`);
   }
 
@@ -3855,7 +3857,8 @@ function generateDateHtml(singleTemplate, dualTemplate, date) {
     "month" in date.start
   ) {
     // Do we have dual dates - both start and stop?
-    if (date.stop.month) {
+    // TODO is this where we check week?
+    if (date.stop.month && date.start.week !== date.stop.week) {
       // start and stop dates
       //cardHtml = cardHtml.replace('{DATE}', dualDateHtmlTemplate[template]);
       cardHtml = dualTemplate;
@@ -3872,11 +3875,20 @@ function generateDateHtml(singleTemplate, dualTemplate, date) {
         // other wise construct dual week
         let weekHtml = examPeriodTemplate;
         if (date.start.week !== "exam") {
-          weekHtml = dualWeekHtmlTemplate.replace(
-            "{WEEK_START}",
-            date.start.week
-          );
-          weekHtml = weekHtml.replace("{WEEK_STOP}", date.stop.week);
+          // not exam, then set to dualWeekHtml
+          if (date.start.week !== date.stop.week) {
+            weekHtml = dualWeekHtmlTemplate.replace(
+              "{WEEK_START}",
+              date.start.week
+            );
+            weekHtml = weekHtml.replace("{WEEK_STOP}", date.stop.week);
+          } else {
+            // same week, so using single week template
+            weekHtml = weekHtmlTemplate.replace(
+              "{WEEK}",
+              `Week ${date.start.week}`
+            );
+          }
         }
         cardHtml = cardHtml.replace("{WEEK}", weekHtml);
       }
@@ -4097,7 +4109,8 @@ var interfaceHtmlTemplate = Array(NUM_TEMPLATES);
 //var CARDS_CSS="https://djon.es/gu/cards.css";
 var CARDS_CSS = "https://s3.amazonaws.com/filebucketdave/banner.js/cards.css";
 var FONT_AWESOME_JS = "https://kit.fontawesome.com/3bd759c8f5.js";
-var FILM_WATCH_OPTIONS_JS = "https://unpkg.com/@djplaner/film-watch-options/film-watch-options.js";
+var FILM_WATCH_OPTIONS_JS =
+  "https://unpkg.com/@djplaner/film-watch-options/film-watch-options.js";
 
 //
 
@@ -4818,13 +4831,13 @@ function addCSS(onlineUrl, printUrl) {
  * (and other places)
  */
 
-function addJS(urlString,module=false) {
+function addJS(urlString, module = false) {
   let head = document.getElementsByTagName("head")[0];
 
   let js = document.createElement("script");
   js.src = urlString;
   js.crossorgin = "anonymous";
-  if ( module ){
+  if (module) {
     js.type = "module";
   }
   head.append(js);
@@ -5367,27 +5380,26 @@ function categoriseEmbeds(span) {
   }
 
   // echo360 embeds
-  if (service.includes("echo360.net.au")) { 
-    let videoUrl = src; 
+  if (service.includes("echo360.net.au")) {
+    let videoUrl = src;
     return {
-        videoHtml: `<p>An Echo360 video can be watched at <a href="${videoUrl}">${videoUrl}</a></p>`,
-        videoUrl: src,
-        activity: "filmWatchingOptions",
-      };
+      videoHtml: `<p>An Echo360 video can be watched at <a href="${videoUrl}">${videoUrl}</a></p>`,
+      videoUrl: src,
+      activity: "filmWatchingOptions",
+    };
   }
-
 
   // Padlet
   // the iframe src does point to the padlet live
-  if (service.includes("padlet.org")) { 
-    let videoUrl = src; 
+  if (service.includes("padlet.org")) {
+    let videoUrl = src;
     return {
-        videoHtml: `<p>A padlet for your contribution is available at <a href="${videoUrl}">${videoUrl}</a></p>`,
-        videoUrl: src,
-        activity: "Activity",
-      };
+      videoHtml: `<p>A padlet for your contribution is available at <a href="${videoUrl}">${videoUrl}</a></p>`,
+      videoUrl: src,
+      activity: "Activity",
+    };
   }
-  
+
   // Youtube
   if (service.includes("youtube.com")) {
     let pattern = /^https:\/\/[^\/]*\/embed\/([^\/]*)/;
