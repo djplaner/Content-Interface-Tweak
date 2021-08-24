@@ -1,2 +1,13 @@
 @import url("https://s3.amazonaws.com/filebucketdave/banner.js/gu_study.css");
 
+.ael-note {
+	background-color: #f9f8db !important;
+	font-size: 80% !important;
+	padding: 0.5em !important;
+	max-width: 70% !important;
+}
+
+.noteImage img {
+	max-width: 80% !important;
+	max-height: 80% !important;
+}
