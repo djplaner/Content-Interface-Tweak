@@ -5783,21 +5783,6 @@ function printPDF(e) {
   let title = document.querySelector("#pageTitleText").innerText;
   let courseName = document.querySelector("#courseMenu_link").innerText;
 
-  let string = `
-  <html>
-    <head>
-      <title>${title}</title>
-     <!-- <link rel="stylesheet" href="${PARAMS.downloadPDFURL}" /> -->
-<!--     <link rel="stylesheet" media="print" href="${PARAMS.downloadPDFURL}" />    -->
-    </head>
-    <body>
-     <link type="text/css" rel="stylesheet" href="${PARAMS.downloadPDFURL}"> 
-      <div id="GU_ContentInterface">
-        ${divContents}
-      </div>
-    </body>
-  </html>`;
-
   let bodyString = `
   <link type="text/css" rel="stylesheet" href="${PARAMS.downloadPDFURL}"> 
   <div id="GU_ContentInterface">
@@ -5807,7 +5792,10 @@ function printPDF(e) {
 
   // print it
   let printWindow = window.open("", "", "height=400,width=800");
+  let base = printWindow.document.createElement("base");
+  base.href = `https://${LMS_LINK}`;
   printWindow.document.title = title;
+  printWindow.document.head.appendChild(base);
   printWindow.document.body.innerHTML = bodyString;
   printWindow.document.close();
 
@@ -5817,7 +5805,7 @@ function printPDF(e) {
   setTimeout(() => {
     printWindow.print();
     printWindow.close();
-  }, 1000);
+  }, 1000); 
 
   // prevent the parent window reloading
   return false;
