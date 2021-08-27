@@ -100,6 +100,10 @@ var ITEM_LINK_PARAMETERS = {
     element: "cssURLElement",
     item: "cssURL",
   },
+  downloadButtonURL: {
+    element: "downloadButtonElement",
+    item: "downloadButtonURL"
+  }
 };
 
 /****************************************************************************/
@@ -5815,6 +5819,23 @@ function addExpandPrintButtons() {
   // add the expand buttons
   jQuery("#GU_ContentInterface").prepend(EXPAND_COLLAPSE_BUTTON_HTML);
 
+  // show downloadButton for downloadButtonURL and downloadButtonLabel
+  if (PARAMS.downloadButtonURL) {
+    let label = "Download File";
+    if (PARAMS.downloadButtonLabel) {
+      label = PARAMS.downloadButtonLabel;
+    }
+    const download_button = `
+    <button href="type="button" id="gu_download" 
+        onclick="window.open('${PARAMS.downloadButtonURL}', '_blank'); return false;"
+       style="padding:0.3em 1.2em;margin:0 0.3em 0.3em 0;border-radius:2em;border:2px solid;box-sizing: border-box;text-decoration:none;text-align:center"
+      >${label}</button>
+    `;
+    jQuery(".accordion-expand-holder").append(download_button);
+
+    return true;
+  }
+  // Provide the generic Download PDF button to dynamic printing
   if (PARAMS.downloadPDF) {
     const print_button = `
     <button href="type="button" id="gu_downloadPDF"
@@ -5826,7 +5847,8 @@ function addExpandPrintButtons() {
 
     return true;
   }
-  // should we add a print button?
+  // The early approach was to have a pdfUrl based on hard coded data structures
+  // deprecated
   pdfUrl = getPrintButtons();
   if (pdfUrl) {
     const print_button = `
@@ -5835,6 +5857,7 @@ function addExpandPrintButtons() {
     `;
     jQuery(".accordion-expand-holder").append(print_button);
   }
+
 }
 
 function getPrintButtons() {
