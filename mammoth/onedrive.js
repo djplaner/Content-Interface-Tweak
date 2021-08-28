@@ -391,6 +391,7 @@ function doMammoth(wordContent) {
       "p[style-name='Note']:ordered-list(1) => div.ael-note > div.instructions > ol > li:fresh",
       "p[style-name='Note']:unordered-list(1) => div.ael-note > div.instructions > ul > li:fresh",
       "p[style-name='Note'] => div.ael-note > div.instructions > p:fresh",
+      "p[style-name='Indent'] => div.ael-indent > p:fresh",
       /* Adding cards */
       "p[style-name='Blackboard Card'] => div.bbCard:fresh",
       /* Blackboard item conversion */
