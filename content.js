@@ -18,6 +18,7 @@ const DEFAULT_CARD_LABEL = "Module";
 // Default reviewed/mark reviewed labels
 var MARK_REVIEWED = "Mark Reviewed";
 var REVIEWED = "Reviewed";
+var TOOLTIPSTER_ADDED = false;
 
 //var DEFAULT_CSS = "https://djon.es/gu/gu_study.css";
 var DEFAULT_CSS =
@@ -103,6 +104,11 @@ var ITEM_LINK_PARAMETERS = {
   downloadButtonURL: {
     element: "downloadButtonElement",
     item: "downloadButtonURL"
+  },
+  downloadButtonTip: {
+    element: "downloadButtonTip",
+    item: "downloadButtonTip",
+    type: "contentItem"
   }
 };
 
@@ -181,7 +187,7 @@ function contentInterface($) {
     jQuery(wordDoc).hide();
 
     // hide all the items found for ITEM_LINK_PARAMETERS
-    for (var paramKey in ITEM_LINK_PARAMETERS) {
+    for (let paramKey in ITEM_LINK_PARAMETERS) {
       let elem = ITEM_LINK_PARAMETERS[paramKey].element;
 
       // if we found an item for this param, hide it
@@ -726,18 +732,25 @@ function handleFootNotes() {
 
     jQuery(footNoteList).html(footNoteListHtml);
 
-    // add tooltipster if there are footnotes
-    jQuery("head").append(
-      "<link id='tooltipstercss' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/tooltipster.bundle.min.css' type='text/css' rel='stylesheet' />"
-    );
-    jQuery.getScript(
-      //"https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.js",
-      "https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.min.js",
-      function () {
-        docWidth = Math.floor(jQuery(document).width() / 2);
-        jQuery(".ci-tooltip").tooltipster({ maxWidth: docWidth });
-      }
-    );
+    addToolTipster();
+  }
+}
+
+function addToolTipster() {
+  if ( ! TOOLTIPSTER_ADDED) {
+      // add tooltipster if there are footnotes
+      jQuery("head").append(
+        "<link id='tooltipstercss' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/tooltipster.bundle.min.css' type='text/css' rel='stylesheet' />"
+      );
+      jQuery.getScript(
+        //"https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.js",
+        "https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.min.js",
+        function () {
+          docWidth = Math.floor(jQuery(document).width() / 2);
+          jQuery(".ci-tooltip").tooltipster({ maxWidth: docWidth });
+        }
+      );
+      TOOLTIPSTER_ADDED=true;
   }
 }
 
@@ -1366,7 +1379,7 @@ function checkParams(contentInterface, wordDoc) {
    *   - item - define pramsObj attribute name for the actual value
    */
 
-  for (var paramKey in ITEM_LINK_PARAMETERS) {
+  for (let paramKey in ITEM_LINK_PARAMETERS) {
     const obj = ITEM_LINK_PARAMETERS[paramKey];
 
     /*if ( paramKey in paramsObj ) {
@@ -1381,9 +1394,21 @@ function checkParams(contentInterface, wordDoc) {
     // only if it's found
     if (element.length > 0) {
       paramsObj[obj.element] = element;
-      paramsObj[obj.item] = jQuery(paramsObj[obj.element])
-        .children("a")
-        .attr("href");
+      // the type of content, depends on the type
+      if ( obj.type === "contentItem" ) { 
+        // content is element.parent.sibling(div.details)
+        // and then remove all the vtbgenertedt_div crap
+        let tipContent = jQuery(paramsObj[obj.element]).parent().next("div.details").html();
+        tipContent = tipContent.replace(/class="vtbegenerated_div"/g, "");
+        tipContent = tipContent.replace(/class="vtbegenerated"/g, "");
+        tipContent = tipContent.replace(/(?:\r\n|\r|\n)/g, " ");
+        paramsObj[obj.item] = tipContent;
+      } else { // assume a link item
+        paramsObj[obj.element] = element;
+        paramsObj[obj.item] = jQuery(paramsObj[obj.element])
+          .children("a")
+          .attr("href");
+      }
     }
   }
 
@@ -5825,8 +5850,15 @@ function addExpandPrintButtons() {
     if (PARAMS.downloadButtonLabel) {
       label = PARAMS.downloadButtonLabel;
     }
+    let tooltip='';
+    let tt_class='';
+    if (PARAMS.downloadButtonTip){
+      tooltip = `data-tooltip-content="${PARAMS.downloadButtonTip}"`;
+      tt_class='class="ci-tooltip"';
+      addToolTipster();
+    }
     const download_button = `
-    <button href="type="button" id="gu_download" 
+    <button href="" type="button" id="gu_download" ${tooltip} ${tt_class} 
         onclick="window.open('${PARAMS.downloadButtonURL}', '_blank'); return false;"
        style="padding:0.3em 1.2em;margin:0 0.3em 0.3em 0;border-radius:2em;border:2px solid;box-sizing: border-box;text-decoration:none;text-align:center"
       >${label}</button>
