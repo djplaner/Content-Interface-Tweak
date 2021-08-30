@@ -86,7 +86,7 @@ var MODULE_NUM;
 
 var ITEM_LINK_PARAMETERS = {
   "Content Document": {
-    element: "wordDocElement",
+    element: "wordDocElement", // need to end in Element to hide the element
     item: "wordDoc",
   },
   "Film Watching Flow": {
@@ -106,7 +106,7 @@ var ITEM_LINK_PARAMETERS = {
     item: "downloadButtonURL"
   },
   downloadButtonTip: {
-    element: "downloadButtonTip",
+    element: "downloadButtonTipElement",
     item: "downloadButtonTip",
     type: "contentItem"
   }
