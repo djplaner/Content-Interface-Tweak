@@ -5741,7 +5741,8 @@ function addLinksForPrint(document, urls, embeds) {
   let linkDiv = document.createElement("div");
   linkDiv.id = "gu-ci-links";
   linkDiv.innerHTML = html;
-  document.body.appendChild(linkDiv);
+  let ci = document.getElementById("GU_ContentInterface")
+  ci.appendChild(linkDiv);
 }
 
 /**
