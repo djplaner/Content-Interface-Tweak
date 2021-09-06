@@ -5773,6 +5773,12 @@ function prepareForPrint(document, title, courseName) {
     button.style.display = "none";
   });
 
+  // replace the inner text on headings for review status etc _edit mode_ on
+  document.querySelectorAll("h1.blackboard").forEach((h1) => {
+    h1.innerText = h1.innerText.replace(" (Review status on)", "");
+    h1.innerText = h1.innerText.replace(" (section hidden from some/all students)", "");
+  });
+
   // extract and categorise links
   let urls = extractAndCategoriseLinks(document);
   let embeds = extractAndCategoriseEmbeds(document);
