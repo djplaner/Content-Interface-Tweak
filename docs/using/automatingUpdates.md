@@ -7,11 +7,13 @@
 
 #### Problem
 
-Updating Blackboard using the Content Interface can be a somewhat complex, off-putting process for some. Even when it [is semi-automated](https://djplaner.github.io/Content-Interface-Tweak/using/createAndModify/#semi-automated-three-step-process) it requires a number of less than obvious steps. Largely because Blackboard is difficulty to integrate seamlessly into a different workflow.
+The content update process - updating Blackboard using the Content Interface - can be a somewhat complex, off-putting process for some. Even when it [is semi-automated](https://djplaner.github.io/Content-Interface-Tweak/using/createAndModify/#semi-automated-three-step-process) it requires a number of less than obvious steps. Largely because Blackboard is difficult to integrate seamlessly into a workflow that draws on non-Blackboard software.
 
 #### Solution
 
-The following explains how to fully automate this process by installing a [userscript](https://en.wikipedia.org/wiki/Userscript) into your Web browser. The small bit of code in the userscript automates [the semi-automated three step process](https://djplaner.github.io/Content-Interface-Tweak/using/createAndModify/#semi-automated-three-step-process) into a single button press.
+The solution presented here is to automate the content update process using a [userscript](https://en.wikipedia.org/wiki/Userscript). The video below demonstrates what the automated content update process looks like.
+
+Following the video is an explanation of how you automate the process by installing a [userscript](https://en.wikipedia.org/wiki/Userscript) into your Web browser. It is the userscript that reduces [the semi-automated three step process](https://djplaner.github.io/Content-Interface-Tweak/using/createAndModify/#semi-automated-three-step-process) into the single button press demonstrated in the video
 
 <span class="embed">
 
@@ -19,9 +21,7 @@ The following explains how to fully automate this process by installing a [users
 
 </span>
 
-## What?
-
-The video above demonstrates the automated process. Instead of you having to manually perform certain parts of the semi-automated process, the Content Interface auto update userscript will perform these steps for you.
+## How to automate the process
 
 To automate the process you will need to (explained in more detail below)
 
@@ -31,11 +31,7 @@ To automate the process you will need to (explained in more detail below)
 
 <div class="ael-note"><div class="noteImage"></div><div class="instructions"><p>Note: The automated process will only work on Web browsers where you have completed these three steps. </p><p>If you have missed one of the first two steps, you will have to use <a href="https://djplaner.github.io/Content-Interface-Tweak/using/createAndModify/#semi-automated-three-step-process">the semi-automated three step process</a>.</p><p>If you have missed the last step, neither the automated or semi-automated steps will work.</p></div></div>
 
-## Automating the process
-
-As noted above, all three of the following steps must be completed to automate the process. The first two steps must be completed (once) on any web browser you plan to use for updating. The last step must be completed (once) on any Blackboard page you wish to update.
-
-The following video demonstrates the process for installing Tampermonkey and the Content Interface user script.
+The following video demonstrates the process for step 1 (installing Tampermonkey) and step 2 (installing the auto update userscript).
 
 <span class="embed">
 

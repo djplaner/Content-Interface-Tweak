@@ -142,6 +142,10 @@ PAGES = [
     {
         "SOURCE" : r"%s\\Customising - Provide PDF\\content.docx" % SOURCE,
         "DESTINATION" : r"%s\\customising\\providePDF.md" % DESTINATION
+    },
+    {
+        "SOURCE" : r"%s\\Customising - download button\\downloadButton.docx" % SOURCE,
+        "DESTINATION" : r"%s\\customising\\downloadButton.md" % DESTINATION
     }
 ]
 
