@@ -395,6 +395,8 @@ function doMammoth(wordContent) {
       /* Adding cards */
       "p[style-name='Blackboard Card'] => div.bbCard:fresh",
       /* Blackboard item conversion */
+      "p[style-name='FAQ Header'] => button.faqHeader",
+      "p[style-name='FAQ Answer'] => div.faqAnswer",
       "p[style-name='Blackboard Item Heading'] => h1.blackboard",
       "p[style-name='Blackboard Item Heading 2'] => h2.blackboard",
       "r[style-name='Blackboard Item Link'] => span.blackboardLink",

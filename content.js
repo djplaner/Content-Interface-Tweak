@@ -103,13 +103,13 @@ var ITEM_LINK_PARAMETERS = {
   },
   downloadButtonURL: {
     element: "downloadButtonElement",
-    item: "downloadButtonURL"
+    item: "downloadButtonURL",
   },
   downloadButtonTip: {
     element: "downloadButtonTipElement",
     item: "downloadButtonTip",
-    type: "contentItem"
-  }
+    type: "contentItem",
+  },
 };
 
 /****************************************************************************/
@@ -228,6 +228,7 @@ function contentInterface($) {
 
   //   that incldues content from the actual footnote (minus some extra HTML)
   handleFootNotes();
+  handleFAQs();
   // FILM WATCH
   //  jQuery("div.filmWatchingOptions").each(handleFilmWatchingOptions);
   // add the jsonurl attribute to all film-watch-options components
@@ -562,6 +563,32 @@ function contentInterface($) {
 }
 
 /**
+ * function handleFAQs
+ */
+
+function handleFAQs() {
+  let acc = document.getElementsByClassName("faqHeader");
+  let i;
+
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function (e) {
+      e.preventDefault();
+      /* Toggle between adding and removing the "active" class,
+     to highlight the button that controls the panel */
+      this.classList.toggle("active");
+
+      /* Toggle between hiding and showing the active panel */
+      var panel = this.nextElementSibling;
+      if (panel.style.display === "block") {
+        panel.style.display = "none";
+      } else {
+        panel.style.display = "block";
+      }
+    });
+  }
+}
+
+/**
  *
  * @param {String} html  - html embe
  * - if the html contains a stream embed, add a message above
@@ -737,20 +764,20 @@ function handleFootNotes() {
 }
 
 function addToolTipster() {
-  if ( ! TOOLTIPSTER_ADDED) {
-      // add tooltipster if there are footnotes
-      jQuery("head").append(
-        "<link id='tooltipstercss' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/tooltipster.bundle.min.css' type='text/css' rel='stylesheet' />"
-      );
-      jQuery.getScript(
-        //"https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.js",
-        "https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.min.js",
-        function () {
-          docWidth = Math.floor(jQuery(document).width() / 2);
-          jQuery(".ci-tooltip").tooltipster({ maxWidth: docWidth });
-        }
-      );
-      TOOLTIPSTER_ADDED=true;
+  if (!TOOLTIPSTER_ADDED) {
+    // add tooltipster if there are footnotes
+    jQuery("head").append(
+      "<link id='tooltipstercss' href='https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/css/tooltipster.bundle.min.css' type='text/css' rel='stylesheet' />"
+    );
+    jQuery.getScript(
+      //"https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.js",
+      "https://cdn.jsdelivr.net/npm/tooltipster@4.2.8/dist/js/tooltipster.bundle.min.js",
+      function () {
+        docWidth = Math.floor(jQuery(document).width() / 2);
+        jQuery(".ci-tooltip").tooltipster({ maxWidth: docWidth });
+      }
+    );
+    TOOLTIPSTER_ADDED = true;
   }
 }
 
@@ -1395,15 +1422,19 @@ function checkParams(contentInterface, wordDoc) {
     if (element.length > 0) {
       paramsObj[obj.element] = element;
       // the type of content, depends on the type
-      if ( obj.type === "contentItem" ) { 
+      if (obj.type === "contentItem") {
         // content is element.parent.sibling(div.details)
         // and then remove all the vtbgenertedt_div crap
-        let tipContent = jQuery(paramsObj[obj.element]).parent().next("div.details").html();
+        let tipContent = jQuery(paramsObj[obj.element])
+          .parent()
+          .next("div.details")
+          .html();
         tipContent = tipContent.replace(/class="vtbegenerated_div"/g, "");
         tipContent = tipContent.replace(/class="vtbegenerated"/g, "");
         tipContent = tipContent.replace(/(?:\r\n|\r|\n)/g, " ");
         paramsObj[obj.item] = tipContent;
-      } else { // assume a link item
+      } else {
+        // assume a link item
         paramsObj[obj.element] = element;
         paramsObj[obj.item] = jQuery(paramsObj[obj.element])
           .children("a")
@@ -5741,7 +5772,7 @@ function addLinksForPrint(document, urls, embeds) {
   let linkDiv = document.createElement("div");
   linkDiv.id = "gu-ci-links";
   linkDiv.innerHTML = html;
-  let ci = document.getElementById("GU_ContentInterface")
+  let ci = document.getElementById("GU_ContentInterface");
   ci.appendChild(linkDiv);
 }
 
@@ -5776,7 +5807,10 @@ function prepareForPrint(document, title, courseName) {
   // replace the inner text on headings for review status etc _edit mode_ on
   document.querySelectorAll("h1.blackboard").forEach((h1) => {
     h1.innerText = h1.innerText.replace(" (Review status on)", "");
-    h1.innerText = h1.innerText.replace(" (section hidden from some/all students)", "");
+    h1.innerText = h1.innerText.replace(
+      " (section hidden from some/all students)",
+      ""
+    );
   });
 
   // extract and categorise links
@@ -5841,7 +5875,7 @@ function printPDF(e) {
   setTimeout(() => {
     printWindow.print();
     printWindow.close();
-  }, 1000); 
+  }, 1000);
 
   // prevent the parent window reloading
   return false;
@@ -5857,11 +5891,11 @@ function addExpandPrintButtons() {
     if (PARAMS.downloadButtonLabel) {
       label = PARAMS.downloadButtonLabel;
     }
-    let tooltip='';
-    let tt_class='';
-    if (PARAMS.downloadButtonTip){
+    let tooltip = "";
+    let tt_class = "";
+    if (PARAMS.downloadButtonTip) {
       tooltip = `data-tooltip-content="${PARAMS.downloadButtonTip}"`;
-      tt_class='class="ci-tooltip"';
+      tt_class = 'class="ci-tooltip"';
       addToolTipster();
     }
     const download_button = `
@@ -5896,7 +5930,6 @@ function addExpandPrintButtons() {
     `;
     jQuery(".accordion-expand-holder").append(print_button);
   }
-
 }
 
 function getPrintButtons() {
