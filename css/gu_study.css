@@ -980,13 +980,12 @@ figure._60 {
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active, .faqQuestion:hover {
+.faqActive, .faqQuestion:hover {
   background-color: #ccc;
 }
 
 /* Style the accordion panel. Note: hidden by default */
 .faqAnswer {
-  margin: 1em;
   padding: 0 2em;
   background-color: white;
   max-height: 0;

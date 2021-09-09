@@ -582,8 +582,10 @@ function handleFAQs() {
       let answer = this.nextElementSibling;
       if (answer.style.maxHeight) {
         answer.style.maxHeight = null;
+        answer.style.margin = "0em 0em 0em 0em";
       } else {
         answer.style.maxHeight = answer.scrollHeight + "px";
+        answer.style.margin = "1em 1em 1em 1em";
       }
     });
   }
