@@ -32,6 +32,7 @@ nav:
     - Accordion appearance: 'customising/accordionAppearance.md'
     - Content appearance: 'customising/contentAppearance.md'
     - Provide PDF: 'customising/providePDF.md'
+    - Download Button: 'customising/downloadButton.md'
 markdown_extensions:
   - toc:
       permalink: '#'

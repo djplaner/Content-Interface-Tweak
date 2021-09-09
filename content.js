@@ -564,10 +564,11 @@ function contentInterface($) {
 
 /**
  * function handleFAQs
+ * - slavish copy of https://www.w3schools.com/howto/howto_js_accordion.asp
  */
 
 function handleFAQs() {
-  let acc = document.getElementsByClassName("faqHeader");
+  let acc = document.getElementsByClassName("faqQuestion");
   let i;
 
   for (i = 0; i < acc.length; i++) {
@@ -575,14 +576,14 @@ function handleFAQs() {
       e.preventDefault();
       /* Toggle between adding and removing the "active" class,
      to highlight the button that controls the panel */
-      this.classList.toggle("active");
+      this.classList.toggle("faqActive");
 
       /* Toggle between hiding and showing the active panel */
-      var panel = this.nextElementSibling;
-      if (panel.style.display === "block") {
-        panel.style.display = "none";
+      let answer = this.nextElementSibling;
+      if (answer.style.maxHeight) {
+        answer.style.maxHeight = null;
       } else {
-        panel.style.display = "block";
+        answer.style.maxHeight = answer.scrollHeight + "px";
       }
     });
   }
@@ -865,6 +866,8 @@ const DOCUMENTATION_LINKS = {
     "https://djplaner.github.io/Content-Interface-Tweak/customising/contentAppearance/",
   providePDF:
     "https://djplaner.github.io/Content-Interface-Tweak/customising/providePDF/",
+  downloadButton:
+    "https://djplaner.github.io/Content-Interface-Tweak/customising/downloadButton/",
 };
 
 var UPDATE_HTML = () => `
@@ -1155,6 +1158,10 @@ var INSTRUCTIONS = `
           Enable <a target="_blank" href="${DOCUMENTATION_LINKS.providePDF}">download PDF</a><br />
     <mark><strong>Updated</strong>: now dynamic PDF generation you can add yourself</mark>
       </p>
+      <p><i class="fa fa-plus-square text-green"></i> 
+      Add a <a target="_blank" href="${DOCUMENTATION_LINKS.downloadButton}">"download button"</a> that links to arbitrary web link
+  </p>
+
             </div>
         </article>
     </div>

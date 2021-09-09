@@ -953,9 +953,9 @@ figure._60 {
 /* FAQ style accordion */
 
  /* Style the buttons that are used to open and close the accordion panel */
- .faqHeader {
-   font-weight: bold ! important;
-   text-align: left ! important;
+/* .faqQuestion { */
+#GU_ContentInterface button.faqQuestion {
+   font-weight: bold;
   background-color: #eee;
   color: #444;
   cursor: pointer;
@@ -967,15 +967,29 @@ figure._60 {
   transition: 0.4s;
 }
 
+.faqQuestion:after {
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 1em;
+  color: #777;
+  float: right;
+  margin-left: 5px;
+}
+
+.faqActive:after { 
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.active, .faqHeader:hover {
+.active, .faqQuestion:hover {
   background-color: #ccc;
 }
 
 /* Style the accordion panel. Note: hidden by default */
 .faqAnswer {
-  padding: 1em;
+  margin: 1em;
+  padding: 0 2em;
   background-color: white;
-  display: none;
+  max-height: 0;
   overflow: hidden;
+  transition: max-height 0.2s ease-out;
 } 
