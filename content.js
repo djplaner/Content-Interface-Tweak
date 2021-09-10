@@ -837,6 +837,10 @@ const DOCUMENTATION_LINKS = {
     "https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#aside",
   readings:
     "https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#reading",
+  poem:
+    "https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#poem",
+  faqs:
+    "https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#faqs",
   universityDates:
     "https://djplaner.github.io/Content-Interface-Tweak/creating/universityContent/#university-dates",
   filmWatching:
@@ -1077,6 +1081,14 @@ var INSTRUCTIONS = `
          </li>
          <li> <a target="_blank" href="${DOCUMENTATION_LINKS.readings}">
          Readings
+            </a>
+         </li>
+         <li> <i class="fa fa-plus-square text-green"></i><a target="_blank" href="${DOCUMENTATION_LINKS.poem}">
+         Poems
+            </a>
+         </li>
+         <li> <i class="fa fa-plus-square text-green"></i><a target="_blank" href="${DOCUMENTATION_LINKS.faqs}">
+         FAQs
             </a>
          </li>
          <li> <a target="_blank" href="${DOCUMENTATION_LINKS.universityDates}">
