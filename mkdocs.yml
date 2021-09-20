@@ -18,9 +18,11 @@ nav:
     - What & Why: 'background/whatWhy.md'
     - How does it work: 'background/howWorks.md'
   - Using:
-    - Set up: 'using/setup.md'
+    - Authoring set up: 'using/authoringSetup.md'
+    - Page set up: 'using/setup.md'
     - Create and modify: 'using/createAndModify.md'
     - Automating updates: 'using/automatingUpdates.md'
+    - Sync shared folder: 'using/syncSharedFolder.md'
   - Creating:
     - Textual: 'creating/textualContent.md'
     - Web: 'creating/webContent.md'

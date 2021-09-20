@@ -18,8 +18,9 @@ DESTINATION= r"c:\\Users\\s2986288\\code\\Content-Interface-Tweak\\docs"
 #DESTINATION="\\staff.ad.griffith.edu.au\ud\fr\s2986288\Documents\GitHub\Content-Interface-Tweak\docs"
 
 #SOURCE=r"C:\\Users\\s2986288\\OneDrive - Griffith University\\Software Development\\Documentation\\Content Interface docs - v2"
+SOURCE= r"c:\\Users\\s2986288\\code\\Content-Interface-Tweak\\documentation"
 
-SOURCE= r"c:\\Users\\s2986288\\OneDrive - Griffith University\\Software Development\\Documentation\\Content Interface docs - v2"
+#SOURCE= r"c:\\Users\\s2986288\\OneDrive - Griffith University\\Software Development\\Documentation\\Content Interface docs - v2"
 
 CSS= """
 <link rel="stylesheet" type="text/css" 
@@ -98,6 +99,14 @@ PAGES = [
     {
         "SOURCE" : r"%s\\Using - Automating updates\\Automating updates.docx" % SOURCE,
         "DESTINATION" : r"%s\\using\\automatingUpdates.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Authoring setup\\authoring-setup.docx" % SOURCE,
+        "DESTINATION" : r"%s\\using\\authoringSetup.md" % DESTINATION
+    }, 
+    {
+        "SOURCE" : r"%s\\Authoring setup\\sync shared folder.docx" % SOURCE,
+        "DESTINATION" : r"%s\\using\\syncSharedFolder.md" % DESTINATION
     }, 
     {
         "SOURCE" : r"%s\\Using - Set up\\content.docx" % SOURCE,

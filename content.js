@@ -796,6 +796,8 @@ const DOCUMENTATION_LINKS = {
   whatWhy:
     "https://djplaner.github.io/Content-Interface-Tweak/background/whatWhy/",
   setUp: "https://djplaner.github.io/Content-Interface-Tweak/using/setup/",
+  authorSetUp: "https://djplaner.github.io/Content-Interface-Tweak/using/authoringSetup/",
+  syncSharedFolder: "https://djplaner.github.io/Content-Interface-Tweak/using/syncSharedFolder/",
   createModify:
     "https://djplaner.github.io/Content-Interface-Tweak/using/createAndModify/",
   automateUpdate:
@@ -985,13 +987,17 @@ var INSTRUCTIONS = `
                <p>How to...</p>
                <ul style="padding-left: 1em; margin-left:0">
                   <li> <a target="_blank" href="${DOCUMENTATION_LINKS.setUp}">
-                        set it up in Blackboard</a> </li>
+                        set up a single Blackboard page</a> </li>
+                  <li> <i class="fa fa-plus-square text-green"></i> <a target="_blank" href="${DOCUMENTATION_LINKS.authoringSetUp}">
+                        set up a course authoring environment</a> </li>
                   <li> <a target="_blank" href="${DOCUMENTATION_LINKS.createModify}">
                         create and modify content</a> (an overview) </li>
                   <li> <a target="_blank" href="${DOCUMENTATION_LINKS.automateUpdate}">
                         automate content updates</a> <br />
                         <mark><strong>New:</strong> experimental feature</mark>
                         </li>
+                  <li> <i class="fa fa-plus-square text-green"></i><a target="_blank" href="${DOCUMENTATION_LINKS.syncSharedFolder}">
+                        syncing a shared folder</a> </li>
               </ul>
 
             </div>
