@@ -988,15 +988,16 @@ var INSTRUCTIONS = `
                <ul style="padding-left: 1em; margin-left:0">
                   <li> <a target="_blank" href="${DOCUMENTATION_LINKS.setUp}">
                         set up a single Blackboard page</a> </li>
-                  <li> <i class="fa fa-plus-square text-green"></i> <a target="_blank" href="${DOCUMENTATION_LINKS.authoringSetUp}">
-                        set up a course authoring environment</a> </li>
                   <li> <a target="_blank" href="${DOCUMENTATION_LINKS.createModify}">
                         create and modify content</a> (an overview) </li>
+                  <li> <i class="fa fa-plus-square text-green"></i> <a target="_blank" href="${DOCUMENTATION_LINKS.authoringSetUp}">
+                        set up a course authoring environment</a> </li>
                   <li> <a target="_blank" href="${DOCUMENTATION_LINKS.automateUpdate}">
                         automate content updates</a> <br />
                         <mark><strong>New:</strong> experimental feature</mark>
                         </li>
-                  <li> <i class="fa fa-plus-square text-green"></i><a target="_blank" href="${DOCUMENTATION_LINKS.syncSharedFolder}">
+                  <li> <i class="fa fa-plus-square text-green"></i>
+                  <a target="_blank" href="${DOCUMENTATION_LINKS.syncSharedFolder}">
                         syncing a shared folder</a> </li>
               </ul>
 
