@@ -827,6 +827,8 @@ const DOCUMENTATION_LINKS = {
     "https://djplaner.github.io/Content-Interface-Tweak/creating/webContent/#links",
   embeds:
     "https://djplaner.github.io/Content-Interface-Tweak/creating/webContent/#embedding-youtube-videos-and-beyond",
+  transcripts:
+    "https://djplaner.github.io/Content-Interface-Tweak/creating/webContent/#generating-and-formatting-video-transcripts",
 
   // create university content
   createUniversity:
@@ -1059,7 +1061,10 @@ var INSTRUCTIONS = `
                  Embedding videos and more
             </a>
          </li>
-         </li>
+         <li>  <i class="fa fa-plus-square text-green"></i>  
+         <a target="_blank" href="${DOCUMENTATION_LINKS.transcripts}">
+              Adding online video transcripts </a> 
+        </li>
       </ul>
             </div>
         </article>
