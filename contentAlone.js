@@ -121,25 +121,25 @@ var ITEM_LINK_PARAMETERS = {
 function contentInterface($) {
   // redefine contains so that it is case insensitive
   // Used to match the Blackboard headings
-  $.expr[":"].contains = $.expr.createPseudo(function (arg) {
+/*  $.expr[":"].contains = $.expr.createPseudo(function (arg) {
     return function (elem) {
       arg = arg.replace(/\u2013|\u2014/g, "-");
       return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
     };
-  });
+  }); */
 
   /* define variables based on Bb page type */
   /* used to identify important components in html */
-  var tweak_bb_active_url_pattern = "listContent.jsp";
+/*  var tweak_bb_active_url_pattern = "listContent.jsp";
   window.tweak_bb = {
     display_view: location.href.indexOf(tweak_bb_active_url_pattern) > 0,
     page_id: "#content_listContainer",
     row_element: "li",
-  };
+  }; */
 
   // Add to jQuery a function that will be used to find BbItems that
   // match a given title
-  jQuery.expr[":"].textEquals =
+/*  jQuery.expr[":"].textEquals =
     jQuery.expr[":"].textEquals ||
     jQuery.expr.createPseudo(function (arg) {
       return function (elem) {
@@ -156,32 +156,36 @@ function contentInterface($) {
           }) === 0
         );
       };
-    });
+    }); */
 
   // Find the item in which the content is contained
-  var contentInterface = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element)
+  let contentInterface = document.getElementById("GU_ContentInterface");
+  console.log("found content interface")
+  console.log(contentInterface);
+  /*jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element)
     .find(".item h3")
     // eslint-disable-next-line no-unused-vars
     .filter(function (x) {
       return this.innerText.toLowerCase().includes("content interface");
     })
-    .eq(0);
+    .eq(0); */
   // Find any Word Document link that's been added
-  var wordDoc = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element)
+/*  var wordDoc = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element)
     .find(".item h3")
     .filter(':contains("Content Document")')
-    .eq(0);
+    .eq(0); */
 
-  calculateTerm();
+//  calculateTerm();
 
-  params = checkParams(contentInterface, wordDoc);
+//  params = checkParams(contentInterface, wordDoc);
   // kludge for jQuery each functions
-  PARAMS = params;
-  setUpEdit(contentInterface, params);
+  let params = {}
+  PARAMS = params; 
+//  setUpEdit(contentInterface, params);
 
   // check parameters passed in
   // Hide the tweak if we're not editing
-  if (location.href.indexOf("listContent.jsp") > 0) {
+/*  if (location.href.indexOf("listContent.jsp") > 0) {
     $(".gutweak").parents("li").hide();
     contentInterface.parents("div.item").hide();
     jQuery(wordDoc).hide();
@@ -199,7 +203,7 @@ function contentInterface($) {
     // add the cards for documentation
     addCSS(CARDS_CSS, params.downloadPDFURL);
     addJS(FONT_AWESOME_JS);
-  }
+  } */
 
   // do nothing if we couldn't find the contentInterface item
   if (contentInterface.length === 0) {
@@ -217,7 +221,7 @@ function contentInterface($) {
     changeJqueryTheme("smoothness");
   }
   // kludge for com14
-  cleanUpPlaceHolder();
+//  cleanUpPlaceHolder();
 
   // remove the vtbegenerated class as it's screwing with CSS in the content
   // PROBLEM if you do this all the normal styles e.g. <LI> revert to
@@ -227,8 +231,8 @@ function contentInterface($) {
     jQuery(vtb).removeClass("vtbegenerated");*/
 
   //   that incldues content from the actual footnote (minus some extra HTML)
-  handleFootNotes();
-  handleFAQs();
+//  handleFootNotes();
+//  handleFAQs();
   // FILM WATCH
   //  jQuery("div.filmWatchingOptions").each(handleFilmWatchingOptions);
   // add the jsonurl attribute to all film-watch-options components
@@ -248,8 +252,8 @@ function contentInterface($) {
 
   // handle the integration of any blackboard headings/items into the
   // content interface
-  jQuery("span.blackboardContentLink").each(handleBlackboardContentLink);
-  jQuery("span.blackboardMenuLink").each(handleBlackboardMenuLink);
+//  jQuery("span.blackboardContentLink").each(handleBlackboardContentLink);
+// jQuery("span.blackboardMenuLink").each(handleBlackboardMenuLink);
 
   jQuery("span.universityDate").each(handleUniversityDate);
 
@@ -279,13 +283,13 @@ function contentInterface($) {
   });
 
   // move these until after the divs have been added
-  jQuery("h1.blackboard").each(handleBlackboardItem);
-  jQuery("h2.blackboard").each(handleBlackboardItem);
+//  jQuery("h1.blackboard").each(handleBlackboardItem);
+//  jQuery("h2.blackboard").each(handleBlackboardItem);
 
   // handle footnotes
   // - find each footnote reference and replace with a tooltipster element
 
-  handleBlackboardCards();
+//  handleBlackboardCards();
   //jQuery("div.bbCard").each( handleBlackboardCards );
 
   // Update the HTML for various defined styles
@@ -348,11 +352,11 @@ function contentInterface($) {
 
   // replace all <div class="vtbegenerated" with <p
   // *%&^$ Bb change to editor
-  jQuery("#GU_ContentInterface")
+/*  jQuery("#GU_ContentInterface")
     .find("div.vtbegenerated_div")
     .replaceWith(function () {
       return jQuery("<p />", { html: jQuery(this).html() });
-    });
+    }); */
 
   // check for any spans class checkbox and replace with checkbox
   jQuery("#GU_ContentInterface span.checkbox").each(function (idx) {
@@ -1246,104 +1250,6 @@ var CHANGE_TEMPLATE = `
  `;
 
 function setUpEdit(ci, params) {
-  //------------------------------------------------
-  // Check to see if the Content Interface item contains details
-  // about the Word document
-  // - NO - show a message without update button
-  // - YES - add the update button
-
-  // does ci contain a path
-  // -- currently implemented as a span with id gu_WordDocument that
-  //    will contain a simple path (probably only works for me)
-  // -- eventually should be a link that works for all with access
-
-  current = window.location.href;
-  var courseId;
-  var contentId;
-
-  m = current.match(/^.*course_id=(_[^&#]*).*$/);
-  if (m) {
-    courseId = m[1];
-  }
-  //console.log("course id " + courseId);
-
-  // get the content id
-  contentId = jQuery(ci).parent().attr("id");
-
-  // if no content id then change display
-  if (typeof contentId === "undefined") {
-    jQuery("#gu_update").html(CONTENT_INTERFACE_NOT_PRESENT);
-    return;
-  }
-
-  // Has a link  to the word doc been shared
-  var path = params.wordDoc;
-
-  if (typeof path === "undefined") {
-    // Word document is not defined
-    HOW_TO = WORD_DOC_NOT_PRESENT;
-    let html = UPDATE_HTML() + INSTRUCTIONS;
-
-    // add in link to edit the content item
-    var editContent =
-      'into the <a href="https://bblearn-blaed.griffith.edu.au/webapps/blackboard/execute/manageCourseItem?content_id=' +
-      contentId +
-      "&course_id=" +
-      courseId +
-      '&dispatch=edit">Content Interface content item</a>';
-
-    html = html.replace("{EDIT_CONTENT_ITEM}", editContent);
-
-    // console.log("edit content item is " + editContent);
-    jQuery("#gu_update").html(html);
-    return;
-  }
-
-  //jQuery(".gu_docNotPresent").hide();
-  HOW_TO = WORD_DOC_PRESENT;
-  let updateHtml = UPDATE_HTML() + INSTRUCTIONS;
-
-  if (jQuery("#gu_jqueryStyle").length) {
-    updateHtml = updateHtml + CHANGE_TEMPLATE;
-  }
-  jQuery("#gu_update").html(updateHtml);
-
-  jQuery("#gu_doc").attr("href", path);
-
-  // remove #6 type links from end of path (breaks conversion)
-  //console.log( "path was " + path );
-  path = path.replace(/#[0-9]*$/, "");
-  // console.log( "path is " + path );
-  // encode path ready for going via URLs
-  path =
-    "u!" +
-    btoa(path).replace(/\+/g, "-").replace(/\//g, "_").replace(/\=+$/, "");
-
-  //---------------------------------------------------
-  // Set up the click event for the submit button
-  // get the courseId
-
-  jQuery("#guUpdate").click(function (event) {
-    // if href currently includes blaed then add parameter
-    var blaed = "";
-    var link = window.location.href;
-    if (link.match(BLAED_LINK) !== null) {
-      blaed = "&blaed=1";
-    }
-    window.location.href =
-      "https://djon.es/gu/mammoth.js/browser-demo/oneDriveMammoth.html?course=" +
-      courseId +
-      blaed +
-      "&content=" +
-      contentId +
-      "&path=" +
-      path;
-  });
-
-  jQuery("#styleSelector").on("change", function () {
-    jQuery("#gu_jqueryStyle").attr("href", this.value);
-    jQuery("#gu_stylePath").text(this.value);
-  });
 }
 
 /************************************************
@@ -1924,9 +1830,9 @@ function handleBlackboardContentLink() {
     });
 
   /* Find the matching Blackboard element heading (h3) */
-  var bbItem = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(
+  /*var bbItem = jQuery(tweak_bb.page_id + " > " + tweak_bb.row_element).find(
     "h3:textEquals(" + title + ")"
-  );
+  );*/
 
   /*console.log("Looking for content link title " + title + " found " + bbItem.length);
     console.log(jQuery(this).html());
@@ -3101,44 +3007,6 @@ function getTermDate(week, startWeek = true, dayOfWeek = "Monday") {
  */
 
 var TERM_DATES = {
-  3221: {
-    0: { start: "2021-03-07", stop: "2021-03-13" },
-    1: { start: "2021-03-14", stop: "2021-03-20" },
-    2: { start: "2021-03-21", stop: "2021-03-27" },
-    3: { start: "2021-03-28", stop: "2021-04-03" },
-    4: { start: "2021-04-04", stop: "2021-04-10" },
-    5: { start: "2021-04-18", stop: "2021-04-24" },
-    6: { start: "2021-04-25", stop: "2021-05-01" },
-    7: { start: "2021-05-02", stop: "2021-05-08" },
-    8: { start: "2021-05-09", stop: "2021-05-15" },
-    9: { start: "2021-05-16", stop: "2021-05-22" },
-    10: { start: "2021-05-23", stop: "2021-05-29" },
-    11: { start: "2021-05-30", stop: "2021-06-05" },
-    12: { start: "2021-06-06", stop: "2021-06-12" },
-    13: { start: "2021-06-13", stop: "2021-06-19" },
-    14: { start: "2021-06-20", stop: "2021-06-26" },
-    15: { start: "2021-06-27", stop: "2021-07-03" },
-    exam: { start: "2021-06-13", stop: "2021-06-25" },
-  },
-  '3221QCM': {
-    0: { start: "2021-02-21", stop: "2021-02-27" },
-    1: { start: "2021-02-28", stop: "2021-03-06" },
-    2: { start: "2021-03-07", stop: "2021-03-13" },
-    3: { start: "2021-03-14", stop: "2021-03-20" },
-    4: { start: "2021-03-21", stop: "2021-03-27" },
-    5: { start: "2021-03-28", stop: "2021-04-03" },
-    6: { start: "2021-04-04", stop: "2021-04-10" },
-    7: { start: "2021-04-18", stop: "2021-04-24" },
-    8: { start: "2021-04-25", stop: "2021-05-01" },
-    9: { start: "2021-05-09", stop: "2021-05-15" },
-    10: { start: "2021-05-16", stop: "2021-05-22" },
-    11: { start: "2021-05-23", stop: "2021-05-29" },
-    12: { start: "2021-05-30", stop: "2021-06-05" },
-    13: { start: "2021-06-06", stop: "2021-06-12" },
-    14: { start: "2021-06-13", stop: "2021-06-19" },
-    15: { start: "2021-06-20", stop: "2021-07-26" },
-    exam: { start: "2021-06-13", stop: "2021-06-25" },
-  },
   2211: {
     0: { start: "2021-02-22", stop: "2021-02-28" },
     1: { start: "2021-03-01", stop: "2021-03-07" },
