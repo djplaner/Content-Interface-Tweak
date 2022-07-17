@@ -23,6 +23,7 @@
   text-align: center;
   transition: all 0.2s;
 }
+
 .open:hover,
 .close:hover {
   background-color: black;
@@ -393,7 +394,7 @@ width: 100%; }*/
   text-align: left;
 }
 
-#GU_ContentInterface .table .flex-row.boxes > * {
+#GU_ContentInterface .table .flex-row.boxes>* {
   box-shadow: 1px 0 0 0 #888, 0 1px 0 0 #888, 1px 1px 0 0 #888,
     1px 0 0 0 #888 inset, 0 1px 0 0 #888 inset;
 }
@@ -420,7 +421,7 @@ width: 100%; }*/
   background: #f8f8f8;
 }
 
-.table .flex-row + .flex-row {
+.table .flex-row+.flex-row {
   margin-top: 0em !important;
 }
 
@@ -588,17 +589,18 @@ height: 100%;*/
     flex: 0.2 1 18%;
   }
 }
+
 /* Helpers for internal items and spacing */
 .flex-row img {
   max-width: 100% !important;
 }
 
 .flex-row:first-child,
-:not(.flex-row) + .flex-row {
+:not(.flex-row)+.flex-row {
   margin-top: 1em !important;
 }
 
-.flex-row + .flex-row {
+.flex-row+.flex-row {
   margin-top: -1em !important;
 }
 
@@ -670,7 +672,7 @@ height: 100%;*/
 }
 
 .flex-tiles:first-child,
-:not(.flex-tiles) + .flex-tiles {
+:not(.flex-tiles)+.flex-tiles {
   margin-top: 1em !important;
 }
 
@@ -678,7 +680,7 @@ height: 100%;*/
   margin-bottom: 1em !important;
 }
 
-.flex-tile-grout > * {
+.flex-tile-grout>* {
   box-shadow: 2px 0 0 0 #fff, 0 2px 0 0 #ffffff, 2px 2px 0 0 #fff,
     2px 0 0 0 #fff inset, 0 2px 0 0 #fff inset;
 }
@@ -876,6 +878,7 @@ figure._60 {
   width: 95%;
   padding: 1em;
 }
+
 #GU_ContentInterface .goReadingImage {
   width: 5%;
 }
@@ -952,10 +955,10 @@ figure._60 {
 
 /* FAQ style accordion */
 
- /* Style the buttons that are used to open and close the accordion panel */
+/* Style the buttons that are used to open and close the accordion panel */
 /* .faqQuestion { */
 #GU_ContentInterface button.faqQuestion {
-   font-weight: bold;
+  font-weight: bold;
   background-color: #eee;
   color: #444;
   cursor: pointer;
@@ -968,19 +971,22 @@ figure._60 {
 }
 
 .faqQuestion:after {
-  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  content: '\02795';
+  /* Unicode character for "plus" sign (+) */
   font-size: 1em;
   color: #777;
   float: right;
   margin-left: 5px;
 }
 
-.faqActive:after { 
-  content: "\2796"; /* Unicode character for "minus" sign (-) */
+.faqActive:after {
+  content: "\2796";
+  /* Unicode character for "minus" sign (-) */
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-.faqActive, .faqQuestion:hover {
+.faqActive,
+.faqQuestion:hover {
   background-color: #ccc;
 }
 
@@ -991,4 +997,33 @@ figure._60 {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
-} 
+}
+
+/* PASS kludge */
+
+table.pass_session_table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.pass_session_table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: .35em;
+}
+
+.pass_session_table th,
+.pass_session_table td {
+  padding: .625em;
+  text-align: center;
+}
+
+.pass_session_table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
