@@ -4915,7 +4915,7 @@ function calculateTerm() {
     // break the course Id up into its components
     // This is the RE for COMM10 - OUA course?
     breakIdRe = new RegExp(
-      "^([A-Z]+[0-9]+)_([0-9][0-9][0-9][0-9])_([A-Z][A-Z])$"
+      "^([A-Z]+[0-9]+)_([0-9][0-9][0-9][0-9])_(..)$"
     );
     m = id.match(breakIdRe);
 
@@ -4933,7 +4933,7 @@ function calculateTerm() {
     } else {
       // check for a normal GU course
       breakIdRe = new RegExp(
-        "^([0-9]+[A-Z]+)_([0-9][0-9][0-9][0-9])_([A-Z][A-Z])$"
+        "^([0-9]+[A-Z]+)_([0-9][0-9][0-9][0-9])_(..)$"
       );
       // Following is broken
 
@@ -4967,7 +4967,7 @@ function calculateTerm() {
         } else {
           // Match Y1 QCM courses e.g. 3526QCM_Y1_3211_SB
           breakIdRe = new RegExp(
-            "^([0-9]+[A-Z]+)_(Y[0-9])_([0-9][0-9][0-9][0-9])_([A-Z][A-Z])$"
+            "^([0-9]+[A-Z]+)_(Y[0-9])_([0-9][0-9][0-9][0-9])_(..)$"
           );
           m = id.match(breakIdRe);
           if (m) {
